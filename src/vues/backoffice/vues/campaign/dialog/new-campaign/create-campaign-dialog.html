@@ -1,0 +1,292 @@
+<modal 
+    v-bind:show="visible" 
+    v-bind:modal-class="'modal-big'" 
+    v-on:close-dialog="close">
+
+    <h4 class="bold-font" slot="header">Create Campaign</h4>
+
+    <div class="row h-padding-big" slot="body">
+        <!-- <validation-observer 
+            ref="observer" 
+            tag="form" 
+            role="form"
+            v-slot="{ invalid }"
+            @submit.prevent="createCampaign">
+            <div class="form-group">
+                <label for="nameField">Name</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <input type="text" class="form-control" id="nameField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Name" v-model="campaign.name" />
+                </validation-provider>
+            </div>
+            <div class="form-group">
+                <label for="descField">Description</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <textarea type="text" class="form-control resize-v" id="descField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Description" v-model="campaign.description">
+                    </textarea>
+                </validation-provider>
+            </div>
+            <div class="form-group">
+                <label for="websiteField">Website</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <input type="url" class="form-control" id="websiteField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Website" v-model="partner.website" />
+                </validation-provider>
+            </div>
+            <div class="row v-padding-medium h-padding-medium">
+                <div class="pull-left">
+                    <span v-if="error.length" class="wine">
+                        {{error}}
+                    </span>
+                    <span v-if="loading" class="blue">
+                        Loading <i class="fa fa-spinner fa-spin"></i>
+                    </span>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary btn-default-width" :disabled="loading||invalid" @click="createPartner()">
+                        Save
+                    </button>
+                    <button class="btn btn-danger btn-default-width" @click="close()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </validation-observer> -->
+        
+        <div class="panel-body">
+
+            <div class="col-md-5">
+                <div class="stepy-tab">
+                    <ul id="default-titles" class="stepy-titles clearfix">
+                        <li 
+                            v-for="(page, index) in formWizard.pages" 
+                            @click="formWizard.setPage(index)"
+                            v-bind:class="{'current-step': formWizard.isSelectedPage(page.key)}">
+                            <div>Step {{index+1}}</div>
+                            <span> </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-7 left-bordered left-padding-medium">
+                <validation-observer 
+                    ref="observer" 
+                    tag="form" 
+                    role="form"
+                    v-slot="{ invalid }"
+                    @submit.prevent="createCampaign" 
+                    novalidate>
+                    <div class="dialog-wizard-main-content-container">
+                        <div v-show="formWizard.isSelectedPage('BASIC_DETAILS')">
+                            <div class="col-md-12">
+                                <h5 class="grey bold-font">Basic Details</h5>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameField">Name</label>
+                                <validation-provider 
+                                    rules="required" 
+                                    v-slot="{ invalid }">
+                                    <input type="text" class="form-control" id="nameField" 
+                                        v-bind:class="{'invalid-field': invalid}"
+                                        placeholder="Enter Name" v-model="campaign.name" />
+                                </validation-provider>
+                            </div>
+                            <div class="form-group">
+                                <label for="descField">Description</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <textarea class="form-control resize-v" id="descField" v-bind:class="{'invalid-field': invalid}"
+                                        placeholder="Enter Description" v-model="campaign.description">
+                                    </textarea>
+                                </validation-provider>
+                            </div>
+                            <div class="form-group">
+                                <label for="partnerField">Partner</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <select name="partnerField" class="form-control" v-bind:class="{'invalid-field': invalid}" 
+                                        v-model="campaign.partnerId">
+                                        <option value="" disabled>Please select a Partner</option>
+                                        <option v-for="partner in partners.data" v-bind:value="partner.id">
+                                            {{partner.name}}
+                                        </option>
+                                    </select>
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('MORE_DETAILS')">
+                            <div class="col-md-12">
+                                <h5 class="grey bold-font">More Details</h5>
+                            </div>
+                            <div class="form-group">
+                                <label for="campaignTypeField">Campaign Type</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <select name="campaignTypeField" class="form-control" v-bind:class="{'invalid-field': invalid}" 
+                                        v-model="campaign.campaignType">
+                                        <option value="" disabled>Please select Campaign Type</option>
+                                        <option v-for="type in campaignTypes" v-bind:value="type">
+                                            {{type}}
+                                        </option>
+                                    </select>
+                                </validation-provider>
+                            </div>
+                            <div class="col-md-12 v-padding-medium">
+                                <div class="col-md-6 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label for="campaignStartDate">Registration Start Date</label>
+                                        <validation-provider 
+                                            rules="required" 
+                                            v-slot="{ invalid }">
+                                            <input type="date" class="form-control" id="campaignStartDate"
+                                                v-bind:class="{'invalid-field': invalid}"
+                                                placeholder="Enter Campaign Start Date" v-model="campaign.startDate" />
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label for="campaignEndDate">Registration End Date</label>
+                                        <validation-provider 
+                                            rules="required" 
+                                            v-slot="{ invalid }">
+                                            <input 
+                                                id="campaignEndDate" type="date" class="form-control" 
+                                                v-bind:class="{'invalid-field': invalid}" 
+                                                v-model="campaign.endDate" />
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('STAGES')">
+                            <div class="col-md-12">
+                                <h5 class="grey bold-font">Stages</h5>
+                            </div>
+                            <div 
+                                v-for="(stage, index) in campaign.stageDescriptions"
+                                class="slight-smaller-font col-md-12 v-padding-medium">
+                                <div class="col-md-3 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'stage-' + (index + 1) + '-field'">Stage</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <select :id="'stage-' + (index + 1) + '-field'" 
+                                                class="form-control" v-bind:class="{'invalid-field': invalid}" 
+                                                v-model="stage.stage">
+                                                <option value="" disabled>Select Stage</option>
+                                                <option v-for="stage in campaignStages" v-bind:value="stage">
+                                                    {{stage}}
+                                                </option>
+                                            </select>
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'winner-count-' + (index + 1) + '-field'">Winner Count</label>
+                                        <validation-provider 
+                                            rules="required" 
+                                            v-slot="{ invalid }">
+                                            <input type="number" class="form-control" :id="'winner-count-' + (index + 1) + '-field'"
+                                                v-bind:class="{'invalid-field': invalid}"
+                                                placeholder="Enter Number of Stage Winners" v-model="stage.winnersCount" />
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'evaluation-time-' + (index + 1) + '-field'">Evaluation Time</label>
+                                        <validation-provider 
+                                            rules="required" 
+                                            v-slot="{ invalid }">
+                                            <input 
+                                                :id="'evaluation-time-' + (index + 1) + '-field'" type="datetime-local" class="form-control" 
+                                                v-bind:class="{'invalid-field': invalid}" v-model="stage.evaluationTime" />
+                                        </validation-provider>
+                                            
+                                    </div>
+                                </div>
+                                <div class="col-md-12" v-show="canDeleteStage(index)">
+                                    <div class="pull-right ">
+                                        <button 
+                                            @click="deleteStage(index)"
+                                            class="btn btn-white white-btn-wine btn-default-width">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12" v-show="campaign.stageDescriptions.length < campaignStages.length">
+                                <div class="pull-left">
+                                    <button 
+                                        @click="addStage()"
+                                        class="btn btn-white white-btn-blue btn-default-width">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('UPLOAD_IMAGES')">
+                            <div class="col-md-12">
+                                <h5 class="grey bold-font">Upload Images</h5>
+                            </div>
+                            <br /><br />
+                            Coming Soon...
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('CONFIRMATION')">
+                            <div class="col-md-12">
+                                <h5 class="grey bold-font">Confirmation</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="pull-left h-padding-medium" v-if="saveCampaign.loading">
+                            <span class="blue">
+                                Loading <i class="fa fa-spinner fa-spin"></i>
+                            </span>
+                        </div>
+                        <div class="pull-right">
+                            <input type="button" 
+                                @click="formWizard.previous()"
+                                :disabled="!formWizard.canPrevious()"
+                                class="btn btn-danger btn-default-width"
+                                value="Previous"
+                            />
+                            <input type="button" 
+                                @click="formWizard.next()"
+                                :disabled="!formWizard.canNext()"
+                                class="btn btn-primary btn-default-width" 
+                                v-if="!formWizard.isLastPage()"
+                                value="Next"
+                            />
+                            <button 
+                                @click="createCampaign()"
+                                :disabled="saveCampaign.loading||invalid"
+                                class="btn btn-primary btn-default-width"
+                                v-if="formWizard.isLastPage()">
+                                Submit
+                            </button>
+                            <input type="button"
+                                @click="close()"
+                                class="btn btn-white white-btn-wine btn-default-width"
+                                value="Cancel"
+                            />
+                        </div>
+                    </div>
+                </validation-observer>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="no-display" slot="footer">
+        //
+    </div>
+
+</modal>
+
+
+
+
+
+
+

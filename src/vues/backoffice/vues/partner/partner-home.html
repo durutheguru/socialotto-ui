@@ -1,0 +1,75 @@
+<div>
+    <div class="main-route-content">
+        <div class="row flex-container-baseline">
+            <section style="flex-grow: 10;">
+                <div v-if="hasElements">
+                    <span class="much-larger-font bold-font">{{elements.pageData.totalElements}}</span>
+                    <span v-if="!elements.searchResults">{{quantity(elements.pageData.totalElements, 'registered Partner')}}</span>
+                    <span v-if="elements.searchResults">
+                        {{quantity(elements.pageData.totalElements, 'result')}} 
+                        for <span class="blue">{{elements.searchQuery}}</span>
+                    </span>
+                </div>
+            </section>
+            <section class="route-header-right-container-top-padded-m" 
+                style="flex-grow: 1;">
+                <search-field 
+                    v-show="hasElements||elements.searchResults"
+                    v-on:search-query-update="searchPartners"
+                    v-on:search-query-cleared="searchCleared" />
+            </section>
+        </div>
+        <div class="row">
+            <section v-if="hasElements">
+    
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td class="col-md-3">Name</td>
+                            <td class="col-md-4">Description</td>
+                            <td class="col-md-1">WebSite</td>
+                            <td class="col-md-1"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="element in elements.list">
+                            <td>{{element.name}}</td>
+                            <td>{{element.description}}</td>
+                            <td><a target="_blank" :href="element.website">{{element.website}}</a></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                <page-navigator 
+                    v-bind:canNext="canNext"
+                    v-bind:canPrevious="canPrevious"
+                    v-on:previous-page-nav="previous()"
+                    v-on:next-page-nav="next()" />
+    
+            </section>
+            <div v-else>
+                <div class="alert alert-block alert-primary fade in" v-if="elements.loading">
+                    <strong>Loading</strong> <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                </div>
+                <div class="alert alert-block alert-danger fade in" v-else>
+                    <span v-if="!elements.searchResults">
+                        No partner exist. Try creating a new Partner.
+                    </span>
+                    <span v-else>
+                        <strong>No results matching search</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <create-partner-dialog
+            v-if="dialogOpts.createPartner.visible"
+            v-bind:visible="dialogOpts.createPartner.visible"
+            v-on:close-dialog="hideCreatePartnerDialog" />
+            
+    </div>
+        
+</div>
+
+

@@ -1,0 +1,26 @@
+<div class="row h-padding-medium">
+    <div v-for="campaign in lotteries.list" 
+        class="col-md-4 pointer h-padding-small v-margin-small" 
+        @click="showCampaignDetails(campaign)">
+        <div class="col-md-12 round-border box-shadowed" style="height:270px;">
+            <div class="col-md-6 primary-color-lighter-bg max-height">
+                
+            </div>
+            <div class="col-md-6 padding-medium max-height relative">
+                <span class="large-font">{{campaign.name}}</span><br />
+                <p class="slight-smaller-font">
+                    {{campaign.description}}
+                </p>
+                <div class="col-md-12">
+                    Starts: {{campaign.startDate}}
+                </div>
+                <div class="col-md-12">
+                    Ends: {{campaign.endDate}}
+                </div>
+                <div class="bottom-anchored-in-parent v-margin-small">
+                    Partner Name: {{campaign.partnerName}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

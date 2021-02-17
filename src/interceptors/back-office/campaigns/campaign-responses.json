@@ -1,0 +1,164 @@
+{
+    "getAll": {
+        "status": 200,
+        "body": {
+            "_embedded": {
+                "campaigns": [
+                    {
+                        "timeAdded": "2020-07-08T19:35:05.174",
+                        "timeUpdated": null,
+                        "createdBy": null,
+                        "name": "Party With Burna",
+                        "description": "Party Description",
+                        "startDate": "2020-01-01",
+                        "endDate": "2020-03-05",
+                        "expectedWinnerCount": 5,
+                        "campaignType": "SINGLE",
+                        "campaignStatus": "APPROVED",
+                        "partnerName" : "Burna Boy",
+                        "finalStage": "SECOND",
+                        "_links": {
+                            "self": {
+                                "href": "http://localhost/api/v1/campaigns/1"
+                            },
+                            "campaign": {
+                                "href": "http://localhost/api/v1/campaigns/1"
+                            },
+                            "stageDescriptions": {
+                                "href": "http://localhost/api/v1/campaigns/1/stageDescriptions"
+                            },
+                            "partner": {
+                                "href": "http://localhost/api/v1/campaigns/1/partner"
+                            }
+                        }
+                    },
+                    {
+                        "timeAdded": "2020-07-08T19:35:05.174",
+                        "timeUpdated": null,
+                        "createdBy": null,
+                        "name": "BURNA Jamz",
+                        "description": "Jamz Description",
+                        "startDate": "2020-01-01",
+                        "endDate": "2020-03-05",
+                        "expectedWinnerCount": 5,
+                        "campaignType": "SINGLE",
+                        "campaignStatus": "COMPLETED",
+                        "partnerName" : "Burna Boy",
+                        "finalStage": "SECOND",
+                        "_links": {
+                            "self": {
+                                "href": "http://localhost/api/v1/campaigns/2"
+                            },
+                            "campaign": {
+                                "href": "http://localhost/api/v1/campaigns/2"
+                            },
+                            "stageDescriptions": {
+                                "href": "http://localhost/api/v1/campaigns/2/stageDescriptions"
+                            },
+                            "partner": {
+                                "href": "http://localhost/api/v1/campaigns/2/partner"
+                            }
+                        }
+                    },
+                    {
+                        "timeAdded": "2020-07-08T19:35:05.174",
+                        "timeUpdated": null,
+                        "createdBy": null,
+                        "name": "BURNA Jamz",
+                        "description": "Jamz Description",
+                        "startDate": "2020-01-01",
+                        "endDate": "2020-03-05",
+                        "expectedWinnerCount": 5,
+                        "campaignType": "SINGLE",
+                        "campaignStatus": "DISAPPROVED",
+                        "finalStage": "SECOND",
+                        "partnerName" : "Burna Boy",
+                        "_links": {
+                            "self": {
+                                "href": "http://localhost/api/v1/campaigns/2"
+                            },
+                            "campaign": {
+                                "href": "http://localhost/api/v1/campaigns/2"
+                            },
+                            "stageDescriptions": {
+                                "href": "http://localhost/api/v1/campaigns/2/stageDescriptions"
+                            },
+                            "partner": {
+                                "href": "http://localhost/api/v1/campaigns/2/partner"
+                            }
+                        }
+                    }
+                ]
+            },
+            "_links": {
+                "self": {
+                    "href": "http://localhost/api/v1/campaigns{?page,size,sort}",
+                    "templated": true
+                },
+                "profile": {
+                    "href": "http://localhost/api/v1/profile/campaigns"
+                },
+                "search": {
+                    "href": "http://localhost/api/v1/campaigns/search"
+                }
+            },
+            "page": {
+                "size": 20,
+                "totalElements": 2,
+                "totalPages": 1,
+                "number": 0
+            }
+        }
+    },
+
+    "search": {
+        "status": 200,
+        "body": {
+            "_embedded": {
+                "campaigns": [
+                    {
+                        "timeAdded": "2020-07-08T22:30:43.518",
+                        "timeUpdated": null,
+                        "createdBy": null,
+                        "name": "Party With Burna",
+                        "description": "Party Description",
+                        "startDate": "2020-01-01",
+                        "endDate": "2020-03-05",
+                        "expectedWinnerCount": 5,
+                        "campaignType": "SINGLE",
+                        "campaignStatus": "APPROVED",
+                        "finalStage": "SECOND",
+                        "_links": {
+                            "self": {
+                                "href": "http://localhost/api/v1/campaign/1"
+                            },
+                            "campaign": {
+                                "href": "http://localhost/api/v1/campaign/1"
+                            },
+                            "stageDescriptions": {
+                                "href": "http://localhost/api/v1/campaign/1/stageDescriptions"
+                            },
+                            "partner": {
+                                "href": "http://localhost/api/v1/campaign/1/partner"
+                            }
+                        }
+                    }
+                ]
+            },
+            "_links": {
+                "self": {
+                    "href": "http://localhost/api/v1/campaign/search/searchCampaign?name=Burna&desc=party&page=0&size=20"
+                }
+            },
+            "page": {
+                "size": 20,
+                "totalElements": 1,
+                "totalPages": 1,
+                "number": 0
+            }
+        }
+    }
+
+}
+
+

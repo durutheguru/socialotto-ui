@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="center center-login box-shadowed">
+        <div class="col-md-6 max-height grey-bordered">
+            <validation-observer v-slot="{ invalid }">
+                <form role="form" @submit.prevent="doLogin" novalidate>
+                    <div class="row h-padding-20">
+                        <h3 class="pull-left">Welcome</h3>
+                    </div><br />
+                    <div class="col-md-10 h-padding-small">
+                        <span class="wine pull-left" v-text="loginError"></span>
+                    </div>
+                    <div class="margin-top-big">
+                        <div class="form-group h-padding-small">
+                            <div class="iconic-input grey">
+                                <i class="fa fa-user"></i>
+                                <validation-provider rules="required">
+                                    <input type="text" v-model="username" class="form-control" placeholder="Username" />
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div class="form-group h-padding-small">
+                            <div class="iconic-input grey">
+                                <i class="fa fa-unlock-alt"></i>
+                                <validation-provider rules="required">
+                                    <input type="password" v-model="password" class="form-control"
+                                        placeholder="Password" />
+                                </validation-provider>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 h-padding-small">
+                        <a href="" class="pull-right">Forgot Password?</a>
+                        <button type="submit" class="btn btn-primary pull-left"
+                            :disabled="loading||invalid">Login</button>
+                    </div>
+                </form>
+            </validation-observer>
+        </div>
+        <div class="col-md-6 max-height login-site-name-container">
+            <div class="col-md-9 center">
+                <img class="logo-img-medium" src="/static/images/icon.png" />&nbsp;
+                <span class="white large-font">LuckyYou.NG</span>
+            </div>
+        </div>
+    </div>
+
+</div>

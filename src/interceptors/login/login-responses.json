@@ -1,0 +1,12 @@
+{
+    "default": {
+        "status": 200,
+
+        "headers": {
+            "authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzdXBlcnVzZXIiLCJhdXRob3JpemF0aW9ucyI6WyJCQUNLX09GRklDRV9VU0VSIl0sImV4cCI6MTU5MDY5OTc2OH0.BVm1ys3FfEMWZp38E5EdMfvKM9S7vSu4yX59eEO8WoFziRayPmo24ajbsek5SROX-dpBccJdp-XgN_y6X8ySNQ"
+        },
+
+        "body": {
+        }
+    }
+}

@@ -1,0 +1,36 @@
+<div class="col-md-10 col-md-offset-1">
+
+    <section class="panel margin-top-big">
+        <header class="panel-heading">
+            <span class="pull-right">
+                <router-link to="/lottery">View All</router-link>
+            </span>
+            {{selectedCampaign.name}}&nbsp;
+            <span class="badge" v-bind:class="{[getApprovalClass(selectedCampaign.campaignStatus)] : true}">
+                {{selectedCampaign.campaignStatus}}
+            </span>
+        </header>
+        <div class="panel-body">
+            <p>
+                {{selectedCampaign.description}}
+            </p>
+            <br />
+            Starts: {{selectedCampaign.startDate}}<br />
+            Ends: {{selectedCampaign.endDate}}<br />
+
+            <button class="btn btn-primary" @click="showUserRegistrationDialog()">
+                Register
+            </button>
+        </div>
+    </section>
+
+
+    <user-campaign-registration-dialog
+            v-if="dialogOpts.userCampaignRegistration.visible"
+            v-bind:visible="dialogOpts.userCampaignRegistration.visible"
+            v-bind:campaign="selectedCampaign"
+            v-on:close-dialog="hideUserRegistrationDialog" />
+
+</div>
+
+

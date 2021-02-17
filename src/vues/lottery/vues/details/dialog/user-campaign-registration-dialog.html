@@ -1,0 +1,20 @@
+<modal 
+    v-bind:show="visible"
+    v-bind:modal-class="'modal-medium'"
+    v-on:close-dialog="close">
+    <h4 slot="header">Confirm</h4>
+    <div slot="body">
+        <p>Are you sure you wish to join Lottery?</p>
+    </div>
+    <div slot="footer">
+        <span class="slight-smaller-font">{{errorMsg}}</span>
+        <div class="pull-right">
+            <button class="btn btn-primary" @click="register()">
+                Sure
+            </button>
+            <button class="btn btn-danger" @click="close()">
+                Close
+            </button>
+        </div>
+    </div>
+</modal>

@@ -1,0 +1,22 @@
+<div>
+
+    <side-menu />
+
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <router-view :key="$route.path" />
+        </section>
+    </section>
+    <!--main content end-->
+
+    <!-- secondary sidebar start -->
+    <secondary-sidebar />
+    <!-- secondary sidebar end -->
+
+    <div class="secondary-sidebar-toggle">
+        <li class="sb-toggle-right">
+            <i class="fa fa-bars large-font"></i>
+        </li>
+    </div>
+</div>

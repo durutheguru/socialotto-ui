@@ -1,0 +1,11 @@
+<div class="iconic-input right">
+    <i class="fa fa-search pointer" v-if="!hasQuery"></i>
+    <i class="fa fa-times pointer" v-if="hasQuery" @click="reset()"></i>
+    <input 
+        type="text" 
+        class="form-control" 
+        placeholder="Search..." 
+        v-model="query"
+        v-on:keyup="throttleSearch()" />
+</div>
+

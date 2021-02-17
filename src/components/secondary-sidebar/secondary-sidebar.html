@@ -1,0 +1,61 @@
+<div class="sb-slidebar sb-right sb-style-overlay" style="margin-right: -288px; transform: translate(-288px);">
+    <h5 v-if="actions.length" class="side-title">MENU</h5>
+    <ul class="quick-chat-list">
+        <li class="online" v-for="action in actions">
+            <div class="media pointer" @click="execute(action)">
+                <div class="media-body">
+                    <strong class="slight-bigger-font">
+                        <i class="fa" v-bind:class="action.icon"></i>&nbsp;
+                        {{action.title}}
+                    </strong>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+    <section class="visible-xs bottom-bordered">
+        <h5 v-if="actions.length" class="side-title">NAVIGATION</h5>
+        <nav-menu-list />
+    </section>
+
+    <div v-if="false">
+        <h5 class="side-title"> Ongoing Tasks</h5>
+        <ul class="p-task tasks-bar">
+            <li>
+                <a href="#">
+                    <div class="task-info">
+                        <div class="desc">Dashboard v1.3</div>
+                        <div class="percent">40%</div>
+                    </div>
+                    <div class="progress progress-striped">
+                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
+                            role="progressbar" class="progress-bar progress-bar-success">
+                            <span class="sr-only">40% Complete (success)</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <div class="task-info">
+                        <div class="desc">Database Update</div>
+                        <div class="percent">60%</div>
+                    </div>
+                    <div class="progress progress-striped">
+                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
+                            role="progressbar" class="progress-bar progress-bar-warning">
+                            <span class="sr-only">60% Complete (warning)</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <ul class="p-task tasks-bar">
+        <li class="external">
+            <a href="javascript:void(0)" @click="logout()">Logout</a>
+        </li>
+    </ul>
+
+</div>

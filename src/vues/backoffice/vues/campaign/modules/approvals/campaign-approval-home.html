@@ -1,0 +1,75 @@
+<div>
+    <div class="main-route-content">
+        <div class="row flex-container-baseline">
+            <div v-if="hasElements">
+                <span class="much-larger-font bold-font">{{elements.pageData.totalElements}}</span>
+                <span>
+                    {{quantity(elements.pageData.totalElements, 'Campaign')}} awaiting approval
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <section v-if="hasElements">
+    
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td class="col-md-2">Name</td>
+                            <td class="col-md-3">Description</td>
+                            <td class="col-md-1">Start Date</td>
+                            <td class="col-md-1">End Date</td>
+                            <td class="col-md-2">Partner</td>
+                            <td class="col-md-1">Type</td>
+                            <td class="col-md-1">Status</td>
+                            <td class="col-md-1"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="element in elements.list">
+                            <td><span class="wine bold-font slight-bigger-font">{{element.name}}</span></td>
+                            <td class="hidden-xs"><span class="dark-grey">{{element.description}}</span></td>
+                            <td><span class="blue">{{element.startDate}}</span></s></td>
+                            <td><span class="blue">{{element.endDate}}</span></td>
+                            <td><span class="bold-font">{{element.partnerName}}</span></td>
+                            <td>{{element.campaignType}}</td>
+                            <td>
+                                <span class="badge bg-info">
+                                    {{element.campaignStatus}}
+                                </span>
+                            </td>
+                            <td>
+                                <button 
+                                    @click="showTreatCampaignApproval(element)"
+                                    class="btn btn-white white-btn-blue">Treat</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+                <page-navigator 
+                    v-bind:canNext="canNext"
+                    v-bind:canPrevious="canPrevious"
+                    v-on:previous-page-nav="previous()"
+                    v-on:next-page-nav="next()" />
+    
+            </section>
+            <div v-else>
+                <div class="alert alert-block alert-primary fade in" v-if="elements.loading">
+                    <strong>Loading</strong> <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+                </div>
+                <div class="alert alert-block alert-danger fade in" v-else>
+                    <span>
+                        No Campaigns Awaiting approval
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <treat-campaign-dialog
+            v-if="dialogOpts.treatCampaignApproval.visible"
+            v-bind:visible="dialogOpts.treatCampaignApproval.visible"
+            v-bind:campaign="dialogOpts.treatCampaignApproval.selectedCampaign"
+            v-on:close-dialog="hideTreatCampaignApproval" />
+
+    </div>
+</div>

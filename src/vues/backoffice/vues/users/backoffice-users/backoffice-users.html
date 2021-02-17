@@ -1,0 +1,63 @@
+<div class="main-route-content">
+    <div class="row flex-container-baseline">
+        <section style="flex-grow: 10;">
+            <div v-if="hasElements">
+                <span class="much-larger-font bold-font">{{elements.pageData.totalElements}}</span>
+                <span v-if="!elements.searchResults">{{quantity(elements.pageData.totalElements, 'registered Back-Office user')}}</span>
+                <span v-if="elements.searchResults">
+                    {{quantity(elements.pageData.totalElements, 'result')}} 
+                    for <span class="blue">{{elements.searchQuery}}</span>
+                </span>
+            </div>
+        </section>
+        <section class="route-header-right-container-top-padded-m" 
+            style="flex-grow: 1;">
+            <search-field 
+                v-show="hasElements||elements.searchResults"
+                v-on:search-query-update="searchBackOfficeUsers"
+                v-on:search-query-cleared="searchCleared" />
+        </section>
+    </div>
+    <div class="row">
+        <section v-if="hasElements">
+
+            <user-table 
+                v-bind:users="elements"
+                v-on:user-details="showBackOfficeUserDetails" />
+
+            <page-navigator 
+                v-bind:canNext="canNext"
+                v-bind:canPrevious="canPrevious"
+                v-on:previous-page-nav="previous()"
+                v-on:next-page-nav="next()" />
+
+        </section>
+        <div v-else>
+            <div class="alert alert-block alert-primary fade in" v-if="elements.loading">
+                <strong>Loading</strong> <i class="fa fa-spinner fa-spin" aria-hidden="true"></i>
+            </div>
+            <div class="alert alert-block alert-danger fade in" v-else>
+                <span v-if="!elements.searchResults">
+                    No users exist. Try creating a new User.
+                </span>
+                <span v-else>
+                    <strong>No results matching search</strong>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <BackOfficeUserDetailsDialog 
+        v-if="dialogOpts.userDetails.visible" 
+        v-bind:user="dialogOpts.userDetails.selectedUser"
+        v-bind:visible="dialogOpts.userDetails.visible"
+        v-on:close-dialog="hideBackOfficeUserDetails" />
+
+    <CreateBackOfficeUserDialog
+        v-if="dialogOpts.createUser.visible"
+        v-bind:visible="dialogOpts.createUser.visible"
+        v-on:close-dialog="hideCreateBackOfficeUser" />
+        
+</div>
+
+

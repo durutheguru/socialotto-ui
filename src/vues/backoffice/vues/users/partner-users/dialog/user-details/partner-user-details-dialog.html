@@ -1,0 +1,16 @@
+<modal 
+    v-bind:show="visible"
+    v-bind:modal-class="'modal-medium'"
+    v-on:close-dialog="close">
+    <h4 slot="header">Partner User Details</h4>
+    <div slot="body">
+        <basic-user-details v-bind:user="user" />
+    </div>
+    <div slot="footer">
+        <div class="pull-right">
+            <button class="btn btn-primary" @click="close()">
+                Close
+            </button>
+        </div>
+    </div>
+</modal>

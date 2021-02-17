@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-4 center-container">
+        <i class="fa fa-user mega-fa"></i>
+    </div>
+    <div class="col-md-8">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="bold-font">Name</span>
+                    </td>
+                    <td class="col-md-8">
+                        <span>{{user.name}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="bold-font">Username</span>
+                    </td>
+                    <td class="col-md-8">
+                        <span>{{user.username}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="bold-font">Email</span>
+                    </td>
+                    <td class="col-md-8">
+                        <span><a :href="'mailto:' + user.email">{{user.email}}</a></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <span class="bold-font">Created</span>
+                    </td>
+                    <td class="col-md-8">
+                        <span>{{user.timeAdded}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

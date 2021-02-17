@@ -1,0 +1,51 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-1">ID</th>
+                <th class="col-md-3 hidden-xs">Name</th>
+                <th class="col-md-2">Username</th>
+                <th class="col-md-1">Email</th>
+                <th class="col-md-2 hidden-xs">Created</th>
+                <th class="col-md-2">Last Login</th>
+                <th class="col-md-1"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="user in users.list">
+                <td>
+                    {{user.id}}
+                </td>
+                <td class="hidden-xs">
+                    <span class="wine bold-font slight-bigger-font">{{user.name}}</span>
+                </td>
+                <td>
+                    <span class="dark-grey">{{user.username}}</span>
+                </td>
+                <td>
+                    <a :href="'mailto:' + user.email">{{user.email}}</a>
+                </td>
+                <td class="hidden-xs">
+                    <span>{{user.timeAdded}}</span>
+                </td>
+                <td></td>
+                <td>
+                    <div class="btn-group drop-down pull-right">
+                        <button 
+                            data-toggle="dropdown" 
+                            class="btn btn-white dropdown-toggle transparent-bg" 
+                            type="button" 
+                            aria-expanded="false">
+                            <span class="caret"></span>
+                        </button>
+                        <ul role="menu" class="dropdown-menu dropdown-menu-right">
+                            <li><a href="javascript:void(0);" @click="showUserDetails(user)">View Details</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Manage</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

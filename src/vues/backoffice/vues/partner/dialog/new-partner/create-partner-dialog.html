@@ -1,0 +1,65 @@
+<modal 
+    v-bind:show="visible" 
+    v-bind:modal-class="'modal-medium'" 
+    v-on:close-dialog="close">
+
+    <h4 class="bold-font" slot="header">Create Partner</h4>
+
+    <div class="row h-padding-big" slot="body">
+        <validation-observer 
+            ref="observer" 
+            tag="form" 
+            role="form"
+            v-slot="{ invalid }"
+            @submit.prevent="createPartner">
+            <div class="form-group">
+                <label for="nameField">Name</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <input type="text" class="form-control" id="nameField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Name" v-model="partner.name" />
+                </validation-provider>
+            </div>
+            <div class="form-group">
+                <label for="descField">Description</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <textarea type="text" class="form-control resize-v" id="descField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Description" v-model="partner.description">
+                    </textarea>
+                </validation-provider>
+            </div>
+            <div class="form-group">
+                <label for="websiteField">Website</label>
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <input type="url" class="form-control" id="websiteField" v-bind:class="{'invalid-field': invalid}" 
+                        placeholder="Enter Website" v-model="partner.website" />
+                </validation-provider>
+            </div>
+            <div class="row v-padding-medium h-padding-medium">
+                <div class="pull-left">
+                    <span v-if="error.length" class="wine">
+                        {{error}}
+                    </span>
+                    <span v-if="loading" class="blue">
+                        Loading <i class="fa fa-spinner fa-spin"></i>
+                    </span>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-primary btn-default-width" :disabled="loading||invalid" @click="createPartner()">
+                        Save
+                    </button>
+                    <button class="btn btn-danger btn-default-width" @click="close()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </validation-observer>
+    </div>
+
+    <div class="no-display" slot="footer">
+        //
+    </div>
+
+</modal>
+
+
+

@@ -1,0 +1,59 @@
+<modal 
+    v-bind:show="visible" 
+    v-bind:modal-class="'modal-small'" 
+    v-on:close-dialog="close">
+
+    <h4 class="bold-font" slot="header">Treat Campaign</h4>
+
+    <div class="row h-padding-big" slot="body">
+        <validation-observer 
+            ref="observer" 
+            tag="form" 
+            role="form"
+            v-slot="{ invalid }"
+            @submit.prevent="treatCampaign">
+            
+            <div class="form-group">
+                <validation-provider rules="required" v-slot="{ invalid }" immediate>
+                    <div class="radios">
+                        <label class="label_radio" for="approve-radio">
+                            <input 
+                                type="radio"
+                                name="approval-radio" 
+                                id="approve-radio" 
+                                value="APPROVED" 
+                                v-model="approval.approvalAction" /> Approve
+                        </label>
+                        <label class="label_radio" for="disapprove-radio">
+                            <input 
+                                type="radio"
+                                name="approval-radio" 
+                                id="disapprove-radio" 
+                                value="DISAPPROVED" 
+                                v-model="approval.approvalAction" /> Disapprove
+                        </label>
+                    </div>
+                </validation-provider>
+            </div>
+
+        </validation-observer>
+    </div>
+
+    <div slot="footer">
+        <div class="pull-left">
+            <span class="blue" v-show="loading">
+                Loading... <i class="fa fa-spinner fa-spin"></i>
+            </span>
+            <span class="wine smaller-font">
+                {{error}}
+            </span>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" @click="treatCampaign()">
+                Done
+            </button>
+        </div>
+    </div>
+
+</modal>
+

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lucky-numberz-front-end
+  namespace: lucky-namespace
+  labels:
+    app: lucky-numberz-front-end-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lucky-numberz-front-end-service
+  template:
+    metadata:
+      labels:
+        app: lucky-numberz-front-end-service
+    spec:
+      containers:
+      - name: lucky-numberz-front-end-service
+        image: durutheguru/{{image-placeholder}}
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 80
+        
+
