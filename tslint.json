@@ -23,12 +23,7 @@
     "no-trailing-whitespace": false,
     "trailing-comma": [true, {
       "singleline": "never",
-      "multiline": {
-        "objects": "ignore",
-        "arrays": "ignore",
-        "functions": "ignore",
-        "typeLiterals": "ignore"
-      }
+      "multiline": "ignore"
     }],
     "no-bitwise": false,
     "prefer-const": false,
