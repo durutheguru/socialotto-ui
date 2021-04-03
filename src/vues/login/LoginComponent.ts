@@ -1,7 +1,8 @@
 import { Component } from 'vue-property-decorator';
 
 import BaseVue from '../../components/BaseVue';
-import { Log, Util } from '../../components/util';
+import ErrorCode from '@/components/util/ErrorCode';
+import { Log, Web, Util } from '../../components/util';
 import '@/components/util/Validation';
 import UserAuthContext from '@/components/auth/UserAuthContext';
 
@@ -17,13 +18,15 @@ import { ListFormat } from 'typescript';
 @Component
 export default class LoginComponent extends BaseVue {
 
-    private loading: boolean = false;
-
     private username: string = '';
+
+    private email: string = '';
 
     private password: string = '';
 
     private secret: string = '';
+
+    private loading: boolean = false;
 
     private loginError: string = '';
 
@@ -46,22 +49,33 @@ export default class LoginComponent extends BaseVue {
          * 
          */
         
-        if (this.isURLParamsSet()) {
-            const userToken = this.getURLParams();
-
-            this.username = atob(decodeURIComponent(userToken.username));
-            this.password = atob(decodeURIComponent(userToken.key));
-            this.secret = atob(decodeURIComponent(userToken.secret));
-
-            Log.info(`I: ${this.username}, TN: ${this.password}, SS: ${this.secret}`);
-            this.doLogin();
+        if (this.isLoginFailureURLParamsSet()) {
+            this.handleLoginFailureURLParams();
+        } else if (this.isLoginSuccessURLParamsSet()) {
+            this.handleLoginSuccessURLParams();
         } else {
             Log.info('URL params not set');
         }
     }
 
 
-    private isURLParamsSet(): boolean {
+    private isLoginFailureURLParamsSet(): boolean {
+        const query = this.$route.query;
+
+        const error = query.err as string;
+
+        return Util.isValidString(error);
+    }
+
+
+    private handleLoginFailureURLParams() {
+        const query = this.$route.query;
+        const error = query.err as string;
+        this.loginError = ErrorCode.map.get(error) || "";
+    }
+
+
+    private isLoginSuccessURLParamsSet(): boolean {
         const query = this.$route.query;
 
         const id = query.i as string;
@@ -69,6 +83,18 @@ export default class LoginComponent extends BaseVue {
         const secret = query.ss as string;
 
         return Util.isValidString(id) && Util.isValidString(key) && Util.isValidString(secret);
+    }
+
+
+    private handleLoginSuccessURLParams() {
+        const userToken = this.getURLParams();
+
+        this.username = atob(decodeURIComponent(userToken.username));
+        this.password = atob(decodeURIComponent(userToken.key));
+        this.secret = atob(decodeURIComponent(userToken.secret));
+
+        Log.info(`U: ${this.username}, SS: ${this.secret}`);
+        this.doCredentialVerification();
     }
 
 
@@ -81,7 +107,7 @@ export default class LoginComponent extends BaseVue {
     }
 
 
-    private doLogin() {
+    private doCredentialVerification() {
         this.loading = true;
         this.loginError = '';
 
@@ -97,6 +123,30 @@ export default class LoginComponent extends BaseVue {
                 store.commit('authToken/apiToken', response.headers.authorization);
                 this.$router.push({path: UserAuthContext.getInstance().homeUrl()});
                 Log.info('Logged In: ' + JSON.stringify(response));
+            },
+
+            (error: any) => {
+                this.loading = false;
+                this.extractLoginError(error);
+                Log.error('Logged Error: ' + JSON.stringify(error));
+            },
+        );
+    }
+
+
+    private doLogin() {
+        this.loading = true;
+        this.loginError = '';
+
+        LoginService.doTwitterLogin(
+            {
+                email: this.email
+            },
+
+            (response: any) => {
+                this.loading = false;
+                Log.info('Logged In: ' + JSON.stringify(response));
+                Web.navigate(response.data);
             },
 
             (error: any) => {

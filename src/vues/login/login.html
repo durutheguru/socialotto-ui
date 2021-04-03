@@ -68,21 +68,38 @@
                           body-classes="px-lg-5 py-lg-5"
                           class="border-0">
                         <template>
-                            <form role="form">
-                                <div class="row h-padding-20">
-                                    <h3 class="pull-left">Socialotto</h3>
-                                </div><br />
-                                <base-input alternative
+                            <validation-observer v-slot="{ invalid }">
+                                <form role="form" action="http://localhost:9111/twitter/oauth" method="POST" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h3 class="pull-left">Socialotto</h3>
+                                        </div>
+                                        <div class="col-md-7 h-padding-small">
+                                            <span id="login-error-msg" 
+                                                class="wine pull-right slight-smaller-font" 
+                                                v-text="loginError"></span>
+                                        </div>
+                                    </div><br />
+                                    <validation-provider rules="required">
+                                        <base-input alternative
+                                            v-model="email" 
                                             class="mb-3"
+                                            name="email"
                                             placeholder="Enter your Email"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
-                                <div class="text-center">
-                                    <base-button type="primary" class="my-4">
-                                        Sign In with <i class="fa fa-twitter"></i>
-                                    </base-button>
-                                </div>
-                            </form>
+                                            addon-left-icon="ni ni-email-83" />
+                                    </validation-provider>
+                                    <div class="text-center">
+                                        <!-- <base-button type="primary" class="my-4" :disabled="loading||invalid" 
+                                            @click="doLogin()">
+                                            Sign In with <i class="fa fa-twitter"></i>
+                                        </base-button> -->
+                                        <base-button type="primary" class="my-4" :disabled="loading||invalid" 
+                                            nativeType="submit">
+                                            Sign In with <i class="fa fa-twitter"></i>
+                                        </base-button>
+                                    </div>
+                                </form>
+                            </validation-observer>
                         </template>
                     </card>
                 </div>
