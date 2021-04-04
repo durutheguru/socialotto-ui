@@ -53,7 +53,8 @@ const actions = {
 
     loadCampaigns(context: any) {
         Web.get(
-            '/api/v1/campaign?projection=campaignDetails',
+            // '/api/v1/campaign?projection=campaignDetails',
+            '/v1/lotteries',
 
             (response: any) => {
                 context.commit(

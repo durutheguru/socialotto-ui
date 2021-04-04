@@ -3,7 +3,7 @@
 $default_grey : #CFCFCF;
 $default_dark_grey : #9F9F9F;
 $default_light_grey : #EFEFEF;
-$primary_color : #74B093;
+$primary_color : #6BB1D3;
 $primary_color_lighter : rgba(83, 136, 111, 0.5);
 $wine: #812F2F;
 $app_blue: #445DA1;
@@ -18,6 +18,15 @@ $v_big_length: 70px;
 $default_height : 250px;
 $default_dialog_height : 500px;
 
+
+// body {
+//   font-size: 1.6em !important;
+// }
+
+html, body {
+  height: 100%;
+  font-size: 0.99em !important;
+}
 
 #app {
   width: 100%;
@@ -42,6 +51,10 @@ $default_dialog_height : 500px;
 
 .blue {
   color : $app_blue;
+}
+
+.background-gradient-blue {
+  background : linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
 }
 
 .grey-bg {
@@ -722,3 +735,6 @@ textarea.resize-v {
 }
 
 
+#login-error-msg {
+  padding-top: 0.5rem;
+}

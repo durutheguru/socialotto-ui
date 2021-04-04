@@ -16,4 +16,11 @@ export default class Log {
     }
 
 
+    public static warn(msg: string) {
+        if (process.env.NODE_ENV === 'development') {
+            console.warn(msg);
+        }
+    }
+
+
 }
