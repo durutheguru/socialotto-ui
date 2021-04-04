@@ -28,6 +28,15 @@ const routes = [
   },
 
   {
+    path: '/user_activation',
+    name: 'UserActivation',
+    component: () => import('@/vues/user_activation/UserActivation.vue'),
+    meta: {
+      skipAuth: true,
+    },
+  },
+
+  {
     path: '/back-office',
     name: 'BackOffice',
     component: BackOffice,
@@ -78,9 +87,6 @@ const routes = [
     path: '/lottery',
     name: 'Lottery',
     component: Lottery,
-    meta: {
-      skipAuth: true,
-    },
     children: [
       {
         path: '',

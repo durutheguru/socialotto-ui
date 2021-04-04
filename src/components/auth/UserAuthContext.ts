@@ -23,11 +23,14 @@ export default class UserAuthContext {
 
 
     public static destroy() {
-        delete UserAuthContext.instance;
+        UserAuthContext.instance = null;
     }
 
 
     private username: string = '';
+
+
+    private enabled?: boolean;
 
 
     private authorizations: string[] = [];
@@ -77,8 +80,17 @@ export default class UserAuthContext {
         const data = JSON.parse(payload);
 
         this.username = data.sub;
+        this.enabled = data.active;
         this.authorizations = data.authorizations;
+
+        Log.info(`Processed Token Payload: username: ${this.username}, enabled: ${this.enabled}`);
     }
+
+
+    public isEnabled(): boolean | undefined {
+        return this.enabled;
+    }
+
 
 }
 
