@@ -1,11 +1,13 @@
 import Web from '@/components/util/Web';
 import UserAuthContext from '@/components/auth/UserAuthContext';
 import '@/interceptors/auth/AuthCheckInterceptor';
+import { Log } from '@/components/util';
 
 
 const state = {
     loggedIn: false,
     authToken: null,
+    userEnabled: null,
 };
 
 
@@ -19,6 +21,10 @@ const getters = {
         return context.loggedIn;
     },
 
+    isUserActive(context: any) {
+        return context.userEnabled;
+    }
+
 };
 
 
@@ -28,7 +34,11 @@ const mutations = {
         context.loggedIn = true;
         context.authToken = token;
 
-        UserAuthContext.getInstance().initialize(token);
+        const userAuthContext = UserAuthContext.getInstance();
+        userAuthContext.initialize(token);
+
+        context.userEnabled = userAuthContext.isEnabled();
+        Log.info(`Context State: context.userEnabled ${context.userEnabled}`);
     },
 
 };

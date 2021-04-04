@@ -1,6 +1,5 @@
-<div class="container">
-
-    <div class="center center-login box-shadowed">
+<!-- <div> -->
+    <!-- <div class="center center-login box-shadowed">
         <div class="col-md-6 max-height grey-bordered">
             <validation-observer v-slot="{ invalid }">
                 <form role="form" @submit.prevent="doLogin" novalidate>
@@ -40,9 +39,72 @@
         <div class="col-md-6 max-height login-site-name-container">
             <div class="col-md-9 center">
                 <img class="logo-img-medium" src="/static/images/icon.png" />&nbsp;
-                <span class="white large-font">LuckyYou.NG</span>
+                <span class="white large-font">SociaLotto</span>
             </div>
         </div>
-    </div>
+    </div> 
 
-</div>
+
+    <section class="section section-shaped section-lg my-0">
+        <div class="shape shape-style-1 bg-gradient-default">
+-->
+
+    <section class="section section-shaped section-lg my-0 max-height background-gradient-blue">
+        <div class="shape shape-style-1  bg-gradient-default">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="container pt-lg-md">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <card type="secondary" shadow
+                          header-classes="bg-white pb-5"
+                          body-classes="px-lg-5 py-lg-5"
+                          class="border-0">
+                        <template>
+                            <validation-observer v-slot="{ invalid }">
+                                <form role="form" action="http://localhost:9111/twitter/oauth" method="POST" novalidate>
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h3 class="pull-left">Socialotto</h3>
+                                        </div>
+                                        <div class="col-md-7 h-padding-small">
+                                            <span id="login-error-msg" 
+                                                class="wine pull-right slight-smaller-font" 
+                                                v-text="loginError"></span>
+                                        </div>
+                                    </div><br />
+                                    <validation-provider rules="required">
+                                        <base-input alternative
+                                            v-model="email" 
+                                            class="mb-3"
+                                            name="email"
+                                            placeholder="Enter your Email"
+                                            addon-left-icon="ni ni-email-83" />
+                                    </validation-provider>
+                                    <div class="text-center">
+                                        <!-- <base-button type="primary" class="my-4" :disabled="loading||invalid" 
+                                            @click="doLogin()">
+                                            Sign In with <i class="fa fa-twitter"></i>
+                                        </base-button> -->
+                                        <base-button type="primary" class="my-4" :disabled="loading||invalid" 
+                                            nativeType="submit">
+                                            Sign In with <i class="fa fa-twitter"></i>
+                                        </base-button>
+                                    </div>
+                                </form>
+                            </validation-observer>
+                        </template>
+                    </card>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- </div> -->

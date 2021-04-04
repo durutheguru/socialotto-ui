@@ -10,24 +10,23 @@
     ]
   },
   "rules": {
+    "arrow-parens": false,
     "indent": [true, "spaces", 2],
     "interface-name": false,
     "no-consecutive-blank-lines": false,
     "object-literal-sort-keys": false,
     "ordered-imports": false,
-    "quotemark": [true, "single"],
+    "semicolon": false,
+    "curly": [true, "ignore-same-line"],
+    "quotemark": [false, "single"],
     "no-console": false,
     "no-trailing-whitespace": false,
     "trailing-comma": [true, {
       "singleline": "never",
-      "multiline": {
-        "objects": "ignore",
-        "arrays": "ignore",
-        "functions": "ignore",
-        "typeLiterals": "ignore"
-      }
+      "multiline": "ignore"
     }],
     "no-bitwise": false,
+    "prefer-const": false,
     "member-ordering": [false]
   }
 }

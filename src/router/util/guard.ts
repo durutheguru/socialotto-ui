@@ -10,7 +10,14 @@ const authRoute = async (to: any, next: any) => {
         if (!authenticated) {
             navigateLogin(to, next);
         } else {
-            navigatePath(next);
+            let userActive = store.getters['authToken/isUserActive'];
+            if (userActive === true) {
+                navigatePath(next);
+            } else if (userActive === false) {
+                Web.navigate('/user_activation');
+            } else {
+                Log.warn('userActive flag undefined. Unable to proceed');
+            }
         }
     } else {
         navigateLogin(to, next);

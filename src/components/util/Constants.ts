@@ -21,6 +21,7 @@ export default class Constants {
     public static authExcludeApiPaths: string[] = [
         '/login',
         '/oauth/login',
+        '/twitter/oauth',
     ];
 
 
