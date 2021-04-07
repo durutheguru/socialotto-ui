@@ -1,44 +1,30 @@
 <div>
 
-    <section id="main-content-lottery">
+    <secondary-sidebar />
 
-        <header class="header primary_color_bg box-shadowed">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-  
-                <!--logo start-->
-                <a href="/lottery" class="logo">LuckyYou.NG</a>
-                <!--logo end-->
-
-                <div class="horizontal-menu navbar-collapse collapse ">
-
-                    <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/about_us">About Us</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                    </ul>
-  
-                </div>
-  
+    <div class="main-content-container margin-top-m">
+        <div class="col-md-12">
+            <div class="col-md-2 col-sm-6">
+                <h1>Socialotto</h1>
             </div>
-
-            <div class="secondary-sidebar-toggle">
-                <li class="sb-toggle-right">
-                    <i class="fa fa-bars large-font"></i>
-                </li>
+            <div class="col-md-10 col-sm-6">
+                <span class="pull-right">
+                    <a class="grey slight-bigger-font" href="javascript:void(0);">
+                        About
+                    </a>&nbsp;&nbsp;<a class="grey slight-bigger-font" href="javascript:void(0);">
+                        Contact
+                    </a>
+                </span>
             </div>
-  
-        </header>
+        </div>
+    </div>
 
+    <section class="main-content-container">
         <section class="wrapper">
             <router-view :key="$route.path" />
         </section>
     </section>
 
-    <!-- secondary sidebar start -->
-    <secondary-sidebar />
-    <!-- secondary sidebar end -->
-
 </div>
+
+

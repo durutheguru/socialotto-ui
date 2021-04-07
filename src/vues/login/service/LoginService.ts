@@ -1,5 +1,6 @@
 import { Web } from '../../../components/util';
 import '@/interceptors/login/LoginInterceptor';
+import store from '@/store';
 
 
 export default class LoginService {
@@ -26,6 +27,16 @@ export default class LoginService {
     public static doLogout() {
         localStorage.clear();
         Web.navigate('/login');
+    }
+
+
+    public static isUserLoggedIn() {
+        return store.getters['authToken/loggedIn'];
+    }
+
+
+    public static isUserActive() {
+        return store.getters['authToken/isUserActive'];
     }
 
 

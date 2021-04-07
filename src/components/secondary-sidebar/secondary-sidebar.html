@@ -1,61 +1,91 @@
-<div class="sb-slidebar sb-right sb-style-overlay" style="margin-right: -288px; transform: translate(-288px);">
-    <h5 v-if="actions.length" class="side-title">MENU</h5>
-    <ul class="quick-chat-list">
-        <li class="online" v-for="action in actions">
-            <div class="media pointer" @click="execute(action)">
-                <div class="media-body">
-                    <strong class="slight-bigger-font">
-                        <i class="fa" v-bind:class="action.icon"></i>&nbsp;
-                        {{action.title}}
-                    </strong>
-                </div>
+<div class="main-sidebar v-padding-small">
+    <div class="row v-padding-small h-padding-medium">
+        <div class="col-sm-1 col-md-1">
+            <a href="javascript:void(0);" @click="">
+                <i class="white lighter-font fa fa-arrow-left large-font" />
+            </a>
+        </div>
+        <div class="col-sm-11 col-md-11 h-padding-small">
+            <div class="col-sm-3 col-md-3 pull-right left-padding-medium">
+                <a class="pull-right" href="javascript:void(0);" @click="">
+                    <i id="power-button" class="fa fa-power-off large-font" />
+                </a>
             </div>
-        </li>
-    </ul>
-
-    <section class="visible-xs bottom-bordered">
-        <h5 v-if="actions.length" class="side-title">NAVIGATION</h5>
-        <nav-menu-list />
-    </section>
-
-    <div v-if="false">
-        <h5 class="side-title"> Ongoing Tasks</h5>
-        <ul class="p-task tasks-bar">
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Dashboard v1.3</div>
-                        <div class="percent">40%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40"
-                            role="progressbar" class="progress-bar progress-bar-success">
-                            <span class="sr-only">40% Complete (success)</span>
-                        </div>
-                    </div>
+            <div class="col-sm-3 col-md-3 pull-right h-padding-medium">
+                <a class="pull-right" href="javascript:void(0);" @click="">
+                    <i class="white fa fa-bell-o large-font" />
                 </a>
-            </li>
-            <li>
-                <a href="#">
-                    <div class="task-info">
-                        <div class="desc">Database Update</div>
-                        <div class="percent">60%</div>
-                    </div>
-                    <div class="progress progress-striped">
-                        <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60"
-                            role="progressbar" class="progress-bar progress-bar-warning">
-                            <span class="sr-only">60% Complete (warning)</span>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-sm-3 col-md-3 pull-right h-padding-medium">
+                <a class="pull-right" href="javascript:void(0);" @click="">
+                    <i class="white fa fa-envelope-o large-font" />
                 </a>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 
-    <ul class="p-task tasks-bar">
-        <li class="external">
-            <a href="javascript:void(0)" @click="logout()">Logout</a>
-        </li>
-    </ul>
+    <div class="row h-padding-medium margin-top-big">
+        <div class="h-padding-medium">
+            <span class="slight-bigger-font">Wallet Balance</span><br />
+            <span class="large-font">N 1,000,000.00</span>
+        </div>
+
+        <div class="col-md-12 margin-top-big">
+            <base-button block type="secondary">Fund</base-button>
+            <base-button block type="danger">Withdraw</base-button>
+        </div>
+    </div>
+
+    <hr class="bottom-bordered-main-sidebar-separator" />
+
+    <div class="row margin-top-big">
+        <div class="h-padding-medium h-margin-medium margin-bottom-m">
+            <h3 class="blue">Recent Activity</h3>
+        </div>
+        
+        <div class="col-md-12 h-margin-medium margin-bottom-s bottom-bordered-main-sidebar-separator">
+            <div class="row">
+                <div class="col-md-12">
+                    You funded your wallet with N100,000
+                </div>
+                <div class="v-margin-small col-md-12">
+                    5s ago
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 h-margin-medium margin-bottom-s bottom-bordered-main-sidebar-separator">
+            <div class="row">
+                <div class="col-md-12">
+                    You withdrew N10,000 from your wallet
+                </div>
+                <div class="v-margin-small col-md-12">
+                    2d ago
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 h-margin-medium margin-bottom-s bottom-bordered-main-sidebar-separator">
+            <div class="row">
+                <div class="col-md-12">
+                    You funded your wallet with N100,000
+                </div>
+                <div class="v-margin-small col-md-12">
+                    2d ago
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 h-margin-medium margin-bottom-s bottom-bordered-main-sidebar-separator">
+            <div class="row">
+                <div class="col-md-12">
+                    You withdrew N10,000 from your wallet
+                </div>
+                <div class="v-margin-small col-md-12">
+                    2d ago
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

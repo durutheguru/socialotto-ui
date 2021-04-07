@@ -104,6 +104,10 @@ html, body {
   text-align: center;
 }
 
+.lighter-font {
+  font-weight: lighter;
+}
+
 i.mega-fa {
   font-size: 8em;
 }
@@ -232,10 +236,23 @@ img.logo-img-medium {
   margin-top : $medium_length;
 }
 
+.margin-bottom-s {
+  margin-bottom: $small_length;
+}
+
+.margin-bottom-m {
+  margin-bottom: $medium_length;
+}
 
 .v-margin-small {
   margin-top: $medium_length;
   margin-bottom: $medium_length;
+}
+
+
+.v-padding-small {
+  padding-top : $small_length;
+  padding-bottom : $small_length;
 }
 
 
@@ -348,18 +365,8 @@ img.logo-img-medium {
 }
 
 
-.sb-slidebar.sb-active {
+.sb-slidebar .sb-active {
   visibility: visible;
-}
-
-
-.sb-slidebar {
-  background-color: rgba(42, 53, 66, 1) !important;
-  margin-top: 60px;
-  color: #aeb2b7;
-  width: 20%;
-  box-shadow: -3px 4px 8px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-top-left-radius: 10px;
 }
 
 
@@ -374,20 +381,69 @@ img.logo-img-medium {
   -webkit-backface-visibility: hidden;
 }
 
+.v-rounded-button {
+  border-radius: 40px;
+}
+
 
 .sb-right {
   right: 0;
 }
 
 
-.sb-slidebar {
+.main-content-container {
+  width: 75%;
+}
+
+
+.main-sidebar {
   height: 100%;
   overflow-y: auto;
   position: fixed;
   top: 0;
+  right: 0;
   z-index: 0;
-  visibility: hidden;
-  background-color: #222222;
+  background-color: #18294D;
+  color: #aeb2b7;
+  // width: 414px;
+  width: 25%;
+  min-width: 400px;
+  float: right;
+  visibility: visible;
+  box-shadow: -3px 4px 8px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+// @media (max-width: 1443px) {
+//   .main-sidebar {
+//     width: 30%;
+//   }
+// }
+
+// @media (max-width: 1300px) {
+//   .main-sidebar {
+//     width: 30%;
+//   }
+// }
+
+// @media (max-width: 767px) {
+//   .main-sidebar {
+//     width: 50%;
+//   }
+// }
+
+
+
+
+hr.bottom-bordered-main-sidebar-separator {
+  border: none;
+  height: 5px;
+  color: #14284A; /* old IE */
+  background-color: #14284A; /* Modern Browsers */
+}
+
+
+.bottom-bordered-main-sidebar-separator {
+  border-bottom: 5px solid #14284A;
 }
 
 
@@ -475,6 +531,16 @@ a.logo_white {
 
 .grey-bg-transparent {
   background: rgba(200, 200, 200, 0.8);
+}
+
+
+a.sidebar-link-btn {
+  cursor: pointer;
+}
+
+
+a.sidebar-link-btn:hover {
+  background: #00283A;
 }
 
 
@@ -599,6 +665,9 @@ a.logo_white {
   overflow-y: visible !important;
 }
 
+#power-button {
+  color: #E05858;
+}
 
 .dialog-wizard-main-content-container {
   height: $default_dialog_height;
