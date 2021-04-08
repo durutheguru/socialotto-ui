@@ -2,7 +2,7 @@
 
     <secondary-sidebar />
 
-    <div class="main-content-container margin-top-m">
+    <div class="main-content-container margin-top-m row">
         <div class="col-md-12">
             <div class="col-md-2 col-sm-6">
                 <h1>Socialotto</h1>
@@ -20,9 +20,7 @@
     </div>
 
     <section class="main-content-container">
-        <section class="wrapper">
-            <router-view :key="$route.path" />
-        </section>
+        <router-view :key="$route.path" />
     </section>
 
 </div>

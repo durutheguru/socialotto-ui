@@ -189,6 +189,10 @@ img.logo-img-medium {
   margin-right: $small_length;
 }
 
+.r-margin-small {
+  margin-right: $small_length;
+}
+
 .h-padding-small {
   padding-left : $small_length;
   padding-right : $small_length;
@@ -245,8 +249,8 @@ img.logo-img-medium {
 }
 
 .v-margin-small {
-  margin-top: $medium_length;
-  margin-bottom: $medium_length;
+  margin-top: $small_length;
+  margin-bottom: $small_length;
 }
 
 
@@ -260,6 +264,11 @@ img.logo-img-medium {
   padding-top : $medium_length;
   padding-bottom : $medium_length;
 }
+
+.item-card-container {
+  padding-left: 0px;
+}
+
 
 
 .sidebar-main {
@@ -381,8 +390,26 @@ img.logo-img-medium {
   -webkit-backface-visibility: hidden;
 }
 
-.v-rounded-button {
-  border-radius: 40px;
+
+.app-btn {
+  border: 1px solid #5E72E4;
+  border-radius: 40px !important;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+
+button.app-btn-primary {
+  color: #FFF;
+  background: #5E72E4;
+}
+
+
+button.app-btn-secondary {
+  color: #5E72E4;
+  background: #FFF;
 }
 
 
@@ -431,6 +458,11 @@ img.logo-img-medium {
 //   }
 // }
 
+
+hr.default-hr {
+  margin-top: $small_length;
+  margin-bottom: $small_length;
+}
 
 
 
@@ -789,7 +821,10 @@ table {
   display: flex;
   align-items: baseline;
   flex-direction: row;
-  justify-content: left;
+}
+
+.flex-align-end {
+  align-self: flex-end;
 }
 
 
