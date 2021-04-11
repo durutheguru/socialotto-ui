@@ -1,27 +1,31 @@
-<div>
+<div style="display:flex;">
 
-    <secondary-sidebar />
-
-    <div class="main-content-container margin-top-m row">
-        <div class="col-md-12">
-            <div class="col-md-2 col-sm-6">
-                <h1>Socialotto</h1>
-            </div>
-            <div class="col-md-10 col-sm-6">
-                <span class="pull-right">
-                    <a class="grey slight-bigger-font" href="javascript:void(0);">
-                        About
-                    </a>&nbsp;&nbsp;<a class="grey slight-bigger-font" href="javascript:void(0);">
-                        Contact
-                    </a>
-                </span>
+    <div style="flex-grow: 3;width:75%;">
+        <div class="margin-top-m row">
+            <div class="col-md-12">
+                <div class="col-md-2 col-sm-6">
+                    <h1>Socialotto</h1>
+                </div>
+                <div class="col-md-10 col-sm-6">
+                    <span class="pull-right">
+                        <a class="grey slight-bigger-font" href="javascript:void(0);">
+                            About
+                        </a>&nbsp;&nbsp;<a class="grey slight-bigger-font" href="javascript:void(0);">
+                            Contact
+                        </a>
+                    </span>
+                </div>
             </div>
         </div>
+    
+        <section>
+            <router-view :key="$route.path" />
+        </section>
     </div>
 
-    <section class="main-content-container">
-        <router-view :key="$route.path" />
-    </section>
+    <div style="flex-grow: 1;width:25%;">
+        <secondary-sidebar />
+    </div>
 
 </div>
 

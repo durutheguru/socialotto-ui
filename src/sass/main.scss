@@ -179,6 +179,11 @@ img.logo-img-medium {
   padding-left: $medium_length;
 }
 
+.h-margin-big {
+  margin-left: $big_length;
+  margin-right: $big_length;
+}
+
 .h-margin-medium {
   margin-left: $medium_length;
   margin-right: $medium_length;
@@ -432,9 +437,9 @@ button.app-btn-secondary {
   z-index: 0;
   background-color: #18294D;
   color: #aeb2b7;
-  // width: 414px;
+  width: 400px;
   width: 25%;
-  min-width: 400px;
+  min-width: 300px;
   float: right;
   visibility: visible;
   box-shadow: -3px 4px 8px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
