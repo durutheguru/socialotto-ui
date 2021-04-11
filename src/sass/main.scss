@@ -198,6 +198,10 @@ img.logo-img-medium {
   margin-right: $small_length;
 }
 
+.r-margin-big {
+  margin-right: $big_length;
+}
+
 .h-padding-small {
   padding-left : $small_length;
   padding-right : $small_length;
@@ -270,10 +274,11 @@ img.logo-img-medium {
   padding-bottom : $medium_length;
 }
 
-.item-card-container {
-  padding-left: 0px;
+.lottery-list-item-card-container {
+  margin-left: $big_length;
+  margin-right: $big_length;
+  padding: $medium_length;
 }
-
 
 
 .sidebar-main {
@@ -423,12 +428,17 @@ button.app-btn-secondary {
 }
 
 
-.main-content-container {
+#main-content-container {
   width: 75%;
 }
 
 
-.main-sidebar {
+#main-sidebar-container {
+  width: 25%;
+}
+
+
+#main-sidebar {
   height: 100%;
   overflow-y: auto;
   position: fixed;
@@ -446,22 +456,82 @@ button.app-btn-secondary {
 }
 
 // @media (max-width: 1443px) {
-//   .main-sidebar {
+//   #main-sidebar {
 //     width: 30%;
 //   }
 // }
 
-// @media (max-width: 1300px) {
-//   .main-sidebar {
-//     width: 30%;
-//   }
-// }
 
-// @media (max-width: 767px) {
-//   .main-sidebar {
-//     width: 50%;
-//   }
-// }
+.lottery-list-posting-date {
+  font-size: 0.85em;
+}
+
+.lottery-list-user-fullname {
+  font-size: 1.3em;
+}
+
+
+.floating-main-action-btn-container {
+  position: fixed !important;
+  bottom: 30px;
+  // right: 30px;
+  right: 4%;
+}
+
+.floating-main-action-btn-container-gutter {
+  width: 75%;
+}
+
+@media (max-width: 1240px) {
+  #main-content-container {
+    width: calc(100% - 300px);
+  }
+
+  .floating-main-action-btn-container {
+    right: 7%;
+  }
+
+  .floating-main-action-btn-container button-container {
+    margin-right: $v_big_length;
+  }
+}
+
+@media (max-width: 1000px) {
+  #main-sidebar-container {
+    display: none;
+    width: 0px;
+  }
+
+  #main-content-container {
+    width: 100%;
+  }
+
+  .floating-main-action-btn-container {
+    right: 1%;
+  }
+
+  .floating-main-action-btn-container-gutter {
+    width: 100%;
+  }
+
+  .lottery-list-posting-date {
+    font-size: 0.7em;
+    position: relative;
+    top: 5px;
+  }
+
+}
+
+
+@media (max-width: 1000px) { 
+  .floating-main-action-btn-container-gutter {
+    width: 90%;
+  }
+}
+
+.hidden-overflow {
+  overflow: hidden;
+}
 
 
 hr.default-hr {
@@ -721,6 +791,10 @@ a.sidebar-link-btn:hover {
 .round-border-primary-color {
   border-radius: 4px;
   border: 1px solid $primary_color;
+}
+
+.profile-photo-container {
+  min-width: 50px;
 }
 
 aside.side-menu {
