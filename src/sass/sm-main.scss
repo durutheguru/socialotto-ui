@@ -1,0 +1,77 @@
+
+
+
+@media (max-width: 540px) {
+
+    h1.site-name {
+        font-size: 1.8rem;
+    }
+
+    .top-page-nav-link {
+        font-size: 0.9em;
+    }
+
+    .app-btn {
+        border: 1px solid #5E72E4;
+        border-radius: 40px !important;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        padding-left: 1em;
+        padding-right: 1em;
+        font-size: 0.8em;
+    }
+
+    .main-site-search {
+        display: none;
+    }
+
+
+    .main-site-search-sm {
+        display: block;
+    }
+    
+    .btn-outline-none {
+        background: none;
+    }
+
+    .btn-outline-none-no-padding {
+        padding: 0 !important;
+    }
+
+    .lottery-list-posted-date-container {
+        width: 40%;
+    }
+
+    .lottery-list-user-meta-container {
+        width: 60%;
+        padding-right: 5px;
+        overflow-x: hidden;
+    }
+
+    .lottery-list-user-meta-name {
+        font-size: 1em;
+    }
+
+    .lottery-list-user-meta-names-container {
+        width: 60%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .lottery-list-lottery-image-container {
+        display: none;
+    }
+
+    .lottery-list-lottery-text-container {
+        width: 100%;
+        padding-left: 0px;
+    }
+
+    .floating-main-action-btn-container {
+        bottom: 60px;
+        right: 6%;
+    }
+
+}
+
+

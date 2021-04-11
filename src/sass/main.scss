@@ -262,6 +262,10 @@ img.logo-img-medium {
   margin-bottom: $small_length;
 }
 
+.v-margin-big {
+  margin-top: $big_length;
+  margin-bottom: $big_length;
+}
 
 .v-padding-small {
   padding-top : $small_length;
@@ -496,38 +500,6 @@ button.app-btn-secondary {
   }
 }
 
-@media (max-width: 1000px) {
-  #main-sidebar-container {
-    display: none;
-    width: 0px;
-  }
-
-  #main-content-container {
-    width: 100%;
-  }
-
-  .floating-main-action-btn-container {
-    right: 1%;
-  }
-
-  .floating-main-action-btn-container-gutter {
-    width: 100%;
-  }
-
-  .lottery-list-posting-date {
-    font-size: 0.7em;
-    position: relative;
-    top: 5px;
-  }
-
-}
-
-
-@media (max-width: 1000px) { 
-  .floating-main-action-btn-container-gutter {
-    width: 90%;
-  }
-}
 
 .hidden-overflow {
   overflow: hidden;
@@ -921,3 +893,42 @@ textarea.resize-v {
 #login-error-msg {
   padding-top: 0.5rem;
 }
+
+.top-page-nav-link {
+  font-size: 1.3em;
+}
+
+.main-site-search-sm {
+  display: none;
+}
+
+
+.lottery-list-posted-date-container {
+  width: 25%;
+}
+
+.lottery-list-user-meta-container {
+  width: 75%;
+}
+
+.lottery-list-user-meta-names-container {
+  width: 83.3333333%;
+}
+
+.lottery-list-user-meta-name {
+  font-size: 1.3em;
+}
+
+.lottery-list-lottery-image-container {
+  width: 16.6666667%;
+}
+
+.lottery-list-lottery-text-container {
+  width: 83.3333333%;
+  padding-left: 10px;
+}
+
+@import "./md-main.scss";
+@import "./sm-main.scss";
+
+
