@@ -5,10 +5,9 @@ import Login from '../vues/login/Login.vue';
 
 import Users from '@/vues/backoffice/vues/users/Users.vue';
 import BackOffice from '../vues/backoffice/BackOffice.vue';
-import Partner from '@/vues/backoffice/vues/partner/Partner.vue';
-import Campaign from '@/vues/backoffice/vues/campaign/Campaign.vue';
 
 import Lottery from '@/vues/lottery/Lottery.vue';
+import Campaign from '@/vues/campaign/Campaign.vue';
 
 import guard from './util/guard';
 import afterRouteScriptLoader from './util/afterRouteScriptLoader';
@@ -66,13 +65,13 @@ const routes = [
       {
         path: 'partner',
         name: 'Partners',
-        component: Partner,
+        component: () => import('@/vues/backoffice/vues/partner/Partner.vue'),
       },
 
       {
         path: 'campaign',
         name: 'Campaigns',
-        component: Campaign,
+        component: () => import('@/vues/backoffice/vues/campaign/Campaign.vue'),
       },
 
       {
@@ -99,6 +98,25 @@ const routes = [
         name: 'LotteryDetail',
         component: () => import('@/vues/lottery/vues/details/LotteryDetail.vue'),
       },
+    ]
+  },
+
+  {
+    path: '/campaign',
+    name: 'Campaign',
+    component: Campaign,
+    children: [
+      {
+        path: '',
+        name: 'CampaignHome',
+        component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
+      },
+
+      // {
+      //   path: ':id',
+      //   name: 'CampaignDetail',
+      //   component: () => import('@/vues/campaign/vues/details/CampaignDetail.vue'),
+      // },
     ]
   }
 

@@ -278,11 +278,6 @@ img.logo-img-medium {
   padding-bottom : $medium_length;
 }
 
-.lottery-list-item-card-container {
-  margin-left: $big_length;
-  margin-right: $big_length;
-  padding: $medium_length;
-}
 
 
 .sidebar-main {
@@ -445,10 +440,10 @@ button.app-btn-secondary {
 #main-sidebar {
   height: 100%;
   overflow-y: auto;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
-  z-index: 0;
+  z-index: 10000;
   background-color: #18294D;
   color: #aeb2b7;
   width: 400px;
@@ -465,14 +460,6 @@ button.app-btn-secondary {
 //   }
 // }
 
-
-.lottery-list-posting-date {
-  font-size: 0.85em;
-}
-
-.lottery-list-user-fullname {
-  font-size: 1.3em;
-}
 
 
 .floating-main-action-btn-container {
@@ -902,30 +889,53 @@ textarea.resize-v {
   display: none;
 }
 
-
-.lottery-list-posted-date-container {
-  width: 25%;
+.item-list-item-card-container {
+  margin-left: $big_length;
+  margin-right: $big_length;
+  padding: $medium_length;
 }
 
-.lottery-list-user-meta-container {
-  width: 75%;
+.item-list-posting-date {
+  font-size: 0.85em;
 }
 
-.lottery-list-user-meta-names-container {
-  width: 83.3333333%;
-}
-
-.lottery-list-user-meta-name {
+.item-list-user-fullname {
   font-size: 1.3em;
 }
 
-.lottery-list-lottery-image-container {
+.item-list-posted-date-container {
+  width: 25%;
+}
+
+.item-list-user-meta-container {
+  width: 75%;
+}
+
+.item-list-user-meta-names-container {
+  width: 83.3333333%;
+}
+
+.item-list-user-meta-name {
+  font-size: 1.3em;
+}
+
+.item-list-lottery-image-container {
   width: 16.6666667%;
 }
 
-.lottery-list-lottery-text-container {
+.item-list-lottery-text-container {
   width: 83.3333333%;
   padding-left: 10px;
+}
+
+.item-list-verified-badge {
+  color: #000;
+  background: #B2DFD4;
+  font-weight: bold;
+}
+
+#sidebar-drawer-icon {
+  display: none;
 }
 
 @import "./md-main.scss";
