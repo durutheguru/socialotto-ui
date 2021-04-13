@@ -48,7 +48,7 @@
 @media (max-width: 850px) {
 
     .modal-big {
-        width: 400px;
+        width: 430px;
     }
 
     .modal-action-buttons-container {
@@ -57,7 +57,7 @@
     }
 
     .wizard-step-list-item-container {
-        display: none;
+        width: 100%;
     }
 
     .wizard-main-item-container {
@@ -91,7 +91,7 @@
 
     .input-search-results-container {
         position: absolute;
-        top: 90px;
+        top: 185px;
         width: 300px;
     }
 
@@ -102,6 +102,16 @@
 
     .modal-body {
       padding: 0 !important;
+    }
+
+    .stepy-titles li {
+        margin: 10px 3px !important;
+    }
+
+    .default-desc-text-area {
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
     }
 
 }
