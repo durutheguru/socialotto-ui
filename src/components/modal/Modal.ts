@@ -1,8 +1,10 @@
 
 import BaseVue from '@/components/BaseVue';
-import WithRender from './modal.html';
 import { Component, Prop, Emit } from 'vue-property-decorator';
 import { Log } from '../util';
+
+
+import WithRender from './modal.html';
 
 
 

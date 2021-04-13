@@ -39,7 +39,7 @@ export default class Constants {
     };
 
 
-    public static campaignStages: string[] = [
+    public static lotteryStages: string[] = [
         'FIRST', 'SECOND', 'THIRD',
     ];
 

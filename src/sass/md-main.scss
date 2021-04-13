@@ -1,4 +1,6 @@
-
+/**
+* 540px - 1000px
+*/
 
 @media (max-width: 1000px) {
     #main-sidebar-container {
@@ -41,4 +43,65 @@
     .floating-main-action-btn-container-gutter .app-btn {
         font-size: 1.3em;
     }
+}
+
+@media (max-width: 850px) {
+
+    .modal-big {
+        width: 400px;
+    }
+
+    .modal-action-buttons-container {
+        width: 80%;
+        margin-right: 0px;
+    }
+
+    .wizard-step-list-item-container {
+        display: none;
+    }
+
+    .wizard-main-item-container {
+        width: 100%;
+        padding-left: 0;
+        height: 560px;
+    }
+
+    .dialog-wizard-main-content-container {
+        margin-bottom: 40px;
+        height: 80%;
+    }
+
+    .selected-campaign-search-results-container {
+        max-height: 290px;
+    }
+      
+    .campaign-search-result {
+        width: 47%;
+        float: left;
+    }
+
+    .campaign-search-result-photo-container {
+        width: 40%;
+    }
+
+    .campaign-search-result-name-container {
+        width: 40%;
+        font-size: 0.8em;
+    }
+
+    .input-search-results-container {
+        position: absolute;
+        top: 90px;
+        width: 300px;
+    }
+
+    .campaign-search-overlay-details-container {
+        width: 75%;
+        float: left;
+    }
+
+    .modal-body {
+      padding: 0 !important;
+    }
+
 }

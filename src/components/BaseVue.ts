@@ -17,11 +17,5 @@ export default class BaseVue extends Vue {
     public extractError = Util.extractError;
 
 
-    public campaignStages = Constants.campaignStages;
-
-
-    public campaignTypes = Constants.campaignTypes;
-
-
 }
 

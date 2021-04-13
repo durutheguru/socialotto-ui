@@ -1,5 +1,7 @@
 
-
+/**
+ < 540px
+ */
 
 @media (max-width: 540px) {
 
@@ -74,4 +76,12 @@
 
 }
 
+
+@media (max-width: 400px) {
+
+    .modal-big {
+        width: 380px;
+    }
+
+}
 

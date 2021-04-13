@@ -1,25 +1,8 @@
 <div style="display:flex;">
 
     <div id="main-content-container">
-        <div class="h-padding-big margin-top-m row">
-            <div class="col--12">
-                <div class="col--6 pull-right">
-                    <span class="pull-right">
-                        <a class="grey top-page-nav-link" href="javascript:void(0);">
-                            About
-                        </a>&nbsp;&nbsp;<a class="grey top-page-nav-link" href="javascript:void(0);">
-                            Contact
-                        </a>
-                        <a id="sidebar-drawer-icon" class="grey top-page-nav-link" href="javascript:void(0);">
-                            <i class="fa fa-bars"></i>
-                        </a>
-                    </span>
-                </div>
-                <div class="col--6">
-                    <h1 class="site-name">Socialotto</h1>
-                </div>
-            </div>
-        </div>
+        
+        <header-component />
     
         <section>
             <router-view :key="$route.path" />

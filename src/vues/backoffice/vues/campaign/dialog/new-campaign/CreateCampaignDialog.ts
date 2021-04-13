@@ -152,5 +152,11 @@ export default class CreateCampaignDialog extends BaseVue {
     }
 
 
+    public campaignStages = Constants.lotteryStages;
+
+
+    public campaignTypes = Constants.campaignTypes;
+
+
 }
 

@@ -1,0 +1,365 @@
+<modal v-bind:show="visible" v-bind:modal-class="'modal-big'" v-on:close-dialog="close">
+
+    <div class="col--12" slot="header">
+
+        <button type="button" data-dismiss="modal" aria-label="Close" 
+            class="close pull-right"
+            @click="close()">
+            <span class="close-dialog-button-text">×</span>
+        </button>
+
+        <h4 class="bold-font">Create Lottery</h4>
+
+    </div>
+
+    <div class="row h-padding-small" slot="body">
+        <div class="panel-body col--12">
+
+            <div class="wizard-step-list-item-container">
+                <div class="stepy-tab">
+                    <ul id="default-titles" class="stepy-titles clearfix">
+                        <li v-for="(page, index) in formWizard.pages" @click="formWizard.setPage(index)"
+                            v-bind:class="{'current-step': formWizard.isSelectedPage(page.key)}">
+                            <div>Step {{index+1}}</div>
+                            <span> </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="wizard-main-item-container">
+                <validation-observer ref="observer" tag="form" role="form" v-slot="{ invalid }"
+                    @submit.prevent="createLottery" novalidate>
+                    <div class="dialog-wizard-main-content-container">
+                        <div v-show="formWizard.isSelectedPage('BASIC_DETAILS')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Basic Details</h5>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameField">Name</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <input type="text" class="form-control" id="nameField"
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Name"
+                                        v-model="lottery.name" />
+                                </validation-provider>
+                            </div>
+                            <div class="form-group">
+                                <label for="descField">Description</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <textarea class="form-control resize-v default-desc-text-area" id="descField"
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Description"
+                                        v-model="lottery.description">
+                                    </textarea>
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('MORE_DETAILS')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">More Details</h5>
+                            </div>
+                            <div class="col--12 v-padding-medium">
+
+                                <div class="col--12 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label for="lotteryEndDate">Registration End Date</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <input id="lotteryEndDate" type="date" class="form-control"
+                                                v-bind:class="{'invalid-field': invalid}" v-model="lottery.endDate" />
+                                        </validation-provider>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lotteryEvalTime">Time of Lottery</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <input id="lotteryEvalTime" type="date" class="form-control"
+                                                v-bind:class="{'invalid-field': invalid}" v-model="lottery.timeOfEvaluation" />
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col--12">
+                                    <div class="col--6 pull-left">
+                                        <div class="form-group">
+                                            <label for="lotteryTicketCost">Ticket Cost</label>
+                                            <validation-provider rules="required" v-slot="{ invalid }">
+                                                <input id="lotteryTicketCost" type="number" class="form-control"
+                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.ticketCost" />
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="col--6 pull-left l-padding-small">
+                                        <div class="form-group">
+                                            <label for="lotteryWinnersCount">Number of Winners</label>
+                                            <validation-provider rules="required" v-slot="{ invalid }">
+                                                <input id="lotteryWinnersCount" type="number" class="form-control"
+                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.winnersCount" />
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('STAGES')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Stages</h5>
+                            </div>
+                            <div v-for="(stage, index) in lottery.stageDescriptions"
+                                class="slight-smaller-font col--12">
+                                <div class="col--3 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'stage-' + (index + 1) + '-field'">Stage</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <select :id="'stage-' + (index + 1) + '-field'" class="form-control"
+                                                v-bind:class="{'invalid-field': invalid}" v-model="stage.stage">
+                                                <option value="" disabled>Select Stage</option>
+                                                <option v-for="stage in lotteryStages" v-bind:value="stage">
+                                                    {{stage}}
+                                                </option>
+                                            </select>
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col--3 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'winner-count-' + (index + 1) + '-field'">Winner Count</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <input type="number" class="form-control"
+                                                :id="'winner-count-' + (index + 1) + '-field'"
+                                                v-bind:class="{'invalid-field': invalid}"
+                                                placeholder="Enter Number of Stage Winners"
+                                                v-model="stage.winnersCount" />
+                                        </validation-provider>
+                                    </div>
+                                </div>
+                                <div class="col--6 h-padding-v-small">
+                                    <div class="form-group">
+                                        <label :for="'evaluation-time-' + (index + 1) + '-field'">Evaluation
+                                            Time</label>
+                                        <validation-provider rules="required" v-slot="{ invalid }">
+                                            <input :id="'evaluation-time-' + (index + 1) + '-field'"
+                                                type="datetime-local" class="form-control"
+                                                v-bind:class="{'invalid-field': invalid}"
+                                                v-model="stage.evaluationTime" />
+                                        </validation-provider>
+
+                                    </div>
+                                </div>
+                                <div class="col--12" v-show="canDeleteStage(index)">
+                                    <div class="pull-right ">
+                                        <button @click="deleteStage(index)"
+                                            class="btn btn-white white-btn-wine btn-default-width">
+                                            Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col--12" v-show="lottery.stageDescriptions.length < lotteryStages.length">
+                                <div class="pull-left">
+                                    <button @click="addStage()" class="btn btn-white white-btn-blue btn-default-width">
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('UPLOAD_IMAGES')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Upload Images</h5>
+                            </div>
+                            <br /><br />
+                            Coming Soon...
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('SELECT_CAMPAIGNS')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Select Campaigns</h5>
+                            </div>
+                            <div class="col--12 h-padding-v-small">
+                                <base-input 
+                                    id="lotteryCampaignsSearch" 
+                                    type="text" v-model="lottery.campaignSearch"
+                                    aria-describedby="addon-right addon-left" 
+                                    placeholder="Search for a Campaign" 
+                                    addon-left-icon="fa fa-search" />
+
+                                <div class="col--12 selected-campaign-search-results-container">
+                                    <div class="campaign-search-result v-margin-small">
+                                        <div class="row h-padding-medium">
+                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                                <span class="dark-grey slight-smaller-font">
+                                                    @burnaboyburnaboyburnaboy
+                                                </span>
+                                            </div>
+                                            <div class="col--12 pull-left slight-smaller-font selected-results-title">
+                                                Support our effort to build a new school for the community.
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-big h-padding-medium">
+                                            <span class="col--12 center-container">
+                                                <a href="javascript:void(0);" class="wine">
+                                                    Remove
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="campaign-search-result v-margin-small">
+                                        <div class="row h-padding-medium">
+                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                                <span class="dark-grey slight-smaller-font">
+                                                    @burnaboyburnaboyburnaboy
+                                                </span>
+                                            </div>
+                                            <div class="col--12 pull-left slight-smaller-font selected-results-title">
+                                                Support our effort to build a new school for the community.
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-big h-padding-medium">
+                                            <span class="col--12 center-container">
+                                                <a href="javascript:void(0);" class="wine">
+                                                    Remove
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="campaign-search-result v-margin-small">
+                                        <div class="row h-padding-medium">
+                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                                <span class="dark-grey slight-smaller-font">
+                                                    @burnaboyburnaboyburnaboy
+                                                </span>
+                                            </div>
+                                            <div class="col--12 pull-left slight-smaller-font selected-results-title">
+                                                Support our effort to build a new school for the community.
+                                            </div>
+                                        </div>
+                                        <div class="row margin-top-big h-padding-medium">
+                                            <span class="col--12 center-container">
+                                                <a href="javascript:void(0);" class="wine">
+                                                    Remove
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="input-search-results-container" v-show="true">
+
+                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
+                                        <div class="col--12">
+                                            <div class="col--1 pull-left profile-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-overlay-details-container">
+                                                <div>
+                                                    <span class="bold-font">Burna Boy</span>
+                                                    <span><i class="fa fa-check-circle blue"></i></span>
+                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
+                                                </div>
+                                                <div class="slight-smaller-font single-line-hidden-overflow">
+                                                    Support my campaign to deliver laptops for 5 devs
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
+                                        <div class="col--12">
+                                            <div class="col--1 pull-left profile-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-overlay-details-container">
+                                                <div>
+                                                    <span class="bold-font">Burna Boy</span>
+                                                    <span><i class="fa fa-check-circle blue"></i></span>
+                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
+                                                </div>
+                                                <div class="slight-smaller-font single-line-hidden-overflow">
+                                                    Support my campaign to deliver laptops for 5 devs
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
+                                        <div class="col--12">
+                                            <div class="col--1 pull-left profile-photo-container r-margin-small">
+                                                <div
+                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                                </div>
+                                            </div>
+                                            <div class="campaign-search-overlay-details-container">
+                                                <div>
+                                                    <span class="bold-font">Burna Boy</span>
+                                                    <span><i class="fa fa-check-circle blue"></i></span>
+                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
+                                                </div>
+                                                <div class="slight-smaller-font single-line-hidden-overflow">
+                                                    Support my campaign to deliver laptops for 5 devs. Support my campaign to deliver laptops for 5 devs
+                                                    . Support my campaign to deliver laptops for 5 devs 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('CONFIRMATION')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Confirmation</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row max-width-container bottom-anchored-in-parent ">
+                        <div class="col--12">
+                            <div class="pull-left h-padding-medium" v-if="saveLottery.loading">
+                                <span class="blue">
+                                    Loading <i class="fa fa-spinner fa-spin"></i>
+                                </span>
+                            </div>
+                            <div class="modal-action-buttons-container">
+                                <input type="button" @click="formWizard.previous()" :disabled="!formWizard.canPrevious()"
+                                    class="btn btn-danger default-dialog-action-btn" value="Previous" />
+                                <input type="button" @click="formWizard.next()" :disabled="!formWizard.canNext()"
+                                    class="btn btn-primary default-dialog-action-btn" v-if="!formWizard.isLastPage()"
+                                    value="Next" />
+                                <button @click="createLottery()" :disabled="saveLottery.loading||invalid"
+                                    class="btn btn-primary default-dialog-action-btn" v-if="formWizard.isLastPage()">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </validation-observer>
+            </div>
+        </div>
+
+    </div>
+    <div class="no-display" slot="footer">
+        //
+    </div>
+</modal>

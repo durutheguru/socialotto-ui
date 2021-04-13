@@ -1,22 +1,4 @@
-
-<div class="v-margin-big">
-
-    <div class="row h-padding-big">
-        <div class="col--12">
-            <div class="col--3 pull-right">
-                <div class="main-site-search">
-                    <base-input placeholder="Search" addon-left-icon="fa fa-search"></base-input>
-                </div>
-                <div class="main-site-search-sm">
-                    <button type="button" class="btn btn-outline-none btn-outline-none-no-padding pull-right">
-                        <i class="fa fa-search large-font pull-right"></i>
-                    </button>
-                </div>
-            </div>
-            <button class="app-btn app-btn-secondary">Lotteries</button>
-            <button class="app-btn  app-btn-primary h-margin-medium">Campaigns</button>
-        </div>
-    </div>
+<div>
 
     <hr class="default-hr" />
 
@@ -138,13 +120,22 @@
 
         <div class="floating-main-action-btn-container-gutter">
             <div class="col--1 pull-right button-container">
-                <button class="app-btn app-btn-primary box-shadowed">
+                <button 
+                    class="app-btn app-btn-primary box-shadowed"
+                    @click="dialogOpts.createUser.visible=true">
                     <i class="fa fa-plus large-font"></i>
                 </button>
             </div>
         </div>
 
     </div>
+
+
+    <CreateBackOfficeUserDialog
+        v-if="dialogOpts.createUser.visible"
+        v-bind:visible="dialogOpts.createUser.visible"
+        v-on:close-dialog="hideCreateBackOfficeUser" />
+        
 
 </div>
 

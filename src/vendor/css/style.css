@@ -3712,21 +3712,21 @@ table.sliders tr td {
     background: #A9D86E;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-}
-
-.stepy-titles li div{
-    font-size:16px;
-    font-weight: 300;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+  
+  .stepy-titles li div{
+    font-size: 0.7em !important;
     background: #eee;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    line-height: 100px;
-}
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+  
 
 
 /*widget*/

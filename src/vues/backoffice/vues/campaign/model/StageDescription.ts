@@ -18,7 +18,7 @@ export default class StageDescription {
 
     public static defaultStage(key?: string): StageDescription {
         const description = new StageDescription();
-        description.stage = Constants.campaignStages[0];
+        description.stage = Constants.lotteryStages[0];
         description.evaluationTime = '';
         description.winnersCount = 1;
 
