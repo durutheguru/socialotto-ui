@@ -77,11 +77,76 @@
 }
 
 
-@media (max-width: 400px) {
+@media (max-width: 500px) {
 
     .modal-big {
-        width: 380px;
+        // width: 380px;
+        width: 95%;
     }
+
+    .modal-wrapper {
+        padding-top: 20px;
+    }
+
+    .default-desc-text-area {
+        min-height: 150px;
+        max-height: 150px;
+    }
+
+    .wizard-main-item-container {
+        height: 400px;
+    }
+
+    .campaign-search-result-name-container {
+        width: 85%;
+        margin-bottom: 4px;
+    }
+
+    .campaign-search-result {
+        width: 30%;
+    }
+
+    .selected-results-title {
+        padding-top: 4px;
+    }
+
+    .modal-action-buttons-container {
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+        padding-left: 20px;
+    }
+
+    .campaign-search-result-remove-container {
+        margin-top: $small_length;
+    }
+    
+
+    .modal-mask {
+        width: 101%;
+        height: 110%;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    // .modal-container {
+    //     box-shadow: 1px 2px 6px 2px #333;
+    // }
+
+
+}
+
+
+@media (max-height: 600px) {
+
+    .stepy-tab {
+        display: none;
+    }
+
+
+    .input-search-results-container {
+        top: 90px;
+    }
+
 
 }
 
