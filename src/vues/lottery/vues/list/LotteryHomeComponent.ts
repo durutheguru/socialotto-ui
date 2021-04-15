@@ -51,8 +51,8 @@ export default class LotteryHomeComponent extends BaseVue {
     }
 
 
-    public showCampaignDetails(campaign: any) {
-        Web.navigate(`/lottery/${campaign.id}`);
+    public viewLotteryDetails(id: number) {
+        Web.navigate(`/lottery/${id}`);
     }
 
 

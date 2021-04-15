@@ -57,6 +57,18 @@ html, body {
   background : linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
 }
 
+.bg-B9C7DC {
+  background: #B9C7DC;
+}
+
+.bg-DCCCB9 {
+  background: #DCCCB9;
+}
+
+.bg-B9DCC1 {
+  background: #B9DCC1;
+}
+
 .grey-bg {
   background-color: $default_grey;
 }
@@ -293,6 +305,11 @@ l-padding-small {
 .v-padding-medium {
   padding-top : $medium_length;
   padding-bottom : $medium_length;
+}
+
+
+.v-centered {
+  vertical-align: middle;
 }
 
 
@@ -837,6 +854,7 @@ aside.side-menu {
 
 .col--12 {
   width: 100%;
+  clear: both;
 }
 .col--11 {
   width: 91.66666667%;
@@ -961,6 +979,30 @@ textarea.resize-v {
   padding-left: 10px;
 }
 
+.lottery-detail-main-meta-container {
+  width: 100%;
+  white-space: nowrap;
+  margin-top: 25px;
+}
+
+.lottery-detail-title-container {
+  width: 35%;
+  height: 100px;
+  float: left;
+  padding-right: 10px;
+  white-space: normal;
+}
+
+.lottery-detail-title-container h5 {
+  padding-top: 3%;
+  font-weight: bold;
+}
+
+.lottery-detail-numbers-container {
+  width: 65%;
+  float: left;
+}
+
 .item-list-verified-badge {
   color: #000;
   background: #B2DFD4;
@@ -993,6 +1035,58 @@ textarea.resize-v {
   height: 136px;
   min-height: 136px;
   max-height: 136px;
+}
+
+section.lottery-detail-number-item-container {
+  border: 1px solid #DFDFDF;
+  border-radius: 30px;
+  padding: 5px 10px;
+  height: 95px;
+  width: 30%;
+  overflow: hidden;
+  float: left;
+  margin-left: 10px;
+}
+
+
+section.lottery-detail-number-item-symbol {
+  height: 120%;
+  width: 40%;
+  float: left;
+  text-align: center;
+  font-size: 3em;
+  position: relative;
+  top: -6px;
+  left: -14px;
+}
+
+
+section.lottery-detail-number-item-symbol i {
+  vertical-align: middle;
+  line-height: 2em;
+}
+
+
+section.lottery-detail-number-item {
+  height: 100%;
+  width: 60%;
+  float: left;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+span.lottery-detail-number {
+  font-size: 2em;
+  width: 100%;
+  line-height: 1.5em;
+  font-weight: bold;
+}
+
+
+span.lottery-detail-number-desc {
+  font-size: 0.85em;
+  width: 100%;
 }
 
 
