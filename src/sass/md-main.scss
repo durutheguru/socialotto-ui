@@ -114,4 +114,33 @@
         max-height: 300px;
     }
 
+    .lottery-detail-amount-raised span {
+        float: right;
+        font-size: 2.5em;
+        line-height: 2em;
+    }
+
+    .lottery-detail-amount-raised-lbl span {
+        font-size: 1.3em;
+    }
+
+    .lottery-detail-campaign-header {
+        padding-left: $medium_length;
+        padding-right: $medium_length;
+    }
+
+    .lottery-detail-campaign-profile-img {
+        width: 40%;
+    }
+
+    .lottery-detail-campaign-title {
+        width: 60%;
+        font-size: 0.85em;
+    }
+
+
+    .lottery-details-campaign-descriptor {
+        font-size: 1.5em !important;
+    }
+
 }

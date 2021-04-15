@@ -84,7 +84,69 @@
     .item-list-posting-date {
         display: none;
     }
-  
+
+
+    .lottery-detail-amount-raised span {
+        float: right;
+        font-size: 1.6em;
+        line-height: 3.5em;
+        padding-left: 10px;
+        width: 95%;
+        white-space: nowrap;
+    }
+
+    .lottery-detail-amount-raised-lbl {
+        padding-top: 20px;
+    }
+
+    .lottery-detail-image-item {
+        height: 150px;
+    }
+
+    .lottery-detail-campaign-container {
+        width: 70%;
+    }
+
+    .lottery-detail-campaign-profile-img {
+        width: 25%;
+      }
+      
+      .lottery-detail-campaign-title {
+        width: 75%;
+      }
+
+    .lottery-detail-main-meta-container {
+        margin-top: 0px;
+    }
+
+    .lottery-detail-amount-raised-container {
+      margin-top: $big_length;
+      margin-bottom: $big_length;
+    }
+
+    .lottery-detail-numbers-container {
+        margin-top: $medium_length;
+    }
+
+
+    .lottery-detail-desc-container h5 {
+        font-size: 0.98em !important;
+    }
+    
+
+    section.lottery-detail-number-item-container {
+        width: 45% !important;
+    }
+
+    .lottery-time-img {
+        width: 70px;
+        height: 70px;
+    }
+
+    // .lottery-detail-campaign-desc {
+    //     display: none;
+    // }
+
 
 }
 
