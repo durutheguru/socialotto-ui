@@ -41,11 +41,11 @@
     }
 
     .item-list-posted-date-container {
-        width: 40%;
+        width: 20%;
     }
 
     .item-list-user-meta-container {
-        width: 60%;
+        width: 80%;
         padding-right: 5px;
         overflow-x: hidden;
     }
@@ -73,6 +73,18 @@
         bottom: 60px;
         right: 6%;
     }
+
+
+    .item-list-sm-posting-date {
+        display: block;
+        font-size: 0.85em;
+    }
+
+
+    .item-list-posting-date {
+        display: none;
+    }
+  
 
 }
 
@@ -124,7 +136,7 @@
 
     .modal-mask {
         width: 101%;
-        height: 110%;
+        height: 106%;
         background-color: rgba(0, 0, 0, 0.4);
     }
 

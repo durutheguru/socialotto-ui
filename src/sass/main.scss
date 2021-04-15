@@ -1060,6 +1060,9 @@ textarea.resize-v {
   margin-top: $big_length;
 }
 
+.item-list-sm-posting-date {
+  display: none;
+}
 
 @import "./md-main.scss";
 @import "./sm-main.scss";
