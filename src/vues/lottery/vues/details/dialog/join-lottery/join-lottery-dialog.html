@@ -1,0 +1,44 @@
+<modal v-bind:show="visible" v-bind:modal-class="'modal-medium'" v-on:close-dialog="close">
+
+    <div class="col--12" slot="header">
+
+        <button type="button" data-dismiss="modal" aria-label="Close" 
+            class="close pull-right"
+            @click="close()">
+            <span class="close-dialog-button-text">×</span>
+        </button>
+
+        <h4 class="bold-font">Buy Lottery Tickets</h4>
+
+    </div>
+
+    <div class="row h-padding-small" slot="body">
+        <div class="panel-body col--12 center-container">
+            <div class="lottery-entry-cost-container margin-centered">
+                N 1,000,000.00
+            </div>
+            <div class="col--12">
+                <div class="lottery-entry-ticket-count-lbl">
+                    Number of Tickets
+                </div>
+                <div class="lottery-entry-ticket-count">
+                    <div class="form-group">
+                        <input id="lotteryTicketCount" type="number" class="disable form-control"
+                             v-bind:class="{'invalid-field': invalid}" v-model="lotteryEntry.entries" />
+                    </div>
+                </div>
+            </div>
+            <div class="col--12 lottery-ticket-btn-row-container ">
+                <button 
+                    class="app-btn app-btn-primary box-shadowed"
+                    @click="showJoinLotteryDialog()">
+                    <span>Buy Tickets</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="no-display" slot="footer">
+        //
+    </div>
+</modal>
+

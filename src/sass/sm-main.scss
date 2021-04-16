@@ -56,8 +56,6 @@
 
     .item-list-user-meta-names-container {
         width: 60%;
-        white-space: nowrap;
-        text-overflow: ellipsis;
     }
 
     .item-list-lottery-image-container {
@@ -124,10 +122,6 @@
       margin-bottom: $big_length;
     }
 
-    .lottery-detail-numbers-container {
-        margin-top: $medium_length;
-    }
-
 
     .lottery-detail-desc-container h5 {
         font-size: 0.98em !important;
@@ -153,7 +147,7 @@
 
 @media (max-width: 500px) {
 
-    .modal-big {
+    .modal-big, .modal-medium {
         // width: 380px;
         width: 95%;
     }
@@ -206,6 +200,18 @@
     //     box-shadow: 1px 2px 6px 2px #333;
     // }
 
+    .lottery-entry-cost-container {
+        font-size: 1.5em;
+    }
+
+
+    .lottery-entry-ticket-count-lbl {
+        width: 50%;
+    }
+
+    .lottery-entry-ticket-count {
+        width: 50%;
+    }
 
 }
 

@@ -42,7 +42,6 @@ export default class LotteryHomeComponent extends BaseVue {
 
     public hideCreateLottery() {
         this.dialogOpts.createLottery.visible = false;
-        
     }
 
 

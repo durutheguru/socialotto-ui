@@ -173,7 +173,9 @@
 
             <div class="row">
                 <div class="col--12 center-container">
-                    <h3 class="bold-font lottery-details-campaign-descriptor">All Funds Raised will go into supporting these Campaigns</h3>
+                    <h3 class="bold-font lottery-details-campaign-descriptor">
+                        All Funds Raised will go into supporting these Campaigns
+                    </h3>
                 </div>
             </div>
 
@@ -272,13 +274,19 @@
             <div class="col--1 pull-right button-container">
                 <button 
                     class="app-btn app-btn-primary box-shadowed"
-                    @click="dialogOpts.createLottery.visible=true">
+                    @click="showJoinLotteryDialog()">
                     <span>Buy Ticket</span>
                 </button>
             </div>
         </div>
 
     </div>
+
+
+    <join-lottery-dialog
+        v-if="dialogOpts.joinLottery.visible"
+        v-bind:visible="dialogOpts.joinLottery.visible"
+        v-on:close-dialog="hideJoinLotteryDialog" />
         
 
 </div>

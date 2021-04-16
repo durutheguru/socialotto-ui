@@ -760,9 +760,9 @@ a.sidebar-link-btn:hover {
 }
 
 
-// .modal-body {
-//   padding: 0 !important;
-// }
+.modal-body-no-bottom-padding {
+  padding-bottom: 0 !important;
+}
 
 .modal-default-button {
   float: right;
@@ -1009,6 +1009,8 @@ textarea.resize-v {
 
 .item-list-user-meta-names-container {
   width: 83.3333333%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .item-list-user-meta-name {
@@ -1328,6 +1330,48 @@ span.lottery-detail-number-desc {
 }
 
 
+.lottery-entry-cost-container {
+  width: 75%;
+  border-radius: 100px;
+  background: #677363;
+  color: #FFF;
+  font-size: 2.5em;
+  text-align: center;
+  padding: 6px 15px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 25px;
+}
+
+
+.lottery-ticket-btn-row-container {
+  padding-top: 30px !important;
+  position: relative;
+  top: 7px;
+}
+
+
+.lottery-entry-ticket-count-lbl {
+  width: 40%;
+  line-height: 2.8em;
+  vertical-align: middle;
+  float: left;
+}
+
+.lottery-entry-ticket-count {
+  width: 60%;
+  float: left;
+}
+
+.lottery-entry-ticket-count input {
+  text-align: end;
+  padding-right: 16px;
+  font-size: 1.4em;
+}
+
+.clearfix {
+  clear: both;
+}
 
 @media (max-width: 1090px) {
 
@@ -1335,6 +1379,13 @@ span.lottery-detail-number-desc {
   .lottery-detail-title-container {
     width: 100%;
   }
+
+
+  .lottery-detail-numbers-container {
+    width: 100%;
+    margin-top: $medium_length;
+  }
+
 
   // .lottery-detail-campaign-profile-img {
   //     width: 40%;
