@@ -1,22 +1,5 @@
 
-// colors
-$default_grey : #CFCFCF;
-$default_dark_grey : #9F9F9F;
-$default_light_grey : #EFEFEF;
-$primary_color : #6BB1D3;
-$primary_color_lighter : rgba(83, 136, 111, 0.5);
-$wine: #812F2F;
-$app_blue: #445DA1;
-
-
-// dimensions
-$v_small_length: 2px;
-$small_length : 7px;
-$medium_length : 15px;
-$big_length : 30px;
-$v_big_length: 70px;
-$default_height : 250px;
-$default_dialog_height : 500px;
+@import "./variables.scss";
 
 
 // body {
@@ -294,6 +277,11 @@ l-padding-small {
 .v-margin-small {
   margin-top: $small_length;
   margin-bottom: $small_length;
+}
+
+.v-margin-medium {
+  margin-top: $medium_length;
+  margin-bottom: $medium_length;
 }
 
 .v-margin-big {
@@ -586,13 +574,11 @@ hr.default-hr {
 hr.bottom-bordered-main-sidebar-separator {
   border: none;
   height: 5px;
-  color: #14284A; /* old IE */
-  background-color: #14284A; /* Modern Browsers */
 }
 
 
 .bottom-bordered-main-sidebar-separator {
-  border-bottom: 5px solid #14284A;
+  border-bottom: 5px solid #10203b;
 }
 
 
@@ -671,6 +657,37 @@ a.logo_white {
 .white-btn-wine:hover {
   color: white !important;
   background: $wine;
+}
+
+.notif-list-title {
+  color: #76B5D9;
+}
+
+.notif-entity-title {
+   color: #FF9F81
+}
+
+.notif-entity-amount {
+  color: #CCFDCB;
+}
+
+.notif-entity-username {
+  color: #5BE7FA;
+}
+
+.owl-carousel {
+  -ms-touch-action: none;
+  touch-action: none;
+  }
+
+.notif-entity-positive-action {
+  color: #45F9EE;
+  cursor: pointer;
+}
+
+.notif-entity-negative-action {
+  color: #F97045;
+  cursor: pointer;
 }
 
 .transparent-bg {
@@ -1368,6 +1385,12 @@ span.lottery-detail-number-desc {
   padding-right: 16px;
   font-size: 1.4em;
 }
+
+
+section#container {
+  overflow: scroll !important;
+}
+
 
 .clearfix {
   clear: both;

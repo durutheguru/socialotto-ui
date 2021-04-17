@@ -2,7 +2,13 @@
 * 540px - 1000px
 */
 
+
+@import "./variables.scss";
+
+
+
 @media (max-width: 1000px) {
+    
     #main-sidebar-container {
         display: none;
         width: 0px;
