@@ -489,7 +489,6 @@ button.app-btn-secondary {
   z-index: 10000;
   background-color: #18294D;
   color: #aeb2b7;
-  width: 400px;
   width: 25%;
   min-width: 300px;
   float: right;
@@ -526,6 +525,10 @@ button.app-btn-secondary {
     width: calc(100% - 300px);
   }
 
+  .message-compose-container {
+    width: 300px;
+  }
+
   .floating-main-action-btn-container {
     right: 7%;
   }
@@ -560,7 +563,7 @@ button.app-btn-secondary {
 
 
 .hidden-overflow {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 
@@ -588,6 +591,11 @@ a.logo_white {
   float: left;
   margin-top: 15px;
   text-transform: uppercase;
+}
+
+
+.primary_color_fg {
+  color: $primary_color;
 }
 
 
@@ -898,15 +906,6 @@ aside.side-menu {
   position: relative !important;
 }
 
-@media (max-width: 767px) {
-  .btn-group .dropdown-menu-right {
-      position: static !important;
-      margin-left: -150px;
-      margin-top: 25px;
-      display: -moz-popup;
-  }
-}
-
 // @media (min-width: 768px) {
 //   .table-responsive {
 //       overflow: visible;
@@ -1024,14 +1023,25 @@ textarea.resize-v {
   width: 75%;
 }
 
-.item-list-user-meta-names-container {
-  width: 83.3333333%;
+.message-list-user-meta-container {
+  width: 100%;
   white-space: nowrap;
+  overflow: hidden !important;
+}
+
+.item-list-user-meta-names-container {
+  width: 75%;
+  white-space: nowrap;
+  overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .item-list-user-meta-name {
   font-size: 1.3em;
+}
+
+.message-list-user-meta-name {
+  font-size: 0.95em;
 }
 
 .item-list-lottery-image-container {
@@ -1391,10 +1401,56 @@ section#container {
   overflow: scroll !important;
 }
 
+.message-list-received-container {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: #181F33;
+  margin-left: -10px;
+  margin-right: 26px;
+  padding: 4px 10px 4px 25px;
+}
+
+
+.message-list-sent-container {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background: #4E3C2D;
+  margin-right: -10px;
+  margin-left: 26px;
+  padding: 4px 25px 4px 10px;
+}
+
+
+.message-compose-container {
+  position: fixed;
+  bottom: 0px;
+  right: 0;
+  width: 25%;
+  background: #030315;
+}
+
+.message-compose-container input, .message-compose-container input:focus {
+  border: none !important;
+  background: #080823;
+  color: #FFF;
+}
+
 
 .clearfix {
   clear: both;
 }
+
+
+@media (max-width: 1200px) {
+
+
+  .message-compose-container {
+    width: 26.5%;
+  }
+
+
+}
+
 
 @media (max-width: 1090px) {
 
@@ -1421,6 +1477,11 @@ section#container {
 
   .lottery-detail-campaign-container {
       width: 70%;
+  }
+
+  
+  .message-compose-container {
+    width: 300px;
   }
 
 

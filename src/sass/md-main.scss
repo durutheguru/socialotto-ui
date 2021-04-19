@@ -150,3 +150,18 @@
     }
 
 }
+
+
+
+
+@media (max-width: 767px) {
+    .btn-group .dropdown-menu-right {
+        position: static !important;
+        margin-left: -150px;
+        margin-top: 25px;
+        display: -moz-popup;
+    }
+  }
+
+
+  
