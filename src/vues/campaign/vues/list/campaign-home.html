@@ -122,7 +122,7 @@
             <div class="col--1 pull-right button-container">
                 <button 
                     class="app-btn app-btn-primary box-shadowed"
-                    @click="dialogOpts.createUser.visible=true">
+                    @click="showCreateCampaignDialog()">
                     <i class="fa fa-plus large-font"></i>
                 </button>
             </div>
@@ -131,10 +131,10 @@
     </div>
 
 
-    <CreateBackOfficeUserDialog
-        v-if="dialogOpts.createUser.visible"
-        v-bind:visible="dialogOpts.createUser.visible"
-        v-on:close-dialog="hideCreateBackOfficeUser" />
+    <create-campaign-dialog
+        v-if="dialogOpts.createCampaign.visible"
+        v-bind:visible="dialogOpts.createCampaign.visible"
+        v-on:close-dialog="hideCreateCampaignDialog" />
         
 
 </div>

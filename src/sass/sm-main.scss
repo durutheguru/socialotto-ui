@@ -218,7 +218,7 @@
 }
 
 
-@media (max-height: 600px) {
+@media (max-height: 600px) and (max-width: 500px) {
 
     .stepy-tab {
         display: none;

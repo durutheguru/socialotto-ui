@@ -1408,6 +1408,7 @@ section#container {
   margin-left: -10px;
   margin-right: 26px;
   padding: 4px 10px 4px 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 
@@ -1418,6 +1419,7 @@ section#container {
   margin-right: -10px;
   margin-left: 26px;
   padding: 4px 25px 4px 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 
@@ -1438,6 +1440,16 @@ section#container {
 
 .clearfix {
   clear: both;
+}
+
+
+@media (min-width: 850px) {
+
+  .dialog-wizard-main-content-container {
+    height: 400px;
+    padding-bottom: 30px;
+  }
+
 }
 
 
