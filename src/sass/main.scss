@@ -826,7 +826,7 @@ a.sidebar-link-btn:hover {
 }
 
 .invalid-field {
-  border: 1px solid $wine !important;
+  border: 1px solid $pinkish !important;
 }
 
 
@@ -1225,6 +1225,7 @@ textarea.resize-v {
   height: 136px;
   min-height: 136px;
   max-height: 136px;
+  white-space: pre-line;
 }
 
 section.lottery-detail-number-item-container {

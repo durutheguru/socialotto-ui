@@ -8,7 +8,18 @@
             <span class="close-dialog-button-text">×</span>
         </button>
 
-        <h4 class="bold-font">Create Lottery</h4>
+        <h4 v-if="canDisplayTitle" class="bold-font">
+            Create Lottery
+        </h4>
+
+        <span class="blue" v-if="saveLottery.loading">
+            Processing <i class="fa fa-spinner fa-spin"></i>
+        </span>
+
+        <span 
+            class="wine smaller-font" 
+            v-if="isValidString(saveLottery.error)"
+            v-text="'ERROR: ' + saveLottery.error"></span>
 
     </div>
 
@@ -36,10 +47,10 @@
                                 <h5 class="grey bold-font">Basic Details</h5>
                             </div>
                             <div class="form-group">
-                                <label for="nameField">Name</label>
+                                <label for="nameField">Title</label>
                                 <validation-provider rules="required" v-slot="{ invalid }">
-                                    <input type="text" class="form-control" id="nameField"
-                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Name"
+                                    <input type="text" class="form-control" id="nameField" maxlength=""
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Title of Lottery"
                                         v-model="lottery.name" />
                                 </validation-provider>
                             </div>
@@ -47,7 +58,7 @@
                                 <label for="descField">Description</label>
                                 <validation-provider rules="required" v-slot="{ invalid }">
                                     <textarea class="form-control resize-v default-desc-text-area" id="descField"
-                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Description"
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Lottery Description"
                                         v-model="lottery.description">
                                     </textarea>
                                 </validation-provider>
@@ -67,20 +78,35 @@
                                                 v-bind:class="{'invalid-field': invalid}" v-model="lottery.endDate" />
                                         </validation-provider>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="lotteryEvalTime">Time of Lottery</label>
-                                        <validation-provider rules="required" v-slot="{ invalid }">
-                                            <input id="lotteryEvalTime" type="date" class="form-control"
-                                                v-bind:class="{'invalid-field': invalid}" v-model="lottery.timeOfEvaluation" />
-                                        </validation-provider>
+                                </div>
+                                <div class="col--12">
+                                    <div class="col--6 pull-left">
+                                        <div class="form-group">
+                                            <label for="lotteryEvalDate">Date of Lottery</label>
+                                            <validation-provider rules="required" v-slot="{ invalid }">
+                                                <input id="lotteryEvalDate" type="date" class="form-control"
+                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.dateOfEvaluation" />
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                    <div class="col--6 pull-left l-padding-small">
+                                        <div class="form-group">
+                                            <label for="lotteryEvalDate">Time of Lottery</label>
+                                            <validation-provider rules="required" v-slot="{ invalid }">
+                                                <input id="lotteryEvalTime" type="time" class="form-control"
+                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.timeOfEvaluation" />
+                                            </validation-provider>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col--12">
                                     <div class="col--6 pull-left">
                                         <div class="form-group">
-                                            <label for="lotteryTicketCost">Ticket Cost</label>
+                                            <label for="lotteryTicketCost">Ticket Cost (N)</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
-                                                <input id="lotteryTicketCost" type="number" class="form-control"
+                                                <input id="lotteryTicketCost" type="number" class="form-control" 
+                                                    step="1" pattern="\d*" min="100" max="1000"
+                                                    oninput="this.value = Math.round(this.value);" placeholder="min: 100, max: 1000"
                                                     v-bind:class="{'invalid-field': invalid}" v-model="lottery.ticketCost" />
                                             </validation-provider>
                                         </div>
@@ -89,73 +115,12 @@
                                         <div class="form-group">
                                             <label for="lotteryWinnersCount">Number of Winners</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
-                                                <input id="lotteryWinnersCount" type="number" class="form-control"
+                                                <input id="lotteryWinnersCount" type="number" class="form-control" step="1" pattern="\d*"
+                                                    min="1" max="20" oninput="this.value = Math.round(this.value);" placeholder="max: 20"
                                                     v-bind:class="{'invalid-field': invalid}" v-model="lottery.winnersCount" />
                                             </validation-provider>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div v-show="formWizard.isSelectedPage('STAGES')">
-                            <div class="col--12">
-                                <h5 class="grey bold-font">Stages</h5>
-                            </div>
-                            <div v-for="(stage, index) in lottery.stageDescriptions"
-                                class="slight-smaller-font col--12">
-                                <div class="col--3 h-padding-v-small">
-                                    <div class="form-group">
-                                        <label :for="'stage-' + (index + 1) + '-field'">Stage</label>
-                                        <validation-provider rules="required" v-slot="{ invalid }">
-                                            <select :id="'stage-' + (index + 1) + '-field'" class="form-control"
-                                                v-bind:class="{'invalid-field': invalid}" v-model="stage.stage">
-                                                <option value="" disabled>Select Stage</option>
-                                                <option v-for="stage in lotteryStages" v-bind:value="stage">
-                                                    {{stage}}
-                                                </option>
-                                            </select>
-                                        </validation-provider>
-                                    </div>
-                                </div>
-                                <div class="col--3 h-padding-v-small">
-                                    <div class="form-group">
-                                        <label :for="'winner-count-' + (index + 1) + '-field'">Winner Count</label>
-                                        <validation-provider rules="required" v-slot="{ invalid }">
-                                            <input type="number" class="form-control"
-                                                :id="'winner-count-' + (index + 1) + '-field'"
-                                                v-bind:class="{'invalid-field': invalid}"
-                                                placeholder="Enter Number of Stage Winners"
-                                                v-model="stage.winnersCount" />
-                                        </validation-provider>
-                                    </div>
-                                </div>
-                                <div class="col--6 h-padding-v-small">
-                                    <div class="form-group">
-                                        <label :for="'evaluation-time-' + (index + 1) + '-field'">Evaluation
-                                            Time</label>
-                                        <validation-provider rules="required" v-slot="{ invalid }">
-                                            <input :id="'evaluation-time-' + (index + 1) + '-field'"
-                                                type="datetime-local" class="form-control"
-                                                v-bind:class="{'invalid-field': invalid}"
-                                                v-model="stage.evaluationTime" />
-                                        </validation-provider>
-
-                                    </div>
-                                </div>
-                                <div class="col--12" v-show="canDeleteStage(index)">
-                                    <div class="pull-right ">
-                                        <button @click="deleteStage(index)"
-                                            class="btn btn-white white-btn-wine btn-default-width">
-                                            Delete
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col--12" v-show="lottery.stageDescriptions.length < lotteryStages.length">
-                                <div class="pull-left">
-                                    <button @click="addStage()" class="btn btn-white white-btn-blue btn-default-width">
-                                        Add
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -336,11 +301,6 @@
                     </div>
                     <div class="row max-width-container bottom-anchored-in-parent ">
                         <div class="col--12">
-                            <div class="pull-left h-padding-medium" v-if="saveLottery.loading">
-                                <span class="blue">
-                                    Loading <i class="fa fa-spinner fa-spin"></i>
-                                </span>
-                            </div>
                             <div class="modal-action-buttons-container">
                                 <input type="button" @click="formWizard.previous()" :disabled="!formWizard.canPrevious()"
                                     class="btn btn-danger default-dialog-action-btn" value="Previous" />
