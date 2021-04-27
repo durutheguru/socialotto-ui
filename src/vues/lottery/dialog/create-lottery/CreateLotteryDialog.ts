@@ -46,10 +46,11 @@ export default class CreateLotteryDialog extends BaseVue {
             description: '',
             lotteryImages: [],
             endDate: '',
-            ticketCost: 100,
+            ticketCost: '',
             timeOfEvaluation: '',
-            winnersCount: 0,
+            winnersCount: '',
             campaignSearch: '',
+            dateOfEvaluation: '',
             stageDescriptions: [
                 StageDescription.defaultStage()
             ]
@@ -85,7 +86,10 @@ export default class CreateLotteryDialog extends BaseVue {
     private createLottery() {
         Log.info(`Lottery Data Post: ${JSON.stringify(this.lottery)}`);
         const lotteryRequest = this.prepareLotteryRequest();
-        this.validateLotteryRequest(lotteryRequest);
+
+        if (!this.validateLotteryRequest(lotteryRequest)) {
+            return;
+        }
 
         this.saveLottery.error = '';
         this.saveLottery.loading = true;
@@ -121,13 +125,24 @@ export default class CreateLotteryDialog extends BaseVue {
     }
 
 
-    private validateLotteryRequest(lotteryRequest: any) {
+    private validateLotteryRequest(lotteryRequest: any): boolean {
         // implement client-side validation of lottery request
+        if (lotteryRequest.dateOfEvaluation <= lotteryRequest.endDate) {
+            this.saveLottery.error = 'Date of Lottery must come after End of Registration';
+            return false;
+        }
+
+        return true;
     }
 
 
     public close() {
         this.$emit(Constants.dialogClosedEvent);
+    }
+
+
+    private get canDisplayTitle(): boolean {
+        return !(this.isValidString(this.saveLottery.error) || this.saveLottery.loading);
     }
 
 

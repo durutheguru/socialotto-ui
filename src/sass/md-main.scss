@@ -2,7 +2,13 @@
 * 540px - 1000px
 */
 
+
+@import "./variables.scss";
+
+
+
 @media (max-width: 1000px) {
+    
     #main-sidebar-container {
         display: none;
         width: 0px;
@@ -48,7 +54,7 @@
 @media (max-width: 850px) {
 
     .modal-big {
-        width: 400px;
+        width: 430px;
     }
 
     .modal-action-buttons-container {
@@ -57,7 +63,7 @@
     }
 
     .wizard-step-list-item-container {
-        display: none;
+        width: 100%;
     }
 
     .wizard-main-item-container {
@@ -91,7 +97,7 @@
 
     .input-search-results-container {
         position: absolute;
-        top: 90px;
+        top: 185px;
         width: 300px;
     }
 
@@ -104,4 +110,58 @@
       padding: 0 !important;
     }
 
+    .stepy-titles li {
+        margin: 10px 3px !important;
+    }
+
+    .default-desc-text-area {
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
+    }
+
+    .lottery-detail-amount-raised span {
+        float: right;
+        font-size: 2.5em;
+        line-height: 2em;
+    }
+
+    .lottery-detail-amount-raised-lbl span {
+        font-size: 1.3em;
+    }
+
+    .lottery-detail-campaign-header {
+        padding-left: $medium_length;
+        padding-right: $medium_length;
+    }
+
+    .lottery-detail-campaign-profile-img {
+        width: 40%;
+    }
+
+    .lottery-detail-campaign-title {
+        width: 60%;
+        font-size: 0.85em;
+    }
+
+
+    .lottery-details-campaign-descriptor {
+        font-size: 1.5em !important;
+    }
+
 }
+
+
+
+
+@media (max-width: 767px) {
+    .btn-group .dropdown-menu-right {
+        position: static !important;
+        margin-left: -150px;
+        margin-top: 25px;
+        display: -moz-popup;
+    }
+  }
+
+
+  

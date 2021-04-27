@@ -2,7 +2,7 @@ import { Component } from 'vue-property-decorator';
 
 import BaseVue from '@/components/BaseVue';
 import FloatingActionButton from '@/components/floating-action-button/FloatingActionButton';
-import CreateBackOfficeUserDialog from '@/vues/backoffice/vues/users/backoffice-users/dialog/new-user/CreateBackOfficeUserDialog';
+import CreateCampaignDialog from '@/vues/campaign/dialog/create-campaign/CreateCampaignDialog';
 
 import { Log, Web } from '@/components/util';
 
@@ -11,7 +11,7 @@ import WithRender from './campaign-home.html';
 @Component({
     components: {
         // FloatingActionButton,
-        CreateBackOfficeUserDialog,
+        CreateCampaignDialog,
     },
 })
 @WithRender
@@ -24,11 +24,10 @@ export default class CampaignHomeComponent extends BaseVue {
             selectedUser: {},
         },
 
-        createUser: {
+        createCampaign: {
             visible: false,
         },
     };
-
 
 
     public mounted() {
@@ -36,15 +35,14 @@ export default class CampaignHomeComponent extends BaseVue {
     }
 
 
-    public showCreateBackOfficeUser() {
-        Log.info('Creating BackOffice User');
-        this.dialogOpts.createUser.visible = true;
+    public showCreateCampaignDialog() {
+        Log.info('Creating Campaign Dialog');
+        this.dialogOpts.createCampaign.visible = true;
     }
 
 
-    public hideCreateBackOfficeUser() {
-        this.dialogOpts.createUser.visible = false;
-        
+    public hideCreateCampaignDialog() {
+        this.dialogOpts.createCampaign.visible = false;
     }
 
 
@@ -59,4 +57,5 @@ export default class CampaignHomeComponent extends BaseVue {
 
 
 }
+
 

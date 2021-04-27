@@ -1,0 +1,100 @@
+<modal v-bind:show="visible" v-bind:modal-class="'modal-big'" v-on:close-dialog="close">
+
+    <div class="col--12" slot="header">
+
+        <button type="button" data-dismiss="modal" aria-label="Close" 
+            class="close pull-right"
+            @click="close()">
+            <span class="close-dialog-button-text">×</span>
+        </button>
+
+        <h4 class="bold-font">Create Campaign</h4>
+
+    </div>
+
+    <div class="row h-padding-small" slot="body">
+        <div class="panel-body col--12">
+
+            <div class="wizard-step-list-item-container">
+                <div class="stepy-tab">
+                    <ul id="default-titles" class="stepy-titles clearfix">
+                        <li v-for="(page, index) in formWizard.pages" @click="formWizard.setPage(index)"
+                            v-bind:class="{'current-step': formWizard.isSelectedPage(page.key)}">
+                            <div>Step {{index+1}}</div>
+                            <span> </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="wizard-main-item-container">
+                <validation-observer ref="observer" tag="form" role="form" v-slot="{ invalid }"
+                    @submit.prevent="createCampaign" novalidate>
+                    <div class="dialog-wizard-main-content-container">
+                        <div v-show="formWizard.isSelectedPage('BASIC_DETAILS')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Basic Details</h5>
+                            </div>
+                            <div class="form-group">
+                                <label for="nameField">Name</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <input type="text" class="form-control" id="nameField"
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Name"
+                                        v-model="campaign.name" />
+                                </validation-provider>
+                            </div>
+                            <div class="form-group">
+                                <label for="descField">Description</label>
+                                <validation-provider rules="required" v-slot="{ invalid }">
+                                    <textarea class="form-control resize-v default-desc-text-area" id="descField"
+                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Description"
+                                        v-model="campaign.description">
+                                    </textarea>
+                                </validation-provider>
+                            </div>
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('UPLOAD_IMAGES')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Upload Images</h5>
+                            </div>
+                            <br /><br />
+                            Coming Soon...
+                        </div>
+                        <div v-show="formWizard.isSelectedPage('CONFIRMATION')">
+                            <div class="col--12">
+                                <h5 class="grey bold-font">Confirmation</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row max-width-container bottom-anchored-in-parent ">
+                        <div class="col--12">
+                            <div class="pull-left h-padding-medium" v-if="saveCampaign.loading">
+                            <!-- <div class="pull-left h-padding-medium" v-if="false"> -->
+                                <span class="blue">
+                                    Loading <i class="fa fa-spinner fa-spin"></i>
+                                </span>
+                            </div>
+                            <div class="modal-action-buttons-container">
+                                <input type="button" @click="formWizard.previous()" :disabled="!formWizard.canPrevious()"
+                                    class="btn btn-danger default-dialog-action-btn" value="Previous" />
+                                <input type="button" @click="formWizard.next()" :disabled="!formWizard.canNext()"
+                                    class="btn btn-primary default-dialog-action-btn" v-if="!formWizard.isLastPage()"
+                                    value="Next" />
+
+                                <!-- <button @click="createCampaign()" :disabled="false||invalid" -->
+                                <button @click="createCampaign()" :disabled="saveCampaign.loading||invalid"
+                                    class="btn btn-primary default-dialog-action-btn" v-if="formWizard.isLastPage()">
+                                    Submit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </validation-observer>
+            </div>
+        </div>
+
+    </div>
+    <div class="no-display" slot="footer">
+        //
+    </div>
+</modal>

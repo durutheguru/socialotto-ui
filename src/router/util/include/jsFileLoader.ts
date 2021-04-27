@@ -4,7 +4,14 @@
     vendorJS.setAttribute('src', '/compiled/js/compile_000.js');
     document.body.appendChild(vendorJS);
 
-    document.body.addEventListener('mousewheel', (e) => {
-        e.preventDefault();
-    }, { passive: false });
+
+    window.addEventListener('wheel', (e) => {
+        // e.preventDefault();
+        // this.mousewheel.bind(this)
+        // console.log('Mouse Wheeling...');
+    }, { passive: true });
+
+
 })();
+
+
