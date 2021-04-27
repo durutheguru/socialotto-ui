@@ -1,10 +1,10 @@
 import AuthContextDescriptor from './AuthContextDescriptor';
 
 
-export default class LotteryUserAuthDescriptor implements AuthContextDescriptor {
+export default class PlatformUserAuthDescriptor implements AuthContextDescriptor {
 
 
-    public name: string = 'LOTTERY_USER';
+    public name: string = 'PLATFORM_USER';
 
 
     public homeUrl: string = '/lottery';
@@ -13,4 +13,5 @@ export default class LotteryUserAuthDescriptor implements AuthContextDescriptor 
     public accessList: string[] = [];
 
 }
+
 

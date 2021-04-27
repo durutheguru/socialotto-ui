@@ -4,7 +4,7 @@ import BaseVue from '@/components/BaseVue';
 import { Log } from '@/components/util';
 
 import CampaignService from '@/vues/backoffice/vues/campaign/service/CampaignService';
-import UserCampaignRegistrationDialog from './dialog/UserCampaignRegistrationDialog';
+import JoinLotteryDialog from './dialog/join-lottery/JoinLotteryDialog';
 
 import WithRender from './lottery-detail.html';
 
@@ -13,15 +13,15 @@ import WithRender from './lottery-detail.html';
 @WithRender
 @Component({
     components: {
-        UserCampaignRegistrationDialog,
-    }
+        JoinLotteryDialog,
+    },
 })
 export default class LotteryDetailComponent extends BaseVue {
 
 
     private dialogOpts: any = {
 
-        userCampaignRegistration: {
+        joinLottery: {
             visible: false,
         },
 
@@ -44,13 +44,13 @@ export default class LotteryDetailComponent extends BaseVue {
     }
 
 
-    private showUserRegistrationDialog() {
-        this.dialogOpts.userCampaignRegistration.visible = true;
+    private showJoinLotteryDialog() {
+        this.dialogOpts.joinLottery.visible = true;
     }
 
 
-    private hideUserRegistrationDialog() {
-        this.dialogOpts.userCampaignRegistration.visible = false;
+    private hideJoinLotteryDialog() {
+        this.dialogOpts.joinLottery.visible = false;
     }
 
 
