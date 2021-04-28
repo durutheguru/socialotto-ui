@@ -5,7 +5,7 @@ import PaginatedContainerVue from '@/components/PaginatedContainerVue';
 import PageDataModel from '@/components/core/PageDataModel';
 import SearchField from '@/components/search-field/SearchField';
 import PageNavigator from '@/components/page-navigator/PageNavigator.vue';
-import CampaignService from './service/CampaignService';
+import CampaignService from '@/services/campaign/CampaignService';
 import PageRequest from '@/components/core/PageRequest';
 import CreateCampaignDialog from '../campaign/dialog/new-campaign/CreateCampaignDialog';
 import { EventTrigger } from '@/components/core/Event';

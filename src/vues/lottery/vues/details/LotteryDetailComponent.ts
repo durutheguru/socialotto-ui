@@ -3,11 +3,10 @@ import { Component } from 'vue-property-decorator';
 import BaseVue from '@/components/BaseVue';
 import { Log } from '@/components/util';
 
-import CampaignService from '@/vues/backoffice/vues/campaign/service/CampaignService';
+import CampaignService from '@/services/campaign/CampaignService';
 import JoinLotteryDialog from './dialog/join-lottery/JoinLotteryDialog';
 
 import WithRender from './lottery-detail.html';
-
 
 
 @WithRender

@@ -44,6 +44,19 @@ export default class CampaignService {
     }
 
 
+    public static searchActiveCampaign(
+        query: string, 
+        pageRequest: PageRequest,
+        successHandler: APISuccessCallback,
+        errorHandler?: APIErrorCallback,
+    ) {
+        Web.get(
+            `/api/v1/campaign_request/search?query=${query}&page=${pageRequest.page}&size=${pageRequest.size}`,
+            successHandler, errorHandler,
+        );
+    }
+
+
     public static getCampaignByStatus(
         status: string,
         pageRequest: PageRequest,

@@ -5,10 +5,14 @@ import { Component, Prop } from 'vue-property-decorator';
 import Modal from '@/components/modal/Modal';
 import BaseVue from '@/components/BaseVue';
 import { Log, Constants, Util } from '@/components/util';
-import BackOfficeUserService from '@/vues/backoffice/vues/users/backoffice-users/service/BackOfficeUserService';
 import WizardPageToggle from '@/components/modal/wizard/WizardPageToggle';
 import StageDescription from '@/vues/backoffice/vues/campaign/model/StageDescription';
 import ApiResource from '@/components/core/ApiResource';
+import FileUploader from '@/components/file-uploader/FileUploader';
+import { EventBus } from '@/components/core/Event';
+import CampaignService from '@/services/campaign/CampaignService';
+import ApiResourceList from '@/components/core/ApiResourceList';
+import PageRequest from '@/components/core/PageRequest';
 
 
 
@@ -21,15 +25,8 @@ import ApiResource from '@/components/core/ApiResource';
 export default class CreateLotteryDialog extends BaseVue {
 
 
-    @Prop({default: false})
+    @Prop({ default: false })
     private visible!: boolean;
-
-
-    private saveLottery: ApiResource = ApiResource.create();
-
-
-    private lottery!: any;
-
 
     private formWizard: WizardPageToggle = new WizardPageToggle(
         'BASIC_DETAILS',
@@ -39,9 +36,22 @@ export default class CreateLotteryDialog extends BaseVue {
         'CONFIRMATION',
     );
 
+    private searchEvent: string = 'campaign-search-event';
+
+    private saveLottery: ApiResource = ApiResource.create();
+
+    private lottery!: any;
+
+    private fileUploader!: FileUploader;
+
+    private searchCampaigns: ApiResourceList = ApiResourceList.createDefault();
+
+
 
     public mounted() {
-        this.lottery = {
+        let self = this;
+
+        self.lottery = {
             name: '',
             description: '',
             lotteryImages: [],
@@ -55,6 +65,33 @@ export default class CreateLotteryDialog extends BaseVue {
                 StageDescription.defaultStage()
             ]
         };
+
+        self.fileUploader = new FileUploader(
+            '/upload', 3
+        );
+
+        self.addEventListeners();
+    }
+
+
+    private addEventListeners() {
+        let self = this;
+
+        EventBus.$on(
+            Constants.fileUploadEvent,
+
+            (data: any) => {
+                self.$forceUpdate();
+            },
+        );
+
+        EventBus.$on(
+            self.searchEvent,
+
+            (data: any) => {
+                self.searchActiveCampaigns();
+            },
+        );
     }
 
 
@@ -78,7 +115,7 @@ export default class CreateLotteryDialog extends BaseVue {
 
 
     private canDeleteStage(index: number): boolean {
-        return (this.lottery.stageDescriptions.length > 1) && 
+        return (this.lottery.stageDescriptions.length > 1) &&
             (index === this.lottery.stageDescriptions.length - 1);
     }
 
@@ -143,6 +180,54 @@ export default class CreateLotteryDialog extends BaseVue {
 
     private get canDisplayTitle(): boolean {
         return !(this.isValidString(this.saveLottery.error) || this.saveLottery.loading);
+    }
+
+
+    private get hasImages(): boolean {
+        Log.info(`Has Images: ${this.lottery.lotteryImages.length > 0}`);
+        return this.lottery.lotteryImages.length > 0;
+    }
+
+
+    public fileChanged(event: any) {
+        this.fileUploader.fileChange(event);
+        this.$forceUpdate();
+    }
+
+
+    public searchActiveCampaigns() {
+        this.searchCampaigns.data = [];
+
+        if (!this.isValidString(this.lottery.campaignSearch)) {
+            return;
+        }
+
+        let self = this;
+
+        self.searchCampaigns.error = '';
+        self.searchCampaigns.loading = true;
+
+        Util.throttle(
+            {
+                key: "lottery-campaigns-search",
+
+                run: () => {
+
+                    CampaignService.searchActiveCampaign(
+                        self.lottery.campaignSearch, 
+            
+                        new PageRequest(0, 4), 
+            
+                        (response) => {
+                            self.searchCampaigns.data = response.data.content;
+                        },
+                    );
+                },
+
+                time: 500,
+            }
+        );
+        
     }
 
 

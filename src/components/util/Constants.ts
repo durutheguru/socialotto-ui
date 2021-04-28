@@ -9,6 +9,8 @@ export default class Constants {
 
     public static routeClearedEvent: string = 'route-cleared';
 
+    public static fileUploadEvent: string = 'file-upload';
+
     public static defaultEventTriggerTimeout: number = 400;
 
     public static previousPageNavigationEvent: string = 'previous-page-nav';

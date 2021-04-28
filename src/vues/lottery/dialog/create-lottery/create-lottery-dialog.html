@@ -2,9 +2,7 @@
 
     <div class="col--12" slot="header">
 
-        <button type="button" data-dismiss="modal" aria-label="Close" 
-            class="close pull-right"
-            @click="close()">
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close pull-right" @click="close()">
             <span class="close-dialog-button-text">×</span>
         </button>
 
@@ -16,9 +14,7 @@
             Processing <i class="fa fa-spinner fa-spin"></i>
         </span>
 
-        <span 
-            class="wine smaller-font" 
-            v-if="isValidString(saveLottery.error)"
+        <span class="wine smaller-font" v-if="isValidString(saveLottery.error)"
             v-text="'ERROR: ' + saveLottery.error"></span>
 
     </div>
@@ -58,8 +54,8 @@
                                 <label for="descField">Description</label>
                                 <validation-provider rules="required" v-slot="{ invalid }">
                                     <textarea class="form-control resize-v default-desc-text-area" id="descField"
-                                        v-bind:class="{'invalid-field': invalid}" placeholder="Enter Lottery Description"
-                                        v-model="lottery.description">
+                                        v-bind:class="{'invalid-field': invalid}"
+                                        placeholder="Enter Lottery Description" v-model="lottery.description">
                                     </textarea>
                                 </validation-provider>
                             </div>
@@ -85,7 +81,8 @@
                                             <label for="lotteryEvalDate">Date of Lottery</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
                                                 <input id="lotteryEvalDate" type="date" class="form-control"
-                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.dateOfEvaluation" />
+                                                    v-bind:class="{'invalid-field': invalid}"
+                                                    v-model="lottery.dateOfEvaluation" />
                                             </validation-provider>
                                         </div>
                                     </div>
@@ -94,7 +91,8 @@
                                             <label for="lotteryEvalDate">Time of Lottery</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
                                                 <input id="lotteryEvalTime" type="time" class="form-control"
-                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.timeOfEvaluation" />
+                                                    v-bind:class="{'invalid-field': invalid}"
+                                                    v-model="lottery.timeOfEvaluation" />
                                             </validation-provider>
                                         </div>
                                     </div>
@@ -104,10 +102,12 @@
                                         <div class="form-group">
                                             <label for="lotteryTicketCost">Ticket Cost (N)</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
-                                                <input id="lotteryTicketCost" type="number" class="form-control" 
+                                                <input id="lotteryTicketCost" type="number" class="form-control"
                                                     step="1" pattern="\d*" min="100" max="1000"
-                                                    oninput="this.value = Math.round(this.value);" placeholder="min: 100, max: 1000"
-                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.ticketCost" />
+                                                    oninput="this.value = Math.round(this.value);"
+                                                    placeholder="min: 100, max: 1000"
+                                                    v-bind:class="{'invalid-field': invalid}"
+                                                    v-model="lottery.ticketCost" />
                                             </validation-provider>
                                         </div>
                                     </div>
@@ -115,9 +115,11 @@
                                         <div class="form-group">
                                             <label for="lotteryWinnersCount">Number of Winners</label>
                                             <validation-provider rules="required" v-slot="{ invalid }">
-                                                <input id="lotteryWinnersCount" type="number" class="form-control" step="1" pattern="\d*"
-                                                    min="1" max="20" oninput="this.value = Math.round(this.value);" placeholder="max: 20"
-                                                    v-bind:class="{'invalid-field': invalid}" v-model="lottery.winnersCount" />
+                                                <input id="lotteryWinnersCount" type="number" class="form-control"
+                                                    step="1" pattern="\d*" min="1" max="20"
+                                                    oninput="this.value = Math.round(this.value);" placeholder="max: 20"
+                                                    v-bind:class="{'invalid-field': invalid}"
+                                                    v-model="lottery.winnersCount" />
                                             </validation-provider>
                                         </div>
                                     </div>
@@ -129,30 +131,58 @@
                                 <h5 class="grey bold-font">Upload Images</h5>
                             </div>
                             <br /><br />
-                            Coming Soon...
+                            <input class="btn btn-outline-success" type="file" name="files[]" multiple
+                                v-on:change="fileChanged" />
+
+                            <table role="presentation" class="table v-margin-medium table-striped">
+                                <tbody class="files">
+                                    <tr 
+                                        v-for="fileUpload in fileUploader.uploads">
+                                        <td class="col--4">
+                                            <p>{{fileUpload.getFile().name}}</p>
+                                        </td>
+                                        <td class="col--5">
+                                            <br />
+                                            <div 
+                                                v-if="fileUpload.getResource().loading"
+                                                class="progress progress-striped active" role="progressbar"
+                                                aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:100%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="col--3">
+                                            <button data-toggle="button" class="pull-right btn btn-danger" 
+                                                @click="fileUploader.removeFile(fileUpload.getFile())">
+                                                <i class="fa fa-trash slight-bigger-text"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div v-show="formWizard.isSelectedPage('SELECT_CAMPAIGNS')">
                             <div class="col--12">
                                 <h5 class="grey bold-font">Select Campaigns</h5>
                             </div>
                             <div class="col--12 h-padding-v-small">
-                                <base-input 
-                                    id="lotteryCampaignsSearch" 
-                                    type="text" v-model="lottery.campaignSearch"
-                                    aria-describedby="addon-right addon-left" 
-                                    placeholder="Search for a Campaign" 
-                                    addon-left-icon="fa fa-search" />
-
+                                <div class="iconic-input">
+                                    <i class="fa fa-search large-font h-margin-small"></i>
+                                    <input id="lotteryCampaignsSearch" class="form-control" type="text" v-model="lottery.campaignSearch"
+                                        placeholder="Search for a Campaign" v-on:input="searchActiveCampaigns()" />
+                                </div>
+                                
                                 <div class="col--12 selected-campaign-search-results-container" v-show="true">
                                     <div class="campaign-search-result v-margin-small">
                                         <div class="row h-padding-medium">
-                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                            <div
+                                                class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
                                                 <div
                                                     style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
                                                 </div>
                                             </div>
-                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                            <div
+                                                class="campaign-search-result-name-container single-line-hidden-overflow">
                                                 <span class="dark-grey slight-smaller-font">
                                                     @burnaboyburnaboyburnaboy
                                                 </span>
@@ -172,13 +202,15 @@
 
                                     <div class="campaign-search-result v-margin-small">
                                         <div class="row h-padding-medium">
-                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                            <div
+                                                class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
                                                 <div
                                                     style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
                                                 </div>
                                             </div>
-                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                            <div
+                                                class="campaign-search-result-name-container single-line-hidden-overflow">
                                                 <span class="dark-grey slight-smaller-font">
                                                     @burnaboyburnaboyburnaboy
                                                 </span>
@@ -198,13 +230,15 @@
 
                                     <div class="campaign-search-result v-margin-small">
                                         <div class="row h-padding-medium">
-                                            <div class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
+                                            <div
+                                                class="pull-left profile-photo-container campaign-search-result-photo-container r-margin-small">
                                                 <div
                                                     style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
                                                 </div>
                                             </div>
-                                            <div class="campaign-search-result-name-container single-line-hidden-overflow">
+                                            <div
+                                                class="campaign-search-result-name-container single-line-hidden-overflow">
                                                 <span class="dark-grey slight-smaller-font">
                                                     @burnaboyburnaboyburnaboy
                                                 </span>
@@ -222,68 +256,30 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="input-search-results-container" v-show="true">
 
-                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
+                                <div class="input-search-results-container box-shadowed" v-show="searchCampaigns.data.length">
+
+                                    <div v-for="result in searchCampaigns.data"
+                                        class="row bottom-bordered-lighter h-padding-medium v-padding-small pointer">
                                         <div class="col--12">
                                             <div class="col--1 pull-left profile-photo-container r-margin-small">
-                                                <div
+                                                <img 
+                                                        v-if="result.owner.photoThumbnail" 
+                                                        class="img-profile-thumbnail"
+                                                        :src="result.owner.photoThumbnail" />
+                                                <div v-else 
                                                     style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
-
+                                                    
                                                 </div>
                                             </div>
                                             <div class="campaign-search-overlay-details-container">
                                                 <div>
-                                                    <span class="bold-font">Burna Boy</span>
+                                                    <span class="bold-font">{{result.owner.name}}</span>
                                                     <span><i class="fa fa-check-circle blue"></i></span>
-                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
+                                                    <span class="dark-grey h-margin-small">@{{result.owner.username}}</span>
                                                 </div>
                                                 <div class="slight-smaller-font single-line-hidden-overflow">
-                                                    Support my campaign to deliver laptops for 5 devs
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
-                                        <div class="col--12">
-                                            <div class="col--1 pull-left profile-photo-container r-margin-small">
-                                                <div
-                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
-
-                                                </div>
-                                            </div>
-                                            <div class="campaign-search-overlay-details-container">
-                                                <div>
-                                                    <span class="bold-font">Burna Boy</span>
-                                                    <span><i class="fa fa-check-circle blue"></i></span>
-                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
-                                                </div>
-                                                <div class="slight-smaller-font single-line-hidden-overflow">
-                                                    Support my campaign to deliver laptops for 5 devs
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row bottom-bordered-lighter h-padding-medium v-padding-small">
-                                        <div class="col--12">
-                                            <div class="col--1 pull-left profile-photo-container r-margin-small">
-                                                <div
-                                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
-
-                                                </div>
-                                            </div>
-                                            <div class="campaign-search-overlay-details-container">
-                                                <div>
-                                                    <span class="bold-font">Burna Boy</span>
-                                                    <span><i class="fa fa-check-circle blue"></i></span>
-                                                    <span class="dark-grey h-margin-small">@burnaboy</span>
-                                                </div>
-                                                <div class="slight-smaller-font single-line-hidden-overflow">
-                                                    Support my campaign to deliver laptops for 5 devs. Support my campaign to deliver laptops for 5 devs
-                                                    . Support my campaign to deliver laptops for 5 devs 
+                                                    {{result.name}}
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +298,8 @@
                     <div class="row max-width-container bottom-anchored-in-parent ">
                         <div class="col--12">
                             <div class="modal-action-buttons-container">
-                                <input type="button" @click="formWizard.previous()" :disabled="!formWizard.canPrevious()"
+                                <input type="button" @click="formWizard.previous()"
+                                    :disabled="!formWizard.canPrevious()"
                                     class="btn btn-danger default-dialog-action-btn" value="Previous" />
                                 <input type="button" @click="formWizard.next()" :disabled="!formWizard.canNext()"
                                     class="btn btn-primary default-dialog-action-btn" v-if="!formWizard.isLastPage()"

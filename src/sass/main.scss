@@ -402,6 +402,13 @@ l-padding-small {
 }
 
 
+.img-profile-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+
 .relative {
   position: relative;
 }
@@ -966,6 +973,9 @@ table {
   border-spacing: 0;
 }
 
+#lotteryCampaignsSearch {
+  padding-left: 40px !important;
+}
 
 .flex-container-baseline {
   display: flex;
@@ -1286,7 +1296,7 @@ span.lottery-detail-number-desc {
   top: 120px;
   width: 400px;
   padding: 10px;
-  background-color: rgba(245, 245, 245, 0.94);
+  background-color: rgba(245, 245, 245);
   border: 1px solid rgb(221, 221, 221);
   max-height: 380px;
   overflow: scroll;

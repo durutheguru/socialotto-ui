@@ -5,7 +5,7 @@ import { Component, Prop } from 'vue-property-decorator';
 import Modal from '@/components/modal/Modal';
 import BaseVue from '@/components/BaseVue';
 import { Constants, Log, Util } from '@/components/util';
-import CampaignService from '../../../service/CampaignService';
+import CampaignService from '@/services/campaign/CampaignService';
 
 
 
