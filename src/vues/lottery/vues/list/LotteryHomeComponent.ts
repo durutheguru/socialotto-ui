@@ -28,7 +28,6 @@ export default class LotteryHomeComponent extends BaseVue {
     };
 
 
-
     public mounted() {
         this.$store.dispatch('lottery/loadCampaigns');
     }

@@ -10,9 +10,11 @@ import StageDescription from '@/vues/backoffice/vues/campaign/model/StageDescrip
 import ApiResource from '@/components/core/ApiResource';
 import FileUploader from '@/components/file-uploader/FileUploader';
 import { EventBus } from '@/components/core/Event';
+import LotteryService from '@/services/lottery/LotteryService';
 import CampaignService from '@/services/campaign/CampaignService';
 import ApiResourceList from '@/components/core/ApiResourceList';
 import PageRequest from '@/components/core/PageRequest';
+import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from '@js-joda/core';
 
 
 
@@ -38,13 +40,13 @@ export default class CreateLotteryDialog extends BaseVue {
 
     private searchEvent: string = 'campaign-search-event';
 
-    private saveLottery: ApiResource = ApiResource.create();
-
     private lottery!: any;
 
     private fileUploader!: FileUploader;
 
     private searchCampaigns: ApiResourceList = ApiResourceList.createDefault();
+
+    private saveLottery: ApiResource = ApiResource.create();
 
 
 
@@ -57,13 +59,16 @@ export default class CreateLotteryDialog extends BaseVue {
             lotteryImages: [],
             endDate: '',
             ticketCost: '',
+            dateOfEvaluation: '',
             timeOfEvaluation: '',
             winnersCount: '',
             campaignSearch: '',
-            dateOfEvaluation: '',
             stageDescriptions: [
-                StageDescription.defaultStage()
-            ]
+                StageDescription.defaultStage(),
+            ],
+            selectedCampaigns: [],
+            minRegistrationEndDate: LocalDate.now().plusDays(1),
+            maxRegistrationEndDate: LocalDate.now().plusDays(14),
         };
 
         self.fileUploader = new FileUploader(
@@ -121,41 +126,78 @@ export default class CreateLotteryDialog extends BaseVue {
 
 
     private createLottery() {
-        Log.info(`Lottery Data Post: ${JSON.stringify(this.lottery)}`);
+        let self = this;
+
+        Log.info(`Lottery Data Post: ${JSON.stringify(self.lottery)}`);
         const lotteryRequest = this.prepareLotteryRequest();
 
         if (!this.validateLotteryRequest(lotteryRequest)) {
             return;
         }
 
-        this.saveLottery.error = '';
-        this.saveLottery.loading = true;
+        self.saveLottery.error = '';
+        self.saveLottery.loading = true;
 
-        // CampaignService.saveCampaign(
-        //     campaignRequest,
+        LotteryService.createLottery(
+            lotteryRequest, 
 
-        //     (response) => {
-        //         this.saveCampaign.loading = false;
-        //         this.close();
-        //     },
+            (response: any) => {
+                self.saveLottery.loading = false;
+                self.close();
+            },
 
-        //     (error) => {
-        //         this.saveCampaign.loading = false;
-        //         this.saveCampaign.error = Util.extractError(error);
-        //     }
-        // );
+            (error: any) => {
+                self.saveLottery.loading = false;
+                self.saveLottery.error = self.extractError(error);
+                Log.error(`Error while creating Lottery: ${error}`);
+            }
+        );
     }
 
 
     private prepareLotteryRequest(): any {
-        const request = this.lottery;
+        let self = this;
 
-        request.stageDescriptions.forEach(
+        this.lottery.stageDescriptions.forEach(
             (stage: StageDescription) => {
                 stage.evaluationTime = stage.evaluationTime.replace('T', ' ');
             }
         );
 
+        let lotteryStageDescription = this.lottery.stageDescriptions[0];
+
+        let request = {
+            lottery: {
+                name: this.lottery.name, 
+                description: this.lottery.description,
+                endDate: this.lottery.endDate,
+                ticketCost: this.lottery.ticketCost,
+                stageDescriptions: [
+                    {
+                        stage: lotteryStageDescription.stage,
+                        winnersCount: lotteryStageDescription.winnersCount,
+                        evaluationTime: ZonedDateTime.of(
+                            LocalDateTime.of(
+                                LocalDate.parse(this.lottery.dateOfEvaluation),
+                                LocalTime.parse(this.lottery.timeOfEvaluation)
+                            ),
+                
+                            ZoneId.systemDefault(),
+                        ).withFixedOffsetZone().toString(),
+                    },
+                ], 
+            },
+            fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
+            beneficiaries: this.lottery.selectedCampaigns.map(
+                (val: any) => {
+                    return {
+                        wallet: val.wallet
+                    };
+                },
+            ),
+        };
+
+        Log.info(`Lottery: ${JSON.stringify(this.lottery)}`);
         Log.info(`Lottery Data Post Request: ${JSON.stringify(request)}`);
 
         return request;
@@ -228,6 +270,38 @@ export default class CreateLotteryDialog extends BaseVue {
             }
         );
         
+    }
+
+
+    private clearCampaignSearch() {
+        this.lottery.campaignSearch = '';
+        this.searchCampaigns.clear();
+    }
+
+
+    public addSelectedCampaign(campaign: any) {
+        if (!this.canAddCampaign(campaign)) {
+            Log.info(`Campaign ID ${campaign.id} already added`);
+        } else {
+            this.lottery.selectedCampaigns.push(campaign);
+        }
+
+        this.clearCampaignSearch();
+    }
+
+
+    private canAddCampaign(campaign: any) {
+        return this.lottery.selectedCampaigns.length < 3 && 
+            this.lottery.selectedCampaigns
+            .filter((val: any) => val.id === campaign.id).length === 0;
+    }
+
+
+    public removeSelectedCampaign(campaign: any) {
+        this.lottery.selectedCampaigns = this.lottery.selectedCampaigns
+            .filter((val: any) => val.id !== campaign.id);
+        
+        this.$forceUpdate();
     }
 
 

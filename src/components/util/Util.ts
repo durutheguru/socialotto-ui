@@ -125,6 +125,7 @@ export default class Util {
         return dest;
     }
 
+
     public static uuid(): string {
         return ('' + 1e7 + -1e3 + -4e3 + -8e3 + -1e11).replace(
                 /1|0/g, 
@@ -133,6 +134,43 @@ export default class Util {
                     return (0 | Math.random() * 16).toString(16) ;
                 }
             );
+    }
+
+
+    public static copy(src: any, dest: any) {
+        if (typeof src !== "object") {
+            throw new Error("Source must be Javascript objects");
+        }
+
+        if (typeof dest !== "object") {
+            dest = {};
+        }
+
+        for (let i in src) {
+            if (src.hasOwnProperty(i)) {
+                dest[i] = src[i];
+            }
+        }
+
+        return dest;
+    }
+
+
+    public static copyArray(src: any, dest: any) {
+        if (!Util.isValidArray(src, true) || !Util.isValidArray(dest, true)) {
+            throw new Error("Both source and Destination must be valid Javascript arrays");
+        }
+
+        for (let i = 0, l = src.length; i < l; i++) {
+            dest.push(src[i]);
+        }
+
+        return dest;
+    }
+
+
+    public static clone(obj: any) {
+        return $.extend(true, {}, obj);
     }
 
 

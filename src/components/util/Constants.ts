@@ -2,6 +2,9 @@
 export default class Constants {
 
 
+    public static API_BASE: string = '/api/v1';
+
+
     // Event Related Constants
     public static dialogClosedEvent: string = 'close-dialog';
 

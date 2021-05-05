@@ -2,15 +2,23 @@ import { Web, Log, Util, Constants } from '@/components/util';
 
 import ApiResource from '@/components/core/ApiResource';
 import PageDataModel from '@/components/core/PageDataModel';
+import PullStreamDataResponseResolver from '@/components/core/resolver/PullStreamDataResponseResolver';
 
 
-const state = {
 
-    selectedCampaign: ApiResource.plain(),
+const getDefaultState = () => {
+    return {
 
-    campaigns: PageDataModel.newModel('campaigns'),
-
+        lotteries: PageDataModel.newModel('lottery'),
+    
+    };
 };
+
+
+const resolver = new PullStreamDataResponseResolver();
+
+
+const state = getDefaultState();
 
 
 const getters = { };
@@ -18,47 +26,62 @@ const getters = { };
 
 const mutations = {
 
-    setCampaigns(context: any, campaignUpdate: any) {
-        Log.info('Assigning Campaigns Page Data: ');
 
-        PageDataModel.assignModelData(
-            context.campaigns, 
+    resetState(context: any) {
+        Object.assign(context, getDefaultState())
+    },
 
-            campaignUpdate.apiResponse,
 
-            campaignUpdate.isSearchResult
+    appendLotteries(context: any, lotteryUpdate: any) {
+        Log.info(`Appending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+
+        PageDataModel.appendModelData(
+            context.lotteries, 
+
+            lotteryUpdate.apiResponse,
+
+            lotteryUpdate.isSearchResult,
+
+            resolver
         );
     },
 
-    setCampaignsError(context: any, campaignError: any) {
-        Log.info('Assigning Campaign Error response: ');
-        context.campaigns.error = Util.extractError(campaignError.apiError);
+
+    prependLotteries(context: any, lotteryUpdate: any) {
+        Log.info(`Prepending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+
+        PageDataModel.prependModelData(
+            context.lotteries, 
+
+            lotteryUpdate.apiResponse,
+
+            lotteryUpdate.isSearchResult,
+
+            resolver
+        );
     },
 
 
-    setSelectedCampaign(context: any, campaignData: any) {
-        Log.info('Setting Campaign Data');
-        context.selectedCampaign.data = campaignData.apiResponse.data;
+    setLotteriesError(context: any, lotteryError: any) {
+        Log.info(`Assigning Lottery Error response: ${JSON.stringify(lotteryError)}`);
+        context.lotteries.error = Util.extractError(lotteryError.apiError);
     },
 
-
-    setSelectedCampaignError(context: any, campaignError: any) {
-        context.selectedCampaign.error = Util.extractError(campaignError.apiError);
-    }
 
 };
 
 
 const actions = {
 
-    loadCampaigns(context: any) {
+    loadLotteries(context: any) {
+        context.commit('resetState');
+
         Web.get(
-            // '/api/v1/campaign?projection=campaignDetails',
-            '/v1/lotteries',
+            '/api/v1/lottery',
 
             (response: any) => {
                 context.commit(
-                    'setCampaigns', 
+                    'appendLotteries', 
                     {
                         apiResponse: response, 
                         isSearchResult: false,
@@ -68,7 +91,65 @@ const actions = {
 
             (error: any) => {
                 context.commit(
-                    'setCampaignsError',
+                    'setLotteriesError',
+                    {
+                        apiError: error,
+                    },
+                );
+            }
+        );
+    },
+
+
+    prependLotteries(context: any) {
+        Web.get(
+            PageDataModel.getPrependUrl(
+                '/api/v1/lottery', 
+                context.lotteries
+            ),
+
+            (response: any) => {
+                context.commit(
+                    'prependLotteries', 
+                    {
+                        apiResponse: response, 
+                        isSearchResult: false,
+                    },
+                );
+            },
+
+            (error: any) => {
+                context.commit(
+                    'setLotteriesError',
+                    {
+                        apiError: error,
+                    },
+                );
+            }
+        );
+    },
+
+
+    appendLotteries(context: any) {
+        Web.get(
+            PageDataModel.getAppendUrl(
+                '/api/v1/lottery', 
+                context.lotteries
+            ),
+
+            (response: any) => {
+                context.commit(
+                    'appendLotteries', 
+                    {
+                        apiResponse: response, 
+                        isSearchResult: false,
+                    },
+                );
+            },
+
+            (error: any) => {
+                context.commit(
+                    'setLotteriesError',
                     {
                         apiError: error,
                     },
