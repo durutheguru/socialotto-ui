@@ -1,4 +1,4 @@
-import { Util } from "@/components/util";
+import { Log, Util } from "@/components/util";
 import PageResponseResolver from "./PageResponseResolver";
 
 
@@ -7,6 +7,9 @@ export default class PullStreamDataResponseResolver implements PageResponseResol
 
 
     public resolve(model: any, response: any): void {
+        Log.info(`PullStreamModel: ${JSON.stringify(model)}`);
+        Log.info(`PullStreamResponse: ${JSON.stringify(response)}`);
+
         let existingMinTimeStamp = model.pageData.minTimeStamp;
         let existingMaxTimeStamp = model.pageData.maxTimeStamp;
 

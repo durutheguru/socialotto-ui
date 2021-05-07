@@ -1,12 +1,14 @@
+import WithRender from './lottery-home.html';
+
 import { Component } from 'vue-property-decorator';
 
 import BaseVue from '@/components/BaseVue';
 import CreateLotteryDialog from '../../dialog/create-lottery/CreateLotteryDialog';
 import FloatingActionButton from '@/components/floating-action-button/FloatingActionButton';
+import store from '@/store';
 
-
-import WithRender from './lottery-home.html';
-import { Log, Web } from '@/components/util';
+import { Constants, Log, Web } from '@/components/util';
+import { EventBus } from '@/components/core/Event';
 
 
 @Component({
@@ -29,7 +31,17 @@ export default class LotteryHomeComponent extends BaseVue {
 
 
     public mounted() {
-        this.$store.dispatch('lottery/loadCampaigns');
+        var self = this;
+
+        EventBus.$on(
+            Constants.newStoreDataEvent, 
+
+            () => {
+                self.$forceUpdate();
+            }
+        );
+        
+        this.$store.dispatch('lottery/loadLotteries');
     }
 
 
@@ -45,7 +57,7 @@ export default class LotteryHomeComponent extends BaseVue {
 
 
     public get lotteries() {
-        return this.$store.state.lottery.campaigns;
+        return store.getters['lottery/getLotteries'];
     }
 
 

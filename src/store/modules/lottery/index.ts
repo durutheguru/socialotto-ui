@@ -3,6 +3,7 @@ import { Web, Log, Util, Constants } from '@/components/util';
 import ApiResource from '@/components/core/ApiResource';
 import PageDataModel from '@/components/core/PageDataModel';
 import PullStreamDataResponseResolver from '@/components/core/resolver/PullStreamDataResponseResolver';
+import { EventBus } from '@/components/core/Event';
 
 
 
@@ -21,14 +22,20 @@ const resolver = new PullStreamDataResponseResolver();
 const state = getDefaultState();
 
 
-const getters = { };
+const getters = { 
+
+    getLotteries(context: any) {
+        return context.lotteries.list;
+    },
+
+};
 
 
 const mutations = {
 
 
     resetState(context: any) {
-        Object.assign(context, getDefaultState())
+        Object.assign(context, getDefaultState());
     },
 
 
@@ -44,6 +51,8 @@ const mutations = {
 
             resolver
         );
+
+        EventBus.$emit(Constants.newStoreDataEvent);
     },
 
 
@@ -59,6 +68,8 @@ const mutations = {
 
             resolver
         );
+
+        EventBus.$emit(Constants.newStoreDataEvent);
     },
 
 
@@ -102,59 +113,79 @@ const actions = {
 
 
     prependLotteries(context: any) {
-        Web.get(
-            PageDataModel.getPrependUrl(
-                '/api/v1/lottery', 
-                context.lotteries
-            ),
+        Util.throttle(
+            {
+                key: 'lottery_list_prepend',
 
-            (response: any) => {
-                context.commit(
-                    'prependLotteries', 
-                    {
-                        apiResponse: response, 
-                        isSearchResult: false,
-                    },
-                );
+                run: () => {
+                    Web.get(
+                        PageDataModel.getPrependUrl(
+                            '/api/v1/lottery', 
+                            context.lotteries
+                        ),
+                        
+                        (response: any) => {
+                            context.commit(
+                                'prependLotteries', 
+                                {
+                                    apiResponse: response, 
+                                    isSearchResult: false,
+                                },
+                            );
+                        },
+            
+                        (error: any) => {
+                            context.commit(
+                                'setLotteriesError',
+                                {
+                                    apiError: error,
+                                },
+                            );
+                        },
+                    );
+                },
+
+                time: 1000,
             },
-
-            (error: any) => {
-                context.commit(
-                    'setLotteriesError',
-                    {
-                        apiError: error,
-                    },
-                );
-            }
         );
     },
 
 
     appendLotteries(context: any) {
-        Web.get(
-            PageDataModel.getAppendUrl(
-                '/api/v1/lottery', 
-                context.lotteries
-            ),
+        Util.throttle(
+            {
+                key: 'lottery_list_append',
 
-            (response: any) => {
-                context.commit(
-                    'appendLotteries', 
-                    {
-                        apiResponse: response, 
-                        isSearchResult: false,
-                    },
-                );
+                run: () => {
+                    Web.get(
+                        PageDataModel.getAppendUrl(
+                            '/api/v1/lottery', 
+                            context.lotteries
+                        ),
+            
+                        (response: any) => {
+                            context.commit(
+                                'appendLotteries', 
+                                {
+                                    apiResponse: response, 
+                                    isSearchResult: false,
+                                },
+                            );
+                        },
+            
+                        (error: any) => {
+                            context.commit(
+                                'setLotteriesError',
+                                {
+                                    apiError: error,
+                                },
+                            );
+                        },
+                    );
+                },
+
+                time: 1000,
             },
-
-            (error: any) => {
-                context.commit(
-                    'setLotteriesError',
-                    {
-                        apiError: error,
-                    },
-                );
-            }
         );
     },
 

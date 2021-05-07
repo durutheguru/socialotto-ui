@@ -5,6 +5,30 @@ import PageResponseResolver from './resolver/PageResponseResolver';
 import HalJsonPageResponseResolver from './resolver/HalJsonPageResponseResolver';
 
 
+
+const defaultPageData = () => {
+    return {
+
+        next: {},
+
+        previous: {},
+
+        number: Constants.defaultPagination.page,
+
+        size: Constants.defaultPagination.size,
+
+        totalElements: 0,
+
+        totalPages: 0,
+
+        minTimeStamp: null,
+
+        maxTimeStamp: null,
+    };
+
+};
+
+
 const defaultPageModel = {
 
     loading: false,
@@ -19,28 +43,10 @@ const defaultPageModel = {
 
     searchQuery: '',
 
-};
-
-
-const defaultPageData = {
-
-    next: {},
-
-    previous: {},
-
-    number: Constants.defaultPagination.page,
-
-    size: Constants.defaultPagination.size,
-
-    totalElements: 0,
-
-    totalPages: 0,
-
-    minTimeStamp: null,
-    
-    maxTimeStamp: null,
+    pageData: defaultPageData(),
 
 };
+
 
 
 export default class PageDataModel {
@@ -51,7 +57,7 @@ export default class PageDataModel {
 
     public list: any = [];
 
-    public pageData: any = Util.clone(defaultPageData);
+    public pageData: any = defaultPageData();
 
     public searchResults: boolean = false;
 
@@ -75,7 +81,7 @@ export default class PageDataModel {
 
 
     public clearPageData() {
-        this.pageData = defaultPageData;
+        this.pageData = defaultPageData();
     }
 
 
@@ -157,7 +163,7 @@ export default class PageDataModel {
 
 
     public static newModel(entity: string): any {
-        return  { 
+        return {
             ...defaultPageModel,
 
             entityKeyName: entity
@@ -166,8 +172,8 @@ export default class PageDataModel {
 
 
     public static appendModelData(
-        model: any, 
-        response: any, 
+        model: any,
+        response: any,
         isSearchResult: boolean = false,
         resolver?: PageResponseResolver
     ) {
@@ -182,13 +188,13 @@ export default class PageDataModel {
 
 
     public static prependModelData(
-        model: any, 
-        response: any, 
+        model: any,
+        response: any,
         isSearchResult: boolean = false,
         resolver?: PageResponseResolver
     ) {
         model.searchResults = isSearchResult;
-        
+
         if (!!resolver) {
             resolver.prepend(model, response);
         } else {

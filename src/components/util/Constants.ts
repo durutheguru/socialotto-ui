@@ -14,6 +14,8 @@ export default class Constants {
 
     public static fileUploadEvent: string = 'file-upload';
 
+    public static newStoreDataEvent: string = 'new-store-data';
+
     public static defaultEventTriggerTimeout: number = 400;
 
     public static previousPageNavigationEvent: string = 'previous-page-nav';

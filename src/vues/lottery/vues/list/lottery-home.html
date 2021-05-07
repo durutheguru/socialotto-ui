@@ -4,7 +4,7 @@
 
     <div class="row h-padding-medium">
         <div class="row">
-            <div 
+            <!-- <div 
                 @click="viewLotteryDetails(12)"
                 class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container pointer">
                 <div class="row">
@@ -69,10 +69,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div 
-                @click="viewLotteryDetails(13)"
+            <div v-for="lottery in lotteries" @click="viewLotteryDetails(lottery.id)"
                 class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container pointer">
                 <div class="row">
                     <div class="col--12">
@@ -85,19 +84,22 @@
                             </span>
                         </div>
                         <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
-                            <div class="col--1 pull-left profile-photo-container" style="padding-left:0px;">
-                                <span class="r-margin-small">
-                                    <div
-                                        style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+                            <div
+                                class="pull-left profile-photo-container r-margin-small" style="padding-left:0px;">
 
-                                    </div>
-                                </span>
+                                <img v-if="lottery.lotteryOwner.photoThumbnail" class="img-profile-thumbnail"
+                                    :src="lottery.lotteryOwner.photoThumbnail" />
+
+                                <div v-else
+                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                </div>
                             </div>
                             <div class="item-list-user-meta-names-container pull-left h-padding-small">
                                 <div style="position:relative;top:4px;">
-                                    <span class="item-list-user-meta-name">Burna Boy</span>
+                                    <span class="item-list-user-meta-name">{{lottery.lotteryOwner.name}}</span>
                                     <span><i class="fa fa-check-circle blue"></i></span>
-                                    <span class="dark-grey h-margin-small item-list-user-meta-name">@burnaboy</span>
+                                    <span class="dark-grey h-margin-small item-list-user-meta-name">@{{lottery.lotteryOwner.username}}</span>
                                 </div>
                             </div>
                         </div>
@@ -106,27 +108,24 @@
                 <div class="row v-margin-small">
                     <div class="col-md-12">
                         <div class="item-list-lottery-text-container pull-left">
-                            <h4>Travel with Burna Boy to Maldives Island</h4>
+                            <h4>{{lottery.name}}</h4>
                             <h5 class="blue">
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
+                                {{lottery.description}}
                             </h5>
                         </div>
                     </div>
                     <div class="col--12 margin-top-m h-padding-medium">
                         <div class="col--6 pull-right">
                             <span class="pull-right dark-grey">
-                                N100 per ticket
+                                N{{lottery.ticketCost}} per ticket
                             </span>
                             <span class="pull-right h-margin-small dark-grey">
-                                1,000 Entries .
+                                {{lottery.numberOfEntries}} Entries .
                             </span>
                         </div>
                         <div class="col--6">
                             <span class="wine">
-                                Closes: 2021-10-20 (tomorrow)
+                                Closes: {{lottery.endDate}} (tomorrow)
                             </span>
                         </div>
                     </div>
@@ -139,9 +138,7 @@
 
         <div class="floating-main-action-btn-container-gutter">
             <div class="col--1 pull-right button-container">
-                <button 
-                    class="app-btn app-btn-primary box-shadowed"
-                    @click="dialogOpts.createLottery.visible=true">
+                <button class="app-btn app-btn-primary box-shadowed" @click="dialogOpts.createLottery.visible=true">
                     <i class="fa fa-plus large-font"></i>
                 </button>
             </div>
@@ -150,11 +147,8 @@
     </div>
 
 
-    <create-lottery-dialog 
-        v-if="dialogOpts.createLottery.visible"
-        v-bind:visible="dialogOpts.createLottery.visible"
+    <create-lottery-dialog v-if="dialogOpts.createLottery.visible" v-bind:visible="dialogOpts.createLottery.visible"
         v-on:close-dialog="hideCreateLottery" />
-        
+
 
 </div>
-
