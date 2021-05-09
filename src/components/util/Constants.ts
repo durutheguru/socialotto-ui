@@ -56,6 +56,17 @@ export default class Constants {
     ];
 
 
+    public static defaultDateFormat: string = 'YYYY-MM-DD';
+
+
+    public static defaultDateTimeFormat: string = 'YYYY-MM-DD hh:mma';
+
+    
+    public static defaultZoneDateTimeFormat: string = 'YYYY-MM-DD HH:mm';
+
+
+
 }
+
 
 

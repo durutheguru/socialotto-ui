@@ -14,7 +14,9 @@ import LotteryService from '@/services/lottery/LotteryService';
 import CampaignService from '@/services/campaign/CampaignService';
 import ApiResourceList from '@/components/core/ApiResourceList';
 import PageRequest from '@/components/core/PageRequest';
-import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from '@js-joda/core';
+import 'js-joda-timezone';
+import Locale from '@/components/core/Locale';
+import { DateTimeFormatter, LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from '@js-joda/core';
 
 
 
@@ -176,14 +178,10 @@ export default class CreateLotteryDialog extends BaseVue {
                     {
                         stage: lotteryStageDescription.stage,
                         winnersCount: lotteryStageDescription.winnersCount,
-                        evaluationTime: ZonedDateTime.of(
-                            LocalDateTime.of(
-                                LocalDate.parse(this.lottery.dateOfEvaluation),
-                                LocalTime.parse(this.lottery.timeOfEvaluation)
-                            ),
-                
-                            ZoneId.systemDefault(),
-                        ).withFixedOffsetZone().toString(),
+                        evaluationTime: Util.stringifyZonedDateTime(
+                            this.lottery.dateOfEvaluation,
+                            this.lottery.timeOfEvaluation,
+                        ),
                     },
                 ], 
             },

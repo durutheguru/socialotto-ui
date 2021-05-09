@@ -1,3 +1,7 @@
+import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-joda/core";
+import moment from "moment";
+import { Constants } from ".";
+
 
 export default class Util {
 
@@ -179,4 +183,57 @@ export default class Util {
     }
 
 
+    public static formatTime(time: string, inputFormat: string, outputFormat: string): string {
+        return moment(time, inputFormat).format(outputFormat);
+    }
+
+
+    public static moment(time: string, format: string): string {
+        return moment(time, format).fromNow();
+    }
+
+
+    public static dateMoment(date: string, format?: string): string {
+        return Util.moment(date, !!format ? format : Constants.defaultDateFormat);
+    }
+
+
+    public static dateTimeMoment(dateTime: string, format?: string): string {
+        return Util.moment(dateTime, !!format ? format : Constants.defaultDateTimeFormat);
+    }
+
+
+    public static zoneDateTimeMoment(zoneDateTime: string, format?: string): string {
+        return Util.moment(zoneDateTime, !!format ? format : Constants.defaultZoneDateTimeFormat);
+    }
+
+
+    public static stringifyZonedDateTime(
+        date: string, time: string
+    ): string {
+        let formattedTime = ZonedDateTime.of(
+            LocalDateTime.of(
+                LocalDate.parse(date),
+                LocalTime.parse(time),
+            ),
+
+            ZoneId.systemDefault(),
+        )
+        .withFixedOffsetZone()
+        .toString();
+
+        formattedTime = formattedTime.replace('T', ' ');
+
+        if (formattedTime.length <= 16) {
+            return formattedTime;
+        }
+
+        let zoneOffset = formattedTime.substring(16);
+        zoneOffset = zoneOffset.replace(':', '');
+
+        return `${formattedTime.substring(0, 16)} ${zoneOffset}`;
+    }
+
+
 }
+

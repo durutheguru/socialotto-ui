@@ -31,7 +31,7 @@ export default class LotteryHomeComponent extends BaseVue {
 
 
     public mounted() {
-        var self = this;
+        let self = this;
 
         EventBus.$on(
             Constants.newStoreDataEvent, 
@@ -40,7 +40,7 @@ export default class LotteryHomeComponent extends BaseVue {
                 self.$forceUpdate();
             }
         );
-        
+
         this.$store.dispatch('lottery/loadLotteries');
     }
 
