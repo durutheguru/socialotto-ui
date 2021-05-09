@@ -52,16 +52,24 @@ export default class Web {
 
 
     public static post(
-        url: string, data: any, successCallback: APISuccessCallback, errorCallback?: APIErrorCallback,
+        url: string, 
+        data: any, 
+        successCallback: APISuccessCallback, 
+        errorCallback?: APIErrorCallback,
+        headers?: any,
     ) {
-        Web.postAbsolute(Web.BASE_URL + url, data, successCallback, errorCallback);
+        Web.postAbsolute(Web.BASE_URL + url, data, successCallback, errorCallback, headers);
     }
 
 
     public static postAbsolute(
-        url: string, data: any, successCallback: APISuccessCallback, errorCallback?: APIErrorCallback,
+        url: string, 
+        data: any, 
+        successCallback: APISuccessCallback, 
+        errorCallback?: APIErrorCallback,
+        headers?: any,
     ) {
-        axios.post(url, data)
+        axios.post(url, data, headers)
         .then(successCallback)
         .catch(errorCallback);
     }

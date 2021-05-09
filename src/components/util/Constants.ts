@@ -2,12 +2,19 @@
 export default class Constants {
 
 
+    public static API_BASE: string = '/api/v1';
+
+
     // Event Related Constants
     public static dialogClosedEvent: string = 'close-dialog';
 
     public static routeUpdateEvent: string = 'route-updated';
 
     public static routeClearedEvent: string = 'route-cleared';
+
+    public static fileUploadEvent: string = 'file-upload';
+
+    public static newStoreDataEvent: string = 'new-store-data';
 
     public static defaultEventTriggerTimeout: number = 400;
 
@@ -49,6 +56,17 @@ export default class Constants {
     ];
 
 
+    public static defaultDateFormat: string = 'YYYY-MM-DD';
+
+
+    public static defaultDateTimeFormat: string = 'YYYY-MM-DD hh:mma';
+
+    
+    public static defaultZoneDateTimeFormat: string = 'YYYY-MM-DD HH:mm';
+
+
+
 }
+
 
 

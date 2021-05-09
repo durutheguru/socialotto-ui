@@ -402,6 +402,13 @@ l-padding-small {
 }
 
 
+.img-profile-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+
 .relative {
   position: relative;
 }
@@ -477,6 +484,21 @@ button.app-btn-secondary {
 
 #main-sidebar-container {
   width: 25%;
+}
+
+
+#top-main-container {
+  position: fixed;
+  width: 75%;
+  background: white;
+  z-index: 100000;
+  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+#main-route-section {
+  position: relative;
+  top: 160px;
 }
 
 
@@ -966,6 +988,9 @@ table {
   border-spacing: 0;
 }
 
+#lotteryCampaignsSearch {
+  padding-left: 40px !important;
+}
 
 .flex-container-baseline {
   display: flex;
@@ -1286,7 +1311,7 @@ span.lottery-detail-number-desc {
   top: 120px;
   width: 400px;
   padding: 10px;
-  background-color: rgba(245, 245, 245, 0.94);
+  background-color: rgb(245, 245, 245);
   border: 1px solid rgb(221, 221, 221);
   max-height: 380px;
   overflow: scroll;

@@ -1,3 +1,7 @@
+import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-joda/core";
+import moment from "moment";
+import { Constants } from ".";
+
 
 export default class Util {
 
@@ -125,6 +129,7 @@ export default class Util {
         return dest;
     }
 
+
     public static uuid(): string {
         return ('' + 1e7 + -1e3 + -4e3 + -8e3 + -1e11).replace(
                 /1|0/g, 
@@ -136,9 +141,99 @@ export default class Util {
     }
 
 
+    public static copy(src: any, dest: any) {
+        if (typeof src !== "object") {
+            throw new Error("Source must be Javascript objects");
+        }
+
+        if (typeof dest !== "object") {
+            dest = {};
+        }
+
+        for (let i in src) {
+            if (src.hasOwnProperty(i)) {
+                dest[i] = src[i];
+            }
+        }
+
+        return dest;
+    }
+
+
+    public static copyArray(src: any, dest: any) {
+        if (!Util.isValidArray(src, true) || !Util.isValidArray(dest, true)) {
+            throw new Error("Both source and Destination must be valid Javascript arrays");
+        }
+
+        for (let i = 0, l = src.length; i < l; i++) {
+            dest.push(src[i]);
+        }
+
+        return dest;
+    }
+
+
+    public static clone(obj: any) {
+        return $.extend(true, {}, obj);
+    }
+
+
     public static refresh(obj: any): any {
         return JSON.parse(JSON.stringify(obj));
     }
 
 
+    public static formatTime(time: string, inputFormat: string, outputFormat: string): string {
+        return moment(time, inputFormat).format(outputFormat);
+    }
+
+
+    public static moment(time: string, format: string): string {
+        return moment(time, format).fromNow();
+    }
+
+
+    public static dateMoment(date: string, format?: string): string {
+        return Util.moment(date, !!format ? format : Constants.defaultDateFormat);
+    }
+
+
+    public static dateTimeMoment(dateTime: string, format?: string): string {
+        return Util.moment(dateTime, !!format ? format : Constants.defaultDateTimeFormat);
+    }
+
+
+    public static zoneDateTimeMoment(zoneDateTime: string, format?: string): string {
+        return Util.moment(zoneDateTime, !!format ? format : Constants.defaultZoneDateTimeFormat);
+    }
+
+
+    public static stringifyZonedDateTime(
+        date: string, time: string
+    ): string {
+        let formattedTime = ZonedDateTime.of(
+            LocalDateTime.of(
+                LocalDate.parse(date),
+                LocalTime.parse(time),
+            ),
+
+            ZoneId.systemDefault(),
+        )
+        .withFixedOffsetZone()
+        .toString();
+
+        formattedTime = formattedTime.replace('T', ' ');
+
+        if (formattedTime.length <= 16) {
+            return formattedTime;
+        }
+
+        let zoneOffset = formattedTime.substring(16);
+        zoneOffset = zoneOffset.replace(':', '');
+
+        return `${formattedTime.substring(0, 16)} ${zoneOffset}`;
+    }
+
+
 }
+

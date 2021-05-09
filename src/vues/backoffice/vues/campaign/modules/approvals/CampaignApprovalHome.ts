@@ -4,7 +4,7 @@ import { Component } from 'vue-property-decorator';
 import PaginatedContainerVue from '@/components/PaginatedContainerVue';
 import PageDataModel from '@/components/core/PageDataModel';
 
-import CampaignService from '../../service/CampaignService';
+import CampaignService from '../../../../../../services/campaign/CampaignService';
 import PageRequest from '@/components/core/PageRequest';
 
 import TreatCampaignDialog from './dialog/TreatCampaignDialog';

@@ -1,6 +1,32 @@
 import { Util } from '../util';
 import Log from '@/components/util/Log';
 import Constants from '../util/Constants';
+import PageResponseResolver from './resolver/PageResponseResolver';
+import HalJsonPageResponseResolver from './resolver/HalJsonPageResponseResolver';
+
+
+
+const defaultPageData = () => {
+    return {
+
+        next: {},
+
+        previous: {},
+
+        number: Constants.defaultPagination.page,
+
+        size: Constants.defaultPagination.size,
+
+        totalElements: 0,
+
+        totalPages: 0,
+
+        minTimeStamp: null,
+
+        maxTimeStamp: null,
+    };
+
+};
 
 
 const defaultPageModel = {
@@ -13,44 +39,14 @@ const defaultPageModel = {
 
     entityKeyName: '',
 
-    pageData: {
-
-        next: {},
-    
-        previous: {},
-    
-        number: Constants.defaultPagination.page,
-    
-        size: Constants.defaultPagination.size,
-    
-        totalElements: 0,
-    
-        totalPages: 0,
-    
-    },
-
     searchResults: false,
 
     searchQuery: '',
 
-};
-
-
-const defaultPageData = {
-
-    next: {},
-
-    previous: {},
-
-    number: Constants.defaultPagination.page,
-
-    size: Constants.defaultPagination.size,
-
-    totalElements: 0,
-
-    totalPages: 0,
+    pageData: defaultPageData(),
 
 };
+
 
 
 export default class PageDataModel {
@@ -61,17 +57,19 @@ export default class PageDataModel {
 
     public list: any = [];
 
-    public pageData: any = defaultPageData;
+    public pageData: any = defaultPageData();
 
     public searchResults: boolean = false;
 
     public searchQuery: string = '';
 
+    public static defaultResolver: PageResponseResolver = new HalJsonPageResponseResolver();
+
 
     constructor(
         private entityKeyName: string, // string value used to extract entity from page response
         public loadEntityFunction?: (url?: string) => void, // function to invoke to load entity
-        public searchEntityFunction?: (query: string, url?: string) => void // function to invoke when searching entity
+        public searchEntityFunction?: (query: string, url?: string) => void, // function to invoke when searching entity
     ) { }
 
 
@@ -83,7 +81,7 @@ export default class PageDataModel {
 
 
     public clearPageData() {
-        this.pageData = defaultPageData;
+        this.pageData = defaultPageData();
     }
 
 
@@ -165,7 +163,7 @@ export default class PageDataModel {
 
 
     public static newModel(entity: string): any {
-        return  { 
+        return {
             ...defaultPageModel,
 
             entityKeyName: entity
@@ -173,12 +171,59 @@ export default class PageDataModel {
     }
 
 
-    public static assignModelData(model: any, response: any, isSearchResult: boolean = false) {
+    public static appendModelData(
+        model: any,
+        response: any,
+        isSearchResult: boolean = false,
+        resolver?: PageResponseResolver
+    ) {
         model.searchResults = isSearchResult;
-        model.list = response.data._embedded[model.entityKeyName];
-        model.pageData = response.data.page;
-        model.pageData.next = response.data._links.next || {};
-        model.pageData.previous = response.data._links.prev || {};
+
+        if (!!resolver) {
+            resolver.append(model, response);
+        } else {
+            PageDataModel.defaultResolver.append(model, response);
+        }
+    }
+
+
+    public static prependModelData(
+        model: any,
+        response: any,
+        isSearchResult: boolean = false,
+        resolver?: PageResponseResolver
+    ) {
+        model.searchResults = isSearchResult;
+
+        if (!!resolver) {
+            resolver.prepend(model, response);
+        } else {
+            PageDataModel.defaultResolver.prepend(model, response);
+        }
+    }
+
+
+    /**
+     * 
+     * @param basePath 
+     * @param model 
+     * @returns 
+     */
+    public static getPrependUrl(basePath: string, model: any): string {
+        if (Util.isValidNumber(model.pageData.maxTimeStamp)) {
+            return `${basePath}?after=${model.pageData.maxTimeStamp}`;
+        }
+
+        return basePath;
+    }
+
+
+    public static getAppendUrl(basePath: string, model: any): string {
+        if (Util.isValidNumber(model.pageData.minTimeStamp)) {
+            return `${basePath}?before=${model.pageData.minTimeStamp}`;
+        }
+
+        return basePath;
     }
 
 

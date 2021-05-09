@@ -19,5 +19,12 @@ export default class ApiResourceList {
     }
 
 
+    public clear() {
+        this.error = '';
+        this.loading = false;
+        this.data = [];
+    }
+
+
 }
 
