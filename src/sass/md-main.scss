@@ -9,32 +9,10 @@
 
 @media (max-width: 1000px) {
     
-    #main-sidebar-container {
-        display: none;
-        width: 0px;
-    }
-
-    #main-content-container {
-        width: 100%;
-    }
-
-    .floating-main-action-btn-container {
-        right: 1%;
-    }
-
-    .floating-main-action-btn-container-gutter {
-        width: 100%;
-    }
-
     .item-list-posting-date {
         font-size: 0.7em;
         position: relative;
         top: 5px;
-    }
-
-    #sidebar-drawer-icon {
-        display: inline-block;
-        margin-left: 10px;
     }
 
 }

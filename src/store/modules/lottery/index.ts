@@ -22,10 +22,31 @@ const resolver = new PullStreamDataResponseResolver();
 const state = getDefaultState();
 
 
-const getters = { 
+const getters = {
+
+
+    getState(context: any) {
+        return context.lotteries;
+    },
 
     getLotteries(context: any) {
         return context.lotteries.list;
+    },
+
+    getLotteriesError(context: any) {
+        return context.lotteries.error;
+    },
+
+    getLotteriesLoading(context: any) {
+        return context.lotteries.loading;
+    },
+
+    getMinFetchedTimeStamp(context: any) {
+        return context.lotteries.pageData.minTimeStamp;
+    },
+
+    getMaxFetchedTimeStamp(context: any) {
+        return context.lotteries.pageData.maxTimeStamp;
     },
 
 };
@@ -49,7 +70,12 @@ const mutations = {
 
             lotteryUpdate.isSearchResult,
 
-            resolver
+            {
+                getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
+                getMaxFetchedTimeStamp: getters.getMaxFetchedTimeStamp(context),
+            },
+
+            resolver,
         );
 
         EventBus.$emit(Constants.newStoreDataEvent);
@@ -66,10 +92,25 @@ const mutations = {
 
             lotteryUpdate.isSearchResult,
 
+            {
+                getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
+                getMaxFetchedTimeStamp: getters.getMaxFetchedTimeStamp(context),
+            },
+
             resolver
         );
 
         EventBus.$emit(Constants.newStoreDataEvent);
+    },
+
+
+    setLotteriesLoading(context: any, loading: boolean) {
+        context.lotteries.loading = loading;
+    },
+
+
+    clearLotteriesError(context: any) {
+        context.lotteries.error = '';
     },
 
 
@@ -85,12 +126,16 @@ const mutations = {
 const actions = {
 
     loadLotteries(context: any) {
-        context.commit('resetState');
+        context.commit('clearLotteriesError');
+        context.commit('setLotteriesLoading', true);
 
         Web.get(
             '/api/v1/lottery',
 
             (response: any) => {
+                context.commit('resetState');
+        
+                context.commit('setLotteriesLoading', false);
                 context.commit(
                     'appendLotteries', 
                     {
@@ -101,6 +146,7 @@ const actions = {
             },
 
             (error: any) => {
+                context.commit('setLotteriesLoading', false);
                 context.commit(
                     'setLotteriesError',
                     {
@@ -118,13 +164,17 @@ const actions = {
                 key: 'lottery_list_prepend',
 
                 run: () => {
+                    context.commit('clearLotteriesError');
+                    context.commit('setLotteriesLoading', true);
+
                     Web.get(
                         PageDataModel.getPrependUrl(
                             '/api/v1/lottery', 
-                            context.lotteries
+                            context.getters.getMaxFetchedTimeStamp
                         ),
                         
                         (response: any) => {
+                            context.commit('setLotteriesLoading', false);
                             context.commit(
                                 'prependLotteries', 
                                 {
@@ -135,6 +185,7 @@ const actions = {
                         },
             
                         (error: any) => {
+                            context.commit('setLotteriesLoading', false);
                             context.commit(
                                 'setLotteriesError',
                                 {
@@ -157,13 +208,17 @@ const actions = {
                 key: 'lottery_list_append',
 
                 run: () => {
+                    context.commit('clearLotteriesError');
+                    context.commit('setLotteriesLoading', true);
+
                     Web.get(
                         PageDataModel.getAppendUrl(
                             '/api/v1/lottery', 
-                            context.lotteries
+                            context.getters.getMinFetchedTimeStamp
                         ),
             
                         (response: any) => {
+                            context.commit('setLotteriesLoading', false);
                             context.commit(
                                 'appendLotteries', 
                                 {
@@ -174,6 +229,7 @@ const actions = {
                         },
             
                         (error: any) => {
+                            context.commit('setLotteriesLoading', false);
                             context.commit(
                                 'setLotteriesError',
                                 {

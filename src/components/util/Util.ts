@@ -39,6 +39,11 @@ export default class Util {
     }
 
 
+    public static isValidPositiveNumber(num: any) {
+        return typeof num === 'number' && num > 0;
+    }
+
+
     public static isValidObject(obj: any) {
         return obj != null && typeof obj === 'object';
     }
@@ -205,6 +210,17 @@ export default class Util {
 
     public static zoneDateTimeMoment(zoneDateTime: string, format?: string): string {
         return Util.moment(zoneDateTime, !!format ? format : Constants.defaultZoneDateTimeFormat);
+    }
+
+
+    public static currencyFormat(num: number, currency?: string) {
+        return new Intl.NumberFormat(
+            'en-US', 
+            {
+                style: 'currency', 
+                currency: !!currency ? currency : Constants.defaultCurrency,
+            },
+        ).format(num);
     }
 
 

@@ -7,11 +7,16 @@ import CampaignService from '@/services/campaign/CampaignService';
 import JoinLotteryDialog from './dialog/join-lottery/JoinLotteryDialog';
 
 import WithRender from './lottery-detail.html';
+import LotteryService from '@/services/lottery/LotteryService';
+import ApiResource from '@/components/core/ApiResource';
+
+import File from '@/components/file/File';
 
 
 @WithRender
 @Component({
     components: {
+        File,
         JoinLotteryDialog,
     },
 })
@@ -26,15 +31,36 @@ export default class LotteryDetailComponent extends BaseVue {
 
     };
 
+    private lottery: ApiResource = ApiResource.create();
+
 
     public mounted() {
         Log.info(`Lottery Details ID: ${this.$route.params.id}`);
-        this.$store.dispatch('lottery/loadCampaignDetails', this.$route.params.id);
+
+        this.getDetails();
     }
 
 
-    public get selectedCampaign() {
-        return this.$store.state.lottery.selectedCampaign.data;
+    private getDetails() {
+        let self = this;
+        self.lottery.error = '';
+        self.lottery.loading = true;
+
+        LotteryService.getLotteryDetails(
+            self.$route.params.id,
+
+            (response: any) => {
+                self.lottery.loading = false;
+                self.lottery.data = response.data;
+            },
+
+            (error: any) => {
+                self.lottery.loading = false;
+                self.lottery.error = self.extractError(error);
+                Log.error(self.lottery.error);
+                self.$router.push('/lottery');
+            }
+        );
     }
 
 
@@ -50,6 +76,7 @@ export default class LotteryDetailComponent extends BaseVue {
 
     private hideJoinLotteryDialog() {
         this.dialogOpts.joinLottery.visible = false;
+        this.getDetails();
     }
 
 

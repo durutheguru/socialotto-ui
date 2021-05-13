@@ -7,8 +7,14 @@ import { ValidationObserver } from 'vee-validate';
 @Component
 export default class BaseVue extends Vue {
 
+
+    public util = Util;
+
     
     public quantity = Util.quantity;
+
+
+    public isValidArray = Util.isValidArray;
 
 
     public isValidString = Util.isValidString;
@@ -28,6 +34,24 @@ export default class BaseVue extends Vue {
             time, 
             Constants.defaultZoneDateTimeFormat, 
             Constants.defaultDateFormat
+        );
+    }
+
+
+    public zdtToFullDateFormat(time: string): string {
+        return Util.formatTime(
+            time, 
+            Constants.defaultZoneDateTimeFormat,
+            'D MMMM, YYYY',
+        );
+    }
+
+
+    public zdtToTZFormat(time: string): string {
+        return Util.formatTime(
+            time, 
+            Constants.defaultZoneDateTimeFormat,
+            'hh:mma z'
         );
     }
 

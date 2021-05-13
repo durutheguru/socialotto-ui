@@ -1,293 +1,226 @@
-<!-- <div class="col-md-10 col-md-offset-1">
-
-    <section class="panel margin-top-big">
-        <header class="panel-heading">
-            <span class="pull-right">
-                <router-link to="/lottery">View All</router-link>
-            </span>
-            {{selectedCampaign.name}}&nbsp;
-            <span class="badge" v-bind:class="{[getApprovalClass(selectedCampaign.campaignStatus)] : true}">
-                {{selectedCampaign.campaignStatus}}
-            </span>
-        </header>
-        <div class="panel-body">
-            <p>
-                {{selectedCampaign.description}}
-            </p>
-            <br />
-            Starts: {{selectedCampaign.startDate}}<br />
-            Ends: {{selectedCampaign.endDate}}<br />
-
-            <button class="btn btn-primary" @click="showUserRegistrationDialog()">
-                Register
-            </button>
-        </div>
-    </section>
-
-
-    <user-campaign-registration-dialog
-            v-if="dialogOpts.userCampaignRegistration.visible"
-            v-bind:visible="dialogOpts.userCampaignRegistration.visible"
-            v-bind:campaign="selectedCampaign"
-            v-on:close-dialog="hideUserRegistrationDialog" />
-
-</div>
-
- -->
-
-
- <div>
+<div>
 
     <hr class="default-hr" />
 
     <div class="row h-padding-big">
-        <div class="col--12 v-padding-small v-margin-small">
-            <div class="row">
-                <div class="col--12">
-                    <div class="item-list-posted-date-container pull-right h-padding-medium">
-                        <span class="pull-right item-list-posting-date">
-                            Posted: 2021-10-02
-                        </span>
-                        <span class="pull-right item-list-sm-posting-date">
-                            2d
-                        </span>
-                    </div>
-                    <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
-                        <div class="col--1 pull-left profile-photo-container" style="padding-left:0px;">
-                            <span class="r-margin-small">
-                                <div
-                                    style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
-                                </div>
+
+        <div v-if="util.isValidNumber(lottery.data.id)">
+
+            <div class="col--12 v-padding-small v-margin-small">
+                <div class="row">
+                    <div class="col--12">
+                        <div class="item-list-posted-date-container pull-right h-padding-medium">
+                            <span class="pull-right item-list-posting-date">
+                                Posted: {{zdtToDTFormat(lottery.data.timeAdded)}}
+                            </span>
+                            <span class="pull-right item-list-sm-posting-date">
+                                {{miniZoneDateTimeMoment(lottery.data.timeAdded)}}
                             </span>
                         </div>
-                        <div class="item-list-user-meta-names-container pull-left h-padding-small">
-                            <div style="position:relative;top:4px;">
-                                <span class="item-list-user-meta-name">Burna Boy</span>
-                                <span><i class="fa fa-check-circle blue"></i></span>
-                                <span class="dark-grey h-margin-small item-list-user-meta-name">@burnaboyburnaboyburnaboy</span>
+                        <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
+                            <div class="pull-left profile-photo-container" style="padding-left:0px;">
+                                <span class="r-margin-small">
+
+                                    <img v-if="lottery.data.lotteryOwner&&lottery.data.lotteryOwner.photoThumbnail" 
+                                        class="img-profile-thumbnail"
+                                        :src="lottery.data.lotteryOwner.photoThumbnail" />
+
+                                    <div v-else
+                                        style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                    </div>
+                                </span>
+                            </div>
+                            <div v-if="lottery.data.lotteryOwner" class="item-list-user-meta-names-container pull-left h-padding-small">
+                                <div style="position:relative;top:4px;">
+                                    <span class="item-list-user-meta-name">{{lottery.data.lotteryOwner.name}}</span>
+                                    <span v-if="lottery.data.lotteryOwner.twitterVerified">
+                                        <i class="fa fa-check-circle blue"></i>
+                                    </span>
+                                    <span
+                                        class="dark-grey h-margin-small item-list-user-meta-name">@{{lottery.data.lotteryOwner.username}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row v-margin-small">
-                <div class="col-12">
-                    <div class="lottery-detail-main-meta-container">
-                        <div class="lottery-detail-title-container h-padding-small">
-                            <h5>Travel with Burna Boy to Maldives Island. New Experience with Burna Boy to Maldives Island. </h5>
+                <div class="row v-margin-small">
+                    <div class="col-12">
+                        <div class="lottery-detail-main-meta-container">
+                            <div class="lottery-detail-title-container h-padding-small">
+                                <h5>{{lottery.data.name}}</h5>
+                            </div>
+                            <div class="lottery-detail-numbers-container">
+
+                                <section class="lottery-detail-number-item-container">
+                                    <section class="lottery-detail-number-item-symbol bg-B9DCC1">
+                                        <i class="fa fa-money" />
+                                    </section>
+                                    <section class="lottery-detail-number-item">
+                                        <span class="lottery-detail-number">
+                                            {{lottery.data.ticketCost}}
+                                        </span>
+                                        <br />
+                                        <span class="lottery-detail-number-desc">Ticket Cost</span>
+                                    </section>
+                                </section>
+
+                                <section class="lottery-detail-number-item-container">
+                                    <section class="lottery-detail-number-item-symbol bg-DCCCB9">
+                                        <i class="fa fa-smile-o" />
+                                    </section>
+                                    <section class="lottery-detail-number-item">
+                                        <span class="lottery-detail-number">
+                                            {{lottery.data.expectedWinnerCount}}
+                                        </span>
+                                        <br />
+                                        <span class="lottery-detail-number-desc">Winners</span>
+                                    </section>
+                                </section>
+
+                                <section class="lottery-detail-number-item-container">
+                                    <section class="lottery-detail-number-item-symbol bg-B9C7DC">
+                                        <i class="fa fa-users" />
+                                    </section>
+                                    <section class="lottery-detail-number-item">
+                                        <span class="lottery-detail-number">
+                                            {{lottery.data.numberOfEntries}}
+                                        </span><br />
+                                        <span class="lottery-detail-number-desc">Entries</span>
+                                    </section>
+                                </section>
+                            </div>
                         </div>
-                        <div class="lottery-detail-numbers-container">
-                            <section class="lottery-detail-number-item-container">
-                                <section class="lottery-detail-number-item-symbol bg-B9C7DC">
-                                    <i class="fa fa-users" />
-                                </section>
-                                <section class="lottery-detail-number-item">
-                                    <span class="lottery-detail-number lottery-detail-number-entries">1,000</span><br />
-                                    <span class="lottery-detail-number-desc">Entries</span>
-                                </section>
-                            </section>
-                            <section class="lottery-detail-number-item-container">
-                                <section class="lottery-detail-number-item-symbol bg-DCCCB9">
-                                    <i class="fa fa-smile-o" />
-                                </section>
-                                <section class="lottery-detail-number-item">
-                                    <span class="lottery-detail-number">2</span><br />
-                                    <span class="lottery-detail-number-desc">Winners</span>
-                                </section>
-                            </section>
-                            <section class="lottery-detail-number-item-container">
-                                <section class="lottery-detail-number-item-symbol bg-B9DCC1">
-                                    <i class="fa fa-money" />
-                                </section>
-                                <section class="lottery-detail-number-item">
-                                    <span class="lottery-detail-number">100</span><br />
-                                    <span class="lottery-detail-number-desc">Ticket Cost</span>
-                                </section>
-                            </section>
+                    </div>
+                </div>
+
+                <div class="row v-margin-medium">
+                    <div class="col--12 v-padding-small v-margin-big h-margin-medium">
+                        <div class="lottery-detail-desc-container">
+                            <h5 class="blue">
+                                {{lottery.data.description}}
+                            </h5>
+                            <br />
+                            <span class="lottery-closing-date">
+                                Registration Closes: {{lottery.data.endDate}} ({{dateMoment(lottery.data.endDate)}})
+                            </span>
+                        </div>
+
+                        <div v-if="lottery.data.stageDescriptions.length" class="lottery-details-time-container">
+                            <h6>Time of Lottery</h6>
+                            <img class="lottery-time-img" src="/static/images/clock.png" /><br />
+                            <span class="dark-grey">
+                                {{zdtToFullDateFormat(lottery.data.stageDescriptions[0].evaluationTime)}}
+                            </span><br />
+                            <span class="dark-grey">
+                                {{zdtToTZFormat(lottery.data.stageDescriptions[0].evaluationTime)}}
+                            </span>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row v-margin-medium">
-                <div class="col--12 v-padding-small v-margin-big h-margin-medium">
-                    <div class="lottery-detail-desc-container">
-                        <h5 class="blue">
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                        </h5>
-
-                        <h5 class="blue">
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                        </h5>
-                        <br />
-                        <span class="lottery-closing-date">
-                            Registration Closes: 2021-10-20 (tomorrow)
-                        </span>
-                    </div>
-
-                    <div class="lottery-details-time-container">
-                        <h6>Time of Lottery</h6>
-                        <img class="lottery-time-img" src="/static/images/clock.png" /><br />
-                        <span class="dark-grey">
-                            20th February, 2020
-                        </span><br />
-                        <span class="dark-grey">
-                            11:10 AM
-                        </span>
+                <div class="row v-margin-medium">
+                    <div class="col-md-10 col-md-offset-1 centered h-margin-medium">
+                        <div v-for="file in lottery.data.fileRefs" class="lottery-detail-image-item">
+                            <file 
+                                :file-ref="file.reference" 
+                                :file-name="file.originalFileName"
+                                :file-type="file.fileType" 
+                                :meta="file.metaData" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row v-margin-medium">
-                <div class="col--12 centered h-margin-medium">
-                    <div class="lottery-detail-image-item">
-                        
-                    </div>
-                    <div class="lottery-detail-image-item">
-                        
-                    </div>
-                    <div class="lottery-detail-image-item">
-                        
+                <div class="row lottery-detail-amount-raised-container">
+                    <div class="col--12">
+                        <div class="lottery-detail-amount-raised-lbl">
+                            <span>Amount Raised</span>
+                        </div>
+                        <div class="lottery-detail-amount-raised">
+                            <span>{{util.currencyFormat(lottery.data.wallet.balance)}}</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="row lottery-detail-amount-raised-container">
-                <div class="col--12">
-                    <div class="lottery-detail-amount-raised-lbl">
-                        <span>Amount Raised</span>
-                    </div>
-                    <div class="lottery-detail-amount-raised">
-                        <span>N 1,000,000.00</span>
+                <div v-if="isValidArray(lottery.data.campaigns)" class="row">
+                    <div class="col--12 center-container">
+                        <h3 class="bold-font lottery-details-campaign-descriptor">
+                            All Funds raised will go into supporting these Campaigns
+                        </h3>
                     </div>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col--12 center-container">
-                    <h3 class="bold-font lottery-details-campaign-descriptor">
-                        All Funds Raised will go into supporting these Campaigns
-                    </h3>
-                </div>
-            </div>
+                <div class="row v-margin-big">
+                    <div v-if="isValidArray(lottery.data.campaigns)"
+                        class="col--12 center-container v-margin-bottom-v-big">
+                        <div v-for="campaign in lottery.data.campaigns"
+                            class="lottery-detail-campaign-container margin-centered">
 
-            <div class="row v-margin-big">
-                <div class="col--12 center-container v-margin-bottom-v-big">
-                    <!-- <div class="margin-centered"> -->
-                        <div class="lottery-detail-campaign-container margin-centered">
                             <div class="lottery-detail-campaign-container-card">
                                 <div class="row">
                                     <div class="col--12 v-padding-medium lottery-detail-campaign-header">
                                         <div class="lottery-detail-campaign-profile-img">
-                                            <div style="width:50px;height:50px;background:#888;border-radius:30px;">
+                                            <div class="lottery-detail-campaign-profile-img">
+
+                                                <img v-if="campaign.owner&&campaign.owner.photoThumbnail" class="img-profile-thumbnail"
+                                                    :src="campaign.owner.photoThumbnail" />
+
+                                                <div v-else
+                                                    style="width:50px;height:50px;background:#888;border-radius:30px;">
+                                                </div>
+
                                             </div>
                                         </div>
-                                        <div class="lottery-detail-campaign-title">
-                                            <span class="blue">
-                                                Support our effort to build a new school for the community
+
+                                        <div class="lottery-detail-campaign-title"><span class="blue">
+                                                {{campaign.name}}
                                             </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col--12 h-padding-small lottery-detail-campaign-desc">
-                                    <span class="smaller-font">
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community...
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="lottery-detail-campaign-container margin-centered">
-                            <div class="lottery-detail-campaign-container-card">
-                                <div class="row">
-                                    <div class="col--12 v-padding-medium lottery-detail-campaign-header">
-                                        <div class="lottery-detail-campaign-profile-img">
-                                            <div style="width:50px;height:50px;background:#888;border-radius:30px;">
-                                            </div>
-                                        </div>
-                                        <div class="lottery-detail-campaign-title">
-                                            <span class="blue">
-                                                Support our effort to build a new school for the community
-                                            </span>
-                                        </div>
+                                    <div
+                                        class="col--12 h-padding-small lottery-detail-campaign-desc left-container-padding-md">
+                                        <span class="slight-smaller-font">
+                                            {{campaign.description}}
+                                        </span>
                                     </div>
                                 </div>
-                                <div class="col--12 h-padding-small lottery-detail-campaign-desc">
-                                    <span class="smaller-font">
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community...
-                                    </span>
-                                </div>
                             </div>
+
                         </div>
-
-                        <div class="lottery-detail-campaign-container margin-centered">
-                            <div class="lottery-detail-campaign-container-card">
-                                <div class="row">
-                                    <div class="col--12 v-padding-medium lottery-detail-campaign-header">
-                                        <div class="lottery-detail-campaign-profile-img">
-                                            <div style="width:50px;height:50px;background:#888;border-radius:30px;">
-                                            </div>
-                                        </div>
-                                        <div class="lottery-detail-campaign-title">
-                                            <span class="blue">
-                                                Support our effort to build a new school for the community
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col--12 h-padding-small lottery-detail-campaign-desc">
-                                    <span class="smaller-font">
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community. Support our effort to build a new school for the community. 
-                                        Support our effort to build a new school for the community...
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- <div class="lottery-detail-campaign-container margin-centered">
-                            <div class="lottery-detail-campaign-container-card">
-
-                            </div>
-                        </div> -->
-                    <!-- </div> -->
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
+            <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
 
-        <div class="floating-main-action-btn-container-gutter">
-            <div class="col--1 pull-right button-container">
-                <button 
-                    class="app-btn app-btn-primary box-shadowed"
-                    @click="showJoinLotteryDialog()">
-                    <span>Buy Ticket</span>
-                </button>
+                <div class="floating-main-action-btn-container-gutter">
+                    <div class="col--1 pull-right button-container">
+                        <button class="app-btn app-btn-primary box-shadowed" @click="showJoinLotteryDialog()">
+                            <span>Buy Ticket</span>
+                        </button>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
+        <div v-else>
+            <span class="grey much-larger-font">
+                Nothing to see yet...
+            </span>
+        </div>
+
+        <join-lottery-dialog 
+            v-if="dialogOpts.joinLottery.visible" 
+            v-bind:visible="dialogOpts.joinLottery.visible"
+            :lotteryId="$route.params.id"
+            :ticketCost="lottery.data.ticketCost"
+            v-on:close-dialog="hideJoinLotteryDialog" />
+
+
     </div>
-
-
-    <join-lottery-dialog
-        v-if="dialogOpts.joinLottery.visible"
-        v-bind:visible="dialogOpts.joinLottery.visible"
-        v-on:close-dialog="hideJoinLotteryDialog" />
-        
 
 </div>
-

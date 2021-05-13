@@ -99,6 +99,11 @@ html, body {
   text-align: center;
 }
 
+.left-container-padding-md {
+  text-align: left;
+  margin-left: $medium_length;
+}
+
 .lighter-font {
   font-weight: lighter;
 }
@@ -179,6 +184,11 @@ img.logo-img-medium {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.sm-box-shadowed {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+
 .left-padding-medium {
   padding-left: $medium_length;
 }
@@ -251,6 +261,11 @@ l-padding-small {
 
 .v-margin-bottom-v-big {
   margin-bottom: $v_big_length;
+}
+
+
+.v-padding-bottom-v-big {
+  padding-bottom: $v_big_length;
 }
 
 
@@ -669,6 +684,10 @@ a.logo_white {
   margin-left: 5px;
 }
 
+.white-bg {
+  background: white !important;
+}
+
 .white-btn-blue:hover {
   color: white !important;
   background: $app_blue;
@@ -852,6 +871,11 @@ a.sidebar-link-btn:hover {
 }
 
 
+.max-width {
+  width: 100%;
+}
+
+
 .max-width-container {
   width: 100%;
   display: flex;
@@ -1030,6 +1054,7 @@ textarea.resize-v {
   margin-left: $big_length;
   margin-right: $big_length;
   padding: $medium_length;
+  background: #FFF;
 }
 
 .item-list-posting-date {
@@ -1074,8 +1099,7 @@ textarea.resize-v {
 }
 
 .item-list-lottery-text-container {
-  width: 83.3333333%;
-  padding-left: 10px;
+  width: 100%;
 }
 
 .lottery-detail-main-meta-container {
@@ -1103,14 +1127,14 @@ textarea.resize-v {
 }
 
 .lottery-detail-desc-container {
-  width: 75%;
+  width: 85%;
   float: left;
   padding-left: $small_length;
   padding-right: $small_length;
 }
 
 .lottery-details-time-container {
-  width: 25%;
+  width: 15%;
   float: left;
   height: 150px;
   text-align: center;
@@ -1129,11 +1153,11 @@ textarea.resize-v {
 }
 
 .lottery-detail-image-item {
-  width: 30%;
+  width: 40%;
   margin-left: 10px;
   height: 200px;
+  max-height: 200px;
   float: left;
-  background: #4784A0;
 }
 
 .lottery-detail-amount-raised-lbl {
@@ -1479,11 +1503,39 @@ section#container {
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1201px) {
 
+  // #main-sidebar-container {
+  //   display: none;
+  // }
+  #main-sidebar {
+    display: none;
+    z-index: 1000000000;
+  }
+
+  #main-content-container {
+    width: 100%;
+  }
+
+  .floating-main-action-btn-container {
+    right: 1%;
+  }
+
+  .floating-main-action-btn-container-gutter {
+    width: 100%;
+  }
+
+  #top-main-container {
+    width: 100%;
+  }
 
   .message-compose-container {
     width: 26.5%;
+  }
+
+  #sidebar-drawer-icon {
+    display: inline-block;
+    margin-left: 10px;
   }
 
 

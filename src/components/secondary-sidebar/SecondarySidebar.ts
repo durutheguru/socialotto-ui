@@ -20,6 +20,9 @@ import WithRender from './secondary-sidebar.html';
 export default class SecondarySidebar extends BaseVue {
 
 
+    private visibleSidebar: boolean = true;
+
+
     private actions: UserAction[] = [];
 
 
@@ -36,6 +39,12 @@ export default class SecondarySidebar extends BaseVue {
             Log.info('Route Cleared.');
 
             this.clearUserActions();
+        });
+
+        EventBus.$on(Constants.sidebarToggleEvent, (data: any) => {
+            Log.info('Sidebar Toggled.');
+
+            this.visibleSidebar = !this.visibleSidebar;
         });
     }
 

@@ -6,12 +6,12 @@ import PageResponseResolver from "./PageResponseResolver";
 export default class PullStreamDataResponseResolver implements PageResponseResolver {
 
 
-    public resolve(model: any, response: any): void {
+    public resolve(model: any, response: any, getters: any): void {
         Log.info(`PullStreamModel: ${JSON.stringify(model)}`);
         Log.info(`PullStreamResponse: ${JSON.stringify(response)}`);
 
-        let existingMinTimeStamp = model.pageData.minTimeStamp;
-        let existingMaxTimeStamp = model.pageData.maxTimeStamp;
+        let existingMinTimeStamp = getters.getMinFetchedTimeStamp;
+        let existingMaxTimeStamp = getters.getMaxFetchedTimeStamp;
 
         model.pageData = {
             next: {},
@@ -36,7 +36,7 @@ export default class PullStreamDataResponseResolver implements PageResponseResol
         }
 
         if (Util.isValidNumber(existingMinTimeStamp)) {
-            if (existingMinTimeStamp < responseMinTimeStamp) {
+            if (existingMinTimeStamp < responseMinTimeStamp && existingMinTimeStamp !== 0) {
                 return existingMinTimeStamp;
             } else {
                 return responseMinTimeStamp;
@@ -52,24 +52,39 @@ export default class PullStreamDataResponseResolver implements PageResponseResol
 
         if (Util.isValidNumber(existingMaxTimeStamp)) {
             if (existingMaxTimeStamp < responseMaxTimeStamp) {
-                return existingMaxTimeStamp;
-            } else {
                 return responseMaxTimeStamp;
+            } else {
+                return existingMaxTimeStamp;
             }
         }
     }
 
 
-    public append(model: any, response: any): void {
+    public append(model: any, response: any, getters: any): void {
         Array.prototype.push.apply(model.list, response.data.content);
-        this.resolve(model, response);
+        this.distinctList(model);
+        this.resolve(model, response, getters);
     }
 
 
-    public prepend(model: any, response: any): void {
+    public prepend(model: any, response: any, getters: any): void {
         Array.prototype.push.apply(response.data.content, model.list);
         model.list = response.data.content;
-        this.resolve(model, response);
+        this.distinctList(model);
+        this.resolve(model, response, getters);
+    }
+
+
+    private distinctList(model: any) {
+        let filterKeys: any = {};
+        model.list = model.list.filter((item: {id: number}) => {
+            if (!!filterKeys[item.id]) {
+                return false;
+            }
+
+            filterKeys[item.id] = item.id;
+            return true;
+        });
     }
 
 
