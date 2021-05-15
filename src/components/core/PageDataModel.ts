@@ -29,21 +29,23 @@ const defaultPageData = () => {
 };
 
 
-const defaultPageModel = {
+const defaultPageModel = () => {
 
-    loading: false,
+    return {
+        loading: false,
 
-    error: '',
+        error: '',
 
-    list: [],
+        list: [],
 
-    entityKeyName: '',
+        entityKeyName: '',
 
-    searchResults: false,
+        searchResults: false,
 
-    searchQuery: '',
+        searchQuery: '',
 
-    pageData: defaultPageData(),
+        pageData: defaultPageData(),
+    };
 
 };
 
@@ -164,7 +166,7 @@ export default class PageDataModel {
 
     public static newModel(entity: string): any {
         return {
-            ...defaultPageModel,
+            ...defaultPageModel(),
 
             entityKeyName: entity
         };
@@ -175,7 +177,7 @@ export default class PageDataModel {
         model: any,
         response: any,
         isSearchResult: boolean = false,
-        getters: any,
+        getters?: any,
         resolver?: PageResponseResolver,
     ) {
         model.searchResults = isSearchResult;

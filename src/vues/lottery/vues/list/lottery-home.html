@@ -71,7 +71,7 @@
         </div> -->
 
         <div v-for="lottery in lotteries" @click="viewLotteryDetails(lottery.id)"
-            class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container sm-box-shadowed pointer">
+            class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container pointer">
             <div class="row">
                 <div class="col--12">
                     <div class="item-list-posted-date-container pull-right h-padding-medium">
@@ -86,18 +86,19 @@
                         <div
                             class="pull-left profile-photo-container r-margin-small" style="padding-left:0px;">
 
-                            <img v-if="lottery.lotteryOwner.photoThumbnail" class="img-profile-thumbnail"
+                            <img v-if="lottery.lotteryOwner&&lottery.lotteryOwner.photoThumbnail" class="img-profile-thumbnail"
                                 :src="lottery.lotteryOwner.photoThumbnail" />
 
                             <div v-else
                                 style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
                             </div>
+
                         </div>
                         <div class="item-list-user-meta-names-container pull-left h-padding-small">
-                            <div style="position:relative;top:4px;">
-                                <span class="item-list-user-meta-name">{{lottery.lotteryOwner.name}}</span>
-                                <span v-if="lottery.lotteryOwner.twitterVerified"><i class="fa fa-check-circle blue"></i></span>
+                            <div v-if="lottery.lotteryOwner" style="position:relative;top:4px;">
+                                <span v-if="lottery.lotteryOwner" class="item-list-user-meta-name">{{lottery.lotteryOwner.name}}</span>
+                                <span v-if="lottery.lotteryOwner&&lottery.lotteryOwner.twitterVerified"><i class="fa fa-check-circle blue"></i></span>
                                 <span class="dark-grey h-margin-small item-list-user-meta-name">@{{lottery.lotteryOwner.username}}</span>
                             </div>
                         </div>

@@ -334,6 +334,12 @@ l-padding-small {
   margin-right: auto;
 }
 
+.router-link-active {
+  color: black !important;
+  text-decoration: underline !important;
+}
+
+
 .sidebar-main {
   color: #FFF;
   background: $primary_color;
@@ -665,8 +671,9 @@ a.logo_white {
 }
 
 .router-link-active {
-  color: #FFF !important;
+  color: #000 !important;
   font-weight: bolder;
+  text-decoration: underline !important;
 }
 
 .main-route-content {
@@ -1245,6 +1252,12 @@ textarea.resize-v {
 .item-list-verified-badge {
   color: #000;
   background: #B2DFD4;
+  font-weight: bold;
+}
+
+.item-list-unverified-badge {
+  color: #000;
+  background: #eb6e6e;
   font-weight: bold;
 }
 

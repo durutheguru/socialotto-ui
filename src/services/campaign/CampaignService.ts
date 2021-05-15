@@ -18,7 +18,7 @@ export default class CampaignService {
             Web.getAbsolute(pageRequest.URL, successHandler, errorHandler);
         } else {
             Web.get(
-                '/api/v1/campaign?page=' + pageRequest.page + 
+                '/api/v1/campaign_request?page=' + pageRequest.page + 
                 '&size=' + pageRequest.size,
                 successHandler, errorHandler
             );

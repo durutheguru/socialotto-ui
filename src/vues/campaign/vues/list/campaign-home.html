@@ -2,111 +2,66 @@
 
     <hr class="default-hr" />
 
-    <div class="row h-padding-medium">
+    <div v-if="isValidArray(campaigns)" class="row h-padding-medium v-padding-bottom-v-big v-margin-bottom-v-big">
         <div class="row">
-            <div class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container">
-                <div class="row">
+            <div v-for="campaign in campaigns" @click="showCampaignDetails(campaign)"
+                class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container pointer">
+                <div v-if="campaign" class="row">
                     <div class="col--12">
                         <div class="item-list-posted-date-container pull-right h-padding-medium">
                             <span class="pull-right item-list-posting-date">
-                                Posted: 2021-10-02
+                                Posted: {{zdtToDTFormat(campaign.timeAdded)}}
                             </span>
                         </div>
                         <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
                             <div class="col--1 pull-left profile-photo-container" style="padding-left:0px;">
                                 <span class="r-margin-small">
-                                    <div style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
-                                        
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="item-list-user-meta-names-container pull-left h-padding-small">
-                                <div style="position:relative;top:4px;">
-                                    <span class="item-list-user-meta-name bold-font">Burna Boy</span>
-                                    <span><i class="fa fa-check-circle blue"></i></span>
-                                    <span class="dark-grey h-margin-small item-list-user-meta-name">@burnaboy</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row v-margin-small">
-                    <div class="col-md-12">
-                        <div class="item-list-lottery-image-container pull-left" style="padding-left:0px;">
-                            <div style="display:inline-block;width:100%;height:100px;background:#AC4C4C;">
-                                
-                            </div>
-                        </div>
-                        <div class="item-list-lottery-text-container pull-left">
-                            <h4>Travel with Burna Boy to Maldives Island</h4>
-                            <h5 class="blue">
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="col--12 margin-top-m h-padding-medium">
-                        <div class="col--6 pull-right">
-                            <span class="pull-right item-list-verified-badge h-padding-medium">
-                                VERIFIED
-                            </span>
-                        </div>
-                        <div class="col--6">
-                            <span class="wine">
-                                Closes: 2021-10-20 (tomorrow)
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container">
-                <div class="row">
-                    <div class="col--12">
-                        <div class="item-list-posted-date-container pull-right h-padding-medium">
-                            <span class="pull-right item-list-posting-date">
-                                Posted: 2021-10-02
-                            </span>
-                        </div>
-                        <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
-                            <div class="col--1 pull-left profile-photo-container" style="padding-left:0px;">
-                                <span class="r-margin-small">
-                                    <div style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
-                                        
+                                    <img v-if="campaign.owner&&campaign.owner.photoThumbnail" class="img-profile-thumbnail"
+                                        :src="campaign.owner.photoThumbnail" />
+
+                                    <div v-else
+                                        style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
                                     </div>
+
                                 </span>
                             </div>
                             <div class="item-list-user-meta-names-container pull-left h-padding-small">
-                                <div style="position:relative;top:4px;">
-                                    <span class="item-list-user-meta-name bold-font">Burna Boy</span>
+                                <div v-if="campaign.owner" style="position:relative;top:4px;">
+                                    <span v-if="campaign.owner" class="item-list-user-meta-name bold-font">{{campaign.owner.name}}</span>
+                                    <span v-if="campaign.owner.twitterVerified"><i class="fa fa-check-circle blue"></i></span>
+                                    <span class="dark-grey h-margin-small item-list-user-meta-name">@{{campaign.owner.username}}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row v-margin-small">
+                <div v-if="campaign" class="row v-margin-small">
                     <div class="col-md-12">
+                        <!-- <div class="item-list-lottery-image-container pull-left" style="padding-left:0px;">
+                            <div style="display:inline-block;width:100%;height:100px;background:#AC4C4C;">
+
+                            </div>
+                        </div> -->
                         <div class="item-list-lottery-text-container pull-left">
-                            <h4>Travel with Burna Boy to Maldives Island</h4>
+                            <h4>{{campaign.name}}</h4>
                             <h5 class="blue">
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives. 
-                                Hello all, come and join me and my crew as we fly away to the lush island of Maldives.
+                                {{util.managedString(campaign.description, 450)}}
                             </h5>
                         </div>
                     </div>
                     <div class="col--12 margin-top-m h-padding-medium">
                         <div class="col--6 pull-right">
-                            <span class="pull-right item-list-verified-badge h-padding-medium">
+                            <span v-if="campaign.verified" class="pull-right item-list-verified-badge h-padding-medium">
                                 VERIFIED
+                            </span>
+                            <span v-else class="pull-right item-list-unverified-badge h-padding-medium">
+                                UNVERIFIED
                             </span>
                         </div>
                         <div class="col--6">
                             <span class="wine">
-                                Closes: 2021-10-20 (tomorrow)
+                                <!-- Closes: {{campaign.endDate}} ({{dateMoment(campaign.endDate)}}) -->
                             </span>
                         </div>
                     </div>
@@ -116,13 +71,17 @@
         </div>
     </div>
 
+    <div v-else>
+        <span class="grey much-larger-font">
+            Nothing to see yet...
+        </span>
+    </div>
+
     <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
 
         <div class="floating-main-action-btn-container-gutter">
             <div class="col--1 pull-right button-container">
-                <button 
-                    class="app-btn app-btn-primary box-shadowed"
-                    @click="showCreateCampaignDialog()">
+                <button class="app-btn app-btn-primary box-shadowed" @click="showCreateCampaignDialog()">
                     <i class="fa fa-plus large-font"></i>
                 </button>
             </div>
@@ -131,11 +90,10 @@
     </div>
 
 
-    <create-campaign-dialog
-        v-if="dialogOpts.createCampaign.visible"
+    <create-campaign-dialog 
+        v-if="dialogOpts.createCampaign.visible" 
         v-bind:visible="dialogOpts.createCampaign.visible"
         v-on:close-dialog="hideCreateCampaignDialog" />
-        
+
 
 </div>
-
