@@ -69,6 +69,13 @@
             </div>
 
         </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <button 
+                class="btn btn-success max-width" 
+                :disabled="campaignsLoading"
+                @click="fetchOlderCampaigns()">Load More..</button>
+        </div>
     </div>
 
     <div v-else>

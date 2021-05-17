@@ -31,7 +31,17 @@ export default class CampaignHomeComponent extends BaseVue {
 
 
     public mounted() {
+        this.loadCampaigns();
+    }
+
+
+    private loadCampaigns() {
         this.$store.dispatch('campaign/loadCampaigns');
+    }
+
+
+    private fetchOlderCampaigns() {
+        this.$store.dispatch('campaign/appendCampaigns');
     }
 
 
@@ -43,6 +53,7 @@ export default class CampaignHomeComponent extends BaseVue {
 
     public hideCreateCampaignDialog() {
         this.dialogOpts.createCampaign.visible = false;
+        this.loadCampaigns();
     }
 
 

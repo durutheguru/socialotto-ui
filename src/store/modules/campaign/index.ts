@@ -42,6 +42,10 @@ const getters = {
         return context.campaigns.loading;
     },
 
+    getCampaignsPage(context: any) {
+        return context.campaigns.pageData.number;
+    },
+
 };
 
 
@@ -145,50 +149,6 @@ const actions = {
     },
 
 
-    prependCampaigns(context: any) {
-        Util.throttle(
-            {
-                key: 'campaign_list_prepend',
-
-                run: () => {
-                    context.commit('clearCampaignsError');
-                    context.commit('setCampaignsLoading', true);
-
-                    Web.get(
-                        PageDataModel.getPrependUrl(
-                            '/api/v1/campaign_request', 
-                            context.getters.getMaxFetchedTimeStamp
-                        ),
-                        
-                        (response: any) => {
-                            context.commit('setCampaignsLoading', false);
-                            context.commit(
-                                'prependCampaigns', 
-                                {
-                                    apiResponse: response, 
-                                    isSearchResult: false,
-                                },
-                            );
-                        },
-            
-                        (error: any) => {
-                            context.commit('setCampaignsLoading', false);
-                            context.commit(
-                                'setCampaignsError',
-                                {
-                                    apiError: error,
-                                },
-                            );
-                        },
-                    );
-                },
-
-                time: 1000,
-            },
-        );
-    },
-
-
     appendCampaigns(context: any) {
         Util.throttle(
             {
@@ -199,10 +159,7 @@ const actions = {
                     context.commit('setCampaignsLoading', true);
 
                     Web.get(
-                        PageDataModel.getAppendUrl(
-                            '/api/v1/campaign', 
-                            context.getters.getMinFetchedTimeStamp
-                        ),
+                        '/api/v1/campaign_request?page=' + (context.getters.getCampaignsPage + 1),
             
                         (response: any) => {
                             context.commit('setCampaignsLoading', false);
