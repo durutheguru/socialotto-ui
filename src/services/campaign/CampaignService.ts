@@ -83,6 +83,15 @@ export default class CampaignService {
     }
 
 
+    public static getCampaignDetails(
+        campaignId: string, 
+        successHandler: APISuccessCallback,
+        errorHandler: APIErrorCallback,
+    ) {
+        Web.get('/api/v1/campaign_request/' + campaignId, successHandler, errorHandler);
+    }
+
+
     public static treatCampaignApproval(
         approval: any,
         successHandler: APISuccessCallback,

@@ -155,7 +155,9 @@
                 <div class="row v-margin-big">
                     <div v-if="isValidArray(lottery.data.campaigns)"
                         class="col--12 center-container v-margin-bottom-v-big">
-                        <div v-for="campaign in lottery.data.campaigns"
+                        <div 
+                            v-for="campaign in lottery.data.campaigns"
+                            @click="showCampaignDetails(campaign)"
                             class="lottery-detail-campaign-container margin-centered">
 
                             <div class="lottery-detail-campaign-container-card">

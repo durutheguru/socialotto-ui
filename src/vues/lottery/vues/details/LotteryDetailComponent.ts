@@ -80,6 +80,12 @@ export default class LotteryDetailComponent extends BaseVue {
     }
 
 
+    public showCampaignDetails(campaign: {id: number}) {
+        let routeData = this.$router.resolve({path: `/campaign/${campaign.id}`});
+        window.open(routeData.href, '_blank');
+    }
+
+
 }
 
 

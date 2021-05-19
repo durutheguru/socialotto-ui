@@ -1,0 +1,127 @@
+<div>
+
+    <hr class="default-hr" />
+
+    <div class="col--12 h-padding-big">
+
+
+        <div v-if="util.isValidNumber(campaign.data.id)">
+
+            <div class="col--12 v-padding-small v-margin-small">
+                <div class="row">
+                    <div class="col--12">
+                        <div class="item-list-posted-date-container pull-right h-padding-medium">
+                            <span class="pull-right item-list-posting-date">
+                                Posted: {{zdtToDTFormat(campaign.data.timeAdded)}}
+                            </span>
+                            <span class="pull-right item-list-sm-posting-date">
+                                {{miniZoneDateTimeMoment(campaign.data.timeAdded)}}
+                            </span>
+                        </div>
+                        <div class="item-list-user-meta-container h-padding-medium hidden-overflow">
+                            <div class="pull-left profile-photo-container" style="padding-left:0px;">
+                                <span class="r-margin-small">
+
+                                    <img v-if="campaign.data.owner&&campaign.data.owner.photoThumbnail" 
+                                        class="img-profile-thumbnail"
+                                        :src="campaign.data.owner.photoThumbnail" />
+
+                                    <div v-else
+                                        style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
+
+                                    </div>
+                                </span>
+                            </div>
+                            <div v-if="campaign.data.owner" class="item-list-user-meta-names-container pull-left h-padding-small">
+                                <div style="position:relative;top:4px;">
+                                    <span class="item-list-user-meta-name">{{campaign.data.owner.name}}</span>
+                                    <span v-if="campaign.data.owner.twitterVerified">
+                                        <i class="fa fa-check-circle blue"></i>
+                                    </span>
+                                    <span
+                                        class="dark-grey h-margin-small item-list-user-meta-name">@{{campaign.data.owner.username}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row v-margin-small">
+                    <div class="col-12">
+                        <div>
+                            <br /><h2>{{campaign.data.name}}</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col--12 v-padding-small h-margin-medium">
+                        <div>
+                            <h5 class="blue">
+                                {{campaign.data.description}}
+                            </h5>
+                            <br />
+                            <span class="lottery-closing-date">
+                                Campaign Closes: {{campaign.data.endDate}} ({{dateMoment(campaign.data.endDate)}})
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="campaign.data.fileRefs&&campaign.data.fileRefs.length" class="row v-margin-medium">
+                    <div class="col-md-10 col-md-offset-1 centered h-margin-medium">
+                        <div v-for="file in campaign.data.fileRefs" class="lottery-detail-image-item">
+                            <file 
+                                :file-ref="file.reference" 
+                                :file-name="file.originalFileName"
+                                :file-type="file.fileType" 
+                                :meta="file.metaData" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row lottery-detail-amount-raised-container">
+                    <div class="col--12">
+                        <div class="lottery-detail-amount-raised-lbl">
+                            <span>Amount Raised</span>
+                        </div>
+                        <div class="lottery-detail-amount-raised">
+                            <span>{{util.currencyFormat(campaign.data.wallet.balance)}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
+
+                <div class="floating-main-action-btn-container-gutter">
+                    <div class="col--1 pull-right button-container">
+                        <button class="app-btn app-btn-primary box-shadowed" @click="showJoinLotteryDialog()">
+                            <span>Donate</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div v-else>
+            <span class="grey much-larger-font">
+                Nothing to see yet...
+            </span>
+        </div>
+
+<!-- 
+        <join-lottery-dialog 
+            v-if="dialogOpts.joinLottery.visible" 
+            v-bind:visible="dialogOpts.joinLottery.visible"
+            :lotteryId="$route.params.id"
+            :ticketCost="campaign.data.ticketCost"
+            v-on:close-dialog="hideJoinLotteryDialog" />
+ -->
+
+    </div>
+
+</div>
