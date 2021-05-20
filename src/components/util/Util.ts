@@ -49,7 +49,7 @@ export default class Util {
     }
 
 
-    public static isValidArray(arr: any, empty: boolean) {
+    public static isValidArray(arr: any, empty?: boolean) {
         return ((!empty) ? arr && !!arr.length : true);
     }
 

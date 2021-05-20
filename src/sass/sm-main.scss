@@ -7,6 +7,14 @@
 
 @media (max-width: 540px) {
 
+    #main-sidebar-container {
+        min-width: 400px;
+    }
+
+    #main-sidebar {
+        min-width: 400px;
+    }
+
     h1.site-name {
         font-size: 1.8rem;
     }
@@ -213,6 +221,19 @@
 
     .lottery-entry-ticket-count {
         width: 50%;
+    }
+
+}
+
+
+@media (max-width: 300px) {
+
+    #main-sidebar {
+        min-width: 100%;
+    }
+
+    #main-sidebar-container {
+        min-width: 100%;
     }
 
 }

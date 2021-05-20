@@ -16,6 +16,20 @@
     }
 
 }
+
+
+@media screen and (min-width: 1000px) {
+
+    #main-content {
+      margin-left: 250px !important;
+    }
+  
+    aside.side-menu {
+      display: block;
+    }
+  
+}
+  
   
   
 @media (max-width: 1000px) { 

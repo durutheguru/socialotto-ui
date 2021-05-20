@@ -505,6 +505,7 @@ button.app-btn-secondary {
 
 #main-sidebar-container {
   width: 25%;
+  min-width: 300px;
 }
 
 
@@ -570,6 +571,7 @@ button.app-btn-secondary {
 
   .message-compose-container {
     width: 300px;
+    max-width: 300px;
   }
 
   .floating-main-action-btn-container {
@@ -914,6 +916,10 @@ a.sidebar-link-btn:hover {
   overflow-y: scroll;
 }
 
+#sidebar-back-button {
+  display: none;
+}
+
 
 .round-border {
   border-radius: 4px;
@@ -942,18 +948,6 @@ aside.side-menu {
   margin-left: 0px !important;
 }
 
-
-@media screen and (min-width: 1000px) {
-
-  #main-content {
-    margin-left: 250px !important;
-  }
-
-  aside.side-menu {
-    display: block;
-  }
-
-}
 
 .relative {
   position: relative !important;
@@ -1265,6 +1259,10 @@ textarea.resize-v {
   display: none;
 }
 
+#sidebar-wallet-icon {
+  color: #999b84;
+}
+
 
 .wizard-step-list-item-container {
   width: 16.666667%;
@@ -1518,9 +1516,10 @@ section#container {
 
 @media (max-width: 1201px) {
 
-  // #main-sidebar-container {
-  //   display: none;
-  // }
+  #main-sidebar-container {
+    display: none;
+  }
+  
   #main-sidebar {
     display: none;
     z-index: 1000000000;
@@ -1529,6 +1528,11 @@ section#container {
   #main-content-container {
     width: 100%;
   }
+
+  #sidebar-back-button {
+    display: block;
+  }
+  
 
   .floating-main-action-btn-container {
     right: 1%;

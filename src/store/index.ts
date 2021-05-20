@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import authToken from './modules/authToken';
 import lottery from './modules/lottery';
 import campaign from './modules/campaign';
+import wallet from './modules/wallet';
 import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     authToken,
     lottery,
     campaign,
+    wallet,
   },
 
 
