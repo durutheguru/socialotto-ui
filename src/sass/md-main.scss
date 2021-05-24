@@ -33,14 +33,13 @@
   
   
 @media (max-width: 1000px) { 
-    .floating-main-action-btn-container-gutter {
-        width: 90%;
-    }
 
 
     .floating-main-action-btn-container-gutter .app-btn {
         font-size: 1.3em;
     }
+
+    
 }
 
 @media (max-width: 850px) {
@@ -165,6 +164,20 @@
     .lottery-evaluation-date {
         display: inline-block;
     }
+
+    .lottery-closing-date {
+        color: #E05858;
+        font-weight: bold;
+        font-size: 0.99em;
+        line-height: 1.5em;
+      }
+      
+      .lottery-evaluation-date {
+        color: #228F89;
+        font-weight: bold;
+        font-size: 0.99em;
+        line-height: 1.5em;
+      }
 
   }
 
