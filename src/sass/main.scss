@@ -28,6 +28,10 @@ html, body {
   color : white;
 }
 
+.black {
+  color: black;
+}
+
 .wine {
   color : $wine !important;
 }
@@ -268,6 +272,9 @@ l-padding-small {
   padding-bottom: $v_big_length;
 }
 
+.padding-top-m {
+  padding-top: $medium_length;
+}
 
 .margin-top-big {
   margin-top : $big_length;
@@ -506,6 +513,8 @@ button.app-btn-secondary {
 #main-sidebar-container {
   width: 25%;
   min-width: 300px;
+  position:fixed;
+  z-index: 1000000000;
 }
 
 
@@ -564,6 +573,11 @@ button.app-btn-secondary {
   line-height: 3.5em !important;
 }
 
+.list-item-description-preview {
+  font-size: 1.3em;
+  color: $app_blue;
+}
+
 @media (max-width: 1240px) {
   #main-content-container {
     width: calc(100% - 300px);
@@ -616,7 +630,6 @@ hr.default-hr {
   margin-top: $small_length;
   margin-bottom: $small_length;
 }
-
 
 
 hr.bottom-bordered-main-sidebar-separator {
@@ -1111,7 +1124,6 @@ textarea.resize-v {
 
 .lottery-detail-title-container {
   width: 35%;
-  height: 100px;
   float: left;
   padding-right: 10px;
   white-space: normal;
@@ -1146,6 +1158,14 @@ textarea.resize-v {
   font-weight: bold;
   font-size: 1.3em;
   line-height: 1.5em;
+}
+
+.lottery-evaluation-date {
+  color: #228F89;
+  font-weight: bold;
+  font-size: 1.3em;
+  line-height: 1.5em;
+  display: none;
 }
 
 .lottery-time-img {
@@ -1584,6 +1604,12 @@ section#container {
 
   .lottery-detail-campaign-container {
       width: 70%;
+  }
+
+
+  .lottery-detail-image-item {
+    width: 70%;
+    margin-bottom: 30px;
   }
 
   

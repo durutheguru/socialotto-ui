@@ -62,5 +62,12 @@ export default class BaseVue extends Vue {
     }
 
 
+    public fullDateFormat(time: string): string {
+        return Util.formatTime(
+            time, 'YYYY-MM-DD', 'D MMMM, YYYY'
+        );
+    }
+
+
 }
 
