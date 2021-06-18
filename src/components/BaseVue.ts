@@ -38,6 +38,15 @@ export default class BaseVue extends Vue {
     }
 
 
+    public zdtToDateTimeFormat(time: string): string {
+        return Util.formatTime(
+            time, 
+            Constants.defaultZoneDateTimeFormat, 
+            Constants.defaultDateTimeFormat
+        );
+    }
+
+
     public zdtToFullDateFormat(time: string): string {
         return Util.formatTime(
             time, 

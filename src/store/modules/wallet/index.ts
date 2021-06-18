@@ -3,6 +3,7 @@ import { Log, Util, Constants } from '@/components/util';
 import { EventBus } from '@/components/core/Event';
 import WalletService from '@/components/secondary-sidebar/components/wallet/WalletService';
 
+import activity from './activity';
 
 
 const getDefaultState = () => {
@@ -113,11 +114,17 @@ const actions = {
 };
 
 
+const modules = {
+    activity,
+};
+
+
 export default {
     namespaced: true,
     state,
     getters,
     actions,
     mutations,
+    modules,
 };
 

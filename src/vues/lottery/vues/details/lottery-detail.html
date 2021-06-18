@@ -99,9 +99,7 @@
                 <div class="row v-margin-medium">
                     <div class="col--12 v-padding-small v-margin-big h-margin-medium">
                         <div class="lottery-detail-desc-container">
-                            <h5 class="blue">
-                                {{lottery.data.description}}
-                            </h5>
+                            <h5 class="blue pre-wrap">{{lottery.data.description}}</h5>
                             <br />
                             <span v-if="lottery.data.stageDescriptions.length" class="lottery-evaluation-date">
                                 <span class="black">Time of Lottery: </span>
@@ -200,7 +198,7 @@
                 </div>
             </div>
 
-            <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
+            <div v-if="lottery.data.lotteryStatus=='ACTIVE'" class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
 
                 <div class="floating-main-action-btn-container-gutter">
                     <div class="col--3 pull-right button-container">

@@ -19,49 +19,18 @@
             <h3 class="blue">Recent Activity</h3>
         </div>
 
-        <div class="max-width h-margin-big margin-bottom-s bottom-bordered-main-sidebar-separator">
+        <div v-for="a in walletActivities"
+            class="max-width h-margin-big margin-bottom-s bottom-bordered-main-sidebar-separator">
             <div class="row">
                 <div class="col-md-12">
-                    You funded your wallet with N100,000
+                    {{a.description}}
                 </div>
                 <div class="v-margin-small col-md-12">
-                    5s ago
+                    {{zdtToDTFormat(a.timeAdded)}}
                 </div>
             </div>
         </div>
 
-        <div class="max-width h-margin-big margin-bottom-s bottom-bordered-main-sidebar-separator">
-            <div class="row">
-                <div class="col-md-12">
-                    You withdrew N10,000 from your wallet
-                </div>
-                <div class="v-margin-small col-md-12">
-                    2d ago
-                </div>
-            </div>
-        </div>
-
-        <div class="max-width h-margin-big margin-bottom-s bottom-bordered-main-sidebar-separator">
-            <div class="row">
-                <div class="col-md-12">
-                    You funded your wallet with N100,000
-                </div>
-                <div class="v-margin-small col-md-12">
-                    2d ago
-                </div>
-            </div>
-        </div>
-
-        <div class="max-width h-margin-big margin-bottom-s bottom-bordered-main-sidebar-separator">
-            <div class="row">
-                <div class="col-md-12">
-                    You withdrew N10,000 from your wallet
-                </div>
-                <div class="v-margin-small col-md-12">
-                    2d ago
-                </div>
-            </div>
-        </div>
     </div>
 
 </div>

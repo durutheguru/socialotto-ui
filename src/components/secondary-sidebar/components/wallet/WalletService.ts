@@ -12,6 +12,14 @@ export default class WalletService {
     }
 
 
+    public static getWalletActivity(
+        successCallback: APISuccessCallback,
+        errorCallback: APIErrorCallback,
+    ) {
+        Web.get('/api/v1/wallet/activity', successCallback, errorCallback);
+    }
+
+
 }
 
 

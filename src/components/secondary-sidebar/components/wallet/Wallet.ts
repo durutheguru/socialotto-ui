@@ -15,11 +15,12 @@ export default class Wallet extends BaseVue {
 
 
     public mounted() {
-        this.getUserWallet();
+        this.fetchUserWallet();
+        this.fetchWalletActivity();
     }
 
 
-    private getUserWallet() {
+    private fetchUserWallet() {
         this.$store.dispatch('wallet/fetchWallet');
     }
 
@@ -27,6 +28,19 @@ export default class Wallet extends BaseVue {
     public get walletBalance() {
         return this.$store.getters['wallet/getWalletBalance'];
     }
+
+
+    public fetchWalletActivity() {
+        this.$store.dispatch('wallet/activity/loadActivities');
+    }
+
+
+    public get walletActivities() {
+        return this.$store.getters['wallet/activity/getActivities'];
+    }
+
+
+
 
 
 }
