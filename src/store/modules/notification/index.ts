@@ -171,7 +171,7 @@ const actions = {
 
                     Web.get(
                         PageDataModel.getPrependUrl(
-                            '/api/v1/user_notifications', 
+                            '/api/v1/user_notifications?userId=' + store.getters['authToken/username'], 
                             context.getters.getMaxFetchedTimeStamp
                         ),
                         
@@ -215,7 +215,7 @@ const actions = {
 
                     Web.get(
                         PageDataModel.getAppendUrl(
-                            '/api/v1/user_notifications', 
+                            '/api/v1/user_notifications?userId=' + store.getters['authToken/username'], 
                             context.getters.getMinFetchedTimeStamp
                         ),
             
