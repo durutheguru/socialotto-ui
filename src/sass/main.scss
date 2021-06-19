@@ -212,6 +212,14 @@ img.logo-img-medium {
   margin-right: $small_length;
 }
 
+.l-margin-big {
+  margin-left: $big_length;
+}
+
+.l-padding-big {
+  padding-left: $big_length;
+}
+
 .r-margin-small {
   margin-right: $small_length;
 }
@@ -562,12 +570,11 @@ button.app-btn-secondary {
 .floating-main-action-btn-container {
   position: fixed !important;
   bottom: 30px;
-  // right: 30px;
-  right: 4%;
 }
 
 .floating-main-action-btn-container-gutter {
   width: 75%;
+  overflow: hidden;
 }
 
 .lottery-detail-number-entries {
@@ -588,10 +595,6 @@ button.app-btn-secondary {
   .message-compose-container {
     width: 300px;
     max-width: 300px;
-  }
-
-  .floating-main-action-btn-container {
-    right: 7%;
   }
 
   .floating-main-action-btn-container button-container {
@@ -1553,11 +1556,6 @@ section#container {
 
   #sidebar-back-button {
     display: block;
-  }
-  
-
-  .floating-main-action-btn-container {
-    right: 1%;
   }
 
   .floating-main-action-btn-container-gutter {

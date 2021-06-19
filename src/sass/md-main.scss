@@ -140,6 +140,12 @@
         font-size: 1.5em !important;
     }
 
+
+
+    .floating-main-action-btn-container-gutter {
+        padding-right: 60px !important; 
+    }
+
 }
 
 
@@ -182,3 +188,15 @@
   }
 
 
+@media (min-width: 760px) {
+
+    .floating-main-action-btn-container-gutter .button-container {
+        padding-left: 40px;
+    }
+
+    // .floating-main-action-btn-container-gutter .s-button-container {
+    //     // padding-left: 100px !important;
+    // }
+
+    
+}
