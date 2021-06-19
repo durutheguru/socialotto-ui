@@ -5,6 +5,7 @@ import { Log } from '@/components/util';
 
 
 const state = {
+    username: '',
     loggedIn: false,
     authToken: null,
     userEnabled: null,
@@ -12,6 +13,10 @@ const state = {
 
 
 const getters = {
+
+    username(context: any) {
+        return context.username;
+    },
 
     apiToken(context: any) {
         return context.authToken;
@@ -37,6 +42,7 @@ const mutations = {
         const userAuthContext = UserAuthContext.getInstance();
         userAuthContext.initialize(token);
 
+        context.username = userAuthContext.userId();
         context.userEnabled = userAuthContext.isEnabled();
         Log.info(`Context State: context.userEnabled ${context.userEnabled}`);
     },

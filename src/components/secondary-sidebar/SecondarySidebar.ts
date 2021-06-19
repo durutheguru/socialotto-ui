@@ -9,6 +9,7 @@ import UserAction from '@/components/core/UserAction';
 import LoginService from '@/vues/login/service/LoginService';
 
 import Wallet from './components/wallet/Wallet';
+import Notification from './components/notifications/Notification';
 
 import WithRender from './secondary-sidebar.html';
 
@@ -17,6 +18,7 @@ import WithRender from './secondary-sidebar.html';
 @Component({
     components: {
         Wallet,
+        Notification,
     },
 })
 export default class SecondarySidebar extends BaseVue {
