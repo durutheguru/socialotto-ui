@@ -70,6 +70,10 @@ export default class Constants {
     public static defaultZoneDateTimeFormat: string = 'YYYY-MM-DD HH:mm:ss.SSSS Z';
 
 
+    public static AUTHORITIES: any = {
+        CAN_CREATE_LOTTERY: 'CAN_CREATE_LOTTERY',
+        CAN_CREATE_CAMPAIGN: 'CAN_CREATE_CAMPAIGN',
+    };
 
 }
 

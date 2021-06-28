@@ -122,6 +122,13 @@ export default class LotteryHomeComponent extends BaseVue {
     }
 
 
+    public get canCreateLottery() {
+        return this.$store.getters['authToken/isAuthorized'](
+            Constants.AUTHORITIES.CAN_CREATE_LOTTERY,
+        );
+    }
+
+
 }
 
 

@@ -97,6 +97,11 @@ export default class UserAuthContext {
     }
 
 
+    public authorizationList(): string[] {
+        return this.authorizations;
+    }
+
+
 }
 
 

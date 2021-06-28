@@ -84,7 +84,8 @@
         </span>
     </div>
 
-    <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
+    <div v-if="canCreateCampaign"
+        class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
 
         <div class="floating-main-action-btn-container-gutter">
             <div class="col--2 pull-right button-container l-padding-big">

@@ -4,7 +4,7 @@ import BaseVue from '@/components/BaseVue';
 import FloatingActionButton from '@/components/floating-action-button/FloatingActionButton';
 import CreateCampaignDialog from '@/vues/campaign/dialog/create-campaign/CreateCampaignDialog';
 import store from '@/store';
-import { Log, Web } from '@/components/util';
+import { Constants, Log, Web } from '@/components/util';
 
 import WithRender from './campaign-home.html';
 
@@ -69,6 +69,12 @@ export default class CampaignHomeComponent extends BaseVue {
 
     public showCampaignDetails(campaign: any) {
         this.$router.push(`/campaign/${campaign.id}`);
+    }
+
+    public get canCreateCampaign() {
+        return this.$store.getters['authToken/isAuthorized'](
+            Constants.AUTHORITIES.CAN_CREATE_CAMPAIGN,
+        );
     }
 
 
