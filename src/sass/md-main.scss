@@ -9,46 +9,37 @@
 
 @media (max-width: 1000px) {
     
-    #main-sidebar-container {
-        display: none;
-        width: 0px;
-    }
-
-    #main-content-container {
-        width: 100%;
-    }
-
-    .floating-main-action-btn-container {
-        right: 1%;
-    }
-
-    .floating-main-action-btn-container-gutter {
-        width: 100%;
-    }
-
     .item-list-posting-date {
         font-size: 0.7em;
         position: relative;
         top: 5px;
     }
 
-    #sidebar-drawer-icon {
-        display: inline-block;
-        margin-left: 10px;
-    }
+}
 
+
+@media screen and (min-width: 1000px) {
+
+    #main-content {
+      margin-left: 250px !important;
+    }
+  
+    aside.side-menu {
+      display: block;
+    }
+  
 }
   
   
+  
 @media (max-width: 1000px) { 
-    .floating-main-action-btn-container-gutter {
-        width: 90%;
-    }
 
 
     .floating-main-action-btn-container-gutter .app-btn {
         font-size: 1.3em;
     }
+
+    
 }
 
 @media (max-width: 850px) {
@@ -149,6 +140,12 @@
         font-size: 1.5em !important;
     }
 
+
+
+    .floating-main-action-btn-container-gutter {
+        padding-right: 60px !important; 
+    }
+
 }
 
 
@@ -161,7 +158,45 @@
         margin-top: 25px;
         display: -moz-popup;
     }
+
+    .lottery-detail-desc-container {
+        width: 100%;
+    }
+
+    .lottery-details-time-container {
+        display: none;
+    }
+
+    .lottery-evaluation-date {
+        display: inline-block;
+    }
+
+    .lottery-closing-date {
+        color: #E05858;
+        font-weight: bold;
+        font-size: 0.99em;
+        line-height: 1.5em;
+      }
+      
+      .lottery-evaluation-date {
+        color: #228F89;
+        font-weight: bold;
+        font-size: 0.99em;
+        line-height: 1.5em;
+      }
+
   }
 
 
-  
+@media (min-width: 760px) {
+
+    .floating-main-action-btn-container-gutter .button-container {
+        padding-left: 40px;
+    }
+
+    // .floating-main-action-btn-container-gutter .s-button-container {
+    //     // padding-left: 100px !important;
+    // }
+
+    
+}

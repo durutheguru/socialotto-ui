@@ -8,6 +8,9 @@ import { Log, Constants, Util } from '@/components/util';
 import WizardPageToggle from '@/components/modal/wizard/WizardPageToggle';
 import StageDescription from '@/vues/backoffice/vues/campaign/model/StageDescription';
 import ApiResource from '@/components/core/ApiResource';
+import FileUploader from '@/components/file-uploader/FileUploader';
+import { EventBus } from '@/components/core/Event';
+import CampaignService from '@/services/campaign/CampaignService';
 
 
 
@@ -23,12 +26,9 @@ export default class CreateCampaignDialog extends BaseVue {
     @Prop({default: false})
     private visible!: boolean;
 
-
-    private saveCampaign!: ApiResource;
-
-
     private campaign!: any;
 
+    private fileUploader!: FileUploader;
 
     private formWizard: WizardPageToggle = new WizardPageToggle(
         'BASIC_DETAILS',
@@ -36,84 +36,102 @@ export default class CreateCampaignDialog extends BaseVue {
         'CONFIRMATION',
     );
 
+    private saveCampaign: ApiResource = ApiResource.create();
+
+
 
     public mounted() {
-        this.saveCampaign = ApiResource.create();
-
         this.campaign = {
             name: '',
             description: '',
-            campaignImages: []
         };
-    }
 
-
-    private addStage() {
-        Log.info('Adding New Stage');
-        this.campaign.stageDescriptions.push(
-            StageDescription.defaultStage(Util.uuid())
+        this.fileUploader = new FileUploader(
+            '/upload', 3
         );
-        this.$forceUpdate();
 
-        Log.info(`Stage Count: ${this.campaign.stageDescriptions.length}`);
+        this.addEventListeners();
     }
 
 
-    private deleteStage(index: number) {
-        this.campaign.stageDescriptions = this.campaign.stageDescriptions.filter((s: any, i: number) => {
-            return i !== index;
-        });
-        this.$forceUpdate();
+    private addEventListeners() {
+        let self = this;
+
+        EventBus.$on(
+            Constants.fileUploadEvent,
+
+            (data: any) => {
+                self.$forceUpdate();
+            },
+        );
     }
 
 
-    private canDeleteStage(index: number): boolean {
-        return (this.campaign.stageDescriptions.length > 1) && 
-            (index === this.campaign.stageDescriptions.length - 1);
+    private get canDisplayTitle(): boolean {
+        return !(this.isValidString(this.saveCampaign.error) || this.saveCampaign.loading);
+    }
+
+
+    public fileChanged(event: any) {
+        this.fileUploader.fileChange(event);
+        this.$forceUpdate();
     }
 
 
     private createCampaign() {
+        let self = this;
+
         Log.info(`Campaign Data Post: ${JSON.stringify(this.campaign)}`);
         const campaignRequest = this.prepareCampaignRequest();
-        this.validateCampaignRequest(campaignRequest);
+        
+        if (!self.validateCampaignRequest(campaignRequest)) {
+            return;
+        }
 
-        this.saveCampaign.error = '';
-        this.saveCampaign.loading = true;
+        self.saveCampaign.error = '';
+        self.saveCampaign.loading = true;
 
-        // CampaignService.saveCampaign(
-        //     campaignRequest,
+        CampaignService.saveCampaign(
+            campaignRequest,
 
-        //     (response) => {
-        //         this.saveCampaign.loading = false;
-        //         this.close();
-        //     },
+            (response) => {
+                self.saveCampaign.loading = false;
+                self.close();
+            },
 
-        //     (error) => {
-        //         this.saveCampaign.loading = false;
-        //         this.saveCampaign.error = Util.extractError(error);
-        //     }
-        // );
+            (error) => {
+                self.saveCampaign.loading = false;
+                self.saveCampaign.error = Util.extractError(error);
+            },
+        );
     }
 
 
-    private prepareCampaignRequest(): any {
-        const request = this.campaign;
+    private prepareCampaignRequest() {
+        let request = {
+            campaign: {
+                name: this.campaign.name, 
+                description: this.campaign.description,
+            },
+            
+            fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
+        };
 
-        request.stageDescriptions.forEach(
-            (stage: StageDescription) => {
-                stage.evaluationTime = stage.evaluationTime.replace('T', ' ');
-            }
-        );
-
-        Log.info(`Campaign Data Post Request: ${JSON.stringify(request)}`);
+        Log.info(`Campaign Request: ${request}`);
 
         return request;
     }
 
 
-    private validateCampaignRequest(campaignRequest: any) {
+    private validateCampaignRequest(campaignRequest: any): boolean {
         // implement client-side validation of Campaign request
+
+        if (!campaignRequest.fileRefs.length) {
+            this.saveCampaign.error = 'File Upload is required';
+            return false;
+        }
+
+        return true;
     }
 
 

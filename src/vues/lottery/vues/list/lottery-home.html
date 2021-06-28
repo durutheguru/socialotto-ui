@@ -2,7 +2,7 @@
 
     <hr class="default-hr" />
 
-    <div class="row h-padding-small">
+    <div v-if="isValidArray(lotteries)" class="row h-padding-small v-padding-bottom-v-big v-margin-bottom-v-big">
         <!-- <div 
             @click="viewLotteryDetails(12)"
             class="col--12 v-padding-small v-margin-small round-border item-list-item-card-container pointer">
@@ -86,18 +86,19 @@
                         <div
                             class="pull-left profile-photo-container r-margin-small" style="padding-left:0px;">
 
-                            <img v-if="lottery.lotteryOwner.photoThumbnail" class="img-profile-thumbnail"
+                            <img v-if="lottery.lotteryOwner&&lottery.lotteryOwner.photoThumbnail" class="img-profile-thumbnail"
                                 :src="lottery.lotteryOwner.photoThumbnail" />
 
                             <div v-else
                                 style="border-radius:50px;display:inline-block;width:50px;height:50px;background:#000;">
 
                             </div>
+
                         </div>
                         <div class="item-list-user-meta-names-container pull-left h-padding-small">
-                            <div style="position:relative;top:4px;">
-                                <span class="item-list-user-meta-name">{{lottery.lotteryOwner.name}}</span>
-                                <span><i class="fa fa-check-circle blue"></i></span>
+                            <div v-if="lottery.lotteryOwner" style="position:relative;top:4px;">
+                                <span v-if="lottery.lotteryOwner" class="item-list-user-meta-name">{{lottery.lotteryOwner.name}}</span>
+                                <span v-if="lottery.lotteryOwner&&lottery.lotteryOwner.twitterVerified"><i class="fa fa-check-circle blue"></i></span>
                                 <span class="dark-grey h-margin-small item-list-user-meta-name">@{{lottery.lotteryOwner.username}}</span>
                             </div>
                         </div>
@@ -108,9 +109,9 @@
                 <div class="col-md-12">
                     <div class="item-list-lottery-text-container pull-left">
                         <h4>{{lottery.name}}</h4>
-                        <h5 class="blue">
-                            {{lottery.description}}
-                        </h5>
+                        <span class="list-item-description-preview">
+                            {{util.managedString(lottery.description, 450)}}
+                        </span>
                     </div>
                 </div>
                 <div class="col--12 margin-top-m h-padding-medium">
@@ -124,18 +125,32 @@
                     </div>
                     <div class="col--6">
                         <span class="wine">
-                            Closes: {{lottery.endDate}} ({{dateMoment(lottery.endDate)}})
+                            Closes: {{lottery.endDate}} <br />({{dateMoment(lottery.endDate)}})
                         </span>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4 col-md-offset-4">
+            <button 
+                class="btn btn-success max-width" 
+                :disabled="lotteriesLoading"
+                @click="fetchOlderLotteries()">Load More..</button>
+        </div>
     </div>
 
-    <div class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
+    <div v-else>
+        <span class="grey much-larger-font">
+            Nothing to see yet...
+        </span>
+    </div>
+
+    <div v-if="canCreateLottery"
+        class="col--12 max-width-container h-padding-medium floating-main-action-btn-container">
 
         <div class="floating-main-action-btn-container-gutter">
-            <div class="col--1 pull-right button-container">
+            <div class="col--2 pull-right button-container l-padding-big">
                 <button class="app-btn app-btn-primary box-shadowed" @click="dialogOpts.createLottery.visible=true">
                     <i class="fa fa-plus large-font"></i>
                 </button>

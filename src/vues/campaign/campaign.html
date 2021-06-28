@@ -4,14 +4,14 @@
         
         <header-component />
     
-        <section>
+        <section id="main-route-section">
             <router-view :key="$route.path" />
         </section>
+        
     </div>
 
-    <div id="main-sidebar-container">
-        <secondary-sidebar />
-    </div>
+    
+    <secondary-sidebar />
 
 </div>
 

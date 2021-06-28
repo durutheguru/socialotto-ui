@@ -4,14 +4,21 @@ import '@/interceptors/auth/AuthCheckInterceptor';
 import { Log } from '@/components/util';
 
 
+
 const state = {
+    username: '',
     loggedIn: false,
     authToken: null,
     userEnabled: null,
+    authorizations: [],
 };
 
 
 const getters = {
+
+    username(context: any) {
+        return context.username;
+    },
 
     apiToken(context: any) {
         return context.authToken;
@@ -23,7 +30,17 @@ const getters = {
 
     isUserActive(context: any) {
         return context.userEnabled;
-    }
+    },
+
+    authorizations(context: any) {
+        return context.authorizations;
+    },
+
+    isAuthorized(context: any) {
+        return (authority: string) => {
+            return (context.authorizations.length > 0) && (context.authorizations.indexOf(authority) > -1);
+        };
+    },
 
 };
 
@@ -37,7 +54,9 @@ const mutations = {
         const userAuthContext = UserAuthContext.getInstance();
         userAuthContext.initialize(token);
 
+        context.username = userAuthContext.userId();
         context.userEnabled = userAuthContext.isEnabled();
+        context.authorizations = userAuthContext.authorizationList();
         Log.info(`Context State: context.userEnabled ${context.userEnabled}`);
     },
 

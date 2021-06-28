@@ -22,6 +22,8 @@ export default class Constants {
     
     public static nextPageNavigationEvent: string = 'next-page-nav';
 
+    public static sidebarToggleEvent: string = 'side-bar-toggle';
+
 
 
     // APIs to exclude authorization
@@ -56,15 +58,22 @@ export default class Constants {
     ];
 
 
+    public static defaultCurrency: string = 'NGN';
+
+
     public static defaultDateFormat: string = 'YYYY-MM-DD';
 
 
     public static defaultDateTimeFormat: string = 'YYYY-MM-DD hh:mma';
-
     
-    public static defaultZoneDateTimeFormat: string = 'YYYY-MM-DD HH:mm';
+    
+    public static defaultZoneDateTimeFormat: string = 'YYYY-MM-DD HH:mm:ss.SSSS Z';
 
 
+    public static AUTHORITIES: any = {
+        CAN_CREATE_LOTTERY: 'CAN_CREATE_LOTTERY',
+        CAN_CREATE_CAMPAIGN: 'CAN_CREATE_CAMPAIGN',
+    };
 
 }
 

@@ -5,12 +5,14 @@ import PageDataModel from '@/components/core/PageDataModel';
 import PullStreamDataResponseResolver from '@/components/core/resolver/PullStreamDataResponseResolver';
 import { EventBus } from '@/components/core/Event';
 
+import WalletService from '@/components/secondary-sidebar/components/wallet/WalletService';
+
 
 
 const getDefaultState = () => {
     return {
 
-        lotteries: PageDataModel.newModel('lottery'),
+        activities: PageDataModel.newModel('activity'),
     
     };
 };
@@ -26,27 +28,27 @@ const getters = {
 
 
     getState(context: any) {
-        return context.lotteries;
+        return context.activities;
     },
 
-    getLotteries(context: any) {
-        return context.lotteries.list;
+    getActivities(context: any) {
+        return context.activities.list;
     },
 
-    getLotteriesError(context: any) {
-        return context.lotteries.error;
+    getActivitiesError(context: any) {
+        return context.activities.error;
     },
 
-    getLotteriesLoading(context: any) {
-        return context.lotteries.loading;
+    getActivitiesLoading(context: any) {
+        return context.activities.loading;
     },
 
     getMinFetchedTimeStamp(context: any) {
-        return context.lotteries.pageData.minTimeStamp;
+        return context.activities.pageData.minTimeStamp;
     },
 
     getMaxFetchedTimeStamp(context: any) {
-        return context.lotteries.pageData.maxTimeStamp;
+        return context.activities.pageData.maxTimeStamp;
     },
 
 };
@@ -60,15 +62,15 @@ const mutations = {
     },
 
 
-    appendLotteries(context: any, lotteryUpdate: any) {
-        Log.info(`Appending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+    appendActivities(context: any, activityUpdate: any) {
+        Log.info(`Appending Activity Page Data: ${JSON.stringify(activityUpdate)}`);
 
         PageDataModel.appendModelData(
-            context.lotteries, 
+            context.activities, 
 
-            lotteryUpdate.apiResponse,
+            activityUpdate.apiResponse, 
 
-            lotteryUpdate.isSearchResult,
+            activityUpdate.isSearchResult, 
 
             {
                 getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
@@ -82,41 +84,41 @@ const mutations = {
     },
 
 
-    prependLotteries(context: any, lotteryUpdate: any) {
-        Log.info(`Prepending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+    prependActivities(context: any, activityUpdate: any) {
+        Log.info(`Prepending Activity Page Data: ${JSON.stringify(activityUpdate)}`);
 
         PageDataModel.prependModelData(
-            context.lotteries, 
+            context.activities, 
 
-            lotteryUpdate.apiResponse,
+            activityUpdate.apiResponse,
 
-            lotteryUpdate.isSearchResult,
+            activityUpdate.isSearchResult,
 
             {
                 getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
                 getMaxFetchedTimeStamp: getters.getMaxFetchedTimeStamp(context),
             },
 
-            resolver
+            resolver,
         );
 
         EventBus.$emit(Constants.newStoreDataEvent);
     },
 
 
-    setLotteriesLoading(context: any, loading: boolean) {
-        context.lotteries.loading = loading;
+    setActivitiesLoading(context: any, loading: boolean) {
+        context.activities.loading = loading;
     },
 
 
-    clearLotteriesError(context: any) {
-        context.lotteries.error = '';
+    clearActivitiesError(context: any) {
+        context.activities.error = '';
     },
 
 
-    setLotteriesError(context: any, lotteryError: any) {
-        Log.info(`Assigning Lottery Error response: ${JSON.stringify(lotteryError)}`);
-        context.lotteries.error = Util.extractError(lotteryError.apiError);
+    setActivitiesError(context: any, error: any) {
+        Log.info(`Assigning Activity Error response: ${JSON.stringify(error)}`);
+        context.activities.error = Util.extractError(error.apiError);
     },
 
 
@@ -125,19 +127,17 @@ const mutations = {
 
 const actions = {
 
-    loadLotteries(context: any) {
-        context.commit('clearLotteriesError');
-        context.commit('setLotteriesLoading', true);
+    loadActivities(context: any) {
+        context.commit('clearActivitiesError');
+        context.commit('setActivitiesLoading', true);
 
-        Web.get(
-            '/api/v1/lottery',
-
+        WalletService.getWalletActivity(
             (response: any) => {
                 context.commit('resetState');
         
-                context.commit('setLotteriesLoading', false);
+                context.commit('setActivitiesLoading', false);
                 context.commit(
-                    'appendLotteries', 
+                    'appendActivities', 
                     {
                         apiResponse: response, 
                         isSearchResult: false,
@@ -146,9 +146,9 @@ const actions = {
             },
 
             (error: any) => {
-                context.commit('setLotteriesLoading', false);
+                context.commit('setActivitiesLoading', false);
                 context.commit(
-                    'setLotteriesError',
+                    'setActivitiesError',
                     {
                         apiError: error,
                     },
@@ -158,25 +158,25 @@ const actions = {
     },
 
 
-    prependLotteries(context: any) {
+    prependActivities(context: any) {
         Util.throttle(
             {
-                key: 'lottery_list_prepend',
+                key: 'wallet_activity_list_prepend',
 
                 run: () => {
-                    context.commit('clearLotteriesError');
-                    context.commit('setLotteriesLoading', true);
+                    context.commit('clearActivitiesError');
+                    context.commit('setActivitiesLoading', true);
 
                     Web.get(
                         PageDataModel.getPrependUrl(
-                            '/api/v1/lottery', 
+                            '/api/v1/wallet/activity', 
                             context.getters.getMaxFetchedTimeStamp
                         ),
                         
                         (response: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setActivitiesLoading', false);
                             context.commit(
-                                'prependLotteries', 
+                                'prependActivities', 
                                 {
                                     apiResponse: response, 
                                     isSearchResult: false,
@@ -185,9 +185,9 @@ const actions = {
                         },
             
                         (error: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setActivitiesLoading', false);
                             context.commit(
-                                'setLotteriesError',
+                                'setActivitiesError',
                                 {
                                     apiError: error,
                                 },
@@ -202,25 +202,25 @@ const actions = {
     },
 
 
-    appendLotteries(context: any) {
+    appendActivities(context: any) {
         Util.throttle(
             {
-                key: 'lottery_list_append',
+                key: 'wallet_activity_list_append',
 
                 run: () => {
-                    context.commit('clearLotteriesError');
-                    context.commit('setLotteriesLoading', true);
+                    context.commit('clearActivitiesError');
+                    context.commit('setActivitiesLoading', true);
 
                     Web.get(
                         PageDataModel.getAppendUrl(
-                            '/api/v1/lottery', 
+                            '/api/v1/wallet/activity', 
                             context.getters.getMinFetchedTimeStamp
                         ),
             
                         (response: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setActivitiesLoading', false);
                             context.commit(
-                                'appendLotteries', 
+                                'appendActivities', 
                                 {
                                     apiResponse: response, 
                                     isSearchResult: false,
@@ -229,9 +229,9 @@ const actions = {
                         },
             
                         (error: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setActivitiesLoading', false);
                             context.commit(
-                                'setLotteriesError',
+                                'setActivitiesError',
                                 {
                                     apiError: error,
                                 },
@@ -242,31 +242,6 @@ const actions = {
 
                 time: 1000,
             },
-        );
-    },
-
-
-    loadCampaignDetails(context: any, campaignId: number) {
-        Web.get(
-            `/api/v1/campaign/${campaignId}?projection=campaignDetails`,
-
-            (response: any) => {
-                context.commit(
-                    'setSelectedCampaign', 
-                    {
-                        apiResponse: response,
-                    },
-                );
-            },
-
-            (error: any) => {
-                context.commit(
-                    'setSelectedCampaignError',
-                    {
-                        apiError: error,
-                    },
-                );
-            }
         );
     },
 
@@ -281,4 +256,6 @@ export default {
     actions,
     mutations,
 };
+
+
 

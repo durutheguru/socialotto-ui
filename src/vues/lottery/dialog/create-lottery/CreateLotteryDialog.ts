@@ -183,7 +183,7 @@ export default class CreateLotteryDialog extends BaseVue {
                             this.lottery.timeOfEvaluation,
                         ),
                     },
-                ], 
+                ],
             },
             fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
             beneficiaries: this.lottery.selectedCampaigns.map(

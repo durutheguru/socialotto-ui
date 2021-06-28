@@ -3,8 +3,8 @@ import { Component } from 'vue-property-decorator';
 import BaseVue from '@/components/BaseVue';
 import FloatingActionButton from '@/components/floating-action-button/FloatingActionButton';
 import CreateCampaignDialog from '@/vues/campaign/dialog/create-campaign/CreateCampaignDialog';
-
-import { Log, Web } from '@/components/util';
+import store from '@/store';
+import { Constants, Log, Web } from '@/components/util';
 
 import WithRender from './campaign-home.html';
 
@@ -31,7 +31,17 @@ export default class CampaignHomeComponent extends BaseVue {
 
 
     public mounted() {
-        this.$store.dispatch('lottery/loadCampaigns');
+        this.loadCampaigns();
+    }
+
+
+    private loadCampaigns() {
+        this.$store.dispatch('campaign/loadCampaigns');
+    }
+
+
+    private fetchOlderCampaigns() {
+        this.$store.dispatch('campaign/appendCampaigns');
     }
 
 
@@ -43,16 +53,28 @@ export default class CampaignHomeComponent extends BaseVue {
 
     public hideCreateCampaignDialog() {
         this.dialogOpts.createCampaign.visible = false;
+        this.loadCampaigns();
     }
 
 
-    public get lotteries() {
-        return this.$store.state.lottery.campaigns;
+    public get campaigns() {
+        return store.getters['campaign/getCampaigns'];
+    }
+
+
+    public get campaignsLoading() {
+        return store.getters['campaign/getCampaignsLoading'];
     }
 
 
     public showCampaignDetails(campaign: any) {
-        Web.navigate(`/lottery/${campaign.id}`);
+        this.$router.push(`/campaign/${campaign.id}`);
+    }
+
+    public get canCreateCampaign() {
+        return this.$store.getters['authToken/isAuthorized'](
+            Constants.AUTHORITIES.CAN_CREATE_CAMPAIGN,
+        );
     }
 
 

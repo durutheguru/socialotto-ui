@@ -21,29 +21,31 @@ const defaultPageData = () => {
 
         totalPages: 0,
 
-        minTimeStamp: null,
+        minTimeStamp: 0,
 
-        maxTimeStamp: null,
+        maxTimeStamp: 0,
     };
 
 };
 
 
-const defaultPageModel = {
+const defaultPageModel = () => {
 
-    loading: false,
+    return {
+        loading: false,
 
-    error: '',
+        error: '',
 
-    list: [],
+        list: [],
 
-    entityKeyName: '',
+        entityKeyName: '',
 
-    searchResults: false,
+        searchResults: false,
 
-    searchQuery: '',
+        searchQuery: '',
 
-    pageData: defaultPageData(),
+        pageData: defaultPageData(),
+    };
 
 };
 
@@ -164,7 +166,7 @@ export default class PageDataModel {
 
     public static newModel(entity: string): any {
         return {
-            ...defaultPageModel,
+            ...defaultPageModel(),
 
             entityKeyName: entity
         };
@@ -175,14 +177,15 @@ export default class PageDataModel {
         model: any,
         response: any,
         isSearchResult: boolean = false,
-        resolver?: PageResponseResolver
+        getters?: any,
+        resolver?: PageResponseResolver,
     ) {
         model.searchResults = isSearchResult;
 
         if (!!resolver) {
-            resolver.append(model, response);
+            resolver.append(model, response, getters);
         } else {
-            PageDataModel.defaultResolver.append(model, response);
+            PageDataModel.defaultResolver.append(model, response, getters);
         }
     }
 
@@ -191,14 +194,15 @@ export default class PageDataModel {
         model: any,
         response: any,
         isSearchResult: boolean = false,
+        getters: any,
         resolver?: PageResponseResolver
     ) {
         model.searchResults = isSearchResult;
 
         if (!!resolver) {
-            resolver.prepend(model, response);
+            resolver.prepend(model, response, getters);
         } else {
-            PageDataModel.defaultResolver.prepend(model, response);
+            PageDataModel.defaultResolver.prepend(model, response, getters);
         }
     }
 
@@ -206,21 +210,20 @@ export default class PageDataModel {
     /**
      * 
      * @param basePath 
-     * @param model 
      * @returns 
      */
-    public static getPrependUrl(basePath: string, model: any): string {
-        if (Util.isValidNumber(model.pageData.maxTimeStamp)) {
-            return `${basePath}?after=${model.pageData.maxTimeStamp}`;
+    public static getPrependUrl(basePath: string, maxTimeStamp: any): string {
+        if (Util.isValidPositiveNumber(maxTimeStamp)) {
+            return `${basePath}?after=${maxTimeStamp}`;
         }
 
         return basePath;
     }
 
 
-    public static getAppendUrl(basePath: string, model: any): string {
-        if (Util.isValidNumber(model.pageData.minTimeStamp)) {
-            return `${basePath}?before=${model.pageData.minTimeStamp}`;
+    public static getAppendUrl(basePath: string, minTimeStamp: number): string {
+        if (Util.isValidPositiveNumber(minTimeStamp)) {
+            return `${basePath}?before=${minTimeStamp}`;
         }
 
         return basePath;

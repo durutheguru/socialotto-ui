@@ -5,12 +5,14 @@ import PageDataModel from '@/components/core/PageDataModel';
 import PullStreamDataResponseResolver from '@/components/core/resolver/PullStreamDataResponseResolver';
 import { EventBus } from '@/components/core/Event';
 
+import store from '@/store';
+
 
 
 const getDefaultState = () => {
     return {
 
-        lotteries: PageDataModel.newModel('lottery'),
+        notifications: PageDataModel.newModel('notifications'),
     
     };
 };
@@ -26,27 +28,27 @@ const getters = {
 
 
     getState(context: any) {
-        return context.lotteries;
+        return context.notifications;
     },
 
-    getLotteries(context: any) {
-        return context.lotteries.list;
+    getNotifications(context: any) {
+        return context.notifications.list;
     },
 
-    getLotteriesError(context: any) {
-        return context.lotteries.error;
+    getNotificationsError(context: any) {
+        return context.notifications.error;
     },
 
-    getLotteriesLoading(context: any) {
-        return context.lotteries.loading;
+    getNotificationsLoading(context: any) {
+        return context.notifications.loading;
     },
 
     getMinFetchedTimeStamp(context: any) {
-        return context.lotteries.pageData.minTimeStamp;
+        return context.notifications.pageData.minTimeStamp;
     },
 
     getMaxFetchedTimeStamp(context: any) {
-        return context.lotteries.pageData.maxTimeStamp;
+        return context.notifications.pageData.maxTimeStamp;
     },
 
 };
@@ -60,15 +62,15 @@ const mutations = {
     },
 
 
-    appendLotteries(context: any, lotteryUpdate: any) {
-        Log.info(`Appending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+    appendNotifications(context: any, notificationsUpdate: any) {
+        Log.info(`Appending Notifications Page Data: ${JSON.stringify(notificationsUpdate)}`);
 
         PageDataModel.appendModelData(
-            context.lotteries, 
+            context.notifications, 
 
-            lotteryUpdate.apiResponse,
+            notificationsUpdate.apiResponse,
 
-            lotteryUpdate.isSearchResult,
+            notificationsUpdate.isSearchResult,
 
             {
                 getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
@@ -82,15 +84,15 @@ const mutations = {
     },
 
 
-    prependLotteries(context: any, lotteryUpdate: any) {
-        Log.info(`Prepending Lottery Page Data: ${JSON.stringify(lotteryUpdate)}`);
+    prependNotifications(context: any, notificationsUpdate: any) {
+        Log.info(`Prepending Notifications Page Data: ${JSON.stringify(notificationsUpdate)}`);
 
         PageDataModel.prependModelData(
-            context.lotteries, 
+            context.notifications, 
 
-            lotteryUpdate.apiResponse,
+            notificationsUpdate.apiResponse,
 
-            lotteryUpdate.isSearchResult,
+            notificationsUpdate.isSearchResult,
 
             {
                 getMinFetchedTimeStamp: getters.getMinFetchedTimeStamp(context),
@@ -104,19 +106,19 @@ const mutations = {
     },
 
 
-    setLotteriesLoading(context: any, loading: boolean) {
-        context.lotteries.loading = loading;
+    setNotificationsLoading(context: any, loading: boolean) {
+        context.notifications.loading = loading;
     },
 
 
-    clearLotteriesError(context: any) {
-        context.lotteries.error = '';
+    clearNotificationsError(context: any) {
+        context.notifications.error = '';
     },
 
 
-    setLotteriesError(context: any, lotteryError: any) {
-        Log.info(`Assigning Lottery Error response: ${JSON.stringify(lotteryError)}`);
-        context.lotteries.error = Util.extractError(lotteryError.apiError);
+    setNotificationsError(context: any, notificationsError: any) {
+        Log.info(`Assigning Notifications Error response: ${JSON.stringify(notificationsError)}`);
+        context.notifications.error = Util.extractError(notificationsError.apiError);
     },
 
 
@@ -125,19 +127,19 @@ const mutations = {
 
 const actions = {
 
-    loadLotteries(context: any) {
-        context.commit('clearLotteriesError');
-        context.commit('setLotteriesLoading', true);
+    loadNotifications(context: any) {
+        context.commit('clearNotificationsError');
+        context.commit('setNotificationsLoading', true);
 
         Web.get(
-            '/api/v1/lottery',
+            '/api/v1/user_notifications?userId=' + store.getters['authToken/username'],
 
             (response: any) => {
                 context.commit('resetState');
         
-                context.commit('setLotteriesLoading', false);
+                context.commit('setNotificationsLoading', false);
                 context.commit(
-                    'appendLotteries', 
+                    'appendNotifications', 
                     {
                         apiResponse: response, 
                         isSearchResult: false,
@@ -146,9 +148,9 @@ const actions = {
             },
 
             (error: any) => {
-                context.commit('setLotteriesLoading', false);
+                context.commit('setNotificationsLoading', false);
                 context.commit(
-                    'setLotteriesError',
+                    'setNotificationsError',
                     {
                         apiError: error,
                     },
@@ -158,25 +160,25 @@ const actions = {
     },
 
 
-    prependLotteries(context: any) {
+    prependNotifications(context: any) {
         Util.throttle(
             {
-                key: 'lottery_list_prepend',
+                key: 'notifications_list_prepend',
 
                 run: () => {
-                    context.commit('clearLotteriesError');
-                    context.commit('setLotteriesLoading', true);
+                    context.commit('clearNotificationsError');
+                    context.commit('setNotificationsLoading', true);
 
                     Web.get(
                         PageDataModel.getPrependUrl(
-                            '/api/v1/lottery', 
+                            '/api/v1/user_notifications?userId=' + store.getters['authToken/username'], 
                             context.getters.getMaxFetchedTimeStamp
                         ),
                         
                         (response: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setNotificationsLoading', false);
                             context.commit(
-                                'prependLotteries', 
+                                'prependNotifications', 
                                 {
                                     apiResponse: response, 
                                     isSearchResult: false,
@@ -185,9 +187,9 @@ const actions = {
                         },
             
                         (error: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setNotificationsLoading', false);
                             context.commit(
-                                'setLotteriesError',
+                                'setNotificationsError',
                                 {
                                     apiError: error,
                                 },
@@ -202,25 +204,25 @@ const actions = {
     },
 
 
-    appendLotteries(context: any) {
+    appendNotifications(context: any) {
         Util.throttle(
             {
-                key: 'lottery_list_append',
+                key: 'notifications_list_append',
 
                 run: () => {
-                    context.commit('clearLotteriesError');
-                    context.commit('setLotteriesLoading', true);
+                    context.commit('clearNotificationsError');
+                    context.commit('setNotificationsLoading', true);
 
                     Web.get(
                         PageDataModel.getAppendUrl(
-                            '/api/v1/lottery', 
+                            '/api/v1/user_notifications?userId=' + store.getters['authToken/username'], 
                             context.getters.getMinFetchedTimeStamp
                         ),
             
                         (response: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setNotificationsLoading', false);
                             context.commit(
-                                'appendLotteries', 
+                                'appendNotifications', 
                                 {
                                     apiResponse: response, 
                                     isSearchResult: false,
@@ -229,9 +231,9 @@ const actions = {
                         },
             
                         (error: any) => {
-                            context.commit('setLotteriesLoading', false);
+                            context.commit('setNotificationsLoading', false);
                             context.commit(
-                                'setLotteriesError',
+                                'setNotificationsError',
                                 {
                                     apiError: error,
                                 },
@@ -244,32 +246,6 @@ const actions = {
             },
         );
     },
-
-
-    loadCampaignDetails(context: any, campaignId: number) {
-        Web.get(
-            `/api/v1/campaign/${campaignId}?projection=campaignDetails`,
-
-            (response: any) => {
-                context.commit(
-                    'setSelectedCampaign', 
-                    {
-                        apiResponse: response,
-                    },
-                );
-            },
-
-            (error: any) => {
-                context.commit(
-                    'setSelectedCampaignError',
-                    {
-                        apiError: error,
-                    },
-                );
-            }
-        );
-    },
-
 
 };
 
@@ -281,4 +257,5 @@ export default {
     actions,
     mutations,
 };
+
 

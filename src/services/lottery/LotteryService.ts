@@ -33,6 +33,30 @@ export default class LotteryService {
     }
 
 
+    public static getLotteryDetails(
+        lotteryId: string,
+        successHandler: APISuccessCallback,
+        errorHandler: APIErrorCallback,
+    ) {
+        Web.get(
+            `/api/v1/lottery/${lotteryId}`,
+            successHandler, errorHandler,
+        );
+    }
+
+
+    public static joinLottery(
+        lotteryEntry: any,
+        successHandler: APISuccessCallback,
+        errorHandler: APIErrorCallback,
+    ) {
+        Web.post(
+            `/api/v1/user_lottery_entry`,
+            lotteryEntry, successHandler, errorHandler
+        );
+    }
+
+
 }
 
 

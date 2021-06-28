@@ -7,6 +7,19 @@
 
 @media (max-width: 540px) {
 
+    .item-list-item-card-container {
+        margin-left: $small_length;
+        margin-right: $small_length;
+    }
+
+    #main-sidebar-container {
+        min-width: 350px;
+    }
+
+    #main-sidebar {
+        min-width: 350px;
+    }
+
     h1.site-name {
         font-size: 1.8rem;
     }
@@ -70,8 +83,7 @@
     }
 
     .floating-main-action-btn-container {
-        bottom: 60px;
-        right: 6%;
+        bottom: 40px;
     }
 
 
@@ -99,12 +111,13 @@
         padding-top: 20px;
     }
 
-    .lottery-detail-image-item {
-        height: 150px;
-    }
-
     .lottery-detail-campaign-container {
         width: 70%;
+    }
+
+    .lottery-detail-image-item {
+        width: 70%;
+        margin-bottom: 30px;
     }
 
     .lottery-detail-campaign-profile-img {
@@ -138,6 +151,16 @@
         width: 70px;
         height: 70px;
     }
+
+    .list-item-description-preview {
+        font-size: 0.91em;
+        color: $app_blue;
+    }
+
+    #main-route-section {
+        top: 105px;
+    }
+
 
     // .lottery-detail-campaign-desc {
     //     display: none;
@@ -213,6 +236,19 @@
 
     .lottery-entry-ticket-count {
         width: 50%;
+    }
+
+}
+
+
+@media (max-width: 300px) {
+
+    #main-sidebar {
+        min-width: 100%;
+    }
+
+    #main-sidebar-container {
+        min-width: 100%;
     }
 
 }

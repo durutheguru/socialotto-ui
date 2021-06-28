@@ -87,8 +87,18 @@ export default class UserAuthContext {
     }
 
 
+    public userId(): string | undefined {
+        return this.username;
+    }
+
+
     public isEnabled(): boolean | undefined {
         return this.enabled;
+    }
+
+
+    public authorizationList(): string[] {
+        return this.authorizations;
     }
 
 
