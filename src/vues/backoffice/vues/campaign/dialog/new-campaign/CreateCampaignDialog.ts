@@ -5,7 +5,7 @@ import Modal from '@/components/modal/Modal';
 
 import WithRender from './create-campaign-dialog.html';
 import { Constants, Util, Log } from '@/components/util';
-import CampaignService from '../../service/CampaignService';
+import CampaignService from '@/services/campaign/CampaignService';
 import PartnerService from '../../../partner/service/PartnerService';
 import ApiResourceList from '@/components/core/ApiResourceList';
 import WizardPageToggle from '@/components/modal/wizard/WizardPageToggle';
@@ -114,12 +114,12 @@ export default class CreateCampaignDialog extends BaseVue {
         CampaignService.saveCampaign(
             campaignRequest,
 
-            (response) => {
+            (response: any) => {
                 this.saveCampaign.loading = false;
                 this.close();
             },
 
-            (error) => {
+            (error: any) => {
                 this.saveCampaign.loading = false;
                 this.saveCampaign.error = Util.extractError(error);
             }

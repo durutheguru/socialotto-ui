@@ -28,6 +28,10 @@ html, body {
   color : white;
 }
 
+.black {
+  color: black;
+}
+
 .wine {
   color : $wine !important;
 }
@@ -97,6 +101,11 @@ html, body {
 
 .center-container {
   text-align: center;
+}
+
+.left-container-padding-md {
+  text-align: left;
+  margin-left: $medium_length;
 }
 
 .lighter-font {
@@ -179,6 +188,11 @@ img.logo-img-medium {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.sm-box-shadowed {
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+
 .left-padding-medium {
   padding-left: $medium_length;
 }
@@ -196,6 +210,14 @@ img.logo-img-medium {
 .h-margin-small {
   margin-left: $small_length;
   margin-right: $small_length;
+}
+
+.l-margin-big {
+  margin-left: $big_length;
+}
+
+.l-padding-big {
+  padding-left: $big_length;
 }
 
 .r-margin-small {
@@ -253,6 +275,14 @@ l-padding-small {
   margin-bottom: $v_big_length;
 }
 
+
+.v-padding-bottom-v-big {
+  padding-bottom: $v_big_length;
+}
+
+.padding-top-m {
+  padding-top: $medium_length;
+}
 
 .margin-top-big {
   margin-top : $big_length;
@@ -318,6 +348,12 @@ l-padding-small {
   margin-left: auto;
   margin-right: auto;
 }
+
+.router-link-active {
+  color: black !important;
+  text-decoration: underline !important;
+}
+
 
 .sidebar-main {
   color: #FFF;
@@ -402,6 +438,13 @@ l-padding-small {
 }
 
 
+.img-profile-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+}
+
+
 .relative {
   position: relative;
 }
@@ -477,6 +520,24 @@ button.app-btn-secondary {
 
 #main-sidebar-container {
   width: 25%;
+  min-width: 300px;
+  position:fixed;
+  z-index: 1000000000;
+}
+
+
+#top-main-container {
+  position: fixed;
+  width: 75%;
+  background: white;
+  z-index: 100000;
+  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+#main-route-section {
+  position: relative;
+  top: 160px;
 }
 
 
@@ -502,22 +563,28 @@ button.app-btn-secondary {
 //   }
 // }
 
-
+.pre-wrap {
+  white-space: pre-wrap;
+}
 
 .floating-main-action-btn-container {
   position: fixed !important;
   bottom: 30px;
-  // right: 30px;
-  right: 4%;
 }
 
 .floating-main-action-btn-container-gutter {
   width: 75%;
+  overflow: hidden;
 }
 
 .lottery-detail-number-entries {
   font-size: 0.9em !important;
   line-height: 3.5em !important;
+}
+
+.list-item-description-preview {
+  font-size: 1.3em;
+  color: $app_blue;
 }
 
 @media (max-width: 1240px) {
@@ -527,10 +594,7 @@ button.app-btn-secondary {
 
   .message-compose-container {
     width: 300px;
-  }
-
-  .floating-main-action-btn-container {
-    right: 7%;
+    max-width: 300px;
   }
 
   .floating-main-action-btn-container button-container {
@@ -571,7 +635,6 @@ hr.default-hr {
   margin-top: $small_length;
   margin-bottom: $small_length;
 }
-
 
 
 hr.bottom-bordered-main-sidebar-separator {
@@ -628,8 +691,9 @@ a.logo_white {
 }
 
 .router-link-active {
-  color: #FFF !important;
+  color: #000 !important;
   font-weight: bolder;
+  text-decoration: underline !important;
 }
 
 .main-route-content {
@@ -645,6 +709,10 @@ a.logo_white {
 .app-btn-default {
   width: 77px;
   margin-left: 5px;
+}
+
+.white-bg {
+  background: white !important;
 }
 
 .white-btn-blue:hover {
@@ -830,6 +898,11 @@ a.sidebar-link-btn:hover {
 }
 
 
+.max-width {
+  width: 100%;
+}
+
+
 .max-width-container {
   width: 100%;
   display: flex;
@@ -861,6 +934,10 @@ a.sidebar-link-btn:hover {
   overflow-y: scroll;
 }
 
+#sidebar-back-button {
+  display: none;
+}
+
 
 .round-border {
   border-radius: 4px;
@@ -889,18 +966,6 @@ aside.side-menu {
   margin-left: 0px !important;
 }
 
-
-@media screen and (min-width: 1000px) {
-
-  #main-content {
-    margin-left: 250px !important;
-  }
-
-  aside.side-menu {
-    display: block;
-  }
-
-}
 
 .relative {
   position: relative !important;
@@ -966,6 +1031,9 @@ table {
   border-spacing: 0;
 }
 
+#lotteryCampaignsSearch {
+  padding-left: 40px !important;
+}
 
 .flex-container-baseline {
   display: flex;
@@ -1005,6 +1073,7 @@ textarea.resize-v {
   margin-left: $big_length;
   margin-right: $big_length;
   padding: $medium_length;
+  background: #FFF;
 }
 
 .item-list-posting-date {
@@ -1049,8 +1118,7 @@ textarea.resize-v {
 }
 
 .item-list-lottery-text-container {
-  width: 83.3333333%;
-  padding-left: 10px;
+  width: 100%;
 }
 
 .lottery-detail-main-meta-container {
@@ -1061,7 +1129,6 @@ textarea.resize-v {
 
 .lottery-detail-title-container {
   width: 35%;
-  height: 100px;
   float: left;
   padding-right: 10px;
   white-space: normal;
@@ -1078,14 +1145,14 @@ textarea.resize-v {
 }
 
 .lottery-detail-desc-container {
-  width: 75%;
+  width: 85%;
   float: left;
   padding-left: $small_length;
   padding-right: $small_length;
 }
 
 .lottery-details-time-container {
-  width: 25%;
+  width: 15%;
   float: left;
   height: 150px;
   text-align: center;
@@ -1098,17 +1165,25 @@ textarea.resize-v {
   line-height: 1.5em;
 }
 
+.lottery-evaluation-date {
+  color: #228F89;
+  font-weight: bold;
+  font-size: 1.3em;
+  line-height: 1.5em;
+  display: none;
+}
+
 .lottery-time-img {
   width: 120px;
   height: 120px;
 }
 
 .lottery-detail-image-item {
-  width: 30%;
+  width: 40%;
   margin-left: 10px;
   height: 200px;
+  max-height: 200px;
   float: left;
-  background: #4784A0;
 }
 
 .lottery-detail-amount-raised-lbl {
@@ -1199,8 +1274,18 @@ textarea.resize-v {
   font-weight: bold;
 }
 
+.item-list-unverified-badge {
+  color: #000;
+  background: #eb6e6e;
+  font-weight: bold;
+}
+
 #sidebar-drawer-icon {
   display: none;
+}
+
+#sidebar-wallet-icon {
+  color: #999b84;
 }
 
 
@@ -1286,7 +1371,7 @@ span.lottery-detail-number-desc {
   top: 120px;
   width: 400px;
   padding: 10px;
-  background-color: rgba(245, 245, 245, 0.94);
+  background-color: rgb(245, 245, 245);
   border: 1px solid rgb(221, 221, 221);
   max-height: 380px;
   overflow: scroll;
@@ -1454,11 +1539,40 @@ section#container {
 }
 
 
-@media (max-width: 1200px) {
+@media (max-width: 1201px) {
 
+  #main-sidebar-container {
+    display: none;
+  }
+  
+  #main-sidebar {
+    display: none;
+    z-index: 1000000000;
+  }
+
+  #main-content-container {
+    width: 100%;
+  }
+
+  #sidebar-back-button {
+    display: block;
+  }
+
+  .floating-main-action-btn-container-gutter {
+    width: 100%;
+  }
+
+  #top-main-container {
+    width: 100%;
+  }
 
   .message-compose-container {
     width: 26.5%;
+  }
+
+  #sidebar-drawer-icon {
+    display: inline-block;
+    margin-left: 10px;
   }
 
 
@@ -1490,6 +1604,12 @@ section#container {
 
   .lottery-detail-campaign-container {
       width: 70%;
+  }
+
+
+  .lottery-detail-image-item {
+    width: 70%;
+    margin-bottom: 30px;
   }
 
   
