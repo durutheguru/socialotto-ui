@@ -1,27 +1,32 @@
 <div>
 
 
-    <video-player class="vjs-custom-skin"
-                  ref="videoPlayer"
-                  :options="playerOptions"
-                  :playsinline="true"
-                  @play="onPlayerPlay($event)"
-                  @pause="onPlayerPause($event)"
-                  @ended="onPlayerEnded($event)"
-                  @loadeddata="onPlayerLoadeddata($event)"
-                  @waiting="onPlayerWaiting($event)"
-                  @playing="onPlayerPlaying($event)"
-                  @timeupdate="onPlayerTimeupdate($event)"
-                  @canplay="onPlayerCanplay($event)"
-                  @canplaythrough="onPlayerCanplaythrough($event)"
-                  @ready="playerReadied"
-                  @statechanged="playerStateChanged($event)">
-    </video-player>
+    <div v-if="fileType.startsWith('image')" class="lottery-detail-image-item">
+        <img :name="fileName" height="200" :src="fileUrl" />
+    </div>
 
-
-    <img v-if="fileType.startsWith('image')" :name="fileName" height="200" :src="fileUrl" />
+    <div v-if="fileType.startsWith('video')">
+        <video-player 
+            class="vjs-custom-skin"
+            ref="videoPlayer"
+            :options="playerOptions"
+            :playsinline="true"
+            @play="onPlayerPlay($event)"
+            @pause="onPlayerPause($event)"
+            @ended="onPlayerEnded($event)"
+            @loadeddata="onPlayerLoadeddata($event)"
+            @waiting="onPlayerWaiting($event)"
+            @playing="onPlayerPlaying($event)"
+            @timeupdate="onPlayerTimeupdate($event)"
+            @canplay="onPlayerCanplay($event)"
+            @canplaythrough="onPlayerCanplaythrough($event)"
+            @ready="playerReadied"
+            @statechanged="playerStateChanged($event)">
+        </video-player>
+    </div>
 
     <div v-else></div>
+
 
 </div>
 

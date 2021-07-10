@@ -2,7 +2,7 @@ import WithRender from './file.html';
 
 import { Component, Prop } from "vue-property-decorator";
 import BaseVue from "../BaseVue";
-import { Web } from '../util';
+import { Log, Web } from '../util';
 
 import { videoPlayer } from 'vue-video-player';
 
@@ -33,21 +33,7 @@ export default class File extends BaseVue {
     private meta!: string;
 
 
-    private playerOptions: any = {
-        height: '360',
-        autoplay: true,
-        muted: true,
-        language: 'en',
-        playbackRates: [0.7, 1.0, 1.5, 2.0],
-        sources: [{
-            type: "video/mp4",
-            // mp4
-            src: "http://vjs.zencdn.net/v/oceans.mp4",
-            // webm
-            // src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"
-        }],
-        poster: "https://surmon-china.github.io/vue-quill-editor/static/images/surmon-1.jpg",
-    };
+    private playerOptions: any = {};
 
 
     public get fileUrl(): string {
@@ -55,8 +41,38 @@ export default class File extends BaseVue {
     }
 
 
+    public mounted() {
+        if (this.fileType.startsWith('video')) {
+            Log.info('Setting Player Options');
+            this.playerOptions = this.getVideoPlayerOptions();
+            Log.info(`Player Options: ${JSON.stringify(this.playerOptions)}`);
+        }
+        else {
+            Log.info(`File Type: ${this.fileType}`);
+        }
+    }
+
+
+    private getVideoPlayerOptions(): any {
+        return {
+            autoplay: false,
+            muted: false,
+            language: 'en',
+            playbackRates: [0.7, 1.0, 1.5, 2.0],
+            sources: [{
+                type: this.fileType,
+                src: this.fileUrl,
+            }]
+        };
+    }
+
+
     private onPlayerPlay(player: any) {
         // console.log('player play!', player)
+        // this.player.
+        if (window.innerWidth < 900) {
+            $('.vjs-fullscreen-control').click();
+        }
     }
 
 
@@ -108,10 +124,7 @@ export default class File extends BaseVue {
 
     // player is ready
     private playerReadied(player: any) {
-        // seek to 10s
-        console.log('example player 1 readied', player)
-        player.currentTime(10)
-        // console.log('example 01: the player is readied', player)
+        Log.info('Player Ready');
     }
 
 

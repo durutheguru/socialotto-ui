@@ -47,7 +47,7 @@ export default class CreateCampaignDialog extends BaseVue {
         };
 
         this.fileUploader = new FileUploader(
-            '/upload', 3
+            '/upload', 3, Constants.defaultFileUploadExtensions, Constants.defaultMaxFileUploadSize
         );
 
         this.addEventListeners();
