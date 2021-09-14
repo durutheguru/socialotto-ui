@@ -58,6 +58,13 @@ export default class Constants {
     ];
 
 
+    public static defaultMaxFileUploadSize: number = 32_500_500;
+
+
+    public static defaultFileUploadExtensions: RegExp = 
+    /.*\.(jpg|jgep|png|flv|mp4|3gp|mov|avi|wmv)$/;
+
+
     public static defaultCurrency: string = 'NGN';
 
 

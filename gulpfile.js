@@ -20,7 +20,8 @@ var cssVendorList = [
     "/font-awesome.css",
     "/style.css",
     "/style-responsive.css",
-    "/slidebars.css"
+    "/slidebars.css",
+    "/video-js.css"
 ];
 
 gulp.task('vendorCSSMin', function() {
@@ -72,7 +73,8 @@ var vendorJSList = gulp_helper.mergePathRoot(VENDOR_JS_ROOT, [
     "/jquery.nicescroll.js",
     "/respond.min.js",
     "/slidebars.min.js",
-    "/common-scripts.js"
+    "/common-scripts.js",
+    "/video.min.js"
 ]);
 
 //vendorJSList = vendorJSList.concat([

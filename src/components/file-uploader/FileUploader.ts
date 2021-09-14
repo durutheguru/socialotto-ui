@@ -14,8 +14,8 @@ export default class FileUploader {
     public constructor(
         private uploadUrl: string,
         private maxFiles: number,
-        // private allowedExtensions: RegExp,
-        // private maxFileSize: number,
+        private allowedExtensions: RegExp,
+        private maxFileSize: number,
     ) {
         this.uploads = [];
     }
@@ -31,6 +31,16 @@ export default class FileUploader {
             }
 
             let file = files.item(i) as File;
+
+            if (!this.allowedExtensions.test(file.name)) {
+                Log.warn(`Unsupported file format: ${file.name}`);
+                return;
+            }
+
+            if (this.maxFileSize < file.size) {
+                Log.warn(`Max File Size exceeded: ${file.size}`);
+                return;
+            }
 
             if (!this.containsFile(file)) {
                 Log.info(`Adding File for upload ${file.name}`);

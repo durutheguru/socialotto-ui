@@ -74,7 +74,7 @@ export default class CreateLotteryDialog extends BaseVue {
         };
 
         self.fileUploader = new FileUploader(
-            '/upload', 3
+            '/upload', 3, Constants.defaultFileUploadExtensions, Constants.defaultMaxFileUploadSize
         );
 
         self.addEventListeners();
