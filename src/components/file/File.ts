@@ -46,8 +46,7 @@ export default class File extends BaseVue {
             Log.info('Setting Player Options');
             this.playerOptions = this.getVideoPlayerOptions();
             Log.info(`Player Options: ${JSON.stringify(this.playerOptions)}`);
-        }
-        else {
+        } else {
             Log.info(`File Type: ${this.fileType}`);
         }
     }
