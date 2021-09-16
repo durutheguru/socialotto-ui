@@ -12,6 +12,7 @@ RUN npm run gulp && npm run build
 
 
 
+
 FROM nginx AS production-stage
 
 RUN mkdir /app
