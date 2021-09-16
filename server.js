@@ -3,7 +3,7 @@ var express = require('express');
 
 var app = express();
 
-// app.use(history());
+app.use(history());
 app.use(express.static('dist'));
 
 const port = process.env.PORT || 80;
