@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "gulp": "gulp",
-    "start": "npm run gulp && vue-cli-service serve",
-    "serve": "npm run start",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --mode production",
     "build-dev": "npm run gulp && vue-cli-service build --mode development",
-    "lint": "vue-cli-service lint"
+    "gulp": "gulp",
+    "lint": "vue-cli-service lint",
+    "postinstall": "npm run build",
+    "serve": "npm run gulp && vue-cli-service serve",
+    "start": "node server.js"
   },
   "dependencies": {
     "@js-joda/core": "^3.2.0",
@@ -20,6 +21,7 @@
     "bootstrap-vue": "^2.0.4",
     "cldr-data": "^36.0.0",
     "cldrjs": "^0.5.5",
+    "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
     "flatpickr": "^4.5.1",
     "gulp": "^4.0.2",
@@ -63,6 +65,8 @@
     "@vue/cli-plugin-vuex": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "axios-mock-adapter": "^1.18.2",
+    "express": "^4.17.1",
+    "serve-static": "^1.14.1",
     "typescript": "~3.7.5",
     "vue-template-compiler": "^2.6.12"
   }
