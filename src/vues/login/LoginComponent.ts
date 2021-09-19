@@ -28,6 +28,8 @@ export default class LoginComponent extends BaseVue {
 
     private loading: boolean = false;
 
+    private loginUrl: string = process.env.VUE_APP_BASE_URL;
+
     private loginError: string = '';
 
 
