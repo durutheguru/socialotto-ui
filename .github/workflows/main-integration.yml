@@ -40,72 +40,16 @@ jobs:
           git config user.name ${{ secrets.GIT_USERNAME }}
           git add .
           git commit -m "Upgraded Version >> $RELEASE_TAG" || true
-<<<<<<< HEAD
       - name: Push changes to Main
-=======
-      - name: Push changes
->>>>>>> 47b062e3e1446560da5a2b2a2784eb43252dde8d
         uses: ad-m/github-push-action@master
         with:
           branch: main
           github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
-<<<<<<< HEAD
       - name: Push changes to Heroku
         run: |
           git branch
           ls
           git push heroku main
-=======
-      - name: Set Kube Deployment Version
-        run: |
-          git branch
-          ls
-          VERSION=$(<version.ver)
-          sed -i s/{{image-placeholder}}/lucky_numbers_ui:$VERSION/g kube/manifests/app/deployment.yaml
-          cat kube/manifests/app/deployment.yaml
-      - name: Deploying to Cluster
-        uses: steebchen/kubectl@master
-        env:
-          KUBECTL_VERSION: "1.17"
-          KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
-        with:
-          args: apply -f kube/manifests/app
-
-
-  # kube-deploy:
-  #   name: Deploy to Kubernetes
-  #   runs-on: ubuntu-latest
-  #   needs: [build]
-
-  #   steps:
-  #   - name: Checkout
-  #     uses: actions/checkout@v2
-  #   - name: Fetching
-  #     run: |
-  #       git fetch --all
-  #   - name: Merge to Main
-  #     uses: devmasx/merge-branch@v1.1.0
-  #     with:
-  #       type: now
-  #       target_branch: 'main'
-  #     env:
-  #       GITHUB_TOKEN: ${{secrets.GIT_ACCESS_TOKEN}}
-  #   - name: Set Kube Deployment Version
-  #     run: |
-  #       git branch
-  #       ls
-  #       VERSION=$(<version.ver)
-  #       sed -i s/{{image-placeholder}}/lucky_numbers_ui:$VERSION/g kube/manifests/app/deployment.yaml
-  #       cat kube/manifests/app/deployment.yaml
-  #   - name: Deploying to Cluster
-  #     uses: steebchen/kubectl@master
-  #     env:
-  #       KUBECTL_VERSION: "1.17"
-  #       KUBE_CONFIG_DATA: ${{ secrets.KUBECONFIG }}
-  #     with:
-  #       args: apply -f kube/manifests/app
-
->>>>>>> 47b062e3e1446560da5a2b2a2784eb43252dde8d
 
 
   merge-develop:
@@ -126,8 +70,5 @@ jobs:
         target_branch: develop
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-<<<<<<< HEAD
 
 
-=======
->>>>>>> 47b062e3e1446560da5a2b2a2784eb43252dde8d
