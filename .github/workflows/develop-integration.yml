@@ -1,0 +1,70 @@
+name: Develop Branch Integration
+
+on:
+  pull_request:
+    branches: [ develop ]
+    types: [ closed ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    if: github.event.pull_request.merged == true
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+        env:
+          CI: true
+      - name: Set Commit Message
+        id: commit
+        run: |
+          [[ ${{ startsWith(github.head_ref, 'feature/') }} ]] && echo ::set-output name=message::"+semver: feature" \
+          || echo ::set-output name=message::"+semver: patch"
+      - name: Upgrading Version
+        env:
+          COMMIT_MSG: ${{ steps.commit.outputs.message }}
+        run: |
+          git config user.email ${{ secrets.GIT_EMAIL }}
+          git config user.name ${{ secrets.GIT_USERNAME }}
+          git add .
+          git commit -m "$COMMIT_MSG" --allow-empty || true
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          branch: develop
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+  merge-master:
+    name: Merge to Main
+    needs: [build]
+    runs-on: ubuntu-latest
+
+    if: github.event.pull_request.merged == true
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Fetching
+      run: |
+        git fetch --all
+    - name: Merge to Main
+      uses: devmasx/merge-branch@v1.1.0
+      with:
+        type: now
+        target_branch: 'main'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+        
+        
+        
+        
