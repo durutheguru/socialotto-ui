@@ -54,6 +54,7 @@
     "vuex": "^3.5.1",
     "vuex-extensions": "^1.1.5",
     "vuex-persistedstate": "^3.1.0",
+    "@vue/cli-service": "^4.2.3",
     "webpack-stream": "^5.2.1"
   },
   "devDependencies": {
@@ -63,7 +64,6 @@
     "@vue/cli-plugin-router": "^4.2.3",
     "@vue/cli-plugin-typescript": "^4.5.12",
     "@vue/cli-plugin-vuex": "^4.2.3",
-    "@vue/cli-service": "^4.2.3",
     "axios-mock-adapter": "^1.18.2",
     "express": "^4.17.1",
     "serve-static": "^1.14.1",
