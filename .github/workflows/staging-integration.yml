@@ -51,7 +51,9 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "socialotto-ui-staging"
           heroku_email: "durutheguru@gmail.com"
-          env_file: ".env.staging"
+#           env_file: ".env.staging"
+        env:
+          VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
 
 
   # merge-develop:
