@@ -53,7 +53,7 @@ jobs:
           heroku_email: "durutheguru@gmail.com"
 #           env_file: ".env.staging"
         env:
-          VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
+          HD_VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
 
 
   # merge-develop:
