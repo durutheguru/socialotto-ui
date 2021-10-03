@@ -1,0 +1,76 @@
+name: Staging Branch CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [ staging ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+# Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Fetching All
+        run: |
+          git fetch --prune --unshallow
+      # - name: Installing GitVersion
+      #   env:
+      #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      #   uses: gittools/actions/gitversion/setup@v0.9.3
+      #   with:
+      #     versionSpec: '5.3.x'
+      # - name: Use GitVersion
+      #   id: gitversion
+      #   uses: gittools/actions/gitversion/execute@v0.9.3
+      #   env:
+      #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+      # - name: Upgrading Version
+      #   run: |
+      #     RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
+      #     echo $RELEASE_TAG > version.ver
+      #     ls
+      #     git config user.email ${{ secrets.GIT_EMAIL }}
+      #     git config user.name ${{ secrets.GIT_USERNAME }}
+      #     git add .
+      #     git commit -m "Upgraded Version >> $RELEASE_TAG" || true
+      # - name: Push changes to Staging
+      #   uses: ad-m/github-push-action@master
+      #   with:
+      #     branch: staging
+      #     github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
+      - name: Push changes to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "socialotto-ui-staging"
+          heroku_email: "durutheguru@gmail.com"
+#           env_file: ".env.staging"
+        env:
+          HD_VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
+
+
+  # merge-develop:
+  #   name: Merge to Develop
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v2
+  #   - name: Fetching
+  #     run: |
+  #       git fetch --all
+  #   - name: Merge to Develop
+  #     uses: devmasx/merge-branch@v1.1.0
+  #     with:
+  #       type: now
+  #       target_branch: develop
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
