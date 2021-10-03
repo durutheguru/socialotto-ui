@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build --mode production",
+    "build": "vue-cli-service build",
     "build-dev": "npm run gulp && vue-cli-service build --mode development",
+    "build-staging": "npm run gulp && vue-cli-service build --mode staging",
+    "build-production": "vue-cli-service build --mode production",
     "gulp": "gulp",
     "lint": "vue-cli-service lint",
     "postinstall": "npm run build",
@@ -17,6 +19,7 @@
     "@js-joda/locale_en": "^3.2.2",
     "@js-joda/locale_fr": "^3.2.2",
     "@js-joda/timezone": "^2.5.0",
+    "@vue/cli-service": "^4.2.3",
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.0.4",
     "cldr-data": "^36.0.0",
@@ -37,6 +40,7 @@
     "moment": "^2.29.1",
     "nouislider": "^11.1.0",
     "raw-loader": "^4.0.1",
+    "replace-in-file": "^6.2.0",
     "sass": "^1.26.10",
     "sass-loader": "^8.0.2",
     "vee-validate": "^3.3.9",
@@ -63,7 +67,6 @@
     "@vue/cli-plugin-router": "^4.2.3",
     "@vue/cli-plugin-typescript": "^4.5.12",
     "@vue/cli-plugin-vuex": "^4.2.3",
-    "@vue/cli-service": "^4.2.3",
     "axios-mock-adapter": "^1.18.2",
     "express": "^4.17.1",
     "serve-static": "^1.14.1",
@@ -71,3 +74,6 @@
     "vue-template-compiler": "^2.6.12"
   }
 }
+
+
+
