@@ -52,7 +52,7 @@ jobs:
           heroku_app_name: "socialotto-ui"
           heroku_email: "durutheguru@gmail.com"
         env:
-          VUE_APP_BASE_URL: "https://socialotto.herokuapp.com"
+          HD_VUE_APP_BASE_URL: "https://socialotto.herokuapp.com"
 
 
   merge-develop:
