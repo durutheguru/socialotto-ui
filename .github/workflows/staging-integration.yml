@@ -56,7 +56,7 @@ jobs:
         env:
           HD_VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
       - run: |
-          git push staging main
+          git push staging staging:main
 
 
   # merge-develop:
