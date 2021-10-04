@@ -56,7 +56,10 @@ jobs:
         env:
           HD_VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
       - run: |
-          git push staging staging:main
+          git config user.email ${{ secrets.GIT_EMAIL }}
+          git config user.name ${{ secrets.GIT_USERNAME }}
+          git remote add staging git@heroku.com:socialotto-ui-staging.git
+          git push staging HEAD:main
 
 
   # merge-develop:
