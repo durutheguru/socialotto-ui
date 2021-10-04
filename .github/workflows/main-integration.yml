@@ -56,7 +56,7 @@ jobs:
       - run: |
           git config user.email ${{ secrets.GIT_EMAIL }}
           git config user.name ${{ secrets.GIT_USERNAME }}
-          git remote add heroku https://git.heroku.com/socialotto-ui.git
+          git remote add heroku https://git.heroku.com/socialotto-ui.git || true
           git pull heroku main
           git push heroku main
 
