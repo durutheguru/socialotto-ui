@@ -53,6 +53,12 @@ jobs:
           heroku_email: "durutheguru@gmail.com"
         env:
           HD_VUE_APP_BASE_URL: "https://socialotto.herokuapp.com"
+      - run: |
+          git config user.email ${{ secrets.GIT_EMAIL }}
+          git config user.name ${{ secrets.GIT_USERNAME }}
+          git remote add heroku https://git.heroku.com/socialotto-ui.git
+          git pull heroku main
+          git push heroku main
 
 
   merge-develop:
