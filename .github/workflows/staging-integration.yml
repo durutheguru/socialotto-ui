@@ -58,7 +58,7 @@ jobs:
       - run: |
           git config user.email ${{ secrets.GIT_EMAIL }}
           git config user.name ${{ secrets.GIT_USERNAME }}
-          git remote add staging git@heroku.com:socialotto-ui-staging.git
+          git remote add staging https://git.heroku.com/socialotto-ui-staging.git
           git push staging HEAD:main
 
 
