@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Login from '../vues/login/Login.vue';
+// import Signup from '../vues/signup/'
+
 
 import Users from '@/vues/backoffice/vues/users/Users.vue';
 import BackOffice from '../vues/backoffice/BackOffice.vue';
@@ -24,6 +26,15 @@ const routes = [
     meta: {
       skipAuth: true,
     },
+  },
+
+  {
+    path: '/signup',
+    name: 'Signup',
+    component: () => import('@/vues/signup/Signup.vue'),
+    meta: {
+      skipAuth: true,
+    }
   },
 
   {
