@@ -8,3 +8,4 @@ import BaseVue from "../../components/BaseVue";
 export default class SignupComponent extends BaseVue {
 
 }
+
