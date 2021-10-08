@@ -31,6 +31,7 @@ export default class Constants {
         '/login',
         '/oauth/login',
         '/twitter/oauth',
+        '/api/v1/user_signup'
     ];
 
 
