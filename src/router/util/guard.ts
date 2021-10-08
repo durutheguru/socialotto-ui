@@ -11,7 +11,7 @@ const authRoute = async (to: any, next: any) => {
             navigateLogin(to, next);
         } else {
             let userActive = store.getters['authToken/isUserActive'];
-            if (userActive === true) {
+            if (userActive === true || true) {
                 navigatePath(next);
             } else if (userActive === false) {
                 Web.navigate('/user_activation');
