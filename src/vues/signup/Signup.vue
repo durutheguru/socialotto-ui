@@ -1,33 +1,37 @@
 <template>
   <div
-    class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
+    class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 "
   >
-    <div class="signupHeader z-10 bg-gray-50 grid lg:grid-cols-2">
-      <span class="signupLogo">Socialotto</span>
-
+    <div class="signupHeader z-10 bg-gray-50 py-auto">
       <div
-        class="spartan flex my-auto relative right-0 flex justify-between"
-        style="height: 40px; width: 552px;"
+        class="mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <a
-          class="whitespace-nowrap inline-flex items-center justify-center"
-          href=""
-          >About Socialotto</a
-        >
-        <a
-          class="whitespace-nowrap inline-flex items-center justify-center"
-          href=""
-          >Sign in</a
-        >
-        <a
-          class="whitespace-nowrap inline-flex items-center justify-center"
-          href=""
-          >Sign up</a
-        >
+        <span class="signupLogo my-auto">Socialotto</span>
+
         <div
-          class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+          class="spartan flex my-auto relative right-0 flex justify-between"
+          style="height: 40px; width: 552px;"
         >
-          Support a campaign
+          <a
+            class="whitespace-nowrap inline-flex items-center justify-center"
+            href=""
+            >About Socialotto</a
+          >
+          <a
+            class="whitespace-nowrap inline-flex items-center justify-center"
+            href=""
+            >Sign in</a
+          >
+          <a
+            class="whitespace-nowrap inline-flex items-center justify-center"
+            href=""
+            >Sign up</a
+          >
+          <div
+            class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+          >
+            Support a campaign
+          </div>
         </div>
       </div>
     </div>
@@ -172,13 +176,15 @@
           <div class="flex items-center justify-between">
             <div class="flex items-end">
               <input
-                id="remember-me"
-                name="remember-me"
+                id="terms"
+                name="terms"
+                value="true"
+                v-model="agree"
                 type="checkbox"
                 class="checkbox"
               />
               <label
-                for="remember-me"
+                for="agree"
                 style="font-family: 'Spartan', sans-serif;
                   font-style: normal;
                   font-weight: normal;
@@ -211,14 +217,16 @@
                 (invalid ||
                   userSignup.loading ||
                   !passwordConfirmed ||
-                  userLogin.loading) &&
+                  userLogin.loading ||
+                  !agree) &&
                   'opacity-25'
               "
               :disabled="
                 invalid ||
                   userSignup.loading ||
                   !passwordConfirmed ||
-                  userLogin.loading
+                  userLogin.loading ||
+                  !agree
               "
               class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
@@ -293,6 +301,8 @@ export default class Signup extends BaseVue {
   };
 
   private userSignup: ApiResource = ApiResource.create();
+
+  private agree: boolean = false;
 
   private userLogin: ApiResource = ApiResource.create();
 
@@ -371,8 +381,8 @@ export default class Signup extends BaseVue {
   position: relative;
   width: 175px;
   height: 40px;
-  left: 10%;
-  top: 22px;
+  /* left: 10%;
+  top: 22px; */
 
   font-family: "Spartan", sans-serif;
   font-style: normal;
