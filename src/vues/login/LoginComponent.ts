@@ -122,9 +122,7 @@ export default class LoginComponent extends BaseVue {
 
             (response: any) => {
                 this.loading = false;
-                store.commit('authToken/apiToken', response.headers.authorization);
-                this.$router.push({path: UserAuthContext.getInstance().homeUrl()});
-                Log.info('Logged In: ' + JSON.stringify(response));
+                LoginService.handleSuccessfulLogin(response, this);
             },
 
             (error: any) => {

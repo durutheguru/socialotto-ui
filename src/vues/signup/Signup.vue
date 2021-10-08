@@ -313,6 +313,8 @@ import UserAuthContext from "@/components/auth/UserAuthContext";
   name: "Signup",
 })
 export default class Signup extends BaseVue {
+  //disable input fields after signup click
+
   public platformUser: any = {
     name: "",
     email: "",
@@ -357,11 +359,7 @@ export default class Signup extends BaseVue {
           },
           (response: any) => {
             self.userLogin.loading = false;
-            store.commit("authToken/apiToken", response.headers.authorization);
-            this.$router.push({
-              path: UserAuthContext.getInstance().homeUrl(),
-            });
-            Log.info("Logged In: " + JSON.stringify(response));
+            LoginService.handleSuccessfulLogin(response, this);
           },
           (error: any) => {
             self.userLogin.loading = false;
