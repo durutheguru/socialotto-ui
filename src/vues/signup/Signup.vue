@@ -4,29 +4,47 @@
   >
     <div class="signupHeader z-10 bg-gray-50 py-auto">
       <div
-        class="mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
+        class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <span class="signupLogo my-auto">Socialotto</span>
+        <div class="menuIcon my-auto">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </div>
 
         <div
-          class="spartan flex my-auto relative right-0 flex justify-between"
+          class=" spartan flex my-auto relative right-0 flex justify-end"
           style="height: 40px; width: 552px;"
         >
-          <a
-            class="whitespace-nowrap inline-flex items-center justify-center"
-            href=""
-            >About Socialotto</a
-          >
-          <a
-            class="whitespace-nowrap inline-flex items-center justify-center"
-            href=""
-            >Sign in</a
-          >
-          <a
-            class="whitespace-nowrap inline-flex items-center justify-center"
-            href=""
-            >Sign up</a
-          >
+          <div class=" anchorDIv">
+            <a
+              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
+              href=""
+              >About Socialotto</a
+            >
+            <a
+              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
+              href=""
+              >Sign in</a
+            >
+            <a
+              class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
+              href=""
+              >Sign up</a
+            >
+          </div>
           <div
             class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
@@ -36,8 +54,10 @@
       </div>
     </div>
 
-    <div class="relative top-20 sm:mx-auto sm:w-full sm:max-w-md ">
-      <div class="signupMain bg-white py-8 px-20  sm:px-10">
+    <div
+      class="signupMainOuterDiv relative top-20 sm:mx-auto sm:w-full sm:max-w-md mb-28"
+    >
+      <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
           <h2 class="mt-3 text-center mainHeader">
             Signup to socialotto
@@ -233,7 +253,7 @@
               Sign up
               <i
                 class="ml-px fa fa-spinner fa-spin"
-                v-if="userSignup.loading"
+                v-if="userSignup.loading || userLogin.loading"
               ></i>
             </button>
           </div>
@@ -326,6 +346,10 @@ export default class Signup extends BaseVue {
         self.userLogin.loading = false;
 
         // TODO login
+        //if response.status is 201 then loginService function
+        //Style navbar anchors
+        //remove white body bckground
+        //remove ugly scrollbars
         LoginService.doLogin(
           {
             username: self.platformUser.email,
@@ -397,11 +421,20 @@ export default class Signup extends BaseVue {
 
 a {
   height: 14px;
-  margin: auto 0;
+  /* margin: auto 0; */
+
+  color: #767676;
 }
 
 .spartan {
   font-family: "Spartan", sans-serif;
+}
+
+.menuIcon {
+  display: none;
+  width: 24px;
+  height: 24px;
+  color: #4691a6;
 }
 
 .signupMain {
@@ -420,6 +453,43 @@ a {
   /* align-items: center;
   flex-direction: column; */
   /* z-index: -1; */
+}
+
+@media only screen and (max-width: 640px) {
+  .signupMain {
+    border: none;
+    padding-top: 0;
+    --tw-bg-opacity: 1;
+    background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+  }
+
+  .signupMainOuterDiv {
+    margin-top: 0;
+  }
+}
+
+.anchorDIv {
+  width: 60%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 900px) {
+  .anchorDIv {
+    display: none;
+  }
+  .innerHeaderDiv {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+
+  .signupLogo {
+    display: none;
+  }
+
+  .menuIcon {
+    display: flex;
+  }
 }
 
 .mainHeader {

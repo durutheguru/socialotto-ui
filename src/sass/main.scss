@@ -5,9 +5,13 @@
 @import "@/../../../node_modules/tailwindcss/utilities";
 
 
-// body {
-//   font-size: 1.6em !important;
-// }
+body {
+  // font-size: 1.6em !important;
+  --tw-bg-opacity: 1;
+  background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
+  overflow-x: hidden !important;
+  min-width: 400px !important;
+}
 
 html, body {
   height: 100%;
@@ -897,7 +901,7 @@ a.sidebar-link-btn:hover {
 }
 
 .invalid-field {
-  border: 1px solid $pinkish !important;
+  border: 1px solid red !important;
 }
 
 
@@ -1487,7 +1491,7 @@ span.lottery-detail-number-desc {
 
 
 section#container {
-  overflow: scroll !important;
+  overflow-x: hidden !important;
 }
 
 .message-list-received-container {
