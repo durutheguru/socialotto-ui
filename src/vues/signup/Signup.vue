@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 "
+    class="h-full bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8  mx-2"
   >
     <!-- <div class="signupHeader z-10 bg-gray-50 py-auto">
       <div
@@ -55,7 +55,7 @@
     </div> -->
 
     <div
-      class="signupMainOuterDiv relative top-20 sm:mx-auto sm:w-full sm:max-w-md mb-28"
+      class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-28"
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
@@ -282,16 +282,19 @@
         </div>
 
         <div>
-          <button
-            :disabled="userSignup.loading || userLogin.loading"
-            style="background-color: #FF3D00; margin-bottom: 20px;"
-            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Google
-          </button>
+          <form :action="loginUrl + '/google/oauth'" method="POST">
+            <button
+              type="submit"
+              :disabled="userSignup.loading || userLogin.loading"
+              style="background-color: #FF3D00; margin-bottom: 20px;"
+              class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Google
+            </button>
+          </form>
         </div>
 
-        <div>
+        <!-- <div>
           <button
             :disabled="userSignup.loading || userLogin.loading"
             style="background-color: #3B5998;"
@@ -299,7 +302,7 @@
           >
             Facebook
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -338,6 +341,8 @@ export default class Signup extends BaseVue {
   // mounted() {
   //   Log.info("name of route: " + String(this.$route.name));
   // }
+
+  public loginUrl: string = process.env.VUE_APP_BASE_URL;
 
   public handleSignup() {
     const self = this;
@@ -466,12 +471,24 @@ a {
   .signupMain {
     border: none;
     padding-top: 0;
+    padding-left: 5px;
+    padding-right: 5px;
     --tw-bg-opacity: 1;
     background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
   }
 
   .signupMainOuterDiv {
     margin-top: 0;
+  }
+
+  .mainHeaderDiv {
+    margin-bottom: 35px !important;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .smHeight {
+    margin-top: 26px;
   }
 }
 

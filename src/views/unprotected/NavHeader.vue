@@ -39,6 +39,7 @@
                 >Sign in</a
               >
               <a
+                v-if="!pageName === 'Signup'"
                 class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
                 href=""
                 >Sign up</a
@@ -72,6 +73,9 @@ import ApiResource from "@/components/core/ApiResource";
 })
 export default class NavHeader extends BaseVue {
   private pageName: string = String(this.$route.name);
+  mounted() {
+    Log.info("name of route: " + String(this.$route.name));
+  }
 }
 </script>
 
@@ -147,19 +151,6 @@ a {
   /* z-index: -1; */
 }
 
-@media only screen and (max-width: 640px) {
-  .signupMain {
-    border: none;
-    padding-top: 0;
-    --tw-bg-opacity: 1;
-    background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
-  }
-
-  .signupMainOuterDiv {
-    margin-top: 0;
-  }
-}
-
 .anchorDIv {
   width: 60%;
   display: flex;
@@ -171,8 +162,10 @@ a {
     display: none;
   }
   .innerHeaderDiv {
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
+    /* padding-left: 2.5rem;
+    padding-right: 2.5rem; */
+    padding-left: 5px;
+    padding-right: 5px;
   }
 
   .signupLogo {
