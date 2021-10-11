@@ -1,8 +1,8 @@
 <template>
   <div
-    class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 "
+    class="h-full bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8  mx-2"
   >
-    <div class="signupHeader z-10 bg-gray-50 py-auto">
+    <!-- <div class="signupHeader z-10 bg-gray-50 py-auto">
       <div
         class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
@@ -52,15 +52,15 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div
-      class="signupMainOuterDiv relative top-20 sm:mx-auto sm:w-full sm:max-w-md mb-28"
+      class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8"
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
           <h2 class="mt-3 text-center mainHeader">
-            Signup to socialotto
+            Signup to Socialotto
           </h2>
         </div>
 
@@ -97,6 +97,7 @@
                   v-model="platformUser.name"
                   v-bind:class="{ 'invalid-field': invalid }"
                   required
+                  :disabled="userSignup.loading || userLogin.loading"
                   class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
               </validation-provider>
@@ -126,6 +127,7 @@
                   autocomplete="email"
                   v-model="platformUser.email"
                   required
+                  :disabled="userSignup.loading || userLogin.loading"
                   v-bind:class="{ 'invalid-field': invalid }"
                   class="appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
@@ -157,6 +159,7 @@
                   v-model="platformUser.password"
                   v-bind:class="{ 'invalid-field': invalid }"
                   required
+                  :disabled="userSignup.loading || userLogin.loading"
                   class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
               </validation-provider>
@@ -187,6 +190,7 @@
                   v-model="platformUser.confirmPassword"
                   v-bind:class="{ 'invalid-field': invalid }"
                   required
+                  :disabled="userSignup.loading || userLogin.loading"
                   class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
               </validation-provider>
@@ -213,6 +217,7 @@
                   text-align: center;
                   color: #797979;"
                 class="ml-2 mb-0 block"
+                :disabled="userSignup.loading || userLogin.loading"
               >
                 I agree to the
                 <span style="font-weight: 600;">terms of service</span>
@@ -277,22 +282,27 @@
         </div>
 
         <div>
-          <button
-            style="background-color: #FF3D00; margin-bottom: 20px;"
-            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Google
-          </button>
+          <form :action="loginUrl + '/google/oauth'" method="POST">
+            <button
+              type="submit"
+              :disabled="userSignup.loading || userLogin.loading"
+              style="background-color: #FF3D00; margin-bottom: 20px;"
+              class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Google
+            </button>
+          </form>
         </div>
 
-        <div>
+        <!-- <div>
           <button
+            :disabled="userSignup.loading || userLogin.loading"
             style="background-color: #3B5998;"
             class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Facebook
           </button>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -306,15 +316,13 @@ import { Component } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import SignupService from "./service/SignupService";
 import LoginService from "../login/service/LoginService";
-import store from "@/store";
-import UserAuthContext from "@/components/auth/UserAuthContext";
+// import store from "@/store";
+// import UserAuthContext from "@/components/auth/UserAuthContext";
 
 @Component({
   name: "Signup",
 })
 export default class Signup extends BaseVue {
-  //disable input fields after signup click
-
   public platformUser: any = {
     name: "",
     email: "",
@@ -327,6 +335,14 @@ export default class Signup extends BaseVue {
   private agree: boolean = false;
 
   private userLogin: ApiResource = ApiResource.create();
+
+  // private pageName: string = String(this.$route.name);
+
+  // mounted() {
+  //   Log.info("name of route: " + String(this.$route.name));
+  // }
+
+  public loginUrl: string = process.env.VUE_APP_BASE_URL;
 
   public handleSignup() {
     const self = this;
@@ -348,10 +364,8 @@ export default class Signup extends BaseVue {
         self.userLogin.loading = false;
 
         // TODO login
-        //if response.status is 201 then loginService function
-        //Style navbar anchors
-        //remove white body bckground
-        //remove ugly scrollbars
+        //  if response.status is 201 then loginService function
+
         LoginService.doLogin(
           {
             username: self.platformUser.email,
@@ -457,12 +471,24 @@ a {
   .signupMain {
     border: none;
     padding-top: 0;
+    padding-left: 5px;
+    padding-right: 5px;
     --tw-bg-opacity: 1;
     background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
   }
 
   .signupMainOuterDiv {
     margin-top: 0;
+  }
+
+  .mainHeaderDiv {
+    margin-bottom: 35px !important;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .smHeight {
+    margin-top: 26px;
   }
 }
 

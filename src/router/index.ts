@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import NavHeader from "../views/unprotected/NavHeader.vue"
 
 import Login from '../vues/login/Login.vue';
 // import Signup from '../vues/signup/'
@@ -18,24 +19,33 @@ import afterRouteScriptLoader from './util/afterRouteScriptLoader';
 Vue.use(VueRouter);
 
 const routes = [
-
   {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      skipAuth: true,
-    },
+    path: "/",
+    name: "NavHeader",
+    component: NavHeader,
+    children: [
+      {
+        path: '/signup',
+        name: 'Signup',
+        component: () => import('@/vues/signup/Signup.vue'),
+        meta: {
+          skipAuth: true,
+        }
+      },
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        meta: {
+          skipAuth: true,
+        },
+      },
+    ]
   },
 
-  {
-    path: '/signup',
-    name: 'Signup',
-    component: () => import('@/vues/signup/Signup.vue'),
-    meta: {
-      skipAuth: true,
-    }
-  },
+
+
+
 
   {
     path: '/user_activation',
