@@ -55,7 +55,7 @@
     </div> -->
 
     <div
-      class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-28"
+      class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8"
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">

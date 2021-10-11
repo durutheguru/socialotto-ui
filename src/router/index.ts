@@ -32,17 +32,18 @@ const routes = [
           skipAuth: true,
         }
       },
+      {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+        meta: {
+          skipAuth: true,
+        },
+      },
     ]
   },
 
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-    meta: {
-      skipAuth: true,
-    },
-  },
+
 
 
 
