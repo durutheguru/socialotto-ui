@@ -15,7 +15,7 @@
         role="form"
         v-slot="{ invalid }"
         class="space-y-6"
-        @submit.prevent="handleSignup"
+        @submit.prevent="doLogin"
         novalidate
       >
         <div>
@@ -68,7 +68,7 @@
                 id="password"
                 name="password"
                 type="password"
-                placeholder="(at least 6 characters)"
+                placeholder="password"
                 autocomplete="current-password"
                 v-model="platformUser.password"
                 v-bind:class="{ 'invalid-field': invalid }"
@@ -116,7 +116,7 @@
                 margin-top: 35px;
                 "
         >
-          <span>or login with</span>
+          <span>or continue with</span>
         </div>
       </div>
 
@@ -140,7 +140,10 @@
 import { Component, Vue } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import LoginService from "../login/service/LoginService";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Web } from "@/components/util";
+import ErrorCode from "@/components/util/ErrorCode";
+import UserLoginToken from "./core/UserLoginToken";
+import BaseVue from "@/components/BaseVue";
 
 // import LoginComponent from "./LoginComponent";
 
@@ -150,15 +153,151 @@ import { Log, Util } from "@/components/util";
   //   },
   name: "Login",
 })
-export default class Login extends Vue {
+export default class Login extends BaseVue {
   private userLogin: ApiResource = ApiResource.create();
-  public platformUser: any = {
-    name: "",
+  public loginUrl: string = process.env.VUE_APP_BASE_URL;
+  private platformUser: any = {
     email: "",
+    password: "",
+    secret: "",
   };
 
-  mounted() {
-    Log.info("name of login route: " + String(this.$route.name));
+  public mounted() {
+    /**
+     * check presence of URL parameters.
+     * if present:
+     *   * decrypt
+     *   * call endpoint to login and fetch access token and refresh token
+     *   * store accesstoken in local storage
+     *   * navigate to next page
+     * if not present:
+     *      check presence of local accesstoken.
+     *   *   if present, validate token
+     *   *          if valid, enter next page
+     *   *          else show login page
+     *   *   else:
+     *          show login page
+     *
+     */
+
+    if (this.isLoginFailureURLParamsSet()) {
+      this.handleLoginFailureURLParams();
+    } else if (this.isLoginSuccessURLParamsSet()) {
+      this.handleLoginSuccessURLParams();
+    } else {
+      Log.info("URL params not set");
+    }
+  }
+
+  private isLoginFailureURLParamsSet(): boolean {
+    const query = this.$route.query;
+
+    const error = query.err as string;
+
+    return Util.isValidString(error);
+  }
+
+  private handleLoginFailureURLParams() {
+    const query = this.$route.query;
+    const error = query.err as string;
+    this.userLogin.error = ErrorCode.map.get(error) || "";
+  }
+
+  private isLoginSuccessURLParamsSet(): boolean {
+    const query = this.$route.query;
+
+    const id = query.i as string;
+    const key = query.tn as string;
+    const secret = query.ss as string;
+
+    return (
+      Util.isValidString(id) &&
+      Util.isValidString(key) &&
+      Util.isValidString(secret)
+    );
+  }
+
+  private handleLoginSuccessURLParams() {
+    const userToken = this.getURLParams();
+
+    this.platformUser.email = atob(decodeURIComponent(userToken.username));
+    this.platformUser.password = atob(decodeURIComponent(userToken.key));
+    this.platformUser.secret = atob(decodeURIComponent(userToken.secret));
+
+    Log.info(`U: ${this.platformUser.email}, SS: ${this.platformUser.secret}`);
+    this.doCredentialVerification();
+  }
+
+  private getURLParams(): UserLoginToken {
+    const query = this.$route.query;
+
+    return new UserLoginToken(
+      query.i as string,
+      query.tn as string,
+      query.ss as string
+    );
+  }
+
+  private doCredentialVerification() {
+    this.userLogin.loading = true;
+    this.userLogin.error = "";
+
+    LoginService.doLogin(
+      {
+        username: this.platformUser.email,
+        password: this.platformUser.password,
+        secret: this.platformUser.secret,
+      },
+
+      (response: any) => {
+        this.userLogin.loading = false;
+        LoginService.handleSuccessfulLogin(response, this);
+      },
+
+      (error: any) => {
+        this.userLogin.loading = false;
+        this.extractLoginError(error);
+        Log.error("Logged Error: " + JSON.stringify(error));
+      }
+    );
+  }
+
+  private doLogin() {
+    this.userLogin.loading = true;
+    this.userLogin.error = "";
+
+    LoginService.doLogin(
+      {
+        username: this.platformUser.email,
+        password: this.platformUser.password,
+      },
+
+      (response: any) => {
+        this.userLogin.loading = false;
+        Log.info("Logged In: " + JSON.stringify(response));
+        LoginService.handleSuccessfulLogin(response, this);
+      },
+
+      (error: any) => {
+        this.userLogin.loading = false;
+        this.extractLoginError(error);
+        Log.error("Logged Error: " + JSON.stringify(error));
+      }
+    );
+  }
+
+  private extractLoginError(error: any) {
+    if (error.response) {
+      if (error.response.status === 401) {
+        this.userLogin.error = "Invalid Username / Password";
+        return;
+      } else if (error.response.status === 0) {
+        this.userLogin.error = "Cannot Reach Server";
+        return;
+      }
+    }
+
+    this.userLogin.error = "Unknown Error Occurred";
   }
 }
 </script>

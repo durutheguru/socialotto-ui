@@ -46,6 +46,7 @@ export default class LoginService {
         vue.$router.push({
             path: UserAuthContext.getInstance().homeUrl(),
         });
+        Log.info('User Path: ' + UserAuthContext.getInstance().homeUrl());
         Log.info("Logged In: " + JSON.stringify(response));
     }
 

@@ -277,7 +277,7 @@
           margin-top: 35px;
           "
           >
-            <span>or one click signup via</span>
+            <span>or continue with</span>
           </div>
         </div>
 
