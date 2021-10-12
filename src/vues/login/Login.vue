@@ -1,20 +1,166 @@
 <template>
-  <div>
-    <LoginComponent />
+  <div
+    class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8 mt-12"
+  >
+    <div class="signupMain bg-white py-8 px-10  sm:px-10">
+      <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
+        <h2 class="mt-3 text-center mainHeader">
+          Login to Socialotto
+        </h2>
+      </div>
+
+      <validation-observer
+        ref="observer"
+        tag="form"
+        role="form"
+        v-slot="{ invalid }"
+        class="space-y-6"
+        @submit.prevent="handleSignup"
+        novalidate
+      >
+        <div>
+          <label
+            for="email"
+            style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+            class="block text-sm font-medium"
+          >
+            Email address
+          </label>
+          <div class="mt-1">
+            <validation-provider rules="email_required" v-slot="{ invalid }">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="email"
+                autocomplete="email"
+                v-model="platformUser.email"
+                required
+                :disabled="userLogin.loading"
+                v-bind:class="{ 'invalid-field': invalid }"
+                class="appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
+              />
+            </validation-provider>
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="password"
+            style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+            class="block text-sm font-medium "
+          >
+            Password
+          </label>
+          <div class="mt-1">
+            <validation-provider rules="required" v-slot="{ invalid }">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="(at least 6 characters)"
+                autocomplete="current-password"
+                v-model="platformUser.password"
+                v-bind:class="{ 'invalid-field': invalid }"
+                required
+                :disabled="userLogin.loading"
+                class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+              />
+            </validation-provider>
+          </div>
+        </div>
+
+        <div class="text-sm mt-2 flex ">
+          <a
+            href="#"
+            class="ml-auto font-medium text-indigo-600 hover:text-indigo-500"
+          >
+            Forgot your password?
+          </a>
+        </div>
+
+        <div>
+          <button
+            type="submit"
+            style="background-color: #4691A6;"
+            :class="(invalid || userLogin.loading) && 'opacity-25'"
+            :disabled="invalid || userLogin.loading"
+            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Login
+            <i class="ml-px fa fa-spinner fa-spin" v-if="userLogin.loading"></i>
+          </button>
+        </div>
+      </validation-observer>
+
+      <div>
+        <div
+          style="font-family: 'Spartan', sans-serif;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 12px;
+                line-height: 100%;
+                text-align: center;
+                color: #797979;
+                margin-bottom: 32px;
+                margin-top: 35px;
+                "
+        >
+          <span>or login with</span>
+        </div>
+      </div>
+
+      <div>
+        <form :action="loginUrl + '/google/oauth'" method="POST">
+          <button
+            type="submit"
+            :disabled="userLogin.loading"
+            style="background-color: #FF3D00; margin-bottom: 20px;"
+            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Google
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import ApiResource from "@/components/core/ApiResource";
+import LoginService from "../login/service/LoginService";
+import { Log, Util } from "@/components/util";
 
-import LoginComponent from "./LoginComponent";
+// import LoginComponent from "./LoginComponent";
 
 @Component({
-  components: {
-    LoginComponent,
-  },
+  //   components: {
+  //     LoginComponent,
+  //   },
+  name: "Login",
 })
-export default class Login extends Vue {}
+export default class Login extends Vue {
+  private userLogin: ApiResource = ApiResource.create();
+  public platformUser: any = {
+    name: "",
+    email: "",
+  };
+
+  mounted() {
+    Log.info("name of login route: " + String(this.$route.name));
+  }
+}
 </script>
 
 <style scoped>
@@ -40,7 +186,7 @@ export default class Login extends Vue {}
   width: 175px;
   height: 40px;
   /* left: 10%;
-    top: 22px; */
+  top: 22px; */
 
   font-family: "Spartan", sans-serif;
   font-style: normal;
@@ -85,7 +231,7 @@ a {
   /* padding: 0 60px; */
   /* display: flex; */
   /* align-items: center;
-    flex-direction: column; */
+  flex-direction: column; */
   /* z-index: -1; */
 }
 
@@ -93,12 +239,24 @@ a {
   .signupMain {
     border: none;
     padding-top: 0;
+    padding-left: 5px;
+    padding-right: 5px;
     --tw-bg-opacity: 1;
     background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
   }
 
   .signupMainOuterDiv {
     margin-top: 0;
+  }
+
+  .mainHeaderDiv {
+    margin-bottom: 35px !important;
+  }
+}
+
+@media only screen and (max-height: 700px) {
+  .smHeight {
+    margin-top: 26px;
   }
 }
 
@@ -176,7 +334,7 @@ input {
   width: 14px;
   height: 14px;
   /* left: 520px;
-    top: 521px; */
+  top: 521px; */
 
   background: #595959;
   border: 2px solid #e1e1e1;
@@ -189,7 +347,7 @@ button {
   width: 100%;
   height: 48px;
   /* left: 520px;
-  top: 559px; */
+top: 559px; */
   border: none;
   border-radius: 8px;
 }
@@ -217,7 +375,4 @@ button {
 
   color: #797979;
 }
-/* position: relative;
-      top: 40px;
-      left: 0px; */
 </style>
