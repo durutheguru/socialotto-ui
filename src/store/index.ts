@@ -14,7 +14,8 @@ export default new Vuex.Store({
 
   state : {
     entryUrl : null,
-    globalAlert: { show: false, text: "", type: "" }
+    globalAlert: { show: false, text: "", type: "" },
+    dropMenu: false
   },
 
 
@@ -32,8 +33,7 @@ export default new Vuex.Store({
     entryUrl(context: any, url: string) {
       context.entryUrl = url;
     },
-    
-		setGlobalAlert(state, payload) {
+    setGlobalAlert(state, payload) {
 
 			// Clear previous timer
 
@@ -44,9 +44,13 @@ export default new Vuex.Store({
 			state.globalAlert = payload;
 
 			// set new timer
-      
+
 			timer = setTimeout(() => (state.globalAlert = { show: false, text: "", type: "" }), 5000);
-		}
+		},
+    setDropMenu(state, payload) {
+      state.dropMenu = payload;
+    }
+
 
   },
 

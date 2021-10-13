@@ -6,7 +6,7 @@
           class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
         >
           <span class="signupLogo my-auto">Socialotto</span>
-          <div class="menuIcon my-auto">
+          <div class="menuIcon my-auto" @click="dropMenu">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6"
@@ -55,6 +55,7 @@
         </div>
       </div>
     </div>
+    <hamburger-menu />
     <router-view></router-view>
   </div>
 </template>
@@ -65,6 +66,8 @@ import { Log, Util } from "@/components/util";
 import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
+import store from "../../store/index";
+import HamburgerMenu from "./HamburgerMenu.vue";
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -72,6 +75,9 @@ import ApiResource from "@/components/core/ApiResource";
 
 @Component({
   name: "NavHeader",
+  components: {
+    HamburgerMenu,
+  },
 })
 export default class NavHeader extends BaseVue {
   private get pageName(): string {
@@ -80,6 +86,11 @@ export default class NavHeader extends BaseVue {
 
   private mounted() {
     Log.info("name of route: " + String(this.$route.name));
+  }
+
+  private dropMenu() {
+    store.commit("setDropMenu", true);
+    // Log.info("dropMenu: " + );
   }
 }
 </script>
