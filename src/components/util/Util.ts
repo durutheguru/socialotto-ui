@@ -1,12 +1,17 @@
 import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-joda/core";
 import moment from "moment";
 import { Constants } from ".";
+import store from "../../store/index"
 
 
 export default class Util {
 
 
     private static throttleObject: any = {};
+    
+    public static handleGlobalAlert(show: boolean, type: string, text: string) {
+        store.commit("setGlobalAlert", { show, type, text });
+    }
 
 
     public static throttle(t: any) {

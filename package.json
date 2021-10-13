@@ -19,6 +19,8 @@
     "@js-joda/locale_en": "^3.2.2",
     "@js-joda/locale_fr": "^3.2.2",
     "@js-joda/timezone": "^2.5.0",
+    "@sentry/tracing": "^6.13.3",
+    "@sentry/vue": "^6.13.3",
     "@vue/cli-service": "^4.2.3",
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.0.4",
@@ -39,10 +41,12 @@
     "js-joda-timezone": "^2.1.1",
     "moment": "^2.29.1",
     "nouislider": "^11.1.0",
+    "postcss": "^7.0.39",
     "raw-loader": "^4.0.1",
     "replace-in-file": "^6.2.0",
     "sass": "^1.26.10",
     "sass-loader": "^8.0.2",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "vee-validate": "^3.3.9",
     "vue": "^2.6.12",
     "vue-class-component": "^7.2.5",
@@ -58,9 +62,7 @@
     "vuex": "^3.5.1",
     "vuex-extensions": "^1.1.5",
     "vuex-persistedstate": "^3.1.0",
-    "webpack-stream": "^5.2.1",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
-    "postcss": "^7.0.39"
+    "webpack-stream": "^5.2.1"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.1",
