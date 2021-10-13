@@ -283,7 +283,7 @@ export default class Login extends BaseVue {
         this.userLogin.loading = false;
         this.extractLoginError(error);
         Log.error("Logged Error: " + JSON.stringify(error));
-        Util.handleGlobalAlert(true, "failed", JSON.stringify(error.message));
+        Util.handleGlobalAlert(true, "failed", this.userLogin.error);
       }
     );
   }

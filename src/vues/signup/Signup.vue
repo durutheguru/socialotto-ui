@@ -371,9 +371,9 @@ export default class Signup extends BaseVue {
             username: self.platformUser.email,
             password: self.platformUser.password,
           },
-          (response: any) => {
+          (res: any) => {
             self.userLogin.loading = false;
-            LoginService.handleSuccessfulLogin(response, this);
+            LoginService.handleSuccessfulLogin(res, this);
           },
           (error: any) => {
             self.userLogin.loading = false;
