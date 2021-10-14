@@ -9,11 +9,13 @@ import createPersistedState from 'vuex-persistedstate';
 
 
 Vue.use(Vuex);
-
+let timer: any;
 export default new Vuex.Store({
 
   state : {
     entryUrl : null,
+    globalAlert: { show: false, text: "", type: "" },
+    dropMenu: false
   },
 
 
@@ -31,6 +33,26 @@ export default new Vuex.Store({
     entryUrl(context: any, url: string) {
       context.entryUrl = url;
     },
+    
+    setGlobalAlert(state, payload) {
+
+			// Clear previous timer
+
+			clearTimeout(timer);
+
+			// update alert state
+
+			state.globalAlert = payload;
+
+			// set new timer
+
+			timer = setTimeout(() => (state.globalAlert = { show: false, text: "", type: "" }), 5000);
+		},
+
+    setDropMenu(state, payload) {
+      state.dropMenu = payload;
+    }
+
 
   },
 

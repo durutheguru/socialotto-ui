@@ -6,7 +6,7 @@
           class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
         >
           <span class="signupLogo my-auto">Socialotto</span>
-          <div class="menuIcon my-auto">
+          <div class="menuIcon my-auto" @click="dropMenu">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6"
@@ -28,21 +28,22 @@
             style="height: 40px; width: 552px;"
           >
             <div class=" anchorDIv">
-              <a
+              <router-link
                 class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-                href=""
-                >About Socialotto</a
+                :to="'/about'"
+                >About Socialotto</router-link
               >
-              <a
+              <router-link
+                v-if="pageName !== 'Login'"
                 class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-                href=""
-                >Sign in</a
-              >
-              <a
-                v-if="!pageName === 'Signup'"
+                :to="'/login'"
+                >Sign in
+              </router-link>
+              <router-link
+                v-if="pageName !== 'Signup'"
                 class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
-                href=""
-                >Sign up</a
+                :to="'/signup'"
+                >Sign up</router-link
               >
             </div>
             <div
@@ -54,15 +55,19 @@
         </div>
       </div>
     </div>
+    <hamburger-menu />
     <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { Log, Util } from "@/components/util";
+// import { computed } from "vue";
 import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
+import store from "../../store/index";
+import HamburgerMenu from "./HamburgerMenu.vue";
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -70,11 +75,22 @@ import ApiResource from "@/components/core/ApiResource";
 
 @Component({
   name: "NavHeader",
+  components: {
+    HamburgerMenu,
+  },
 })
 export default class NavHeader extends BaseVue {
-  private pageName: string = String(this.$route.name);
-  mounted() {
+  private get pageName(): string {
+    return String(this.$route.name);
+  }
+
+  private mounted() {
     Log.info("name of route: " + String(this.$route.name));
+  }
+
+  private dropMenu() {
+    store.commit("setDropMenu", true);
+    // Log.info("dropMenu: " + );
   }
 }
 </script>

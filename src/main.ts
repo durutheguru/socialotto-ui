@@ -5,6 +5,8 @@ import router from './router';
 import store from './store';
 import Argon from "./plugins/argon-kit";
 import VueVideoPlayer from 'vue-video-player';
+// import * as Sentry from "@sentry/vue";
+// import { Integrations } from "@sentry/tracing";
 
 Vue.config.productionTip = false;
 
