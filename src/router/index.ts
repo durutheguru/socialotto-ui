@@ -21,6 +21,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    redirect: "/signup",
     name: "NavHeader",
     component: NavHeader,
     children: [

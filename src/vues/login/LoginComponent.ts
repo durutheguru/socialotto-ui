@@ -32,6 +32,8 @@ export default class LoginComponent extends BaseVue {
 
     private loginError: string = '';
 
+    private agree: boolean = false;
+
 
     public mounted() {
         /**
