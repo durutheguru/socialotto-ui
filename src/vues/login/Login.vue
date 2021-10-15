@@ -81,12 +81,12 @@
         </div>
 
         <div class="text-sm mt-2 flex ">
-          <a
-            href="#"
+          <router-link
+            :to="'/forgotpassword'"
             class="ml-auto font-medium text-indigo-600 hover:text-indigo-500"
           >
             Forgot your password?
-          </a>
+          </router-link>
         </div>
 
         <div>

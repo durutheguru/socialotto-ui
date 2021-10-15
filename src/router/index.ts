@@ -21,7 +21,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/signup",
+    redirect: "/login",
     name: "NavHeader",
     component: NavHeader,
     children: [
@@ -41,6 +41,14 @@ const routes = [
           skipAuth: true,
         },
       },
+      {
+        path: "/forgotpassword",
+        name: "Forgot Password",
+        component: () => import('@/vues/forgotPassword/ForgotPassword.vue'),
+        meta: {
+          skipAuth: true,
+        },
+      }
     ]
   },
 
