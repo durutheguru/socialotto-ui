@@ -63,6 +63,16 @@
     /* z-index: -1; */
   }
   
+ 
+  
+  .anchorDIv {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+
+  }
+
+
   @media only screen and (max-width: 640px) {
     .signupMain {
       border: none;
@@ -86,12 +96,6 @@
     .smHeight {
       margin-top: 26px;
     }
-  }
-  
-  .anchorDIv {
-    width: 60%;
-    display: flex;
-    justify-content: flex-end;
   }
   
   @media only screen and (max-width: 900px) {

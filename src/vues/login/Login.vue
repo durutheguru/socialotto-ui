@@ -155,7 +155,9 @@ import BaseVue from "@/components/BaseVue";
 })
 export default class Login extends BaseVue {
   private userLogin: ApiResource = ApiResource.create();
+
   public loginUrl: string = process.env.VUE_APP_BASE_URL;
+
   private platformUser: any = {
     email: "",
     password: "",

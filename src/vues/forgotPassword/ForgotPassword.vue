@@ -1,8 +1,8 @@
 <template>
   <div
-    class="signupMainOuterDiv relative top-4 sm:mx-auto  sm:max-w-xl mb-8 mt-12"
+    class="signupMainOuterDiv relative top-4 sm:mx-auto  sm:max-w-lg mb-8 mt-12"
   >
-    <div class="signupMain sm:bg-white py-8 px-10 sm:px-10">
+    <div v-if="!emailSent" class="signupMain sm:bg-white py-8 px-10 sm:px-10">
       <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
         <div class="flex items-center justify-center mt-4">
           <svg
@@ -81,11 +81,11 @@
                 type="email"
                 placeholder="email"
                 autocomplete="email"
-                v-model="userEmail"
+                v-model="userEmail.email"
                 required
                 :disabled="sendUserPassword.loading"
                 v-bind:class="{ 'invalid-field': invalid }"
-                class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
+                class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:bg-gray-50 focus:outline-none sm:text-sm"
               />
             </validation-provider>
           </div>
@@ -114,6 +114,8 @@
         </span>
       </div>
     </div>
+
+    <YouGotMail v-else />
   </div>
 </template>
 
@@ -122,22 +124,33 @@ import { Component, Vue } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import EmailService from "../../components/mail/Mail";
 import { Log, Util } from "../../components/util";
+import YouGotMail from "./YouGotMail.vue";
 
 @Component({
-  name: "Forgot Password",
+  name: "Forgot_Password",
+  components: {
+    YouGotMail,
+  },
 })
 export default class ForgotPassword extends Vue {
   private sendUserPassword: ApiResource = ApiResource.create();
 
-  private userEmail: string = "";
+  private userEmail: any = {
+    email: "",
+  };
+
+  private emailSent = false;
 
   private sendPassword() {
     this.sendUserPassword.loading = true;
+
     Log.info("userEmail: " + this.userEmail);
+
     EmailService.sendPassword(
       this.userEmail,
       (response: any) => {
         this.sendUserPassword.loading = false;
+        this.emailSent = true;
         Util.handleGlobalAlert(true, "success", "Password sent to email");
       },
       (error: any) => {

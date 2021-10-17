@@ -271,7 +271,7 @@ import LoginService from "../login/service/LoginService";
   name: "Signup",
 })
 export default class Signup extends BaseVue {
-  public platformUser: any = {
+  private platformUser: any = {
     name: "",
     email: "",
     password: "",

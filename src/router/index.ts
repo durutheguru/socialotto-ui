@@ -48,6 +48,14 @@ const routes = [
         meta: {
           skipAuth: true,
         },
+      },
+      {
+        path: '/password_reset',
+        name: 'ResetPassword',
+        component: () => import('@/vues/forgotPassword/ResetPassword.vue'),
+        meta: {
+          skipAuth: true,
+        },
       }
     ]
   },
