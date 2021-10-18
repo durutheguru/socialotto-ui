@@ -45,6 +45,7 @@
                 v-bind:class="{ 'invalid-field': invalid }"
                 class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
               />
+              <!-- <span>{{ errors[0] }}</span> -->
             </validation-provider>
           </div>
         </div>
@@ -81,12 +82,12 @@
         </div>
 
         <div class="text-sm mt-2 flex ">
-          <a
-            href="#"
+          <router-link
+            :to="'/forgotpassword'"
             class="ml-auto font-medium text-indigo-600 hover:text-indigo-500"
           >
             Forgot your password?
-          </a>
+          </router-link>
         </div>
 
         <div>
@@ -155,7 +156,9 @@ import BaseVue from "@/components/BaseVue";
 })
 export default class Login extends BaseVue {
   private userLogin: ApiResource = ApiResource.create();
+
   public loginUrl: string = process.env.VUE_APP_BASE_URL;
+
   private platformUser: any = {
     email: "",
     password: "",

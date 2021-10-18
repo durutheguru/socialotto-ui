@@ -2,58 +2,6 @@
   <div
     class="h-full bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8  mx-2"
   >
-    <!-- <div class="signupHeader z-10 bg-gray-50 py-auto">
-      <div
-        class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
-      >
-        <span class="signupLogo my-auto">Socialotto</span>
-        <div class="menuIcon my-auto">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h8m-8 6h16"
-            />
-          </svg>
-        </div>
-
-        <div
-          class=" spartan flex my-auto relative right-0 flex justify-end"
-          style="height: 40px; width: 552px;"
-        >
-          <div class=" anchorDIv">
-            <a
-              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-              href=""
-              >About Socialotto</a
-            >
-            <a
-              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-              href=""
-              >Sign in</a
-            >
-            <a
-              class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
-              href=""
-              >Sign up</a
-            >
-          </div>
-          <div
-            class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
-          >
-            Support a campaign
-          </div>
-        </div>
-      </div>
-    </div> -->
-
     <div
       class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8"
     >
@@ -323,7 +271,7 @@ import LoginService from "../login/service/LoginService";
   name: "Signup",
 })
 export default class Signup extends BaseVue {
-  public platformUser: any = {
+  private platformUser: any = {
     name: "",
     email: "",
     password: "",

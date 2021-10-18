@@ -50,7 +50,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import store from "../../store/index";
 @Component({
-  name: "Hamburger Menu",
+  name: "Hamburger_Menu",
 })
 export default class HamburgerMenu extends Vue {
   private get dropMenu(): boolean {
