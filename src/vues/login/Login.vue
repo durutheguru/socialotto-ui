@@ -45,6 +45,7 @@
                 v-bind:class="{ 'invalid-field': invalid }"
                 class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
               />
+              <!-- <span>{{ errors[0] }}</span> -->
             </validation-provider>
           </div>
         </div>
