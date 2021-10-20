@@ -201,10 +201,10 @@ export default class ResetPassword extends BaseVue {
               password: this.platformUser.password,
             },
 
-            (response: any) => {
+            (res: any) => {
               this.userLogin.loading = false;
-              Log.info("Logged In: " + JSON.stringify(response));
-              LoginService.handleSuccessfulLogin(response, this);
+              Log.info("Logged In: " + JSON.stringify(res));
+              LoginService.handleSuccessfulLogin(res, this);
               Util.handleGlobalAlert(true, "success", "Welcome!");
             },
 
