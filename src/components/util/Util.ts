@@ -1,4 +1,5 @@
 import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-joda/core";
+import { ApolloError } from "apollo-client";
 import moment from "moment";
 import { Constants } from ".";
 import store from "../../store/index"
@@ -109,6 +110,14 @@ export default class Util {
     public static extractError(errorResponse: any) {
         const errorMsg = Util.deepGet(errorResponse, 'response.data.message');
         return Util.isValidString(errorMsg, false) ? Util.errorSanitize(errorMsg) : 'Unknown Error';
+    }
+
+
+    public static extractGqlError(error: ApolloError): string {
+        const msg = error.message;
+        return Util.isValidString(msg) && msg.indexOf(Constants.gqlDefaultErrorDelimeter) > 0 ? 
+            msg.substring(msg.indexOf(Constants.gqlDefaultErrorDelimeter) + Constants.gqlDefaultErrorDelimeter.length) 
+            : msg;
     }
 
 

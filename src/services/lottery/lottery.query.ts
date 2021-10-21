@@ -1,6 +1,8 @@
 import gql from "graphql-tag";
 
-const lotteriesQuery = gql`
+
+
+const searchLotteries = gql `
 	query searchLotteries($searchKey: String, $page: Int, $size: Int) {
         searchLotteries(searchKey: $searchKey, page: $page, size: $size) {
             id
@@ -24,6 +26,9 @@ const lotteriesQuery = gql`
 	}
 `;
 
+
 export {
-    lotteriesQuery,
+    searchLotteries,
 };
+
+
