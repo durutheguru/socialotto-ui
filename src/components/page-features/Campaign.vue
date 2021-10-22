@@ -1,13 +1,12 @@
 <template>
   <div class="h-full ">
-    <div
-      class="h-full flex items-end"
-      :style="{ backgroundImage: `url(${post.imageUrl})` }"
-    >
-      <!-- <div class="flex-shrink-0">
+    <!-- <div :style="{ backgroundImage: `url(${post.imageUrl})` }"></div> -->
+
+    <div class="h-full flex items-end lotteryNcampaignGrid ">
+      <div class="flex-shrink-0">
         <img class="h-48 w-full object-cover" :src="post.imageUrl" alt="" />
-      </div> -->
-      <div class="">
+      </div>
+      <div class="backgroundGrey h-full flex items-end">
         <div
           class="flex-1 p-6 flex flex-col justify-between lotteryNcampaignTxt"
         >
