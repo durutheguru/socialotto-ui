@@ -66,6 +66,9 @@ export default class Constants {
     /.*\.(jpg|jgep|png|flv|mp4|3gp|mov|avi|wmv)$/;
 
 
+    public static gqlDefaultErrorDelimeter = ') : ';
+
+
     public static defaultCurrency: string = 'NGN';
 
 
