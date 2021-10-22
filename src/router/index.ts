@@ -42,6 +42,14 @@ const routes = [
         },
       },
       {
+        path: "/home",
+        name: "Home",
+        component: () => import("@/vues/home/Home.vue"),
+        meta: {
+          skipAuth: true,
+        },
+      },
+      {
         path: "/forgotpassword",
         name: "Forgot Password",
         component: () => import('@/vues/forgotPassword/ForgotPassword.vue'),
@@ -56,7 +64,8 @@ const routes = [
         meta: {
           skipAuth: true,
         },
-      }
+      },
+   
     ]
   },
 

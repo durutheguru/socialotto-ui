@@ -148,7 +148,7 @@
 
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md grid grid-rows-1 mb-4">
       <span class="text-center spartan text-base sm:text-sm items-center">
-        I did not make this reauest.
+        I did not make this request.
         <router-link :to="'/login'">report</router-link>
       </span>
     </div>
@@ -179,38 +179,39 @@ export default class ResetPassword extends BaseVue {
   private userLogin: ApiResource = ApiResource.create();
 
   private confirmChange() {
-    if (this.platformUser.password === this.platformUser.confirmPassword) {
-      this.passwordChange.loading = true;
-      this.passwordChange.error = "";
+    const self = this;
+    if (self.platformUser.password === self.platformUser.confirmPassword) {
+      self.passwordChange.loading = true;
+      self.passwordChange.error = "";
 
       PasswordReset.doReset(
         {
-          email: this.platformUser.email,
+          email: self.platformUser.email,
           passwordResetToken: atob(String(this.$route.query.tn)),
-          newPassword: this.platformUser.password,
+          newPassword: self.platformUser.password,
         },
 
         (response: any) => {
-          this.passwordChange.loading = false;
-          this.userLogin.loading = true;
-          this.userLogin.error = "";
+          self.passwordChange.loading = false;
+          self.userLogin.loading = true;
+          self.userLogin.error = "";
 
           LoginService.doLogin(
             {
-              username: this.platformUser.email,
-              password: this.platformUser.password,
+              username: self.platformUser.email,
+              password: self.platformUser.password,
             },
 
             (res: any) => {
-              this.userLogin.loading = false;
+              self.userLogin.loading = false;
               Log.info("Logged In: " + JSON.stringify(res));
               LoginService.handleSuccessfulLogin(res, this);
               Util.handleGlobalAlert(true, "success", "Welcome!");
             },
 
             (error: any) => {
-              this.userLogin.loading = false;
-              this.userLogin.error = "Unknown Error Occurred";
+              self.userLogin.loading = false;
+              self.userLogin.error = "Unknown Error Occurred";
 
               Log.error("Logged Error: " + JSON.stringify(error));
               Util.handleGlobalAlert(true, "failed", this.userLogin.error);

@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <div class=" bg-gray-50 flex  justify-center  sm:px-6 lg:px-8 ">
-      <div class="signupHeader z-10 bg-gray-50 px-6">
+    <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 ">
+      <div class="signupHeader z-10 bg-blue-50 px-6">
         <div
           class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
         >
