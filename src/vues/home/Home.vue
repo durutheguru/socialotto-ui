@@ -10,9 +10,15 @@
         <div
           v-for="post in posts"
           :key="post.title"
-          class="flex flex-col rounded-lg shadow-lg overflow-hidden"
+          class="flex flex-col rounded-lg overflow-hidden"
+          style="height: 458px;"
         >
-          <Campaign :post="post" />
+          <div v-if="post.type === 'Campaign'" class="h-full">
+            <Campaign :post="post" />
+          </div>
+          <div v-else-if="post.type === 'Lottery'" class="h-full">
+            <Lottery :post="post" />
+          </div>
         </div>
       </div>
     </div>
@@ -27,6 +33,7 @@ import Incentives from "../../components/Incentives.vue";
 import Footer from "../../components/Footer.vue";
 import SearchNFilter from "../../components/SearchNFilter.vue";
 import Campaign from "../../components/page-features/Campaign.vue";
+import Lottery from "../../components/page-features/Lottery.vue";
 
 @Component({
   name: "Home",
@@ -35,6 +42,7 @@ import Campaign from "../../components/page-features/Campaign.vue";
     Footer,
     SearchNFilter,
     Campaign,
+    Lottery,
   },
 })
 export default class Home extends Vue {
@@ -43,6 +51,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Lottery",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -61,6 +70,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Campaign",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -79,6 +89,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Lottery",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -97,6 +108,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Campaign",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -115,6 +127,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Lottery",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -133,6 +146,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Campaign",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -151,6 +165,7 @@ export default class Home extends Vue {
       title: "Boost your conversion rate",
       href: "#",
       category: { name: "Article", href: "#" },
+      type: "Lottery",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
       date: "Mar 16, 2020",
@@ -169,6 +184,7 @@ export default class Home extends Vue {
       title: "How to use search engine optimization to drive sales",
       href: "#",
       category: { name: "Video", href: "#" },
+      type: "Campaign",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit facilis asperiores porro quaerat doloribus, eveniet dolore. Adipisci tempora aut inventore optio animi., tempore temporibus quo laudantium.",
       date: "Mar 10, 2020",
@@ -187,6 +203,7 @@ export default class Home extends Vue {
       title: "Improve your customer experience",
       href: "#",
       category: { name: "Case Study", href: "#" },
+      type: "Lottery",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic.",
       date: "Feb 12, 2020",
