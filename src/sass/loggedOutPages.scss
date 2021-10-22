@@ -196,5 +196,26 @@
     color: #ffffff;
   }
   
+  .buyLotteryBtn {
+    border: 1px solid #FCFCFC;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 8px;
+    background-color: transparent;
+  }
+
+  .lotteryNcampaignTxt{
+    color:  #FCFCFC;
+    font-family: "Spartan", sans-serif;
+    font-style: normal;
+    line-height: 100%;
+
+  }
+
+  .lotteryBtn {
+    background-color: #52C8E9;
+  }
 
   

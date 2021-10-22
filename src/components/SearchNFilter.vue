@@ -24,7 +24,7 @@
     </div>
 
     <div class="flex flex-col">
-      <span class="inline-flex rounded-md h-full ">
+      <span class="flex justify-end rounded-md h-full ">
         <button
           type="button"
           class="inline-flex items-center px-4 py-2 border-grey-dark text-base leading-6 font-medium rounded-md text-grey-light bg-transparent focus:outline-none transition ease-in-out duration-150"
