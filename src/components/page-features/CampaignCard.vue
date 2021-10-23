@@ -53,7 +53,7 @@ import { Component, Vue } from "vue-property-decorator";
 // import {  PropType } from "vue"
 
 @Component({
-  name: "Campaign",
+  name: "CampaignCard",
   props: {
     post: {
       required: true,
@@ -67,7 +67,7 @@ import { Component, Vue } from "vue-property-decorator";
   //        }
   // }
 })
-export default class Campaign extends Vue {}
+export default class CampaignCard extends Vue {}
 </script>
 
 <style scoped>

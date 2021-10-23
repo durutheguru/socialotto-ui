@@ -2,10 +2,9 @@
   <!-- <campaign-component /> -->
   <div>
     <span v-if="$apollo.queries.searchLotteries.loading">Loading<br /></span>
-    Lotteries: {{searchLotteries}} <br />
-    Error: {{searchError}}
+    Lotteries: {{ searchLotteries }} <br />
+    Error: {{ searchLotteriesQuery.error }}
   </div>
-
 </template>
 
 <script lang="ts">
@@ -21,36 +20,30 @@ import { ApolloError } from "apollo-client";
   // },
 
   apollo: {
-    $client: 'anonymousClient', 
+    $client: "anonymousClient",
     searchLotteries: {
-        query: searchLotteries,
+      query: searchLotteries,
 
-        variables() {
-          return {
-              searchKey: this.searchLotteriesQuery.key,
-              page: this.searchLotteriesQuery.page, 
-              size: this.searchLotteriesQuery.size,
-          };
-        },
-        
-        error(error: ApolloError) {
-          this.searchLotteriesQuery.error = Util.extractGqlError(error);
-        }
-    }
+      variables() {
+        return {
+          searchKey: this.searchLotteriesQuery.key,
+          page: this.searchLotteriesQuery.page,
+          size: this.searchLotteriesQuery.size,
+        };
+      },
+
+      error(error: ApolloError) {
+        this.searchLotteriesQuery.error = Util.extractGqlError(error);
+      },
+    },
   },
 })
 export default class Campaign extends Vue {
-  
   private searchLotteriesQuery: any = {
-    key: 'aza',
-    error: '',
+    key: "aza",
+    error: "",
     page: 0,
-    size: 20
+    size: 20,
   };
-
 }
-
-
 </script>
-
-

@@ -3,6 +3,22 @@
     <div class="max-w-screen-xl mx-auto pt-60">
       <!-- <div> -->
       <SearchNFilter />
+
+      <div>
+        <span v-if="$apollo.queries.searchLotteries.loading"
+          >Loading<br
+        /></span>
+        Lotteries: {{ searchLotteries }} <br />
+        Error: {{ searchLotteriesQuery.error }}
+      </div>
+
+      <div>
+        <span v-if="$apollo.queries.searchCampaigns.loading"
+          >Loading<br
+        /></span>
+        Campaigns: {{ searchCampaigns }} <br />
+        Error: {{ searchCampaignsQuery.error }}
+      </div>
       <!-- </div> -->
       <div>
         <div
@@ -15,10 +31,10 @@
             style="height: 458px;"
           >
             <div v-if="post.type === 'Campaign'" class="h-full">
-              <Campaign :post="post" />
+              <CampaignCard :post="post" />
             </div>
             <div v-else-if="post.type === 'Lottery'" class="h-full">
-              <Lottery :post="post" />
+              <LotteryCard :post="post" />
             </div>
           </div>
         </div>
@@ -80,11 +96,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Util } from "@/components/util";
 import Incentives from "../../components/Incentives.vue";
 import Footer from "../../components/Footer.vue";
 import SearchNFilter from "../../components/SearchNFilter.vue";
-import Campaign from "../../components/page-features/Campaign.vue";
-import Lottery from "../../components/page-features/Lottery.vue";
+import CampaignCard from "../../components/page-features/CampaignCard.vue";
+import LotteryCard from "../../components/page-features/LotteryCard.vue";
+import { searchLotteries } from "@/services/lottery/lottery.query";
+import { searchCampaigns } from "@/services/campaign/campaign.query";
+import { ApolloError } from "apollo-client";
 
 @Component({
   name: "Home",
@@ -92,8 +112,42 @@ import Lottery from "../../components/page-features/Lottery.vue";
     Incentives,
     Footer,
     SearchNFilter,
-    Campaign,
-    Lottery,
+    CampaignCard,
+    LotteryCard,
+  },
+  apollo: {
+    $client: "anonymousClient",
+    searchLotteries: {
+      query: searchLotteries,
+
+      variables() {
+        return {
+          searchKey: this.searchLotteriesQuery.key,
+          page: this.searchLotteriesQuery.page,
+          size: this.searchLotteriesQuery.size,
+        };
+      },
+
+      error(error: ApolloError) {
+        this.searchLotteriesQuery.error = Util.extractGqlError(error);
+      },
+    },
+
+    searchCampaigns: {
+      query: searchCampaigns,
+
+      variables() {
+        return {
+          searchKey: this.searchCampaignsQuery.key,
+          page: this.searchCampaignsQuery.page,
+          size: this.searchCampaignsQuery.size,
+        };
+      },
+
+      error(error: ApolloError) {
+        this.searchCampaignsQuery.error = Util.extractGqlError(error);
+      },
+    },
   },
 })
 export default class Home extends Vue {
@@ -270,6 +324,24 @@ export default class Home extends Vue {
       },
     },
   ];
+
+  private searchLotteriesQuery: any = {
+    key: "aza",
+    error: "",
+    page: 0,
+    size: 9,
+  };
+
+  private searchCampaignsQuery: any = {
+    key: "a",
+    error: "",
+    page: 0,
+    size: 9,
+  };
+
+  private mounted() {
+    console.log(searchLotteries);
+  }
 }
 </script>
 

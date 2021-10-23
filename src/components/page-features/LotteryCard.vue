@@ -48,7 +48,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: "Lottery",
+  name: "LotteryCard",
   props: {
     post: {
       required: true,
@@ -56,7 +56,7 @@ import { Component, Vue } from "vue-property-decorator";
     },
   },
 })
-export default class Lottery extends Vue {}
+export default class LotteryCard extends Vue {}
 </script>
 
 <style scoped></style>
