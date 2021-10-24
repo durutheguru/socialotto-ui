@@ -351,7 +351,7 @@ ul.sidebar-menu li a.active i {
 .wrapper {
     display: inline-block;
     margin-top: 0;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
     /* padding: 15px; */
     width: 100%;
     height: 100%;
