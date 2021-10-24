@@ -195,6 +195,10 @@
   
     color: #ffffff;
   }
+
+  .bg-transparent-black {
+    background-color: #000000a8;
+  }
   
   .buyLotteryBtn {
     border: 1px solid #FCFCFC;
@@ -204,6 +208,10 @@
 
     border-radius: 8px;
     background-color: transparent;
+  }
+
+  .border-grey-dark {
+    border: 1px solid #343434;
   }
 
   .lotteryNcampaignTxt{
@@ -220,9 +228,22 @@
 
   .lotteryNcampaignGrid{
       display: grid;
-      grid-template-rows: 1fr 2fr;
+      grid-template-rows: 2fr 3fr;
   
   }
 
-
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+    ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+    ::-webkit-scrollbar-thumb {
+    background: #888; 
+      border-radius:10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    
+    background: #555; 
+  } 
   

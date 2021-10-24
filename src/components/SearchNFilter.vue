@@ -2,24 +2,27 @@
   <div class="grid lg:grid-col-2 grid-flow-col gap-10 rounded-md lg:max-w-none">
     <div class="flex flex-col relative h-12 ">
       <div
-        class="absolute  inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
       >
         <svg
-          class="h-5 w-5 text-gray-400"
           xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
         >
           <path
-            d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
-          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
         </svg>
       </div>
       <input
         id="email"
-        class="rounded-md form-input w-full h-full pl-10 sm:text-sm sm:leading-5 bg-transparent border-grey-dark"
-        placeholder="you@example.com"
+        class="rounded-md text-sm spartan form-input w-full h-full pl-10 sm:text-sm sm:leading-5 bg-transparent border-grey-dark placeholder-gray-900 text-gray-900"
+        placeholder="search for NGOs or campaign names"
       />
     </div>
 
