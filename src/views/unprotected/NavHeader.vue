@@ -97,6 +97,7 @@ export default class NavHeader extends BaseVue {
 
 <style scoped>
 .signupHeader {
+  padding-right: 42px;
   position: fixed;
   width: 100%;
   height: 84px;

@@ -232,6 +232,10 @@
   
   }
 
+  .overflow-y {
+    overflow-y: hidden;
+  }
+  
   ::-webkit-scrollbar {
     width: 20px;
   }
