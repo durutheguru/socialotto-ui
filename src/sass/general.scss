@@ -44,6 +44,7 @@
 
 ::-webkit-scrollbar {
     width: 20px;
+    // height: 120px;
 }
 ::-webkit-scrollbar-track {
     background: #f1f1f1; 
@@ -51,6 +52,7 @@
 ::-webkit-scrollbar-thumb {
     background: #888; 
     border-radius:10px;
+    height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 

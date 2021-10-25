@@ -2,14 +2,14 @@
   <div class="divContainer overflow-auto lg:overflow-y-scroll">
     <div class="max-w-screen-xl mx-auto pt-60 sm:w-11/12">
       <!-- <div> -->
-      <SearchNFilter />
+      <!-- <SearchNFilter :searchInput="siteQuery.key" /> -->
 
-      <!-- <div>
+      <div>
         <span v-if="$apollo.queries.searchLotteries.loading"
           >Loading<br
         /></span>
         Lotteries: {{ searchLotteries }} <br />
-        Error: {{ searchLotteriesQuery.error }}
+        Error: {{ siteQuery.error }}
         <svg
           width="18"
           height="18"
@@ -25,19 +25,21 @@
             stroke-linejoin="round"
           />
         </svg>
-      </div> -->
+      </div>
 
-      <!-- <div>
+      <div>
         <span v-if="$apollo.queries.searchCampaigns.loading"
           >Loading<br
         /></span>
-        Campaigns: {{ searchCampaigns }} <br />
-        Error: {{ searchCampaignsQuery.error }}
-      </div> -->
+        <!-- Campaigns: {{ searchCampaigns }} <br /> -->
+        Error: {{ siteQuery.error }} <br />
+        joinedArray:
+        {{ lotteriesNcampaigns }}
+      </div>
       <!-- </div> -->
       <div>
         <div
-          class="mt-12 max-w-lg mx-auto grid gap-10 lg:grid-cols-3 lg:max-w-none mb-16"
+          class="mt-12  mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
         >
           <div
             v-for="post in posts"
@@ -137,14 +139,14 @@ import { ApolloError } from "apollo-client";
 
       variables() {
         return {
-          searchKey: this.searchLotteriesQuery.key,
-          page: this.searchLotteriesQuery.page,
-          size: this.searchLotteriesQuery.size,
+          searchKey: this.siteQuery.key,
+          page: this.siteQuery.page,
+          size: this.siteQuery.size,
         };
       },
 
       error(error: ApolloError) {
-        this.searchLotteriesQuery.error = Util.extractGqlError(error);
+        this.siteQuery.error = Util.extractGqlError(error);
       },
     },
 
@@ -153,14 +155,14 @@ import { ApolloError } from "apollo-client";
 
       variables() {
         return {
-          searchKey: this.searchCampaignsQuery.key,
-          page: this.searchCampaignsQuery.page,
-          size: this.searchCampaignsQuery.size,
+          searchKey: this.siteQuery.key,
+          page: this.siteQuery.page,
+          size: this.siteQuery.size,
         };
       },
 
       error(error: ApolloError) {
-        this.searchCampaignsQuery.error = Util.extractGqlError(error);
+        this.siteQuery.error = Util.extractGqlError(error);
       },
     },
   },
@@ -340,23 +342,24 @@ export default class Home extends Vue {
     },
   ];
 
-  private searchLotteriesQuery: any = {
-    key: "aza",
-    error: "",
-    page: 0,
-    size: 9,
-  };
+  private searchInput: String = "";
 
-  private searchCampaignsQuery: any = {
-    key: "a",
-    error: "",
-    page: 0,
-    size: 9,
-  };
+  // private lotteriesNcampaigns: any = [];
 
-  private mounted() {
-    console.log(searchLotteries);
+  // this.lotteriesNcampaigns = this.searchCampaigns
+  get lotteriesNcampaigns() {
+    // let self = this;
+    return searchCampaigns;
   }
+
+  private siteQuery: any = {
+    key: "",
+    error: "",
+    page: 0,
+    size: 9,
+  };
+
+  // private mounted() {}
 }
 </script>
 

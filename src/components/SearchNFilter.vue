@@ -20,6 +20,7 @@
         </svg>
       </div>
       <input
+        v-model="searchInput"
         id="email"
         class="rounded-md text-sm spartan form-input w-full h-full pl-10 sm:text-sm sm:leading-5 bg-transparent border-grey-dark placeholder-gray-900 text-gray-900"
         placeholder="search for NGOs or campaign names"
@@ -53,7 +54,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-@Component
+@Component({
+  props: {
+    searchInput: {
+      required: true,
+      type: String,
+    },
+  },
+})
 export default class SearchNFilter extends Vue {}
 </script>
 
