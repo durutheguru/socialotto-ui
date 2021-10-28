@@ -290,7 +290,7 @@ export default class Signup extends BaseVue {
   //   Log.info("name of route: " + String(this.$route.name));
   // }
 
-  public loginUrl: string = process.env.VUE_APP_BASE_URL;
+  public loginUrl: string | undefined = process.env.VUE_APP_BASE_URL;
 
   public handleSignup() {
     const self = this;

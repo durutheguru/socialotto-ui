@@ -10,7 +10,11 @@ axios.interceptors.request.use(
             return config.url.indexOf(value) > -1;
         });
 
-        if (matchingExcludePaths.length === 0 && config.url?.startsWith(process.env.VUE_APP_BASE_URL)) {
+        if (
+            matchingExcludePaths.length === 0 
+            && process.env.VUE_APP_BASE_URL 
+            && config.url?.startsWith(process.env.VUE_APP_BASE_URL)
+            ) {
             config.headers.Authorization = store.getters['authToken/apiToken'];
         }
 
@@ -32,7 +36,7 @@ function isSSECallback(obj: SSECallback): obj is SSECallback {
 export default class Web {
 
 
-    public static BASE_URL: string = process.env.VUE_APP_BASE_URL;
+    public static BASE_URL: string | undefined = process.env.VUE_APP_BASE_URL;
 
 
     public static get(
