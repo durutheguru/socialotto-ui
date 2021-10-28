@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import NavHeader from "../views/unprotected/NavHeader.vue"
+import NavHeader from "../views/unprotected/NavHeader.vue";
+import AuthNavHeader from "../protected/AuthNavHeader.vue";
 
 import Login from '../vues/login/Login.vue';
 // import Signup from '../vues/signup/'
@@ -66,6 +67,24 @@ const routes = [
         },
       },
    
+    ]
+  },
+  {
+    path: '/auth_home',
+    name: "AuthNavHeader",
+    component: AuthNavHeader,
+    meta: {
+      skipAuth: true,
+    },
+    children: [
+      {
+        path: '/create_campaign',
+        name: 'CreateCampaign',
+        component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
+        meta: {
+          skipAuth: true,
+        }
+      }
     ]
   },
 

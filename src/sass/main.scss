@@ -1,4 +1,3 @@
-
 @import "./variables.scss";
 @import "./header.scss";
 @import "./general.scss";
@@ -6,7 +5,7 @@
 @import "@/../../../node_modules/tailwindcss/base.css";
 @import "@/../../../node_modules/tailwindcss/components.css";
 @import "@/../../../node_modules/tailwindcss/utilities.css";
-
+@import "./authpages.scss";
 
 body {
   // font-size: 1.6em !important;
@@ -16,7 +15,8 @@ body {
   min-width: 400px !important;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-size: 0.99em !important;
 }
@@ -27,15 +27,15 @@ html, body {
 }
 
 .grey {
-  color : $default_grey;
+  color: $default_grey;
 }
 
 .dark-grey {
-  color : $default_dark_grey;
+  color: $default_dark_grey;
 }
 
 .white {
-  color : white;
+  color: white;
 }
 
 .black {
@@ -43,27 +43,27 @@ html, body {
 }
 
 .wine {
-  color : $wine !important;
+  color: $wine !important;
 }
 
 .blue {
-  color : $app_blue;
+  color: $app_blue;
 }
 
 .background-gradient-blue {
-  background : linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
+  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
 }
 
 .bg-B9C7DC {
-  background: #B9C7DC;
+  background: #b9c7dc;
 }
 
 .bg-DCCCB9 {
-  background: #DCCCB9;
+  background: #dcccb9;
 }
 
 .bg-B9DCC1 {
-  background: #B9DCC1;
+  background: #b9dcc1;
 }
 
 .grey-bg {
@@ -79,7 +79,7 @@ html, body {
 }
 
 .default-h-padding {
-  padding : 0px 10px;
+  padding: 0px 10px;
 }
 
 .default-min-height {
@@ -93,7 +93,7 @@ html, body {
 
 .login-site-name-container {
   background: $primary_color;
-  color : white;
+  color: white;
 }
 
 .bold-font {
@@ -158,17 +158,16 @@ i.mega-fa {
   font-size: 0.65em;
 }
 
-
 img.logo-img-medium {
-  width : 50px;
-  height : 50px;
+  width: 50px;
+  height: 50px;
 }
 
 .center-login {
-  width : 40%;
-  min-width : 350px;
-  height : 50%;
-  min-height : 250px;
+  width: 40%;
+  min-width: 350px;
+  height: 50%;
+  min-height: 250px;
 }
 
 .max-height {
@@ -176,7 +175,7 @@ img.logo-img-medium {
 }
 
 .grey-bordered {
-  border : 1px solid $default_grey;
+  border: 1px solid $default_grey;
 }
 
 .top-bordered {
@@ -201,7 +200,6 @@ img.logo-img-medium {
 .sm-box-shadowed {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 .left-padding-medium {
   padding-left: $medium_length;
@@ -247,8 +245,8 @@ l-padding-small {
 }
 
 .h-padding-small {
-  padding-left : $small_length;
-  padding-right : $small_length;
+  padding-left: $small_length;
+  padding-right: $small_length;
 }
 
 .h-padding-v-small {
@@ -257,34 +255,31 @@ l-padding-small {
 }
 
 .h-padding-medium {
-  padding-left : $medium_length;
-  padding-right : $medium_length;
+  padding-left: $medium_length;
+  padding-right: $medium_length;
 }
 
 .h-padding-big {
-  padding-left : $big_length;
-  padding-right : $big_length;
+  padding-left: $big_length;
+  padding-right: $big_length;
 }
 
 .h-padding-20 {
-  padding-left : 20px;
-  padding-right : 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .padding-medium {
-  padding : $medium_length $medium_length;
+  padding: $medium_length $medium_length;
 }
-
 
 .v-margin-top-v-big {
   margin-top: $v_big_length;
 }
 
-
 .v-margin-bottom-v-big {
   margin-bottom: $v_big_length;
 }
-
 
 .v-padding-bottom-v-big {
   padding-bottom: $v_big_length;
@@ -295,15 +290,15 @@ l-padding-small {
 }
 
 .margin-top-big {
-  margin-top : $big_length;
+  margin-top: $big_length;
 }
 
 .margin-top-s {
-  margin-top : $small_length;
+  margin-top: $small_length;
 }
 
 .margin-top-m {
-  margin-top : $medium_length;
+  margin-top: $medium_length;
 }
 
 .margin-bottom-s {
@@ -335,16 +330,14 @@ l-padding-small {
 }
 
 .v-padding-small {
-  padding-top : $small_length;
-  padding-bottom : $small_length;
+  padding-top: $small_length;
+  padding-bottom: $small_length;
 }
-
 
 .v-padding-medium {
-  padding-top : $medium_length;
-  padding-bottom : $medium_length;
+  padding-top: $medium_length;
+  padding-bottom: $medium_length;
 }
-
 
 .v-centered {
   vertical-align: middle;
@@ -364,9 +357,8 @@ l-padding-small {
   text-decoration: underline !important;
 }
 
-
 .sidebar-main {
-  color: #FFF;
+  color: #fff;
   background: $primary_color;
   width: 250px;
   height: 100%;
@@ -378,15 +370,13 @@ l-padding-small {
   width: 250px;
   height: 100%;
   position: fixed;
-  color: #FFF;
+  color: #fff;
   background: $primary_color;
 }
-
 
 #sidebar > .row-container {
   max-width: 250px;
 }
-
 
 #sidebar-logo-box {
   height: 127px;
@@ -401,9 +391,8 @@ l-padding-small {
   left: 70px;
 }
 
-
 #welcome-msg {
-  color : white;
+  color: white;
   font-weight: bold;
   font-size: 1.3em;
   font-family: Helvetica;
@@ -416,9 +405,8 @@ l-padding-small {
   display: block;
 }
 
-
 .sidebar-menu-container {
-  background: #2A3542;
+  background: #2a3542;
   text-align: left;
   height: 79%;
   overflow: hidden;
@@ -427,13 +415,12 @@ l-padding-small {
 }
 
 .left-bordered {
-  border-left: 1px solid #DDD;
+  border-left: 1px solid #ddd;
 }
 
 .right-bordered {
-  border-right: 1px solid #DDD;
+  border-right: 1px solid #ddd;
 }
-
 
 .bottom-anchored {
   position: fixed;
@@ -441,12 +428,10 @@ l-padding-small {
   margin-bottom: 6px;
 }
 
-
 .bottom-anchored-in-parent {
   position: absolute;
   bottom: 0;
 }
-
 
 .img-profile-thumbnail {
   width: 50px;
@@ -454,16 +439,13 @@ l-padding-small {
   border-radius: 50px;
 }
 
-
 .relative {
   position: relative;
 }
 
-
 // .campaign-display-card {
 //   position: relative;
 // }
-
 
 .secondary-sidebar-toggle {
   position: absolute;
@@ -473,18 +455,18 @@ l-padding-small {
   padding-right: 18px;
 }
 
-
 .sb-slidebar.sb-style-overlay {
   z-index: 9999;
 }
-
 
 .sb-slidebar .sb-active {
   visibility: visible;
 }
 
-
-.sb-slide, #sb-site, .sb-site, .sb-slidebar {
+.sb-slide,
+#sb-site,
+.sb-site,
+.sb-slidebar {
   -webkit-transition: -webkit-transform 400ms ease;
   -moz-transition: -moz-transform 400ms ease;
   -o-transition: -o-transform 400ms ease;
@@ -495,9 +477,8 @@ l-padding-small {
   -webkit-backface-visibility: hidden;
 }
 
-
 .app-btn {
-  border: 1px solid #5E72E4;
+  border: 1px solid #5e72e4;
   border-radius: 40px !important;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
@@ -505,51 +486,44 @@ l-padding-small {
   padding-right: 2em;
 }
 
-
 button.app-btn-primary {
-  color: #FFF;
-  background: #5E72E4;
+  color: #fff;
+  background: #5e72e4;
 }
-
 
 button.app-btn-secondary {
-  color: #5E72E4;
-  background: #FFF;
+  color: #5e72e4;
+  background: #fff;
 }
-
 
 .sb-right {
   right: 0;
 }
 
-
 #main-content-container {
   width: 75%;
 }
 
-
 #main-sidebar-container {
   width: 25%;
   min-width: 300px;
-  position:fixed;
+  position: fixed;
   z-index: 1000000000;
 }
-
 
 #top-main-container {
   position: fixed;
   width: 75%;
   background: white;
   z-index: 100000;
-  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: -2px 2px 2px 2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 #main-route-section {
   position: relative;
   top: 160px;
 }
-
 
 #main-sidebar {
   height: 100%;
@@ -558,13 +532,14 @@ button.app-btn-secondary {
   top: 0;
   right: 0;
   z-index: 10000;
-  background-color: #18294D;
+  background-color: #18294d;
   color: #aeb2b7;
   width: 25%;
   min-width: 300px;
   float: right;
   visibility: visible;
-  box-shadow: -3px 4px 8px 3px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: -3px 4px 8px 3px rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 // @media (max-width: 1443px) {
@@ -613,7 +588,6 @@ button.app-btn-secondary {
 
   section.lottery-detail-number-item-symbol {
     font-size: 2em !important;
-
   }
 
   span.lottery-detail-number {
@@ -632,71 +606,63 @@ button.app-btn-secondary {
     font-size: 0.9em !important;
     line-height: 3.5em !important;
   }
-
 }
-
 
 .hidden-overflow {
   overflow: hidden !important;
 }
-
 
 hr.default-hr {
   margin-top: $small_length;
   margin-bottom: $small_length;
 }
 
-
 hr.bottom-bordered-main-sidebar-separator {
   border: none;
   height: 5px;
 }
 
-
 .bottom-bordered-main-sidebar-separator {
   border-bottom: 5px solid #10203b;
 }
 
-
 a.logo_white {
   font-size: 21px;
-  color: #FFF;
+  color: #fff;
   float: left;
   margin-top: 15px;
   text-transform: uppercase;
 }
 
-
 .primary_color_fg {
   color: $primary_color;
 }
 
-
 .primary_color_bg {
   background-color: $primary_color;
-  color: #FFF;
+  color: #fff;
 }
-
 
 .primary_color_bg a {
-  color: #FFF;
+  color: #fff;
 }
 
-
-:after, :before {
+:after,
+:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-:after, :before {
+:after,
+:before {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
 ::selection {
-  background: #FF6C60;
+  background: #ff6c60;
   color: #fff;
 }
 
@@ -746,33 +712,33 @@ a.logo_white {
 }
 
 .notif-list-title {
-  color: #76B5D9;
+  color: #76b5d9;
 }
 
 .notif-entity-title {
-   color: #FF9F81
+  color: #ff9f81;
 }
 
 .notif-entity-amount {
-  color: #CCFDCB;
+  color: #ccfdcb;
 }
 
 .notif-entity-username {
-  color: #5BE7FA;
+  color: #5be7fa;
 }
 
 .owl-carousel {
   -ms-touch-action: none;
   touch-action: none;
-  }
+}
 
 .notif-entity-positive-action {
-  color: #45F9EE;
+  color: #45f9ee;
   cursor: pointer;
 }
 
 .notif-entity-negative-action {
-  color: #F97045;
+  color: #f97045;
   cursor: pointer;
 }
 
@@ -780,21 +746,17 @@ a.logo_white {
   background: rgba(255, 255, 255, 0) !important;
 }
 
-
 .grey-bg-transparent {
   background: rgba(200, 200, 200, 0.8);
 }
-
 
 a.sidebar-link-btn {
   cursor: pointer;
 }
 
-
 a.sidebar-link-btn:hover {
-  background: #00283A;
+  background: #00283a;
 }
-
 
 .pointer {
   cursor: pointer;
@@ -812,12 +774,10 @@ a.sidebar-link-btn:hover {
   transition: opacity 0.3s ease;
 }
 
-
 .modal-wrapper {
   display: table-cell;
   vertical-align: middle;
 }
-
 
 .modal-container {
   margin: 0px auto;
@@ -829,21 +789,17 @@ a.sidebar-link-btn:hover {
   font-family: Helvetica, Arial, sans-serif;
 }
 
-
 .modal-small {
   width: 300px;
 }
-
 
 .modal-medium {
   width: 500px;
 }
 
-
 .modal-big {
   width: 800px;
 }
-
 
 .modal-header h3 {
   margin-top: 0;
@@ -857,11 +813,9 @@ a.sidebar-link-btn:hover {
   padding-bottom: 2px;
 }
 
-
 .modal-header {
   padding: 2px 15px 5px 7px !important;
 }
-
 
 .modal-body-no-bottom-padding {
   padding-bottom: 0 !important;
@@ -889,14 +843,13 @@ a.sidebar-link-btn:hover {
   transform: scale(1.1);
 }
 
-
 .owl-carousel {
   -ms-touch-action: none;
   touch-action: none;
 }
 
 .owl-carousel {
-  touch-action: manipulation; 
+  touch-action: manipulation;
 }
 
 .no-display {
@@ -907,18 +860,15 @@ a.sidebar-link-btn:hover {
   border: 1px solid red !important;
 }
 
-
 .max-width {
   width: 100%;
 }
-
 
 .max-width-container {
   width: 100%;
   display: flex;
   overflow-x: scroll !important;
 }
-
 
 // .table{
 //   display: block !important;
@@ -930,13 +880,12 @@ a.sidebar-link-btn:hover {
   overflow-y: visible !important;
 }
 
-
 .table-responsive * {
   overflow-y: visible !important;
 }
 
 #power-button {
-  color: #E05858;
+  color: #e05858;
 }
 
 .dialog-wizard-main-content-container {
@@ -948,10 +897,9 @@ a.sidebar-link-btn:hover {
   display: none;
 }
 
-
 .round-border {
   border-radius: 4px;
-  border: 1px solid #EFEFEF;
+  border: 1px solid #efefef;
 }
 
 .round-border-primary-color {
@@ -971,11 +919,9 @@ aside.side-menu {
   margin-left: 0px !important;
 }
 
-
 #main-content-lottery {
   margin-left: 0px !important;
 }
-
 
 .relative {
   position: relative !important;
@@ -986,7 +932,6 @@ aside.side-menu {
 //       overflow: visible;
 //   }
 // }
-
 
 .col--12 {
   width: 100%;
@@ -1026,8 +971,14 @@ aside.side-menu {
   width: 8.33333333%;
 }
 
-
-table, caption, tbody, tfoot, thead, tr, th, td {
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td {
   margin: 0;
   padding: 0;
   border: 0;
@@ -1055,17 +1006,14 @@ table {
   align-self: flex-end;
 }
 
-
 ul.sub li {
   padding-left: 32px;
   padding-bottom: 5px;
 }
 
-
 textarea.resize-v {
   resize: vertical;
 }
-
 
 #login-error-msg {
   padding-top: 0.5rem;
@@ -1083,7 +1031,7 @@ textarea.resize-v {
   margin-left: $big_length;
   margin-right: $big_length;
   padding: $medium_length;
-  background: #FFF;
+  background: #fff;
 }
 
 .item-list-posting-date {
@@ -1169,14 +1117,14 @@ textarea.resize-v {
 }
 
 .lottery-closing-date {
-  color: #E05858;
+  color: #e05858;
   font-weight: bold;
   font-size: 1.3em;
   line-height: 1.5em;
 }
 
 .lottery-evaluation-date {
-  color: #228F89;
+  color: #228f89;
   font-weight: bold;
   font-size: 1.3em;
   line-height: 1.5em;
@@ -1199,7 +1147,7 @@ textarea.resize-v {
 .lottery-detail-amount-raised-lbl {
   width: 32%;
   float: left;
-  background: #A2AAAC;
+  background: #a2aaac;
   height: 100px;
   text-align: center;
   display: table-cell;
@@ -1209,11 +1157,10 @@ textarea.resize-v {
 
 .lottery-detail-amount-raised-lbl span {
   font-size: 1.5em;
-  color: #FFF;
+  color: #fff;
   vertical-align: middle;
   line-height: 1.5;
   display: inline;
-
 }
 
 .lottery-detail-amount-raised {
@@ -1228,7 +1175,7 @@ textarea.resize-v {
 .lottery-detail-amount-raised span {
   float: right;
   font-size: 3.5em;
-  color: #FFF;
+  color: #fff;
   font-weight: bolder;
 }
 
@@ -1241,8 +1188,8 @@ textarea.resize-v {
 
 .lottery-detail-campaign-container-card {
   border-radius: 10px;
-  border: 1px solid #DDD;
-  background: #FAF4F4;
+  border: 1px solid #ddd;
+  background: #faf4f4;
   width: 100%;
   height: 150px;
   overflow: hidden;
@@ -1280,7 +1227,7 @@ textarea.resize-v {
 
 .item-list-verified-badge {
   color: #000;
-  background: #B2DFD4;
+  background: #b2dfd4;
   font-weight: bold;
 }
 
@@ -1298,19 +1245,16 @@ textarea.resize-v {
   color: #999b84;
 }
 
-
 .wizard-step-list-item-container {
   width: 16.666667%;
   float: left;
 }
-
 
 .wizard-main-item-container {
   width: 83.333333%;
   float: left;
   padding-left: $medium_length;
 }
-
 
 .default-dialog-action-btn {
   width: 116px;
@@ -1324,7 +1268,7 @@ textarea.resize-v {
 }
 
 section.lottery-detail-number-item-container {
-  border: 1px solid #DFDFDF;
+  border: 1px solid #dfdfdf;
   border-radius: 30px;
   padding: 5px 10px;
   height: 95px;
@@ -1333,7 +1277,6 @@ section.lottery-detail-number-item-container {
   display: inline-block;
   margin-left: 10px;
 }
-
 
 section.lottery-detail-number-item-symbol {
   height: 120%;
@@ -1346,12 +1289,10 @@ section.lottery-detail-number-item-symbol {
   left: -14px;
 }
 
-
 section.lottery-detail-number-item-symbol i {
   vertical-align: middle;
   line-height: 2em;
 }
-
 
 section.lottery-detail-number-item {
   height: 100%;
@@ -1361,7 +1302,6 @@ section.lottery-detail-number-item {
   vertical-align: middle;
 }
 
-
 span.lottery-detail-number {
   font-size: 2em;
   width: 100%;
@@ -1369,12 +1309,10 @@ span.lottery-detail-number {
   font-weight: bold;
 }
 
-
 span.lottery-detail-number-desc {
   font-size: 0.85em;
   width: 100%;
 }
-
 
 .input-search-results-container {
   position: absolute;
@@ -1389,12 +1327,10 @@ span.lottery-detail-number-desc {
   z-index: 1000;
 }
 
-
 .single-line-hidden-overflow {
   white-space: nowrap;
   overflow: hidden;
 }
-
 
 .single-line-scroll-overflow {
   white-space: nowrap !important;
@@ -1409,10 +1345,10 @@ span.lottery-detail-number-desc {
   width: 30%;
   float: left;
   border-radius: 10px;
-  background: #FAF4F4;
+  background: #faf4f4;
   padding: $small_length;
   margin-right: $small_length;
-  border: 1px solid #BBB;
+  border: 1px solid #bbb;
 }
 
 .campaign-search-overlay-details-container {
@@ -1444,20 +1380,18 @@ span.lottery-detail-number-desc {
   display: none;
 }
 
-
 .lottery-detail-numbers-container {
   margin-left: auto;
-  margin-right:auto;
+  margin-right: auto;
   text-align: center !important;
   white-space: normal;
 }
-
 
 .lottery-entry-cost-container {
   width: 75%;
   border-radius: 100px;
   background: #677363;
-  color: #FFF;
+  color: #fff;
   font-size: 2.5em;
   text-align: center;
   padding: 6px 15px 6px;
@@ -1466,13 +1400,11 @@ span.lottery-detail-number-desc {
   margin-bottom: 25px;
 }
 
-
 .lottery-ticket-btn-row-container {
   padding-top: 30px !important;
   position: relative;
   top: 7px;
 }
-
 
 .lottery-entry-ticket-count-lbl {
   width: 40%;
@@ -1492,7 +1424,6 @@ span.lottery-detail-number-desc {
   font-size: 1.4em;
 }
 
-
 section#container {
   overflow-x: hidden !important;
 }
@@ -1500,24 +1431,22 @@ section#container {
 .message-list-received-container {
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
-  background: #181F33;
+  background: #181f33;
   margin-left: -10px;
   margin-right: 26px;
   padding: 4px 10px 4px 25px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
 .message-list-sent-container {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
-  background: #4E3C2D;
+  background: #4e3c2d;
   margin-right: -10px;
   margin-left: 26px;
   padding: 4px 25px 4px 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 .message-compose-container {
   position: fixed;
@@ -1527,34 +1456,29 @@ section#container {
   background: #030315;
 }
 
-.message-compose-container input, .message-compose-container input:focus {
+.message-compose-container input,
+.message-compose-container input:focus {
   border: none !important;
   background: #080823;
-  color: #FFF;
+  color: #fff;
 }
-
 
 .clearfix {
   clear: both;
 }
 
-
 @media (min-width: 850px) {
-
   .dialog-wizard-main-content-container {
     height: 400px;
     padding-bottom: 30px;
   }
-
 }
 
-
 @media (max-width: 1201px) {
-
   #main-sidebar-container {
     display: none;
   }
-  
+
   #main-sidebar {
     display: none;
     z-index: 1000000000;
@@ -1584,24 +1508,17 @@ section#container {
     display: inline-block;
     margin-left: 10px;
   }
-
-
 }
 
-
 @media (max-width: 1090px) {
-
-
   .lottery-detail-title-container {
     width: 100%;
   }
-
 
   .lottery-detail-numbers-container {
     width: 100%;
     margin-top: $medium_length;
   }
-
 
   // .lottery-detail-campaign-profile-img {
   //     width: 40%;
@@ -1611,28 +1528,19 @@ section#container {
   //     width: 60%;
   // }
 
-
   .lottery-detail-campaign-container {
-      width: 70%;
+    width: 70%;
   }
-
 
   .lottery-detail-image-item {
     width: 70%;
     margin-bottom: 30px;
   }
 
-  
   .message-compose-container {
     width: 300px;
   }
-
-
 }
-
-
 
 @import "./md-main.scss";
 @import "./sm-main.scss";
-
-
