@@ -1,10 +1,4 @@
 <template>
-  <!-- style="background-image: url('https://socialotto.s3.ca-central-1.amazonaws.com/uploads/images.jpg')" -->
-  <!-- :style="{
-      'background-image':
-        'url(' + `${util.searchImageUrl(result.campaignFiles)}` + ')',
-    }" -->
-  <!-- :style="{ backgroundImage: `url(${result.campaignFiles[0].reference})` }" -->
   <div
     class="h-full bg-cover  bg-center"
     :style="{
@@ -12,13 +6,7 @@
         'url(' + util.searchImageUrl(result.campaignFiles) + ')',
     }"
   >
-    <!-- <div :style="{ backgroundImage: `url(${post.imageUrl})` }"></div> -->
-
     <div class="h-full flex items-end  bg-transparent-black">
-      <!-- <div class="flex-shrink-0">
-        <img class="h-48 w-full object-cover" :src="post.imageUrl" alt="" />
-      </div> -->
-      <!-- <div class=" h-full flex items-end"> -->
       <div class="flex-1  p-6 flex flex-col justify-between text-white">
         <div class="flex-1">
           <p class="text-sm font-semibold spartan ">
@@ -55,7 +43,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseVue from "../../components/BaseVue";
-// import {  PropType } from "vue"
 
 @Component({
   name: "CampaignCard",
@@ -65,30 +52,8 @@ import BaseVue from "../../components/BaseVue";
       type: Object,
     },
   },
-  // computed:{
-  //  styling(){
-  //    return {
-  //            background-image: `${this.post.imageUrl}`
-  //        }
-  // }
 })
-export default class CampaignCard extends BaseVue {
-  private searchImageUrl(arr: any[]) {
-    const obj: any = arr.find(({ fileType }) => {
-      fileType.slice(0, 5) === "image";
-    });
-
-    return obj.publicUrl;
-  }
-
-  // private mounted() {
-  //   Log.info("propsCampaign: " + JSON.stringify(result));
-  // }
-}
+export default class CampaignCard extends BaseVue {}
 </script>
 
-<style scoped>
-/* .main {
-  background-image: url(post.imageUrl);
-} */
-</style>
+<style scoped></style>

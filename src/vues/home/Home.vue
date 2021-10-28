@@ -1,35 +1,6 @@
 <template>
   <div class="divContainer overflow-auto lg:overflow-y-scroll">
-    <div class="  max-w-screen-xl mx-auto pt-20 sm:w-11/12">
-      <!-- <div> -->
-      <!-- <SearchNFilter :searchInput="siteQuery.key" /> -->
-
-      <!-- <div v-for="result in searchLotteries" :key="result.id">
-        <h1>{{ result.lotteryFiles[0].fileType }}</h1>
-      </div> -->
-
-      <!-- <div>
-        <span v-if="$apollo.queries.searchLotteries.loading"
-          >Loading<br
-        /></span>
-        Lotteries: {{ searchLotteries }} <br />
-        Error: {{ siteQuery.error }}
-      </div>
-
-      <div>
-        <span v-if="$apollo.queries.searchCampaigns.loading"
-          >Loading<br
-        /></span>
-        Campaigns: {{ searchCampaigns }} <br />
-
-        Error: {{ siteQuery.error }} <br />
-       
-      </div> -->
-
-      <!-- joinedArray:
-      {{ lotteriesNcampaigns }} -->
-      <!-- </div> -->
-
+    <div class="  max-w-screen-xl mx-auto pt-3 md:pt-20 sm:w-11/12">
       <div class="px-6 md:px-0">
         <div
           class="mt-12 auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
@@ -52,19 +23,6 @@
           v-else
           class="mt-12 auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
         >
-          <!-- <div
-            v-if="
-              $apollo.queries.searchCampaigns.loading ||
-                $apollo.queries.searchLotteries.loading
-            "
-          >
-            <span>Loading<br /></span>
-          </div> -->
-          <!-- "
-              $apollo.queries.searchCampaigns.loading ||
-                $apollo.queries.searchLotteries.loading
-            " -->
-
           <div
             v-for="result in lotteriesNcampaigns"
             :key="result.id"
@@ -79,55 +37,6 @@
             </div>
           </div>
         </div>
-
-        <!-- ---------------Prev N next------------- -->
-        <!-- <div class="w-full flex justify-end mb-16">
-          <div class="flex flex-col">
-            <span class="flex justify-end rounded-md h-full ">
-              <button
-                type="button"
-                class="inline-flex items-center px-4 py-2 border-grey-dark text-base leading-6 font-medium rounded-md text-grey-light bg-transparent focus:outline-none transition ease-in-out duration-150"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 -ml-1 mr-3 text-grey-light"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-                Prev
-              </button>
-            </span>
-          </div>
-
-          <div class="flex flex-col ml-8">
-            <span class="flex justify-end rounded-md h-full ">
-              <button
-                type="button"
-                class="inline-flex items-center px-4 py-2 border-grey-dark text-base leading-6 font-medium rounded-md text-grey-light bg-transparent focus:outline-none transition ease-in-out duration-150"
-              >
-                Next
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 -mr-1 ml-3 text-grey-light"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </button>
-            </span>
-          </div>
-        </div> -->
       </div>
     </div>
     <Incentives />
@@ -178,6 +87,9 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
 
       error(error: ApolloError) {
         this.siteQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.siteQuery.error)) {
+          this.$apollo.queries.searchLotteries.refetch();
+        }
       },
     },
 
@@ -199,6 +111,9 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
 
       error(error: ApolloError) {
         this.siteQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.siteQuery.error)) {
+          this.$apollo.queries.searchCampaigns.refetch();
+        }
       },
     },
   },

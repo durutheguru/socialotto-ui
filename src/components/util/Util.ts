@@ -86,12 +86,12 @@ export default class Util {
         const defaultBackground: string = Constants.defaultCardBackgroundUrl;
         
         const obj: any = arr.find(({ fileType }) => { 
-            fileType.slice(0, 5) === 'image' 
+            return fileType.slice(0, 5) === 'image';
         });
          
 
         return arr.length && obj && obj.publicUrl ? obj.publicUrl : defaultBackground;
-      }
+    }
 
 
     public static deepGet(parent: any, path: string) {
