@@ -7,12 +7,14 @@ const searchLotteries = gql `
         searchLotteries(searchKey: $searchKey, page: $page, size: $size) {
             id
             name
+            description
             lotteryStatus
             ticketCost
             endDate
             lotteryFiles {
                 reference
                 fileType
+                publicUrl
             }
             owner {
                 username

@@ -1,7 +1,16 @@
 <template>
+  <!-- style="background-image: url('https://socialotto.s3.ca-central-1.amazonaws.com/uploads/images.jpg')" -->
+  <!-- :style="{
+      'background-image':
+        'url(' + `${util.searchImageUrl(result.campaignFiles)}` + ')',
+    }" -->
+  <!-- :style="{ backgroundImage: `url(${result.campaignFiles[0].reference})` }" -->
   <div
-    class="h-full bg-cover"
-    :style="{ backgroundImage: `url(${post.imageUrl})` }"
+    class="h-full bg-cover  bg-center"
+    :style="{
+      'background-image':
+        'url(' + util.searchImageUrl(result.campaignFiles) + ')',
+    }"
   >
     <!-- <div :style="{ backgroundImage: `url(${post.imageUrl})` }"></div> -->
 
@@ -12,34 +21,26 @@
       <!-- <div class=" h-full flex items-end"> -->
       <div class="flex-1  p-6 flex flex-col justify-between text-white">
         <div class="flex-1">
-          <!-- <div class="mt-6 flex justify-end mb-44">
-            <div
-              class=" h-11 w-20 lotteryBtn rounded-lg flex justify-center items-center"
-            >
-              <span>Lottery</span>
-            </div>
-          </div> -->
-
-          <p class="text-sm font-bold ">
-            20 regular and 5 VIP tickets to Wizkid’s MIL concert in December
+          <p class="text-sm font-semibold spartan ">
+            {{ result.name }}
           </p>
-          <p class="mt-3 text-base ">
-            5,000 raffle tickets sold
+          <p class="mt-3 text-xs spartan leading-5">
+            {{ util.managedString(result.description, 100) }}
           </p>
-          <p class="mt-3 text-base ">
-            N250,000 raised out of N2million
+          <p class="mt-3 text-sm spartan">
+            {{ result.totalFundsRaised }} raised out of {{ result.targetFunds }}
           </p>
         </div>
         <div class="mt-0 grid grid-cols-2 items-center">
           <div
-            class="cursor-pointer h-11 w-full buyLotteryBtn  flex justify-center items-center"
+            class="cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"
           >
             <span>Donate</span>
           </div>
 
           <div class="flex justify-center ">
             <div
-              class="cursor-pointer h-6 w-20 flex justify-center items-center"
+              class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
               <span>Details</span>
             </div>
@@ -53,12 +54,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import BaseVue from "../../components/BaseVue";
 // import {  PropType } from "vue"
 
 @Component({
   name: "CampaignCard",
   props: {
-    post: {
+    result: {
       required: true,
       type: Object,
     },
@@ -70,7 +72,19 @@ import { Component, Vue } from "vue-property-decorator";
   //        }
   // }
 })
-export default class CampaignCard extends Vue {}
+export default class CampaignCard extends BaseVue {
+  private searchImageUrl(arr: any[]) {
+    const obj: any = arr.find(({ fileType }) => {
+      fileType.slice(0, 5) === "image";
+    });
+
+    return obj.publicUrl;
+  }
+
+  // private mounted() {
+  //   Log.info("propsCampaign: " + JSON.stringify(result));
+  // }
+}
 </script>
 
 <style scoped>

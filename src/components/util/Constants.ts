@@ -24,6 +24,8 @@ export default class Constants {
 
     public static sidebarToggleEvent: string = 'side-bar-toggle';
 
+    public static defaultCardBackgroundUrl: string = 'https://socialotto.s3.ca-central-1.amazonaws.com/uploads/images.jpg';
+
 
 
     // APIs to exclude authorization

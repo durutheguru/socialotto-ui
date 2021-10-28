@@ -6301,7 +6301,7 @@ header.blue-bg .search:focus {
     justify-content: flex-end;
   }
   
-  @media only screen and (max-width: 900px) {
+  /* @media only screen and (max-width: 900px) {
     .anchorDIv {
       display: none;
     }
@@ -6317,7 +6317,7 @@ header.blue-bg .search:focus {
     .menuIcon {
       display: flex;
     }
-  }
+  } */
   
   .mainHeader {
     position: relative;

@@ -3,7 +3,7 @@
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
-        class="innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
+        class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <span class="signupLogo my-auto">Socialotto</span>
         <div class="menuIcon my-auto" @click="dropMenu">
@@ -174,16 +174,16 @@ a {
   justify-content: flex-end;
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 768px) {
   .anchorDIv {
     display: none;
   }
-  .innerHeaderDiv {
-    /* padding-left: 2.5rem;
+  /* .innerHeaderDiv { */
+  /* padding-left: 2.5rem;
     padding-right: 2.5rem; */
-    padding-left: 5px;
-    padding-right: 5px;
-  }
+  /* padding-left: 5px;
+    padding-right: 5px; */
+  /* } */
 
   .signupLogo {
     display: none;

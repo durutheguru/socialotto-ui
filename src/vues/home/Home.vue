@@ -1,63 +1,87 @@
 <template>
   <div class="divContainer overflow-auto lg:overflow-y-scroll">
-    <div class="max-w-screen-xl mx-auto pt-60 sm:w-11/12">
+    <div class="  max-w-screen-xl mx-auto pt-20 sm:w-11/12">
       <!-- <div> -->
       <!-- <SearchNFilter :searchInput="siteQuery.key" /> -->
 
-      <div>
+      <!-- <div v-for="result in searchLotteries" :key="result.id">
+        <h1>{{ result.lotteryFiles[0].fileType }}</h1>
+      </div> -->
+
+      <!-- <div>
         <span v-if="$apollo.queries.searchLotteries.loading"
           >Loading<br
         /></span>
         Lotteries: {{ searchLotteries }} <br />
         Error: {{ siteQuery.error }}
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z"
-            stroke="#767676"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
       </div>
 
       <div>
         <span v-if="$apollo.queries.searchCampaigns.loading"
           >Loading<br
         /></span>
-        <!-- Campaigns: {{ searchCampaigns }} <br /> -->
+        Campaigns: {{ searchCampaigns }} <br />
+
         Error: {{ siteQuery.error }} <br />
-        joinedArray:
-        {{ lotteriesNcampaigns }}
-      </div>
+       
+      </div> -->
+
+      <!-- joinedArray:
+      {{ lotteriesNcampaigns }} -->
       <!-- </div> -->
-      <div>
+
+      <div class="px-6 md:px-0">
         <div
-          class="mt-12  mx-auto grid gap-10 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
+          class="mt-12 auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
+          v-if="
+            $apollo.queries.searchCampaigns.loading ||
+              $apollo.queries.searchLotteries.loading
+          "
         >
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+          <CardSkeleton />
+        </div>
+        <div
+          v-else
+          class="mt-12 auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
+        >
+          <!-- <div
+            v-if="
+              $apollo.queries.searchCampaigns.loading ||
+                $apollo.queries.searchLotteries.loading
+            "
+          >
+            <span>Loading<br /></span>
+          </div> -->
+          <!-- "
+              $apollo.queries.searchCampaigns.loading ||
+                $apollo.queries.searchLotteries.loading
+            " -->
+
           <div
-            v-for="post in posts"
-            :key="post.title"
-            class="flex flex-col rounded-lg overflow-hidden"
+            v-for="result in lotteriesNcampaigns"
+            :key="result.id"
+            class="w-full xsm:w-97 mx-auto md:w-full flex flex-col rounded-lg overflow-hidden"
             style="height: 458px;"
           >
-            <div v-if="post.type === 'Campaign'" class="h-full">
-              <CampaignCard :post="post" />
+            <div v-if="result.__typename === 'Campaign'" class="h-full">
+              <CampaignCard :result="result" />
             </div>
-            <div v-else-if="post.type === 'Lottery'" class="h-full">
-              <LotteryCard :post="post" />
+            <div v-else-if="result.__typename === 'Lottery'" class="h-full">
+              <LotteryCard :result="result" />
             </div>
           </div>
         </div>
 
         <!-- ---------------Prev N next------------- -->
-        <div class="w-full flex justify-end mb-16">
+        <!-- <div class="w-full flex justify-end mb-16">
           <div class="flex flex-col">
             <span class="flex justify-end rounded-md h-full ">
               <button
@@ -103,7 +127,7 @@
               </button>
             </span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <Incentives />
@@ -122,6 +146,7 @@ import LotteryCard from "../../components/page-features/LotteryCard.vue";
 import { searchLotteries } from "@/services/lottery/lottery.query";
 import { searchCampaigns } from "@/services/campaign/campaign.query";
 import { ApolloError } from "apollo-client";
+import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
 
 @Component({
   name: "Home",
@@ -131,6 +156,7 @@ import { ApolloError } from "apollo-client";
     SearchNFilter,
     CampaignCard,
     LotteryCard,
+    CardSkeleton,
   },
   apollo: {
     $client: "anonymousClient",
@@ -143,6 +169,11 @@ import { ApolloError } from "apollo-client";
           page: this.siteQuery.page,
           size: this.siteQuery.size,
         };
+      },
+
+      result({ data }) {
+        Log.info("Search Lotteries Data: " + JSON.stringify(data));
+        this.siteQuery.lotteryData = data.searchLotteries;
       },
 
       error(error: ApolloError) {
@@ -161,6 +192,11 @@ import { ApolloError } from "apollo-client";
         };
       },
 
+      result({ data }) {
+        Log.info("Search Campaigns Data: " + JSON.stringify(data));
+        this.siteQuery.campaignData = data.searchCampaigns;
+      },
+
       error(error: ApolloError) {
         this.siteQuery.error = Util.extractGqlError(error);
       },
@@ -168,198 +204,36 @@ import { ApolloError } from "apollo-client";
   },
 })
 export default class Home extends Vue {
-  private posts: any = [
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Lottery",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Campaign",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Lottery",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Campaign",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Lottery",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Campaign",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Boost your conversion rate",
-      href: "#",
-      category: { name: "Article", href: "#" },
-      type: "Lottery",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto accusantium praesentium eius, ut atque fuga culpa, similique sequi cum eos quis dolorum.",
-      date: "Mar 16, 2020",
-      datetime: "2020-03-16",
-      imageUrl:
-        "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "6 min",
-      author: {
-        name: "Roel Aufderehar",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "How to use search engine optimization to drive sales",
-      href: "#",
-      category: { name: "Video", href: "#" },
-      type: "Campaign",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit facilis asperiores porro quaerat doloribus, eveniet dolore. Adipisci tempora aut inventore optio animi., tempore temporibus quo laudantium.",
-      date: "Mar 10, 2020",
-      datetime: "2020-03-10",
-      imageUrl:
-        "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "4 min",
-      author: {
-        name: "Brenna Goyette",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-    {
-      title: "Improve your customer experience",
-      href: "#",
-      category: { name: "Case Study", href: "#" },
-      type: "Lottery",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic.",
-      date: "Feb 12, 2020",
-      datetime: "2020-02-12",
-      imageUrl:
-        "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80",
-      readingTime: "11 min",
-      author: {
-        name: "Daniela Metz",
-        href: "#",
-        imageUrl:
-          "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    },
-  ];
-
-  private searchInput: String = "";
-
-  // private lotteriesNcampaigns: any = [];
-
-  // this.lotteriesNcampaigns = this.searchCampaigns
-  get lotteriesNcampaigns() {
-    // let self = this;
-    return searchCampaigns;
-  }
-
   private siteQuery: any = {
     key: "",
     error: "",
+    lotteryData: [],
+    campaignData: [],
     page: 0,
     size: 9,
   };
 
-  // private mounted() {}
+  private mounted() {
+    Log.info("joined Array: " + JSON.stringify(searchLotteries));
+  }
+
+  get lotteriesNcampaigns() {
+    // let self = this;
+    const mergedData = this.siteQuery.lotteryData.concat(
+      this.siteQuery.campaignData
+    );
+
+    Log.info("Unsorted Merged Data: " + JSON.stringify(mergedData));
+
+    mergedData.sort((o1: any, o2: any) => {
+      return o1.name > o2.name ? -1 : 1;
+    });
+
+    Log.info("Sorted Merged Data: " + JSON.stringify(mergedData));
+
+    return mergedData;
+    // return JSON.stringify(this.$apollo.queries.searchLotteries);
+  }
 }
 </script>
 

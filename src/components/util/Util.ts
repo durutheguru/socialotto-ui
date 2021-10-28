@@ -82,6 +82,17 @@ export default class Util {
         }
     }
 
+    public static searchImageUrl(arr: any[]) {
+        const defaultBackground: string = Constants.defaultCardBackgroundUrl;
+        
+        const obj: any = arr.find(({ fileType }) => { 
+            fileType.slice(0, 5) === 'image' 
+        });
+         
+
+        return arr.length && obj && obj.publicUrl ? obj.publicUrl : defaultBackground;
+      }
+
 
     public static deepGet(parent: any, path: string) {
         const paths = path.split('.');

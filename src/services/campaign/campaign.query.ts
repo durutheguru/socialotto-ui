@@ -11,6 +11,7 @@ query searchCampaigns($searchKey: String, $page: Int, $size: Int) {
         campaignFiles {
             reference
             fileType
+            publicUrl
         }
         owner {
             name
