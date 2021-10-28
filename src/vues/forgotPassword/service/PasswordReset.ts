@@ -8,4 +8,4 @@ export default class PasswordReset {
             '/api/v1/password_reset/update', credentials, successHandler, errorHandler,
         );
     }
-}
+};

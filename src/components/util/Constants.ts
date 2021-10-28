@@ -24,6 +24,8 @@ export default class Constants {
 
     public static sidebarToggleEvent: string = 'side-bar-toggle';
 
+    public static defaultCardBackgroundUrl: string = 'https://socialotto.s3.ca-central-1.amazonaws.com/uploads/default-img-md-bg.jpeg';
+
 
 
     // APIs to exclude authorization
@@ -64,6 +66,9 @@ export default class Constants {
 
     public static defaultFileUploadExtensions: RegExp = 
     /.*\.(jpg|jgep|png|flv|mp4|3gp|mov|avi|wmv)$/;
+
+
+    public static gqlDefaultErrorDelimeter = ') : ';
 
 
     public static defaultCurrency: string = 'NGN';
