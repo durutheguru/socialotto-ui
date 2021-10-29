@@ -72,15 +72,11 @@
   padding-right: 16px;
 }
 
-// @media only screen and (max-width: 1024px) {
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-
-//   .navheaderPadding {
-//     padding-right: 0px;
-//   }
-// }
+@media only screen and (max-width: 1024px) {
+  .instructionsDisplay {
+    display: none;
+  }
+}
 
 @media only screen and (max-width: 768px) {
   ::-webkit-scrollbar {

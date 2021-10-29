@@ -7,6 +7,8 @@
             Create your campaign
           </h1>
         </div>
+        <!-- -----------InstructionsHamburger---------- -->
+        <CampaignInstructionsMenu />
         <div>
           <div class=" mb-2">
             <div class=" sm:flex">
@@ -180,9 +182,13 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import CampaignInstructionsMenu from "@/components/page-features/CampaignInstructionsMenu.vue";
 
 @Component({
   name: "CampaignInputs",
+  components: {
+    CampaignInstructionsMenu,
+  },
 })
 export default class CampaignInputs extends Vue {}
 </script>
