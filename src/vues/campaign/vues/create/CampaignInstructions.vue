@@ -1,47 +1,50 @@
 <template>
-  <div class="w-full lg:w-11/12 ml-auto">
-    <div class="mb-1">
-      <h1 class="spartan text-2xl font-semibold dark-blue-text mb-0">
-        What you need to know before starting a campaign
-      </h1>
-    </div>
-    <div class="bg-white rounded-md">
-      <div class="p-6">
-        <div class="mb-6">
-          <span class="spartan text-sm font-semibold dark-blue-text">
-            To guide you on how best to enter information on each field to
-            create this campaign.
-          </span>
-        </div>
-        <div>
-          <div class="spartan font-medium text-base text-grey-light">
-            <ol v-for="instruction in instructions" :key="instruction">
-              <li class="mb-8">{{ instruction }}</li>
-            </ol>
-          </div>
-
+  <div class="px-6 mb-16 md:mb-0">
+    <div class="max-w-sm md:w-full lg:w-11/12 mx-auto md:ml-auto">
+      <div class="mb-1">
+        <h1 class="spartan text-2xl font-semibold dark-blue-text mb-0">
+          What you need to know before starting a campaign
+        </h1>
+      </div>
+      <div class="bg-white rounded-md">
+        <div class="p-6">
           <div class="mb-6">
-            <div>
-              <span class="light-blue-text font-semibold spartan"
-                >Note: We add the% interest neccessary to run a fund raising
-                campaign to the cost amount you provide and display to the
-                potential donators.
-              </span>
-            </div>
+            <span class="spartan text-sm font-semibold dark-blue-text">
+              To guide you on how best to enter information on each field to
+              create this campaign.
+            </span>
           </div>
-          <div class="mb-10">
-            <div>
-              <span class="font-semibold spartan text-red-500"
-                >Warning: When your campaign is hosted on Socialotto, you are
-                required to fulfill all terms stated as legal steps are taken
-                against anyone who breaches the conditions of the raised funds.
-              </span>
+          <div>
+            <div class="spartan font-medium text-base text-grey-light">
+              <ol v-for="instruction in instructions" :key="instruction">
+                <li class="mb-8">{{ instruction }}</li>
+              </ol>
             </div>
-          </div>
-          <div class="mb-1 flex justify-center">
-            <h1 class="spartan text-xl font-semibold dark-blue-text mb-0">
-              Goodluck with your campaign!
-            </h1>
+
+            <div class="mb-6">
+              <div>
+                <span class="light-blue-text font-semibold spartan"
+                  >Note: We add the% interest neccessary to run a fund raising
+                  campaign to the cost amount you provide and display to the
+                  potential donators.
+                </span>
+              </div>
+            </div>
+            <div class="mb-10">
+              <div>
+                <span class="font-semibold spartan text-red-500"
+                  >Warning: When your campaign is hosted on Socialotto, you are
+                  required to fulfill all terms stated as legal steps are taken
+                  against anyone who breaches the conditions of the raised
+                  funds.
+                </span>
+              </div>
+            </div>
+            <div class="mb-1 flex justify-center">
+              <h1 class="spartan text-xl font-semibold dark-blue-text mb-0">
+                Goodluck with your campaign!
+              </h1>
+            </div>
           </div>
         </div>
       </div>
