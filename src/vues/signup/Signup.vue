@@ -3,7 +3,7 @@
     <div
       class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
     >
-      <div class="signupMain bg-white py-8 px-10  sm:px-10">
+      <div class="signupMain bg-white py-8 px-10  sm:px-10 border">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
           <h2 class="mt-3 text-center mainHeader">
             Signup to Socialotto
@@ -419,7 +419,7 @@ a {
     padding-top: 0;
     padding-left: 5px;
     padding-right: 5px;
-    --tw-bg-opacity: 1;
+    /* --tw-bg-opacity: 1; */
     background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
   }
 

@@ -5,7 +5,7 @@
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
-          <h2 class="mt-3 text-center mainHeader">
+          <h2 class="mt-3 text-center mainHeader dark-blue-text">
             Login to Socialotto
           </h2>
         </div>
@@ -446,7 +446,7 @@ a {
   font-weight: 600;
   font-size: 24px;
   line-height: 100%;
-  color: #2c5662;
+  /* color: #2c5662; */
 }
 
 .mainHeaderDiv {

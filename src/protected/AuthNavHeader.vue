@@ -6,7 +6,7 @@
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <span class="signupLogo my-auto">Socialotto</span>
-        <div class="menuIcon my-auto" @click="dropMenu">
+        <div class="menuIcon my-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
