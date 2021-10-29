@@ -1,112 +1,116 @@
 <template>
-  <div
-    class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8 mt-12"
-  >
-    <div class="signupMain bg-white py-8 px-10  sm:px-10">
-      <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
-        <h2 class="mt-3 text-center mainHeader">
-          Login to Socialotto
-        </h2>
-      </div>
+  <div class="divContainer overflow-auto lg:overflow-y-scroll">
+    <div
+      class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
+    >
+      <div class="signupMain bg-white py-8 px-10  sm:px-10">
+        <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
+          <h2 class="mt-3 text-center mainHeader">
+            Login to Socialotto
+          </h2>
+        </div>
 
-      <validation-observer
-        ref="observer"
-        tag="form"
-        role="form"
-        v-slot="{ invalid }"
-        class="space-y-6"
-        @submit.prevent="doLogin"
-        novalidate
-      >
-        <div>
-          <label
-            for="email"
-            style="font-family: 'Spartan', sans-serif;
+        <validation-observer
+          ref="observer"
+          tag="form"
+          role="form"
+          v-slot="{ invalid }"
+          class="space-y-6"
+          @submit.prevent="doLogin"
+          novalidate
+        >
+          <div>
+            <label
+              for="email"
+              style="font-family: 'Spartan', sans-serif;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 12px;
                     line-height: 100%;
                     color: #797979;"
-            class="block text-sm font-medium"
-          >
-            Email address
-          </label>
-          <div class="mt-1">
-            <validation-provider rules="email_required" v-slot="{ invalid }">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                placeholder="email"
-                autocomplete="email"
-                v-model="platformUser.email"
-                required
-                :disabled="userLogin.loading"
-                v-bind:class="{ 'invalid-field': invalid }"
-                class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
-              />
-              <!-- <span>{{ errors[0] }}</span> -->
-            </validation-provider>
+              class="block text-sm font-medium"
+            >
+              Email address
+            </label>
+            <div class="mt-1">
+              <validation-provider rules="email_required" v-slot="{ invalid }">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="email"
+                  autocomplete="email"
+                  v-model="platformUser.email"
+                  required
+                  :disabled="userLogin.loading"
+                  v-bind:class="{ 'invalid-field': invalid }"
+                  class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
+                />
+                <!-- <span>{{ errors[0] }}</span> -->
+              </validation-provider>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label
-            for="password"
-            style="font-family: 'Spartan', sans-serif;
+          <div>
+            <label
+              for="password"
+              style="font-family: 'Spartan', sans-serif;
                     font-style: normal;
                     font-weight: normal;
                     font-size: 12px;
                     line-height: 100%;
                     color: #797979;"
-            class="block text-sm font-medium "
-          >
-            Password
-          </label>
-          <div class="mt-1">
-            <validation-provider rules="required" v-slot="{ invalid }">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                placeholder="password"
-                autocomplete="current-password"
-                v-model="platformUser.password"
-                v-bind:class="{ 'invalid-field': invalid }"
-                required
-                :disabled="userLogin.loading"
-                class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
-              />
-            </validation-provider>
+              class="block text-sm font-medium "
+            >
+              Password
+            </label>
+            <div class="mt-1">
+              <validation-provider rules="required" v-slot="{ invalid }">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  placeholder="password"
+                  autocomplete="current-password"
+                  v-model="platformUser.password"
+                  v-bind:class="{ 'invalid-field': invalid }"
+                  required
+                  :disabled="userLogin.loading"
+                  class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                />
+              </validation-provider>
+            </div>
           </div>
-        </div>
 
-        <div class="text-sm mt-2 flex ">
-          <router-link
-            :to="'/forgotpassword'"
-            class="ml-auto font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Forgot your password?
-          </router-link>
-        </div>
+          <div class="text-sm mt-2 flex ">
+            <router-link
+              :to="'/forgotpassword'"
+              class="ml-auto font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              Forgot your password?
+            </router-link>
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              style="background-color: #4691A6;"
+              :class="(invalid || userLogin.loading) && 'opacity-25'"
+              :disabled="invalid || userLogin.loading"
+              class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Login
+              <i
+                class="ml-px fa fa-spinner fa-spin"
+                v-if="userLogin.loading"
+              ></i>
+            </button>
+          </div>
+        </validation-observer>
 
         <div>
-          <button
-            type="submit"
-            style="background-color: #4691A6;"
-            :class="(invalid || userLogin.loading) && 'opacity-25'"
-            :disabled="invalid || userLogin.loading"
-            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Login
-            <i class="ml-px fa fa-spinner fa-spin" v-if="userLogin.loading"></i>
-          </button>
-        </div>
-      </validation-observer>
-
-      <div>
-        <div
-          style="font-family: 'Spartan', sans-serif;
+          <div
+            style="font-family: 'Spartan', sans-serif;
                 font-style: normal;
                 font-weight: normal;
                 font-size: 12px;
@@ -116,22 +120,23 @@
                 margin-bottom: 32px;
                 margin-top: 35px;
                 "
-        >
-          <span>or continue with</span>
-        </div>
-      </div>
-
-      <div>
-        <form :action="loginUrl + '/google/oauth'" method="POST">
-          <button
-            type="submit"
-            :disabled="userLogin.loading"
-            style="background-color: #FF3D00; margin-bottom: 20px;"
-            class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Google
-          </button>
-        </form>
+            <span>or continue with</span>
+          </div>
+        </div>
+
+        <div>
+          <form :action="loginUrl + '/google/oauth'" method="POST">
+            <button
+              type="submit"
+              :disabled="userLogin.loading"
+              style="background-color: #FF3D00; margin-bottom: 20px;"
+              class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Google
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>

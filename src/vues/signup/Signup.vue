@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="h-full bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8  mx-2"
-  >
+  <div class="divContainer overflow-auto lg:overflow-y-scroll">
     <div
-      class="signupMainOuterDiv relative top-4 sm:mx-auto sm:w-full sm:max-w-md mb-8"
+      class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
