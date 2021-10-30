@@ -8,9 +8,9 @@
           </div>
 
           <div
-            class="instructionsDisplay col-span-6 md:col-span-2 order-first md:order-last md:col-start-4"
+            class="instructionsDisplay  col-span-6 md:col-span-2 order-first md:order-last md:col-start-4"
           >
-            <!-- <div class="w-full hidden lg:block"> -->
+            <!-- <div class="bg-white rounded-md"> -->
             <CampaignInstructions />
             <!-- </div> -->
           </div>

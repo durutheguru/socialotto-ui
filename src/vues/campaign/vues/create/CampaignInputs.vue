@@ -3,12 +3,14 @@
     <div class="px-6 mb-16 md:mb-0">
       <div class="max-w-sm sm:max-w-md md:w-full mx-auto">
         <div class="mb-10">
-          <h1 class="spartan text-3xl font-semibold dark-blue-text mb-0">
+          <h1
+            class="flex justify-center sm:justify-start spartan text-3xl font-semibold dark-blue-text mb-0"
+          >
             Create your campaign
           </h1>
         </div>
         <!-- -----------InstructionsHamburger---------- -->
-        <CampaignInstructionsMenu />
+        <CampaignInstructionsMenu class="lg:hidden" />
         <div>
           <div class=" mb-2">
             <div class=" sm:flex">
