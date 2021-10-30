@@ -72,9 +72,13 @@
   padding-right: 16px;
 }
 
-@media only screen and (max-width: 1024px) {
+.instructionsDisplay {
+  display: none;
+}
+
+@media (min-width: 1024px) {
   .instructionsDisplay {
-    display: none;
+    display: block;
   }
 }
 
@@ -84,6 +88,6 @@
   }
 
   .navheaderPadding {
-    ppadding-right: 12px;
+    padding-right: 12px;
   }
 }

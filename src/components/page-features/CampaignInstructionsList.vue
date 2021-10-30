@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="ddd">
     <div class="p-6">
       <div class="mb-6">
         <span class="spartan text-sm font-semibold dark-blue-text">

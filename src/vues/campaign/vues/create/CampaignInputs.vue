@@ -10,7 +10,7 @@
           </h1>
         </div>
         <!-- -----------InstructionsHamburger---------- -->
-        <CampaignInstructionsMenu class="lg:hidden" />
+        <CampaignInstructionsMenu class=" lg:hidden" />
         <div>
           <div class=" mb-2">
             <div class=" sm:flex">
@@ -23,7 +23,7 @@
                   >
                 </span>
               </div>
-              <div class="w-full md:w-9/12 lg:w-4/5">
+              <div class="w-full lg:w-4/5">
                 <div class="w-full mb-6">
                   <label
                     for="email"
@@ -102,7 +102,7 @@
                   >
                 </span>
               </div>
-              <div class="w-full md:w-9/12 lg:w-4/5">
+              <div class="w-full  lg:w-4/5">
                 <div class="w-full mb-6">
                   <label
                     for="email"

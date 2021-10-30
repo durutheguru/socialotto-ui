@@ -19,7 +19,7 @@
       </div>
     </div>
     <!-- ----------menu display----------- -->
-    <div class="bg-white rounded-b-md">
+    <div class="bg-white rounded-b-md ">
       <CampaignInstructionsList v-if="show" />
     </div>
   </div>

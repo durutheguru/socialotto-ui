@@ -3,7 +3,7 @@
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
-        class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
+        class="px-6 md:px-0 mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <span class="signupLogo my-auto">Socialotto</span>
         <div class="menuIcon my-auto">
@@ -23,33 +23,60 @@
           </svg>
         </div>
 
-        <div
-          class=" spartan flex my-auto relative right-0 flex justify-end"
-          style="height: 40px; width: 552px;"
-        >
-          <div class=" anchorDIv">
+        <div class=" spartan flex my-auto relative right-0 flex justify-end">
+          <div class=" anchorDIv" style="width: 60%; ">
             <router-link
               class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
               :to="'/about'"
-              >About Socialotto</router-link
-            >
-            <router-link
-              v-if="pageName !== 'Login'"
-              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-              :to="'/login'"
-              >Sign in
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
+              </svg>
             </router-link>
             <router-link
-              v-if="pageName !== 'Signup'"
+              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
+              :to="'/login'"
+              ><svg
+                width="22"
+                height="20"
+                viewBox="0 0 22 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 10H17L14 19L8 1L5 10H1"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </router-link>
+            <router-link
               class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
               :to="'/signup'"
-              >Sign up</router-link
             >
+              <img
+                class="inline-block h-8 w-8 rounded-full"
+                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                alt=""
+              />
+            </router-link>
           </div>
           <div
-            class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+            class=" customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
-            Support a campaign
+            <span>Support a campaign</span>
           </div>
         </div>
       </div>

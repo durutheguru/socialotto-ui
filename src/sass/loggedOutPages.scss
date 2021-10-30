@@ -111,23 +111,23 @@
   }
 }
 
-// @media only screen and (max-width: 900px) {
-//   .anchorDIv {
-//     display: none;
-//   }
-//   .innerHeaderDiv {
-//     padding-left: 2.5rem;
-//     padding-right: 2.5rem;
-//   }
+@media only screen and (max-width: 768px) {
+  .anchorDIv {
+    display: none;
+  }
+  // .innerHeaderDiv {
+  //   padding-left: 2.5rem;
+  //   padding-right: 2.5rem;
+  // }
 
-//   .signupLogo {
-//     display: none;
-//   }
+  .signupLogo {
+    display: none;
+  }
 
-//   .menuIcon {
-//     display: flex;
-//   }
-// }
+  .menuIcon {
+    display: flex;
+  }
+}
 
 .mainHeader {
   position: relative;

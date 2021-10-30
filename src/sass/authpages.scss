@@ -2,3 +2,31 @@
   //   display: grid;
   grid-template-columns: 3fr, 2fr !important;
 }
+
+.m-fadeOut {
+  display: none;
+  opacity: 0;
+  transition: display 0s linear 300ms, opacity 300ms;
+}
+.m-fadeIn {
+  display: block;
+  opacity: 1;
+  transition: display 0s linear 0s, opacity 300ms;
+}
+
+.displayTransition {
+  transition-property: display;
+  transition-duration: 2s;
+}
+
+.fadein,
+.fadeout {
+  opacity: 0;
+  -moz-transition: opacity 0.8s ease-in-out;
+  -o-transition: opacity 0.8s ease-in-out;
+  -webkit-transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
+}
+.fadein {
+  opacity: 1;
+}
