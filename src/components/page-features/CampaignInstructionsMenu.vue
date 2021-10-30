@@ -1,7 +1,7 @@
 <template>
-  <div class="rounded-md bg-gray-200 mb-10">
-    <div class="mt-8 h-16 flex justify-center items-center">
-      <div class="flex my-auto ">
+  <div class="rounded-md bg-gray-200 mb-10 w-full">
+    <div class="mt-8 h-16 w-full">
+      <div class="flex justify-between w-full ">
         <span
           class="spartan mx-3 text-sm font-semibold dark-blue-text my-auto "
         >

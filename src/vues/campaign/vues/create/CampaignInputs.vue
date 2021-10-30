@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="px-6 mb-16 md:mb-0">
-      <div class="max-w-sm sm:max-w-md md:w-full mx-auto">
+    <div class="px-6 lg:px-0 mb-16 md:mb-0">
+      <div class=" max-w-xl mx-auto lg:mx-0">
         <div class="mb-10">
           <h1
             class="flex justify-center sm:justify-start spartan text-3xl font-semibold dark-blue-text mb-0"
