@@ -66,7 +66,7 @@ export default class Constants {
 
 
     public static defaultFileUploadExtensions: RegExp = 
-    /.*\.(jpg|jgep|png|flv|mp4|3gp|mov|avi|wmv)$/;
+    /.*\.(jpg|jgep|png|flv|mp4|3gp|mov|avi|wmv|pdf|doc|docx)$/;
 
 
     public static gqlDefaultErrorDelimeter = ') : ';
