@@ -45,6 +45,7 @@
                       >
                         <input
                           v-model="campaign.name"
+                          required
                           type="text"
                           name="campaign_title"
                           id="campaign_title"
@@ -64,15 +65,21 @@
                     >
                     <div class="mt-1 rounded-md ">
                       <div>
-                        <textarea
-                          v-model="campaign.description"
-                          autocomplete="off"
-                          id="campaign_details"
-                          required
-                          rows="6"
-                          class="max-h-44 spartan bg-transparent border border-solid rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border bg-cool-gray-50 border-gray-200 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 focus:ring-indigo-500 focus:border-indigo-500"
-                          placeholder="Bank details for X..."
-                        ></textarea>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ invalid }"
+                        >
+                          <textarea
+                            v-model="campaign.description"
+                            autocomplete="off"
+                            id="campaign_description"
+                            required
+                            rows="6"
+                            :class="{ 'invalid-field': invalid }"
+                            class="max-h-44 spartan bg-transparent border border-solid rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border bg-cool-gray-50 border-gray-200 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 focus:ring-indigo-500 focus:border-indigo-500"
+                            placeholder="Bank details for X..."
+                          ></textarea>
+                        </validation-provider>
                       </div>
                     </div>
                   </div>
@@ -84,34 +91,43 @@
                       >Upload campaign document</label
                     >
                     <div class="mt-1">
-                      <div
-                        class="spartan h-12 flex bg-transparent border border-solid rounded-md"
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ invalid }"
                       >
-                        <input
-                          type="text"
-                          name="campaign_title"
-                          id="campaign_title"
-                          class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
-                          placeholder="confirm password"
-                        />
                         <div
-                          @click="chooseFiles"
-                          class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-28 h-10 my-auto mr-0.5"
+                          class="spartan h-12 flex bg-transparent border border-solid rounded-md"
                         >
-                          <span class="spartan">Upload</span>
                           <input
-                            autocomplete="off"
-                            multiple
-                            type="file"
-                            id="campaign_file"
-                            name="campaign_file"
-                            accept="image/png, image/jpeg"
-                            placeholder="upload file"
-                            class="hidden"
-                            v-on:change="fileChanged"
+                            readonly
+                            type="text"
+                            name="campaign_title"
+                            id="campaign_title"
+                            v-bind:class="{ 'invalid-field': invalid }"
+                            class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                            placeholder="confirm password"
                           />
+                          <div
+                            @click="chooseFiles"
+                            class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-28 h-10 my-auto mr-0.5"
+                          >
+                            <span class="spartan">Upload</span>
+
+                            <input
+                              required
+                              autocomplete="off"
+                              multiple
+                              type="file"
+                              id="campaign_file"
+                              name="campaign_file"
+                              accept="image/png, image/jpeg"
+                              placeholder="upload file"
+                              class="hidden"
+                              v-on:change="fileChanged"
+                            />
+                          </div>
                         </div>
-                      </div>
+                      </validation-provider>
                     </div>
                     <div v-if="fileUploader.uploads.length > 0">
                       <table
@@ -186,22 +202,30 @@
                       >Total amount</label
                     >
                     <div class="mt-1">
-                      <input
-                        type="text"
-                        name="campaign_title"
-                        id="campaign_title"
-                        class="spartan h-12 bg-transparent  border-gray-300 border-2 border-opacity-25  px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md"
-                        placeholder="N10000"
-                      />
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ invalid }"
+                      >
+                        <input
+                          v-model="campaign.targetFunds"
+                          required
+                          type="text"
+                          name="campaign_targetFunds"
+                          id="campaign_targetFunds"
+                          :class="{ 'invalid-field': invalid }"
+                          class="spartan h-12 bg-transparent  border-gray-300 border-2 border-opacity-25  px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md"
+                          placeholder="N10000"
+                        />
+                      </validation-provider>
                     </div>
                   </div>
 
                   <div class="flex items-center justify-between w-full mb-8">
                     <div class="flex items-end">
                       <input
+                        v-model="agree"
                         id="terms"
                         name="terms"
-                        value="true"
                         type="checkbox"
                         class="checkbox"
                       />
@@ -235,15 +259,30 @@
 
                   <div class="w-full mb-6">
                     <div class="mt-1">
-                      <div @click="createCampaign" :disabled="invalid">
+                      <div
+                        @click="createCampaign"
+                        :disabled="
+                          invalid ||
+                            saveCampaign.loading ||
+                            !agree ||
+                            fileUploader.uploads.length > 0
+                        "
+                      >
                         <div
+                          :class="
+                            (invalid ||
+                              saveCampaign.loading ||
+                              !agree ||
+                              fileUploader.uploads.length === 0) &&
+                              'opacity-25'
+                          "
                           class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
                           Create campaign
-                          <!-- <i
-                        class="ml-px fa fa-spinner fa-spin"
-                        v-if="userLogin.loading"
-                    ></i> -->
+                          <i
+                            class="ml-px fa fa-spinner fa-spin"
+                            v-if="saveCampaign.loading"
+                          ></i>
                         </div>
                       </div>
                     </div>
@@ -275,9 +314,9 @@ import BaseVue from "@/components/BaseVue";
   },
 })
 export default class CampaignInputs extends BaseVue {
-  private chooseFiles() {
-    document.getElementById("campaign_file").click();
-  }
+  private saveCampaign: ApiResource = ApiResource.create();
+
+  private agree: boolean = false;
 
   private campaign: any = {
     name: "",
@@ -292,11 +331,14 @@ export default class CampaignInputs extends BaseVue {
     Constants.defaultMaxFileUploadSize
   );
 
-  private saveCampaign: ApiResource = ApiResource.create();
-
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);
     // this.$forceUpdate();
+  }
+
+  private chooseFiles() {
+    const showFilesToSelect: any = document.getElementById("campaign_file");
+    showFilesToSelect.click();
   }
 
   private createCampaign() {
@@ -307,17 +349,47 @@ export default class CampaignInputs extends BaseVue {
 
     const campaignRequest = this.prepareCampaignRequest();
 
+    // if (self.campaign.name.length < 2) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(
+    //     true,
+    //     "failed",
+    //     "title must be 2 characters or more"
+    //   );
+    // }
+    // if (self.campaign.description.length < 2000) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(
+    //     true,
+    //     "failed",
+    //     "description must be 2000 characters or more"
+    //   );
+    // }
+
+    // if (self.campaign.targetFund.length < 1) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(true, "failed", "Invalid amount");
+    // }
+
     CampaignService.saveCampaign(
       campaignRequest,
       (response: any) => {
         self.saveCampaign.loading = false;
+        Util.handleGlobalAlert(
+          true,
+          "success",
+          "Successfully created campaign"
+        );
       },
       (error: any) => {
         self.saveCampaign.loading = false;
         self.saveCampaign.error = self.extractError(error);
         Log.error(`Error while creating campaign: ${error}`);
+        Util.handleGlobalAlert(true, "failed", JSON.stringify(error.message));
       }
     );
+
+    Log.info(JSON.stringify(campaignRequest));
   }
 
   private prepareCampaignRequest(): any {
