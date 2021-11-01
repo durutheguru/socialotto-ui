@@ -349,27 +349,27 @@ export default class CampaignInputs extends BaseVue {
 
     const campaignRequest = this.prepareCampaignRequest();
 
-    // if (self.campaign.name.length < 2) {
-    //   self.saveCampaign.loading = false;
-    //   Util.handleGlobalAlert(
-    //     true,
-    //     "failed",
-    //     "title must be 2 characters or more"
-    //   );
-    // }
-    // if (self.campaign.description.length < 2000) {
-    //   self.saveCampaign.loading = false;
-    //   Util.handleGlobalAlert(
-    //     true,
-    //     "failed",
-    //     "description must be 2000 characters or more"
-    //   );
-    // }
+    if (self.campaign.name.length < 2) {
+      self.saveCampaign.loading = false;
+      Util.handleGlobalAlert(
+        true,
+        "failed",
+        "title must be 2 characters or more"
+      );
+    }
+    if (self.campaign.description.length < 2000) {
+      self.saveCampaign.loading = false;
+      Util.handleGlobalAlert(
+        true,
+        "failed",
+        "description must be 2000 characters or more"
+      );
+    }
 
-    // if (self.campaign.targetFund.length < 1) {
-    //   self.saveCampaign.loading = false;
-    //   Util.handleGlobalAlert(true, "failed", "Invalid amount");
-    // }
+    if (self.campaign.targetFund.length < 1) {
+      self.saveCampaign.loading = false;
+      Util.handleGlobalAlert(true, "failed", "Invalid amount");
+    }
 
     CampaignService.saveCampaign(
       campaignRequest,
