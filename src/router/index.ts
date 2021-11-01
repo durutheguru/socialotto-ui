@@ -73,17 +73,13 @@ const routes = [
     path: '/auth_home',
     name: "AuthNavHeader",
     component: AuthNavHeader,
-    meta: {
-      skipAuth: true,
-    },
+   
     children: [
       {
         path: '/create_campaign',
         name: 'CreateCampaign',
         component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
-        meta: {
-          skipAuth: true,
-        }
+       
       }
     ]
   },

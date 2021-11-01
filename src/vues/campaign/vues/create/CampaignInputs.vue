@@ -40,19 +40,23 @@
                     >
                     <div class="mt-1">
                       <validation-provider
-                        rules="required"
-                        v-slot="{ invalid }"
+                        mode="aggressive"
+                        rules="required|min:2"
+                        v-slot="{ errors }"
                       >
                         <input
                           v-model="campaign.name"
                           required
                           type="text"
-                          name="campaign_title"
+                          name="Campaign title"
                           id="campaign_title"
-                          :class="{ 'invalid-field': invalid }"
-                          class="spartan h-12 bg-transparent  border-gray-300 border-2 border-opacity-25  px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md"
+                          :class="{
+                            'border-red-600': errors.length > 0,
+                          }"
+                          class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
                           placeholder="Help a father of 3 with money for his kidney surgery in India"
                         />
+                        <span class="text-red-500">{{ errors[0] }}</span>
                       </validation-provider>
                     </div>
                   </div>
@@ -66,19 +70,23 @@
                     <div class="mt-1 rounded-md ">
                       <div>
                         <validation-provider
-                          rules="required"
-                          v-slot="{ invalid }"
+                          mode="aggressive"
+                          rules="required|max:200"
+                          v-slot="{ errors }"
                         >
                           <textarea
                             v-model="campaign.description"
                             autocomplete="off"
-                            id="campaign_description"
+                            id="description"
                             required
                             rows="6"
-                            :class="{ 'invalid-field': invalid }"
-                            class="max-h-44 spartan bg-transparent border border-solid rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border bg-cool-gray-50 border-gray-200 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5 focus:ring-indigo-500 focus:border-indigo-500"
+                            :class="{
+                              'border-red-600': errors.length > 0,
+                            }"
+                            class="max-h-44 spartan bg-transparent rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border-gray-300 border-2 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5  focus:border-blue-500"
                             placeholder="Bank details for X..."
                           ></textarea>
+                          <span class="text-red-500">{{ errors[0] }}</span>
                         </validation-provider>
                       </div>
                     </div>
@@ -91,10 +99,7 @@
                       >Upload campaign document</label
                     >
                     <div class="mt-1">
-                      <validation-provider
-                        rules="required"
-                        v-slot="{ invalid }"
-                      >
+                      <validation-provider rules="required" v-slot="{}">
                         <div
                           class="spartan h-12 flex bg-transparent border border-solid rounded-md"
                         >
@@ -103,7 +108,6 @@
                             type="text"
                             name="campaign_title"
                             id="campaign_title"
-                            v-bind:class="{ 'invalid-field': invalid }"
                             class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
                             placeholder="confirm password"
                           />
@@ -203,19 +207,25 @@
                     >
                     <div class="mt-1">
                       <validation-provider
-                        rules="required"
-                        v-slot="{ invalid }"
+                        rules="required|numeric"
+                        v-slot="{ errors }"
                       >
                         <input
                           v-model="campaign.targetFunds"
                           required
-                          type="text"
-                          name="campaign_targetFunds"
+                          min="1000"
+                          oninput="this.value = Math.abs(Math.round(this.value));"
+                          type="number"
+                          name="target funds"
                           id="campaign_targetFunds"
-                          :class="{ 'invalid-field': invalid }"
-                          class="spartan h-12 bg-transparent  border-gray-300 border-2 border-opacity-25  px-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm rounded-md"
+                          :class="{
+                            'border-red-600': errors.length > 0,
+                          }"
+                          class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
                           placeholder="N10000"
                         />
+
+                        <span class="text-red-500">{{ errors[0] }}</span>
                       </validation-provider>
                     </div>
                   </div>
@@ -265,7 +275,7 @@
                           invalid ||
                             saveCampaign.loading ||
                             !agree ||
-                            fileUploader.uploads.length > 0
+                            fileUploader.uploads.length === 0
                         "
                       >
                         <div
@@ -349,27 +359,27 @@ export default class CampaignInputs extends BaseVue {
 
     const campaignRequest = this.prepareCampaignRequest();
 
-    if (self.campaign.name.length < 2) {
-      self.saveCampaign.loading = false;
-      Util.handleGlobalAlert(
-        true,
-        "failed",
-        "title must be 2 characters or more"
-      );
-    }
-    if (self.campaign.description.length < 2000) {
-      self.saveCampaign.loading = false;
-      Util.handleGlobalAlert(
-        true,
-        "failed",
-        "description must be 2000 characters or more"
-      );
-    }
+    // if (self.campaign.name.length < 2) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(
+    //     true,
+    //     "failed",
+    //     "title must be 2 characters or more"
+    //   );
+    // }
+    // if (self.campaign.description.length < 2000) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(
+    //     true,
+    //     "failed",
+    //     "description must be 2000 characters or more"
+    //   );
+    // }
 
-    if (self.campaign.targetFund.length < 1) {
-      self.saveCampaign.loading = false;
-      Util.handleGlobalAlert(true, "failed", "Invalid amount");
-    }
+    // if (self.campaign.targetFund.length < 1) {
+    //   self.saveCampaign.loading = false;
+    //   Util.handleGlobalAlert(true, "failed", "Invalid amount");
+    // }
 
     CampaignService.saveCampaign(
       campaignRequest,

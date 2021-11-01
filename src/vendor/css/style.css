@@ -3175,9 +3175,9 @@ input.spinner[type="text"], input.spinner[type="password"], input.spinner[type="
     font-weight: 400;
 }
 
-input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus, .cmxform .form-group input.error , .cmxform .form-group textarea.error{
+/* input:focus:invalid:focus, textarea:focus:invalid:focus, select:focus:invalid:focus, .cmxform .form-group input.error , .cmxform .form-group textarea.error{
     border-color: #B94A48 !important;
-}
+} */
 
 #signupForm label.error {
     display: inline;
