@@ -9,7 +9,7 @@ export default class InterceptorRegistry {
 
     public static interceptors: IInterceptor[] = [];
 
-    public static BASE_URL: string = process.env.VUE_APP_BASE_URL;
+    public static BASE_URL: string | undefined = process.env.VUE_APP_BASE_URL;
 
     private static mock: MockAdapter = new MockAdapter(axios, { onNoMatch: 'passthrough' });
 

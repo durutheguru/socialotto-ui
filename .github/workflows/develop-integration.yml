@@ -45,25 +45,25 @@ jobs:
 
 
 
-#   merge-master:
-#     name: Merge to Main
-#     needs: [build]
-#     runs-on: ubuntu-latest
+  merge-staging:
+    name: Merge to Staging
+    needs: [build]
+    runs-on: ubuntu-latest
 
-#     if: github.event.pull_request.merged == true
-#     steps:
-#     - name: Checkout
-#       uses: actions/checkout@v2
-#     - name: Fetching
-#       run: |
-#         git fetch --all
-#     - name: Merge to Main
-#       uses: devmasx/merge-branch@v1.1.0
-#       with:
-#         type: now
-#         target_branch: 'main'
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
+    if: github.event.pull_request.merged == true
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Fetching
+      run: |
+        git fetch --all
+    - name: Merge to Staging
+      uses: devmasx/merge-branch@v1.1.0
+      with:
+        type: now
+        target_branch: 'staging'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GIT_ACCESS_TOKEN }}
         
         
         

@@ -1,40 +1,24 @@
 <template>
-  <section id="container">
-      <fade-transition origin="center" mode="out-in" :duration="250">
+  <section id="container" class="overflow-hidden">
+      <!-- <fade-transition origin="center" mode="out-in" :duration="250"> -->
+        <template>
+        <global-alert />
           <router-view />
-      </fade-transition>
+          </template>
+      <!-- </fade-transition> -->
   </section>
 </template>
 
 <script>
 import { FadeTransition } from "vue2-transitions";
+import GlobalAlert from "./vues/Alert/GlobalAlert.vue"
 
 export default {
   components: {
-    FadeTransition
+    FadeTransition,
+    GlobalAlert
   }
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<style src="./assets/tailwind.css">

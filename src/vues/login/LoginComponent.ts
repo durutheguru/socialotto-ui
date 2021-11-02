@@ -28,9 +28,11 @@ export default class LoginComponent extends BaseVue {
 
     private loading: boolean = false;
 
-    private loginUrl: string = process.env.VUE_APP_BASE_URL;
+    private loginUrl: string | undefined = process.env.VUE_APP_BASE_URL;
 
     private loginError: string = '';
+
+    private agree: boolean = false;
 
 
     public mounted() {
@@ -122,9 +124,7 @@ export default class LoginComponent extends BaseVue {
 
             (response: any) => {
                 this.loading = false;
-                store.commit('authToken/apiToken', response.headers.authorization);
-                this.$router.push({path: UserAuthContext.getInstance().homeUrl()});
-                Log.info('Logged In: ' + JSON.stringify(response));
+                LoginService.handleSuccessfulLogin(response, this);
             },
 
             (error: any) => {

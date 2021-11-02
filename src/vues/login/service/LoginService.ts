@@ -1,6 +1,7 @@
-import { Web } from '../../../components/util';
+import { Log, Web } from '../../../components/util';
 import '@/interceptors/login/LoginInterceptor';
 import store from '@/store';
+import UserAuthContext from '@/components/auth/UserAuthContext';
 
 
 export default class LoginService {
@@ -37,6 +38,16 @@ export default class LoginService {
 
     public static isUserActive() {
         return store.getters['authToken/isUserActive'];
+    }
+
+
+    public static handleSuccessfulLogin(response: any, vue: Vue) {
+        store.commit("authToken/apiToken", response.headers.authorization);
+        vue.$router.push({
+            path: UserAuthContext.getInstance().homeUrl(),
+        });
+        Log.info('User Path: ' + UserAuthContext.getInstance().homeUrl());
+        Log.info("Logged In: " + JSON.stringify(response));
     }
 
 
