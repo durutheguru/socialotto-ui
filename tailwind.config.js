@@ -12,7 +12,12 @@ module.exports = {
 
       width: {
         '97': "25rem"
-      }
+      },
+      // gridTemplateColumns: {
+      //   // Simple 16 column grid
+      //   '3/2': '3fr 2fr',
+
+      // }
     },
   },
   variants: {
