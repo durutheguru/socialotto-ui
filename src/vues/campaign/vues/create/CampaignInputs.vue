@@ -14,10 +14,12 @@
         <div>
           <validation-observer
             ref="observer"
+            id="campaign_form"
             tag="form"
             role="form"
-            v-slot="{ invalid }"
+            v-slot="{ invalid, reset }"
             @submit.prevent="createCampaign"
+            @reset.prevent="reset"
             novalidate
           >
             <div class=" mb-2">
@@ -41,22 +43,24 @@
                     <div class="mt-1">
                       <validation-provider
                         mode="aggressive"
-                        rules="required|min:2"
+                        rules="required|min:5"
                         v-slot="{ errors }"
                       >
                         <input
                           v-model="campaign.name"
                           required
                           type="text"
-                          name="Campaign title"
+                          name="campaign title"
                           id="campaign_title"
                           :class="{
-                            'border-red-600': errors.length > 0,
+                            'border-red-400': errors.length > 0,
                           }"
                           class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
-                          placeholder="Help a father of 3 with money for his kidney surgery in India"
+                          placeholder="title"
                         />
-                        <span class="text-red-500">{{ errors[0] }}</span>
+                        <span class="text-red-500 spartan">{{
+                          errors[0]
+                        }}</span>
                       </validation-provider>
                     </div>
                   </div>
@@ -71,7 +75,7 @@
                       <div>
                         <validation-provider
                           mode="aggressive"
-                          rules="required|max:200"
+                          rules="required|min:20|max:240"
                           v-slot="{ errors }"
                         >
                           <textarea
@@ -81,12 +85,14 @@
                             required
                             rows="6"
                             :class="{
-                              'border-red-600': errors.length > 0,
+                              'border-red-400': errors.length > 0,
                             }"
                             class="max-h-44 spartan bg-transparent rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border-gray-300 border-2 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5  focus:border-blue-500"
-                            placeholder="Bank details for X..."
+                            placeholder="description"
                           ></textarea>
-                          <span class="text-red-500">{{ errors[0] }}</span>
+                          <span class="text-red-500 spartan">{{
+                            errors[0]
+                          }}</span>
                         </validation-provider>
                       </div>
                     </div>
@@ -106,10 +112,10 @@
                           <input
                             readonly
                             type="text"
-                            name="campaign_title"
+                            name="campaign upload"
                             id="campaign_title"
                             class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
-                            placeholder="confirm password"
+                            placeholder="select files"
                           />
                           <div
                             @click="chooseFiles"
@@ -219,26 +225,38 @@
                           name="target funds"
                           id="campaign_targetFunds"
                           :class="{
-                            'border-red-600': errors.length > 0,
+                            'border-red-400': errors.length > 0,
                           }"
                           class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
                           placeholder="N10000"
                         />
 
-                        <span class="text-red-500">{{ errors[0] }}</span>
+                        <span class="text-red-500 spartan">{{
+                          errors[0]
+                        }}</span>
                       </validation-provider>
                     </div>
                   </div>
 
                   <div class="flex items-center justify-between w-full mb-8">
                     <div class="flex items-end">
-                      <input
-                        v-model="agree"
-                        id="terms"
-                        name="terms"
-                        type="checkbox"
-                        class="checkbox"
-                      />
+                      <validation-provider rules="required" v-slot="{ errors }">
+                        <input
+                          required
+                          v-model="agree"
+                          id="terms"
+                          name="terms"
+                          type="checkbox"
+                          class="checkbox"
+                          :class="{
+                            'border-red-400': errors.length > 0,
+                          }"
+                        />
+                        <span class="text-red-500 spartan">{{
+                          errors[0]
+                        }}</span>
+                      </validation-provider>
+
                       <label
                         for="agree"
                         style="font-family: 'Spartan', sans-serif;
@@ -252,8 +270,8 @@
                       >
                         I agree to the
                         <span class="light-blue-text font-semibold spartan"
-                          >Conditions of campaign creation and Socialotto</span
-                        >
+                          >Conditions of campaign creation and Socialotto.
+                        </span>
                       </label>
                     </div>
 
@@ -269,31 +287,34 @@
 
                   <div class="w-full mb-6">
                     <div class="mt-1">
-                      <div
-                        @click="createCampaign"
-                        :disabled="
-                          invalid ||
+                      <div>
+                        <button class="hidden" id="reset" type="reset">
+                          Reset
+                        </button>
+                        <button
+                          @click="createCampaign"
+                          :disabled="
+                            invalid ||
+                              saveCampaign.loading ||
+                              !agree ||
+                              fileUploader.uploads.length === 0
+                          "
+                          :class="[
+                            invalid ||
                             saveCampaign.loading ||
                             !agree ||
                             fileUploader.uploads.length === 0
-                        "
-                      >
-                        <div
-                          :class="
-                            (invalid ||
-                              saveCampaign.loading ||
-                              !agree ||
-                              fileUploader.uploads.length === 0) &&
-                              'opacity-25'
-                          "
-                          class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                              ? 'opacity-25'
+                              : 'opacity-100',
+                          ]"
+                          class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         >
                           Create campaign
                           <i
                             class="ml-px fa fa-spinner fa-spin"
                             v-if="saveCampaign.loading"
                           ></i>
-                        </div>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -390,12 +411,17 @@ export default class CampaignInputs extends BaseVue {
           "success",
           "Successfully created campaign"
         );
+
+        let resetButton: any = document.getElementById("reset");
+        resetButton.click();
+        // let form = document.getElementById("campaign_form") as HTMLFormElement;
+        // form.reset();
       },
       (error: any) => {
         self.saveCampaign.loading = false;
         self.saveCampaign.error = self.extractError(error);
         Log.error(`Error while creating campaign: ${error}`);
-        Util.handleGlobalAlert(true, "failed", JSON.stringify(error.message));
+        Util.handleGlobalAlert(true, "failed", self.saveCampaign.error);
       }
     );
 
@@ -414,6 +440,17 @@ export default class CampaignInputs extends BaseVue {
     };
 
     return request;
+  }
+
+  private reset() {
+    this.campaign.name = "";
+    this.campaign.description = "";
+    this.campaign.targetFunds = "";
+    this.fileUploader.uploads = [];
+    this.agree = false;
+    (this.$refs["observer"] as any).reset();
+
+    Log.info("Done Resetting form...");
   }
 
   // public mounted() {
