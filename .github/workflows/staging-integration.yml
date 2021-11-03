@@ -20,47 +20,14 @@ jobs:
       - name: Fetching All
         run: |
           git fetch --prune --unshallow
-      # - name: Installing GitVersion
-      #   env:
-      #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      #   uses: gittools/actions/gitversion/setup@v0.9.3
-      #   with:
-      #     versionSpec: '5.3.x'
-      # - name: Use GitVersion
-      #   id: gitversion
-      #   uses: gittools/actions/gitversion/execute@v0.9.3
-      #   env:
-      #     ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-      # - name: Upgrading Version
-      #   run: |
-      #     RELEASE_TAG=${{ steps.gitversion.outputs.semVer }}
-      #     echo $RELEASE_TAG > version.ver
-      #     ls
-      #     git config user.email ${{ secrets.GIT_EMAIL }}
-      #     git config user.name ${{ secrets.GIT_USERNAME }}
-      #     git add .
-      #     git commit -m "Upgraded Version >> $RELEASE_TAG" || true
-      # - name: Push changes to Staging
-      #   uses: ad-m/github-push-action@master
-      #   with:
-      #     branch: staging
-      #     github_token: ${{ secrets.GIT_ACCESS_TOKEN }}
-      # - name: Push changes to Heroku
-      #   uses: akhileshns/heroku-deploy@v3.12.12
-      #   with:
-      #     heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-      #     heroku_app_name: "socialotto-ui-staging"
-      #     heroku_email: "durutheguru@gmail.com"
-      #     justlogin: true
-#           env_file: ".env.staging"
-        # env:
-        #   HD_VUE_APP_BASE_URL: "https://socialotto-staging.herokuapp.com"
-      - run: |
-          git config user.email ${{ secrets.GIT_EMAIL }}
-          git config user.name ${{ secrets.GIT_USERNAME }}
-          git remote add staging https://git.heroku.com/socialotto-ui-staging.git
-          git pull staging main
-          git push staging staging:main
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+        env:
+          CI: true
 
 
   # merge-develop:
