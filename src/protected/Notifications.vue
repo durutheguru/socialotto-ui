@@ -1,8 +1,8 @@
 <template>
   <div class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 ">
-    <div class="pointy"></div>
+    <div class="pointy ml-auto"></div>
     <div class="relative dropDownMenu">
-      <div class="rounded-lg shadow-xs overflow-hidden">
+      <div class=" shadow-xs overflow-hidden">
         <div class="py-3 px-2 space-y-2">
           <div class="mx-2 ">
             <span class="spartan text-sm font-bold">Notifications</span>

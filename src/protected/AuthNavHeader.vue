@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" @click.self="clearDropDowns">
+  <div class="wrapper">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
@@ -25,7 +25,9 @@
 
         <div class=" spartan flex my-auto relative right-0 flex justify-end">
           <div class=" anchorDIv" style="width: 60%; ">
+            <!-- -----Notifications----- -->
             <div
+              @click="ToggleNotifications"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
@@ -42,12 +44,15 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                 />
               </svg>
-              <Notificatons />
+              <Notificatons v-if="notifications" />
             </div>
-            <router-link
-              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-              :to="'/login'"
-              ><svg
+
+            <!-- -----Recent activities----- -->
+            <div
+              @click="ToggleRecentActivities"
+              class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
+            >
+              <svg
                 width="22"
                 height="20"
                 viewBox="0 0 22 20"
@@ -62,7 +67,11 @@
                   stroke-linejoin="round"
                 />
               </svg>
-            </router-link>
+
+              <RecentActivities v-if="recentActivities" />
+            </div>
+
+            <!-- -----Avatar menu----- -->
             <div
               @click="dropUserMenu"
               class="relative spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
@@ -100,6 +109,7 @@ import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
 import AvatarMenu from "./AvatarMenu.vue";
 import Notificatons from "./Notifications.vue";
+import RecentActivities from "./RecentActivities.vue";
 // import ExpMenu from "./expMenu.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
@@ -115,6 +125,7 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
     AuthHamburgerMenu,
     AvatarMenu,
     Notificatons,
+    RecentActivities,
 
     // ExpMenu,
   },
@@ -126,6 +137,18 @@ export default class AuthNavHeader extends BaseVue {
   //   private mounted() {
   //     Log.info("name of route: " + String(this.$route.name));
   //   }
+
+  private notifications: boolean = false;
+  private recentActivities: boolean = false;
+
+  private ToggleNotifications() {
+    this.notifications = !this.notifications;
+  }
+
+  private ToggleRecentActivities() {
+    this.recentActivities = !this.recentActivities;
+  }
+
   private dropAuthMenu() {
     store.commit("setDropAuthMenu", true);
     // Log.info("dropMenu: " + );

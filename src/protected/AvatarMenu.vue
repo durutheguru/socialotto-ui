@@ -2,9 +2,10 @@
   <div
     class="absolute right-0 top-0 object-right-top  mt-10 w-44 max-w-xs sm:px-0 "
   >
-    <!-- <div class="arrow-up"></div> -->
-    <div class="rounded-lg dropDownMenu">
-      <div class="rounded-lg shadow-xs overflow-hidden">
+    <div class="pointy ml-auto"></div>
+
+    <div class=" dropDownMenu">
+      <div class="overflow-hidden">
         <div class="z-20 relative grid gap-0 sm:gap-0 ">
           <a
             href="#"
