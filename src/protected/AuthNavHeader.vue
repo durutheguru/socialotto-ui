@@ -1,12 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper" @click.self="clearDropDowns">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
         class="px-6 md:px-0 mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <span class="signupLogo my-auto">Socialotto</span>
-        <div class="menuIcon my-auto">
+        <div class="menuIcon my-auto" @click="dropAuthMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -25,10 +25,10 @@
 
         <div class=" spartan flex my-auto relative right-0 flex justify-end">
           <div class=" anchorDIv" style="width: 60%; ">
-            <router-link
-              class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
-              :to="'/about'"
-              ><svg
+            <div
+              class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
+            >
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
                 fill="none"
@@ -42,7 +42,8 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                 />
               </svg>
-            </router-link>
+              <Notificatons />
+            </div>
             <router-link
               class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
               :to="'/login'"
@@ -62,16 +63,21 @@
                 />
               </svg>
             </router-link>
-            <router-link
-              class="spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
-              :to="'/signup'"
+            <div
+              @click="dropUserMenu"
+              class="relative spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
               <img
                 class="inline-block h-8 w-8 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
               />
-            </router-link>
+              <!-- <div
+                @click="dropUserMenu"
+                class="fixed inset-0 h-full w-full z-10"
+              ></div> -->
+              <AvatarMenu v-if="userMenu" />
+            </div>
           </div>
           <div
             class=" customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
@@ -82,19 +88,22 @@
       </div>
     </div>
     <!-- </div> -->
-    <!-- <hamburger-menu /> -->
-    <router-view></router-view>
+    <auth-hamburger-menu />
+    <router-view @click="clearDropDowns"></router-view>
   </div>
 </template>
 
 <script lang="ts">
-// import { Log, Util } from "@/components/util";
+import { Log, Util } from "@/components/util";
 // import { computed } from "vue";
 import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
+import AvatarMenu from "./AvatarMenu.vue";
+import Notificatons from "./Notifications.vue";
+// import ExpMenu from "./expMenu.vue";
 // import ApiResource from "@/components/core/ApiResource";
-// import store from "../../store/index";
-// import HamburgerMenu from "./HamburgerMenu.vue";
+import store from "../store/index";
+import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -103,7 +112,11 @@ import { Component } from "vue-property-decorator";
 @Component({
   name: "AuthNavHeader",
   components: {
-    // HamburgerMenu,
+    AuthHamburgerMenu,
+    AvatarMenu,
+    Notificatons,
+
+    // ExpMenu,
   },
 })
 export default class AuthNavHeader extends BaseVue {
@@ -113,10 +126,23 @@ export default class AuthNavHeader extends BaseVue {
   //   private mounted() {
   //     Log.info("name of route: " + String(this.$route.name));
   //   }
-  //   private dropMenu() {
-  //     store.commit("setDropMenu", true);
-  //     // Log.info("dropMenu: " + );
-  //   }
+  private dropAuthMenu() {
+    store.commit("setDropAuthMenu", true);
+    // Log.info("dropMenu: " + );
+  }
+  private dropUserMenu() {
+    store.commit("setUserMenu", !this.userMenu);
+    // Log.info("dropMenu: " + );
+  }
+
+  private get userMenu(): boolean {
+    return store.state.userMenu;
+  }
+
+  private clearDropDowns() {
+    store.commit("setUserMenu", false);
+    // Log.info("dropMenu: " + );
+  }
 }
 </script>
 

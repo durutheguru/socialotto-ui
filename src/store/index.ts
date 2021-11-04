@@ -15,7 +15,9 @@ export default new Vuex.Store({
   state : {
     entryUrl : null,
     globalAlert: { show: false, text: "", type: "" },
-    dropMenu: false
+    dropMenu: false,
+    dropAuthMenu: false,
+    userMenu: false,
   },
 
 
@@ -51,6 +53,12 @@ export default new Vuex.Store({
 
     setDropMenu(state, payload) {
       state.dropMenu = payload;
+    },
+    setDropAuthMenu(state, payload) {
+      state.dropAuthMenu = payload;
+    },
+    setUserMenu(state, payload) {
+      state.userMenu = payload;
     }
 
 

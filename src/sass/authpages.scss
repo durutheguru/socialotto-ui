@@ -30,3 +30,17 @@
 .fadein {
   opacity: 1;
 }
+
+.dropDownMenu {
+  box-shadow: 2px 4px 12px rgba(153, 153, 153, 0.1);
+  background-color: #e6f1f4;
+}
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+
+  border-bottom: 5px solid black;
+}
