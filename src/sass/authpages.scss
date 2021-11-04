@@ -35,6 +35,9 @@
   // box-shadow: 2px 4px 12px rgba(153, 153, 153, 0.1);
   box-shadow: 9px 9px 12px rgb(153 153 153 / 10%);
   background-color: #e6f1f4;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
 }
 
 .arrow-up {
@@ -44,4 +47,18 @@
   border-right: 5px solid transparent;
 
   border-bottom: 5px solid black;
+}
+
+.pointy {
+  border-top: 0rem solid transparent;
+  // border-right: 0.4rem solid #e6f1f4;
+  // border-left: 0.5rem solid transparent;
+  // border-bottom: 0.4rem solid #e6f1f4;
+
+  border-right: 0.5rem solid #e6f1f4;
+  border-left: 0.9rem solid transparent;
+  border-bottom: 0.6rem solid #e6f1f4;
+  width: 0px;
+  height: 0px;
+  border-top-right-radius: 5px;
 }
