@@ -1,18 +1,18 @@
 <template>
   <div class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 ">
     <!-- <div class="arrow-up"></div> -->
-    <div class="rounded-lg dropDownMenu">
+    <div class="relative rounded-lg dropDownMenu">
       <div class="rounded-lg shadow-xs overflow-hidden">
         <div class="p-3">
           <div>
             <span class="spartan text-sm font-bold">Notifications</span>
           </div>
-          <div class=" relative w-96">
-            <div class="block">
+          <div class=" relative w-96 whitespace-normal">
+            <div class="">
               <span class="text-xs">Today</span>
               <div class="bg-white rounded-md p-2">
                 <div>
-                  <div class="flex">
+                  <div class="flex mb-2">
                     <div class="mr-2">
                       <svg
                         width="20"
@@ -27,19 +27,21 @@
                         />
                       </svg>
                     </div>
-                    <span class="spartan font-semibold text-sm leading-6"
-                      >This campaign you donated to has ended but the truth is
-                      beans</span
+                    <span class="spartan font-semibold text-sm "
+                      >This campaign you donated to has endeds</span
                     >
                   </div>
 
-                  <div class="relative ">
+                  <div class="relative flex">
                     <p class=" text-sm mb-0 ">
                       Help a father of 3 with money for his kidney surgery in
                       India
                     </p>
-
-                    <!-- <span class="w-4/12">View Details</span> -->
+                    <div class="flex">
+                      <span class="w-4/12 text-xs whitespace-nowrap leading-5"
+                        >View Details</span
+                      >
+                    </div>
                   </div>
                 </div>
               </div>
