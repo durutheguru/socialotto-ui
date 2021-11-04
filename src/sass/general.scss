@@ -57,15 +57,15 @@
   // height: 120px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #d4e7ed;
 }
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #4691a6;
   border-radius: 10px;
   height: 20px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #3b7d8f;
 }
 
 .navheaderPadding {
@@ -74,6 +74,11 @@
 
 .instructionsDisplay {
   display: none;
+}
+
+.notice::-webkit-scrollbar {
+  width: 8px;
+  // height: 120px;
 }
 
 @media (min-width: 1024px) {
