@@ -7,10 +7,11 @@
           <div>
             <span class="spartan text-sm font-bold">Notifications</span>
           </div>
-          <div class=" relative w-96 whitespace-normal">
+          <div class=" relative w-96 whitespace-normal space-y-3.5">
+            <!-- --------------- -->
             <div class="">
               <span class="text-xs">Today</span>
-              <div class="bg-white rounded-md p-2">
+              <div class="bg-white rounded-md p-2.5">
                 <div>
                   <div class="flex mb-2">
                     <div class="mr-2">
@@ -33,12 +34,55 @@
                   </div>
 
                   <div class="relative flex">
-                    <p class=" text-sm mb-0 ">
+                    <p class=" text-sm mb-0 leading-6">
                       Help a father of 3 with money for his kidney surgery in
                       India
                     </p>
-                    <div class="flex">
-                      <span class="w-4/12 text-xs whitespace-nowrap leading-5"
+                    <div class="flex items-end">
+                      <span
+                        class="w-full text-xs whitespace-nowrap leading-5 light-blue-text font-semibold"
+                        >View Details</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ------------------------ -->
+
+            <div class="">
+              <span class="text-xs">Last week</span>
+              <div class="bg-white rounded-md p-2.5">
+                <div>
+                  <div class="flex mb-2">
+                    <div class="mr-2">
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 14C8.85652 14 10.637 13.2625 11.9497 11.9497C13.2625 10.637 14 8.85652 14 7C14 5.14348 13.2625 3.36301 11.9497 2.05025C10.637 0.737498 8.85652 0 7 0C5.14348 0 3.36301 0.737498 2.05025 2.05025C0.737498 3.36301 0 5.14348 0 7C0 8.85652 0.737498 10.637 2.05025 11.9497C3.36301 13.2625 5.14348 14 7 14ZM4.5 5.25C4.5 5.05109 4.57902 4.86032 4.71967 4.71967C4.86032 4.57902 5.05109 4.5 5.25 4.5H9.5C9.65236 4.5001 9.80108 4.54661 9.92636 4.63333C10.0516 4.72004 10.1475 4.84286 10.2013 4.98543C10.255 5.128 10.2641 5.28355 10.2272 5.43139C10.1904 5.57923 10.1094 5.71234 9.995 5.813V5.814L9.982 5.825L9.929 5.875C9.59548 6.20126 9.28631 6.55154 9.004 6.923C8.447 7.654 7.816 8.693 7.474 9.947C7.44813 10.0421 7.40379 10.1311 7.3435 10.2091C7.28321 10.287 7.20817 10.3523 7.12265 10.4012C7.03712 10.4502 6.9428 10.4818 6.84506 10.4943C6.74732 10.5068 6.64808 10.4999 6.553 10.474C6.45792 10.4481 6.36887 10.4038 6.29093 10.3435C6.21299 10.2832 6.14769 10.2082 6.09875 10.1226C6.04982 10.0371 6.01821 9.9428 6.00572 9.84506C5.99324 9.74732 6.00013 9.64808 6.026 9.553C6.434 8.057 7.178 6.846 7.809 6.015L7.82 6H5.25C5.05109 6 4.86032 5.92098 4.71967 5.78033C4.57902 5.63968 4.5 5.44891 4.5 5.25Z"
+                          fill="#FFB900"
+                        />
+                      </svg>
+                    </div>
+                    <span class="spartan font-semibold text-sm "
+                      >The winners of this lottery has been announced</span
+                    >
+                  </div>
+
+                  <div class="relative flex">
+                    <p class=" text-sm mb-0 leading-6">
+                      20 regular and 5 VIP tickets to Wizkid’s MIL concert in
+                      December
+                    </p>
+                    <div class="flex items-end">
+                      <span
+                        class="w-full text-xs whitespace-nowrap leading-5 light-blue-text font-semibold"
                         >View Details</span
                       >
                     </div>
