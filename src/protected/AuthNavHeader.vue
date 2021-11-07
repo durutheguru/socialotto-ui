@@ -25,6 +25,7 @@
 
         <div class=" spartan flex my-auto relative right-0 flex justify-end">
           <div class=" anchorDIv" style="width: 60%; ">
+            <!-- <ExpMenu /> -->
             <!-- -----Notifications----- -->
             <div
               @click="ToggleNotifications"
@@ -85,7 +86,7 @@
                 @click="dropUserMenu"
                 class="fixed inset-0 h-full w-full z-10"
               ></div> -->
-              <AvatarMenu v-if="userMenu" />
+              <avatar-menu v-if="userMenu"></avatar-menu>
             </div>
           </div>
           <div
@@ -141,7 +142,7 @@ export default class AuthNavHeader extends BaseVue {
   private notifications: boolean = false;
   private recentActivities: boolean = false;
 
-  private ToggleNotifications() {
+  private ToggleNotifications(e: any) {
     this.notifications = !this.notifications;
   }
 
