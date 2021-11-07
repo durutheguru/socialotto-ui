@@ -34,6 +34,7 @@
     "connect-history-api-fallback": "^1.6.0",
     "core-js": "^3.6.5",
     "flatpickr": "^4.5.1",
+    "g": "^2.0.1",
     "graphql": "^15.6.1",
     "graphql-tag": "^2.12.5",
     "gulp": "^4.0.2",

@@ -448,7 +448,7 @@ export default class CampaignInputs extends BaseVue {
     this.campaign.targetFunds = "";
     this.fileUploader.uploads = [];
     this.agree = false;
-    (this.$refs["observer"] as any).reset();
+    (this.$refs.observer as any).reset();
 
     Log.info("Done Resetting form...");
   }
