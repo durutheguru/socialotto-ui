@@ -74,19 +74,21 @@
 
             <!-- -----Avatar menu----- -->
             <div
-              @click="dropUserMenu"
-              class="relative spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
+              data-dropdown
+              class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
-              <img
-                class="inline-block h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
-              />
+              <button class="menuAnchor h-full" data-dropdown-button>
+                <img
+                  class="inline-block h-8 w-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt=""
+                />
+              </button>
               <!-- <div
                 @click="dropUserMenu"
                 class="fixed inset-0 h-full w-full z-10"
               ></div> -->
-              <avatar-menu v-if="userMenu"></avatar-menu>
+              <avatar-menu></avatar-menu>
             </div>
           </div>
           <div
@@ -135,9 +137,47 @@ export default class AuthNavHeader extends BaseVue {
   //   private get pageName(): string {
   //     return String(this.$route.name);
   //   }
-  //   private mounted() {
-  //     Log.info("name of route: " + String(this.$route.name));
-  //   }
+  private mounted() {
+    // window.onclick = function(event: Event) {
+    //   const target = event.target as HTMLFormElement;
+    //   if (
+    //     document.getElementsByClassName("dropdown-content")[0].contains(target)
+    //   ) {
+    //     // inside
+    //   } else {
+    //     // outside
+    //     alert("foo");
+    //   }
+    // };
+    // Log.info("name of route: " + String(this.$route.name));
+
+    document.addEventListener("click", (e: Event) => {
+      const target = e.target as HTMLFormElement;
+      const isDropDownButton = target.matches("[data-dropdown-button]");
+
+      if (!isDropDownButton && target.closest("[data-dropdown]") != null) {
+        Log.info("isDropDown: false oh" + JSON.stringify(isDropDownButton));
+        return;
+      }
+
+      let currentDropdown: any;
+
+      if (isDropDownButton) {
+        Log.info("isDropDown: true");
+        currentDropdown = target.closest("[data-dropdown]");
+        currentDropdown.classList.toggle("active");
+        Log.info("class: added");
+      }
+
+      document
+        .querySelectorAll("[data-dropdown].active")
+        .forEach((dropdown) => {
+          if (dropdown === currentDropdown) return;
+          dropdown.classList.remove("active");
+          Log.info("class: removed");
+        });
+    });
+  }
 
   private notifications: boolean = false;
   private recentActivities: boolean = false;

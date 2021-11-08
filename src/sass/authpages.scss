@@ -62,3 +62,21 @@
   height: 0px;
   border-top-right-radius: 5px;
 }
+
+.dropdown {
+  position: relative;
+}
+
+.dd-menu {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+.dropdown.active > .menuAnchor + .dd-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}

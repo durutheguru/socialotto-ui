@@ -2,7 +2,7 @@
   <div
     id="avatarMenu"
     ref="avatarMenu"
-    class="absolute right-0 top-0 object-right-top  mt-10 w-44 max-w-xs sm:px-0 "
+    class="dd-menu  right-0 top-0 object-right-top  mt-10 w-44 max-w-xs sm:px-0 "
   >
     <div class="pointy ml-auto"></div>
 
