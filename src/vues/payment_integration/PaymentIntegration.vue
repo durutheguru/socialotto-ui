@@ -23,16 +23,16 @@ export default class PaymentIntegration extends Vue {
         MonnifySDK.initialize({
             amount: 5000,
             currency: 'NGN',
-            reference: '83095398y290e8dh94893289',
+            reference: Util.uuidv5(new Date().getTime() + '', true),
             customerName: 'John Doe',
             customerEmail: 'monnify@monnify.com',
-            apiKey: 'MK_TEST_TFKP8BY6JQ',
-            contractCode: '3843765994',
-            paymentDescription: 'Test Pay',
+            apiKey: process.env.VUE_APP_MONNIFY_API_KEY,
+            contractCode: process.env.VUE_APP_MONNIFY_CONTRACT_CODE,
+            paymentDescription: '<<Payment for Lottery>>',
             isTestMode: true,
             metadata: {
-                name: 'Damilare',
-                age: 45
+                name: 'User name',
+                email: 'User email'
             },
             paymentMethods: ['CARD', 'ACCOUNT_TRANSFER'],
 

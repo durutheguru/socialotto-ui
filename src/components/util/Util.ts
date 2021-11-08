@@ -2,7 +2,9 @@ import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-
 import { ApolloError } from "apollo-client";
 import moment from "moment";
 import { Constants } from ".";
-import store from "../../store/index"
+import store from "../../store/index";
+import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 
 
 export default class Util {
@@ -273,6 +275,11 @@ export default class Util {
         zoneOffset = zoneOffset.replace(':', '');
 
         return `${formattedTime.substring(0, 16)} ${zoneOffset}`;
+    }
+
+
+    public static uuidv5(input?: string, pad?: boolean): string {
+        return uuidv5(input || '', Util.uuid()) + (pad ? Util.uuid() : '');
     }
 
 
