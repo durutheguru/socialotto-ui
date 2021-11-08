@@ -19,7 +19,8 @@
         <a href="#" class="">Logout</a>
       </div>
     </div> -->
-    <div class="box p-6 w-40 mx-auto my-10  bg-pink-500">
+    <button class="p-4 bg-blue-100" @click="toggleDiv">toggle</button>
+    <div v-if="toggle" class="box p-6 w-40 mx-auto my-10  bg-pink-500">
       Click outside me to hide me
     </div>
   </div>
@@ -32,17 +33,33 @@ import { Component, Vue } from "vue-property-decorator";
   name: "ExpMenu",
 })
 export default class ExpMenu extends Vue {
-  private mounted() {
-    document.addEventListener("click", function(event) {
-      let box = document.querySelector(".box") as HTMLFormElement;
-      const etarget = event.target as HTMLFormElement;
+  private toggle: boolean = false;
 
-      if (etarget.closest(".box")) {
-        return;
+  private toggleDiv() {
+    this.toggle = !this.toggle;
+  }
+
+  private clickOutside(event: any) {
+    let box = document.querySelector(".box") as HTMLFormElement;
+    const etarget = event.target as HTMLFormElement;
+
+    if (etarget.closest(".box")) {
+      return;
+    }
+    console.log("box:", box);
+    box.classList.add("box-hidden");
+  }
+
+  private mounted() {
+    document.addEventListener("click", (event) => {
+      if (this.toggle === false) {
+        this.clickOutside(event);
       }
-      console.log("box:", box);
-      box.classList.add("box-hidden");
     });
+  }
+
+  private unmounted() {
+    document.removeEventListener("click", this.clickOutside);
   }
 }
 </script>
