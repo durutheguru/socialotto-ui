@@ -77,7 +77,11 @@
               data-dropdown
               class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
-              <button class="menuAnchor h-full" data-dropdown-button>
+              <button
+                class="menuAnchor h-full"
+                data-dropdown-button
+                @click="dropUserMenu"
+              >
                 <img
                   class="inline-block h-8 w-8 rounded-full"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -88,7 +92,9 @@
                 @click="dropUserMenu"
                 class="fixed inset-0 h-full w-full z-10"
               ></div> -->
-              <avatar-menu></avatar-menu>
+              <transition name="fade">
+                <AvatarMenu v-if="userMenu" />
+              </transition>
             </div>
           </div>
           <div
@@ -117,6 +123,7 @@ import RecentActivities from "./RecentActivities.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
+// import ClickOutside from 'vue-click-outside';
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -132,12 +139,28 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
 
     // ExpMenu,
   },
+  directives: {
+    // ClickOutside
+  },
 })
 export default class AuthNavHeader extends BaseVue {
   //   private get pageName(): string {
   //     return String(this.$route.name);
   //   }
+
+  private closeWhenClickedOutside(event: Event) {
+    let etarget = event.target as HTMLFormElement;
+    if (!etarget.closest(".dd-menu")) {
+      Log.info("Clicked outside");
+      console.log(this.userMenu);
+      store.commit("setUserMenu", false);
+    }
+  }
+
   private mounted() {
+    // if (this.userMenu === true) {
+    document.addEventListener("click", this.closeWhenClickedOutside);
+    // }
     // window.onclick = function(event: Event) {
     //   const target = event.target as HTMLFormElement;
     //   if (
@@ -150,33 +173,32 @@ export default class AuthNavHeader extends BaseVue {
     //   }
     // };
     // Log.info("name of route: " + String(this.$route.name));
+    // document.addEventListener("click", (e: Event) => {
+    //   const target = e.target as HTMLFormElement;
+    //   const isDropDownButton = target.matches("[data-dropdown-button]");
+    //   if (!isDropDownButton && target.closest("[data-dropdown]") != null) {
+    //     Log.info("isDropDown: false oh" + JSON.stringify(isDropDownButton));
+    //     return;
+    //   }
+    //   let currentDropdown: any;
+    //   if (isDropDownButton) {
+    //     Log.info("isDropDown: true");
+    //     currentDropdown = target.closest("[data-dropdown]");
+    //     currentDropdown.classList.toggle("active");
+    //     Log.info("class: added");
+    //   }
+    //   document
+    //     .querySelectorAll("[data-dropdown].active")
+    //     .forEach((dropdown) => {
+    //       if (dropdown === currentDropdown) return;
+    //       dropdown.classList.remove("active");
+    //       Log.info("class: removed");
+    //     });
+    // });
+  }
 
-    document.addEventListener("click", (e: Event) => {
-      const target = e.target as HTMLFormElement;
-      const isDropDownButton = target.matches("[data-dropdown-button]");
-
-      if (!isDropDownButton && target.closest("[data-dropdown]") != null) {
-        Log.info("isDropDown: false oh" + JSON.stringify(isDropDownButton));
-        return;
-      }
-
-      let currentDropdown: any;
-
-      if (isDropDownButton) {
-        Log.info("isDropDown: true");
-        currentDropdown = target.closest("[data-dropdown]");
-        currentDropdown.classList.toggle("active");
-        Log.info("class: added");
-      }
-
-      document
-        .querySelectorAll("[data-dropdown].active")
-        .forEach((dropdown) => {
-          if (dropdown === currentDropdown) return;
-          dropdown.classList.remove("active");
-          Log.info("class: removed");
-        });
-    });
+  private beforeDestroy() {
+    document.removeEventListener("click", this.closeWhenClickedOutside);
   }
 
   private notifications: boolean = false;

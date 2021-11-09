@@ -69,14 +69,22 @@
 
 .dd-menu {
   position: absolute;
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-  transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+  // opacity: 0;
+  // transform: translateY(-10px);
+  // pointer-events: none;
+  // transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
 }
 
-.dropdown.active > .menuAnchor + .dd-menu {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
+// .dropdown.active > .menuAnchor + .dd-menu {
+//   opacity: 1;
+//   transform: translateY(0);
+//   pointer-events: auto;
+// }
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
