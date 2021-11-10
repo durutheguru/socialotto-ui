@@ -81,6 +81,28 @@
 //   pointer-events: auto;
 // }
 
+// .menuAnchor:checked ~ .dd-menu {
+//   opacity: 1;
+//   transform: translateY(0);
+//   pointer-events: auto;
+// }
+
+// .menuAnchor:not(:checked) ~ .dd-menu {
+//   position: absolute;
+//   opacity: 0;
+//   transform: translateY(-10px);
+//   pointer-events: none;
+//   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+// }
+
+// .profile-menu-button:focus.dd-menu {
+//   position: absolute;
+//   opacity: 0;
+//   transform: translateY(-10px);
+//   pointer-events: none;
+//   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+// }
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

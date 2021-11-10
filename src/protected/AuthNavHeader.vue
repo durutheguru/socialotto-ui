@@ -28,10 +28,10 @@
             <!-- <ExpMenu /> -->
             <!-- -----Notifications----- -->
             <div
-              @click="ToggleNotifications"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
+                @click="ToggleNotifications"
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
                 fill="none"
@@ -45,7 +45,9 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                 />
               </svg>
-              <Notificatons v-if="notifications" />
+              <transition name="fade">
+                <Notificatons v-if="notifications" />
+              </transition>
             </div>
 
             <!-- -----Recent activities----- -->
@@ -68,8 +70,9 @@
                   stroke-linejoin="round"
                 />
               </svg>
-
-              <RecentActivities v-if="recentActivities" />
+              <transition name="fade">
+                <RecentActivities v-if="recentActivities" />
+              </transition>
             </div>
 
             <!-- -----Avatar menu----- -->
@@ -88,6 +91,24 @@
                   alt=""
                 />
               </button>
+              <!-- <input
+                type="checkbox"
+                id="profile-menu-label"
+                class="menuAnchor h-6 w-6 hidden"
+                data-dropdown-button
+                @click="dropUserMenu"
+              />
+
+              <label class="profile-menu-label" for="profile-menu-label">
+                <button class="profile-menu-button">
+                  <img
+                    class="inline-block h-8 w-8 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                </button>
+              </label> -->
+
               <!-- <div
                 @click="dropUserMenu"
                 class="fixed inset-0 h-full w-full z-10"
@@ -139,27 +160,37 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
 
     // ExpMenu,
   },
-  directives: {
-    // ClickOutside
-  },
 })
 export default class AuthNavHeader extends BaseVue {
   //   private get pageName(): string {
   //     return String(this.$route.name);
   //   }
 
-  private closeWhenClickedOutside(event: Event) {
-    let etarget = event.target as HTMLFormElement;
-    if (!etarget.closest(".dd-menu")) {
-      Log.info("Clicked outside");
-      console.log(this.userMenu);
-      store.commit("setUserMenu", false);
-    }
+  // private closeWhenClickedOutside(event: Event) {
+  //   let etarget = event.target as HTMLFormElement;
+  //   if (!etarget.closest(".dd-menu")) {
+  //     Log.info("Clicked outside");
+  //     console.log(this.userMenu);
+  //     store.commit("setUserMenu", false);
+  //   }
+  // }
+
+  private noticeMenu: any = document.getElementById("noticeMenu");
+
+  private close(e: Event) {
+    const etarget = e.target;
+    Log.info("ETarget: " + etarget);
+    // if (etarget.id != "noticeMenu") {
+    //   // Log.info("clickOutside");
+    //   Log.info(`clickOutside. ${etarget.id}`);
+    // } else {
+    //   Log.info(`clickInside. ${etarget.id}`);
+    // }
   }
 
   private mounted() {
     // if (this.userMenu === true) {
-    document.addEventListener("click", this.closeWhenClickedOutside);
+    document.addEventListener("click", this.close);
     // }
     // window.onclick = function(event: Event) {
     //   const target = event.target as HTMLFormElement;
@@ -197,15 +228,19 @@ export default class AuthNavHeader extends BaseVue {
     // });
   }
 
-  private beforeDestroy() {
-    document.removeEventListener("click", this.closeWhenClickedOutside);
-  }
+  // private beforeDestroy() {
+  //   document.removeEventListener("click", this.closeWhenClickedOutside);
+  // }
 
   private notifications: boolean = false;
   private recentActivities: boolean = false;
 
-  private ToggleNotifications(e: any) {
+  private ToggleNotifications() {
     this.notifications = !this.notifications;
+  }
+
+  private hide() {
+    this.notifications = false;
   }
 
   private ToggleRecentActivities() {

@@ -67,9 +67,9 @@ import store from "../store/index";
   },
 })
 export default class AvatarMenu extends Vue {
-  $refs!: {
-    avatarMenu: HTMLFormElement;
-  };
+  // $refs!: {
+  //   avatarMenu: HTMLFormElement;
+  // };
   private avatarMenu: any = document.getElementById("avatarMenu");
 
   private mounted() {
