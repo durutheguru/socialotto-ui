@@ -55,6 +55,7 @@
     "replace-in-file": "^6.2.0",
     "sass": "^1.26.10",
     "sass-loader": "^8.0.2",
+    "serve": "^13.0.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "uuid": "^8.3.2",
     "vee-validate": "^3.3.9",
