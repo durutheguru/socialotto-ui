@@ -65,6 +65,9 @@ const routes = [
     path: '/auth_home',
     name: "AuthNavHeader",
     component: AuthNavHeader,
+    meta: {
+      skipAuth: true,
+    },
    
     children: [
       {

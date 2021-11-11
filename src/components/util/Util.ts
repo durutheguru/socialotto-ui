@@ -9,6 +9,34 @@ export default class Util {
 
 
     private static throttleObject: any = {};
+
+    public static clickOutside(menu: string, menuTrigger: string, storeMutation: string){
+        let elem = document.getElementById(menu) as HTMLElement;
+        let rect = elem.getBoundingClientRect();
+        let rectx = Math.floor(rect.x);
+        let recty = Math.floor(rect.y);
+        let recth = Math.floor(rect.height);
+        let rectw = Math.floor(rect.width);
+        let rectxspan = rectx + rectw;
+        let rectyspan = recty + recth;
+    
+        window.onclick = function(event: any) {
+          let x = event.clientX;
+          let y = event.clientY;
+        //   let arr = ["recentsToggle", "noticeToggle", "dropdown"]
+        //   arr.includes(event.target.id) 
+    
+          // if(self.menu)
+         
+    
+          if (
+            event.target.id != menuTrigger && 
+            (x < rectx || x > rectxspan || y < recty || y > rectyspan)
+          ) {
+            store.commit(storeMutation, false);
+          }
+        };
+    }
     
     public static handleGlobalAlert(show: boolean, type: string, text: string) {
         store.commit("setGlobalAlert", { show, type, text });

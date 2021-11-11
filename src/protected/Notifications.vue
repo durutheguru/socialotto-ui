@@ -1,5 +1,8 @@
 <template>
-  <div class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 ">
+  <div
+    id="noticeMenu"
+    class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 "
+  >
     <div class="pointy ml-auto"></div>
     <div class="relative dropDownMenu">
       <div class=" shadow-xs overflow-hidden">
@@ -115,11 +118,18 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Util } from "@/components/util";
 
 @Component({
   name: "Notifications",
 })
-export default class Notifications extends Vue {}
+export default class Notifications extends Vue {
+  private noticeMenu: any = document.getElementById("noticeMenu");
+
+  private mounted() {
+    Util.clickOutside("noticeMenu", "noticeToggle", "setIsNoticeMenu");
+  }
+}
 </script>
 
 <style scoped></style>

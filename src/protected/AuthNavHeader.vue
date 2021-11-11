@@ -25,14 +25,16 @@
 
         <div class=" spartan flex my-auto relative right-0 flex justify-end">
           <div class=" anchorDIv" style="width: 60%; ">
+            <!-- <ExpMenu /> -->
             <!-- -----Notifications----- -->
             <div
               @click="ToggleNotifications"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
+                id="noticeToggle"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
+                class="h-6 w-6 m-1 cursor-pointer"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -45,7 +47,7 @@
                 />
               </svg>
               <transition name="fade">
-                <Notificatons v-if="notifications" />
+                <Notificatons v-if="noticeMenu" />
               </transition>
             </div>
 
@@ -54,36 +56,62 @@
               @click="ToggleRecentActivities"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
-              <svg
-                width="22"
-                height="20"
-                viewBox="0 0 22 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21 10H17L14 19L8 1L5 10H1"
-                  stroke="#767676"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <div>
+                <svg
+                  id="recentsToggle"
+                  class="m-1.5 cursor-pointer"
+                  width="22"
+                  height="20"
+                  viewBox="0 0 22 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 10H17L14 19L8 1L5 10H1"
+                    stroke="#767676"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
               <transition name="fade">
-                <RecentActivities v-if="recentActivities" />
+                <RecentActivities v-if="recentsMenu" />
               </transition>
             </div>
 
             <!-- -----Avatar menu----- -->
             <div
               @click="dropUserMenu"
-              class="relative spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
+              data-dropdown
+              class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
-              <img
-                class="inline-block h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+              <button class="menuAnchor h-full" data-dropdown-button>
+                <img
+                  id="dropdown"
+                  class="inline-block h-8 w-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt=""
+                />
+              </button>
+              <!-- <input
+                type="checkbox"
+                id="profile-menu-label"
+                class="menuAnchor h-6 w-6 hidden"
+                data-dropdown-button
+                @click="dropUserMenu"
               />
+
+              <label class="profile-menu-label" for="profile-menu-label">
+                <button class="profile-menu-button">
+                  <img
+                    class="inline-block h-8 w-8 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                </button>
+              </label> -->
+
               <!-- <div
                 @click="dropUserMenu"
                 class="fixed inset-0 h-full w-full z-10"
@@ -119,6 +147,7 @@ import RecentActivities from "./RecentActivities.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
+// import ClickOutside from 'vue-click-outside';
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -136,22 +165,36 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
   },
 })
 export default class AuthNavHeader extends BaseVue {
-  //   private get pageName(): string {
-  //     return String(this.$route.name);
-  //   }
-  //   private mounted() {
-  //     Log.info("name of route: " + String(this.$route.name));
-  //   }
+  private created() {
+    store.commit("setUserMenu", false);
+    store.commit("setIsNoticeMenu", false);
+    store.commit("setIsRecentsMenu", false);
+  }
 
-  private notifications: boolean = false;
-  private recentActivities: boolean = false;
+  // private notifications: boolean = false;
+
+  // private recentActivities: boolean = false;
+
+  private get userMenu(): boolean {
+    return store.state.userMenu;
+  }
+
+  private get noticeMenu(): boolean {
+    return store.state.isNoticeMenu;
+  }
+
+  private get recentsMenu(): boolean {
+    return store.state.isRecentsMenu;
+  }
 
   private ToggleNotifications() {
-    this.notifications = !this.notifications;
+    // this.notifications = !this.notifications;
+    store.commit("setIsNoticeMenu", !this.noticeMenu);
   }
 
   private ToggleRecentActivities() {
-    this.recentActivities = !this.recentActivities;
+    // this.recentActivities = !this.recentActivities;
+    store.commit("setIsRecentsMenu", !this.recentsMenu);
   }
 
   private dropAuthMenu() {
@@ -161,10 +204,6 @@ export default class AuthNavHeader extends BaseVue {
   private dropUserMenu() {
     store.commit("setUserMenu", !this.userMenu);
     // Log.info("dropMenu: " + );
-  }
-
-  private get userMenu(): boolean {
-    return store.state.userMenu;
   }
 
   private clearDropDowns() {

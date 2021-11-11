@@ -32,8 +32,8 @@
 }
 
 .dropDownMenu {
-  // box-shadow: 2px 4px 12px rgba(153, 153, 153, 0.1);
-  box-shadow: 9px 9px 12px rgb(153 153 153 / 10%);
+  box-shadow: 2px 4px 12px rgba(153, 153, 153, 0.1);
+  // box-shadow: 9px 9px 12px rgb(153 153 153 / 10%);
   background-color: #e6f1f4;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
@@ -63,6 +63,49 @@
   border-top-right-radius: 5px;
 }
 
+<<<<<<< HEAD
+=======
+.dropdown {
+  position: relative;
+}
+
+.dd-menu {
+  position: absolute;
+  // opacity: 0;
+  // transform: translateY(-10px);
+  // pointer-events: none;
+  // transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+}
+
+// .dropdown.active > .menuAnchor + .dd-menu {
+//   opacity: 1;
+//   transform: translateY(0);
+//   pointer-events: auto;
+// }
+
+// .menuAnchor:checked ~ .dd-menu {
+//   opacity: 1;
+//   transform: translateY(0);
+//   pointer-events: auto;
+// }
+
+// .menuAnchor:not(:checked) ~ .dd-menu {
+//   position: absolute;
+//   opacity: 0;
+//   transform: translateY(-10px);
+//   pointer-events: none;
+//   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+// }
+
+// .profile-menu-button:focus.dd-menu {
+//   position: absolute;
+//   opacity: 0;
+//   transform: translateY(-10px);
+//   pointer-events: none;
+//   transition: opacity 150ms ease-in-out, transform 150ms ease-in-out;
+// }
+
+>>>>>>> feature/authHeader-test
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
