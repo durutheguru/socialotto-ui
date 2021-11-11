@@ -38,7 +38,7 @@
                   <div class="w-full mb-6">
                     <label
                       for="email"
-                      class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                      class="spartan font-medium text-dark block text-sm text-gray-700"
                       >Campaign title</label
                     >
                     <div class="mt-1">
