@@ -16,8 +16,11 @@ export default new Vuex.Store({
     entryUrl : null,
     globalAlert: { show: false, text: "", type: "" },
     dropMenu: false,
+    isNoticeMenu: false,
+    isRecentsMenu: false,
     dropAuthMenu: false,
     userMenu: false,
+    lastEventTarget: "",
   },
 
 
@@ -59,6 +62,15 @@ export default new Vuex.Store({
     },
     setUserMenu(state, payload) {
       state.userMenu = payload;
+    },
+    setIsNoticeMenu(state, payload){
+      state.isNoticeMenu = payload;
+    },
+    setLastEventTarget(state, payload){
+      state.lastEventTarget = payload;
+    },
+    setIsRecentsMenu(state, payload){
+      state.isRecentsMenu = payload;
     }
 
 

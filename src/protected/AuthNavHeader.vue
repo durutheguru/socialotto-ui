@@ -28,12 +28,13 @@
             <!-- <ExpMenu /> -->
             <!-- -----Notifications----- -->
             <div
+              @click="ToggleNotifications"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
-                @click="ToggleNotifications"
+                id="noticeToggle"
                 xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
+                class="h-6 w-6 m-1 cursor-pointer"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -46,7 +47,7 @@
                 />
               </svg>
               <transition name="fade">
-                <Notificatons v-if="notifications" />
+                <Notificatons v-if="noticeMenu" />
               </transition>
             </div>
 
@@ -55,37 +56,39 @@
               @click="ToggleRecentActivities"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
-              <svg
-                width="22"
-                height="20"
-                viewBox="0 0 22 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M21 10H17L14 19L8 1L5 10H1"
-                  stroke="#767676"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+              <div>
+                <svg
+                  id="recentsToggle"
+                  class="m-1.5 cursor-pointer"
+                  width="22"
+                  height="20"
+                  viewBox="0 0 22 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M21 10H17L14 19L8 1L5 10H1"
+                    stroke="#767676"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
               <transition name="fade">
-                <RecentActivities v-if="recentActivities" />
+                <RecentActivities v-if="recentsMenu" />
               </transition>
             </div>
 
             <!-- -----Avatar menu----- -->
             <div
+              @click="dropUserMenu"
               data-dropdown
               class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
-              <button
-                class="menuAnchor h-full"
-                data-dropdown-button
-                @click="dropUserMenu"
-              >
+              <button class="menuAnchor h-full" data-dropdown-button>
                 <img
+                  id="dropdown"
                   class="inline-block h-8 w-8 rounded-full"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""
@@ -162,89 +165,36 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
   },
 })
 export default class AuthNavHeader extends BaseVue {
-  //   private get pageName(): string {
-  //     return String(this.$route.name);
-  //   }
-
-  // private closeWhenClickedOutside(event: Event) {
-  //   let etarget = event.target as HTMLFormElement;
-  //   if (!etarget.closest(".dd-menu")) {
-  //     Log.info("Clicked outside");
-  //     console.log(this.userMenu);
-  //     store.commit("setUserMenu", false);
-  //   }
-  // }
-
-  private noticeMenu: any = document.getElementById("noticeMenu");
-
-  private close(e: Event) {
-    const etarget = e.target;
-    Log.info("ETarget: " + etarget);
-    // if (etarget.id != "noticeMenu") {
-    //   // Log.info("clickOutside");
-    //   Log.info(`clickOutside. ${etarget.id}`);
-    // } else {
-    //   Log.info(`clickInside. ${etarget.id}`);
-    // }
+  private created() {
+    store.commit("setUserMenu", false);
+    store.commit("setIsNoticeMenu", false);
+    store.commit("setIsRecentsMenu", false);
   }
 
-  private mounted() {
-    // if (this.userMenu === true) {
-    document.addEventListener("click", this.close);
-    // }
-    // window.onclick = function(event: Event) {
-    //   const target = event.target as HTMLFormElement;
-    //   if (
-    //     document.getElementsByClassName("dropdown-content")[0].contains(target)
-    //   ) {
-    //     // inside
-    //   } else {
-    //     // outside
-    //     alert("foo");
-    //   }
-    // };
-    // Log.info("name of route: " + String(this.$route.name));
-    // document.addEventListener("click", (e: Event) => {
-    //   const target = e.target as HTMLFormElement;
-    //   const isDropDownButton = target.matches("[data-dropdown-button]");
-    //   if (!isDropDownButton && target.closest("[data-dropdown]") != null) {
-    //     Log.info("isDropDown: false oh" + JSON.stringify(isDropDownButton));
-    //     return;
-    //   }
-    //   let currentDropdown: any;
-    //   if (isDropDownButton) {
-    //     Log.info("isDropDown: true");
-    //     currentDropdown = target.closest("[data-dropdown]");
-    //     currentDropdown.classList.toggle("active");
-    //     Log.info("class: added");
-    //   }
-    //   document
-    //     .querySelectorAll("[data-dropdown].active")
-    //     .forEach((dropdown) => {
-    //       if (dropdown === currentDropdown) return;
-    //       dropdown.classList.remove("active");
-    //       Log.info("class: removed");
-    //     });
-    // });
+  // private notifications: boolean = false;
+
+  // private recentActivities: boolean = false;
+
+  private get userMenu(): boolean {
+    return store.state.userMenu;
   }
 
-  // private beforeDestroy() {
-  //   document.removeEventListener("click", this.closeWhenClickedOutside);
-  // }
+  private get noticeMenu(): boolean {
+    return store.state.isNoticeMenu;
+  }
 
-  private notifications: boolean = false;
-  private recentActivities: boolean = false;
+  private get recentsMenu(): boolean {
+    return store.state.isRecentsMenu;
+  }
 
   private ToggleNotifications() {
-    this.notifications = !this.notifications;
-  }
-
-  private hide() {
-    this.notifications = false;
+    // this.notifications = !this.notifications;
+    store.commit("setIsNoticeMenu", !this.noticeMenu);
   }
 
   private ToggleRecentActivities() {
-    this.recentActivities = !this.recentActivities;
+    // this.recentActivities = !this.recentActivities;
+    store.commit("setIsRecentsMenu", !this.recentsMenu);
   }
 
   private dropAuthMenu() {
@@ -254,10 +204,6 @@ export default class AuthNavHeader extends BaseVue {
   private dropUserMenu() {
     store.commit("setUserMenu", !this.userMenu);
     // Log.info("dropMenu: " + );
-  }
-
-  private get userMenu(): boolean {
-    return store.state.userMenu;
   }
 
   private clearDropDowns() {

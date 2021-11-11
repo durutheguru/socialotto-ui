@@ -1,6 +1,5 @@
 <template>
   <div
-    ref="noticeMenu"
     id="noticeMenu"
     class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 "
   >
@@ -125,23 +124,10 @@ import { Log, Util } from "@/components/util";
   name: "Notifications",
 })
 export default class Notifications extends Vue {
-  // $refs!: {
-  //   noticeMenu: HTMLElement;
-  // };
+  private noticeMenu: any = document.getElementById("noticeMenu");
+
   private mounted() {
-    // Log.info(String(this.$refs));
-    // let elem = document.getElementById("noticeMenu") as HTMLElement;
-    // let rect = elem.getBoundingClientRect();
-    // let rectx = Math.floor(rect.x);
-    // let recty = Math.floor(rect.y);
-    // let recth = Math.floor(rect.height);
-    // let rectw = Math.floor(rect.width);
-    // window.onclick = function(event: any) {
-    //   let x = event.clientX;
-    //   let y = event.clientY;
-    //   if (x <= rectx || x > rectx + rectw) {
-    //   }
-    // };
+    Util.clickOutside("noticeMenu", "noticeToggle", "setIsNoticeMenu");
   }
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
   <div
     id="avatarMenu"
-    ref="avatarMenu"
     class="dd-menu  right-0 top-0 object-right-top  mt-10 w-44 max-w-xs sm:px-0 "
   >
     <div class="pointy ml-auto"></div>
@@ -73,15 +72,7 @@ export default class AvatarMenu extends Vue {
   private avatarMenu: any = document.getElementById("avatarMenu");
 
   private mounted() {
-    // Log.info(String(...this.$refs));
-    //     this.element.addEventListener("click", function() {
-    //       Log.info("click");
-    //     });
-    // window.addEventListener("mouseup", (e) => {
-    //     if (e.target.id  != this.avatarMenu) {
-    //   store.commit("setDropAuthMenu", false);
-    //     }
-    // });
+    Util.clickOutside("avatarMenu", "dropdown", "setUserMenu");
   }
 }
 </script>
