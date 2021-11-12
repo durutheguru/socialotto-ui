@@ -1,11 +1,25 @@
 <template>
   <div class="">
     <div class="flex spartan font-medium text-sm mb-12 w-full ">
-      <a class="mr-10 underline" @click="view = 'info'">Info</a>
-      <span class="mr-10" @click="view = 'Campaign Status'"
-        >Campaign Status</span
+      <button
+        :class="{ underline: view === 'info' }"
+        class="mr-10 cursor-pointer focus:underline"
+        @click="view = 'info'"
       >
-      <span class="mr-10" @click="view = 'Updates'">Updates</span>
+        Info
+      </button>
+      <button
+        class="mr-10 cursor-pointer focus:underline"
+        @click="view = 'Campaign Status'"
+      >
+        Campaign Status
+      </button>
+      <button
+        class="mr-10 cursor-pointer focus:underline"
+        @click="view = 'Updates'"
+      >
+        Updates
+      </button>
     </div>
 
     <div>
