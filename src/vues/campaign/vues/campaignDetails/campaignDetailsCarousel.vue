@@ -1,33 +1,34 @@
 <template>
   <div class="">
+    <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
     <div class="slideshow-container">
       <div class="mySlides fade">
         <div class="numbertext">1 / 3</div>
-        <img src="img_nature_wide.jpg" style="width:100%" />
+        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
         <div class="text">Caption Text</div>
       </div>
 
       <div class="mySlides fade">
         <div class="numbertext">2 / 3</div>
-        <img src="img_snow_wide.jpg" style="width:100%" />
+        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
         <div class="text">Caption Two</div>
       </div>
 
       <div class="mySlides fade">
         <div class="numbertext">3 / 3</div>
-        <img src="img_mountains_wide.jpg" style="width:100%" />
+        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
         <div class="text">Caption Three</div>
       </div>
 
-      <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      <a class="prev" @click="plusSlides(-1)">&#10094;</a>
+      <a class="next" @click="plusSlides(1)">&#10095;</a>
     </div>
     <br />
 
     <div style="text-align:center">
-      <span class="dot" onclick="currentSlide(1)"></span>
-      <span class="dot" onclick="currentSlide(2)"></span>
-      <span class="dot" click="currentSlide(3)"></span>
+      <span class="dot" @click="currentSlide(1)"></span>
+      <span class="dot" @click="currentSlide(2)"></span>
+      <span class="dot" @click="currentSlide(3)"></span>
     </div>
   </div>
 </template>
@@ -39,64 +40,72 @@ import { Component, Vue } from "vue-property-decorator";
   name: "CampaignDetailsCarousel",
 })
 export default class CampaignDetailsCarousel extends Vue {
+  private plusSlides: any;
+  private currentSlide: any;
+  private showSlides: any;
+
   private mounted() {
-    // var slideIndex = 1;
-    // showSlides(slideIndex);
-    // function plusSlides(n: number) {
-    //   showSlides((slideIndex += n));
-    // }
-    // function currentSlide(n: number) {
-    //   showSlides((slideIndex = n));
-    // }
-    // function showSlides(n: number) {
-    //   let i;
-    //   let slides = document.getElementsByClassName(
-    //     "mySlides"
-    //   ) as HTMLCollectionOf<HTMLElement>;
-    //   let dots = document.getElementsByClassName("dot") as HTMLCollectionOf<
-    //     HTMLElement
-    //   >;
-    //   if (n > slides.length) {
-    //     slideIndex = 1;
-    //   }
-    //   if (n < 1) {
-    //     slideIndex = slides.length;
-    //   }
-    //   for (i = 0; i < slides.length; i++) {
-    //     slides[i].style.display = "none";
-    //   }
-    //   for (i = 0; i < dots.length; i++) {
-    //     dots[i].className = dots[i].className.replace(" active", "");
-    //   }
-    //   slides[slideIndex - 1].style.display = "block";
-    //   dots[slideIndex - 1].className += " active";
-    // }
+    let slideIndex = 1;
+
+    this.showSlides = (n: number) => {
+      let i;
+      let slides = document.getElementsByClassName(
+        "mySlides"
+      ) as HTMLCollectionOf<HTMLElement>;
+      let dots = document.getElementsByClassName("dot") as HTMLCollectionOf<
+        HTMLElement
+      >;
+      if (n > slides.length) {
+        slideIndex = 1;
+      }
+      if (n < 1) {
+        slideIndex = slides.length;
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    };
+
+    this.plusSlides = (n: number) => {
+      this.showSlides((slideIndex += n));
+    };
+
+    this.currentSlide = (n: number) => {
+      this.showSlides((slideIndex = n));
+    };
+
+    this.showSlides(slideIndex);
   }
-  private slideIndex: number = 1;
-  private self = this;
-  private showSlides(n: number) {
-    let i;
-    let slides = document.getElementsByClassName(
-      "mySlides"
-    ) as HTMLCollectionOf<HTMLElement>;
-    let dots = document.getElementsByClassName("dot") as HTMLCollectionOf<
-      HTMLElement
-    >;
-    if (n > slides.length) {
-      this.slideIndex = 1;
-    }
-    if (n < 1) {
-      this.slideIndex = slides.length;
-    }
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[this.slideIndex - 1].style.display = "block";
-    dots[this.slideIndex - 1].className += " active";
-  }
+  // private slideIndex: number = 1;
+  // // private self = this;
+  // private showSlides(n: number) {
+  //   let i;
+  //   let slides = document.getElementsByClassName(
+  //     "mySlides"
+  //   ) as HTMLCollectionOf<HTMLElement>;
+  //   let dots = document.getElementsByClassName("dot") as HTMLCollectionOf<
+  //     HTMLElement
+  //   >;
+  //   if (n > slides.length) {
+  //     this.slideIndex = 1;
+  //   }
+  //   if (n < 1) {
+  //     this.slideIndex = slides.length;
+  //   }
+  //   for (i = 0; i < slides.length; i++) {
+  //     slides[i].style.display = "none";
+  //   }
+  //   for (i = 0; i < dots.length; i++) {
+  //     dots[i].className = dots[i].className.replace(" active", "");
+  //   }
+  //   slides[this.slideIndex - 1].style.display = "block";
+  //   dots[this.slideIndex - 1].className += " active";
+  // }
 
   // this.showSlides(this.slideIndex);
 
