@@ -1,25 +1,55 @@
 <template>
-  <div class="flex flex-col">
-    <div></div>
-    <div class="flex border-b-2 border-gray-200 justify-between">
-      <span>N246, 000 raised</span>
-      <span>32 days left</span>
+  <div class="flex flex-col ml-10 spartan">
+    <div>
+      <div class="relative pt-1">
+        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+          <div
+            style="width: 30%"
+            class="
+        shadow-none
+        flex flex-col
+        text-center
+        whitespace-nowrap
+        text-white
+        justify-center
+        progressbar-green
+        rounded-full
+      "
+          ></div>
+        </div>
+      </div>
     </div>
-    <div class="flex flex-col border-b-2 border-gray-200">
-      <div class="flex  justify-between">
-        <span>Campaign goal</span>
-        <span>N700,000</span>
+
+    <!-- -------------- -->
+    <div
+      class="h-14 items-center flex border-b-2 border-gray-200 justify-between"
+    >
+      <span class=" text-base font-semibold text-gray-600 "
+        >N246, 000 <span class="font-medium text-gray-400">raised</span></span
+      >
+      <span class="text-base font-semibold text-gray-600 "
+        >32 <span class="font-medium text-gray-400">days left</span></span
+      >
+    </div>
+    <div class="flex flex-col border-b-2 border-gray-200 pb-8 pt-2">
+      <div class="h-14 items-center flex  justify-between ">
+        <span class="text-sm font-medium text-gray-400">Campaign goal</span>
+        <span class="text-base font-semibold text-gray-600 ">N700,000</span>
       </div>
       <!-- ----------- -->
-      <div class="flex  justify-between">
-        <span>Contributors</span>
-        <span>234 people</span>
+      <div class="h-14 items-center flex  justify-between">
+        <span class="text-sm font-medium text-gray-400">Contributors</span>
+        <span class="text-base font-semibold text-gray-600 ">234 people</span>
       </div>
       <!-- ----------- -->
-      <div class="flex  justify-between">
-        <span>Contributors</span>
-        <div class="flex">
-          <span>234 people</span>
+      <div class="h-14 items-center flex  justify-between">
+        <span class="text-sm font-medium text-gray-400"
+          >Campaign Authenticity</span
+        >
+        <div class="flex bg-blue-70 p-3 items-center rounded-md">
+          <span class="text-base font-semibold text-gray-600 mr-3"
+            >SOS Mr Pisvh.pdf</span
+          >
 
           <div class="bg-blue-200 rounded-md">
             <svg
@@ -53,6 +83,25 @@
               />
             </svg>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 h-14 mt-8">
+      <div class="flex items-center  justify-start">
+        <div
+          class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
+        >
+          <span class="text-white text-base font-semi-bold cursor-pointer"
+            >Donate</span
+          >
+        </div>
+      </div>
+      <div class="flex items-center  justify-end">
+        <div
+          class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
+        >
+          <span class="text-base font-semi-bold cursor-pointer">Share</span>
         </div>
       </div>
     </div>

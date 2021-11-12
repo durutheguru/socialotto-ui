@@ -18,6 +18,7 @@
       </div>
     </div>
     <CampaignDetailsSec2 />
+    <CampaignDetailsSec3 />
     <Incentives />
     <Footer />
   </div>
@@ -30,6 +31,7 @@ import Footer from "@/components/Footer.vue";
 import CampaignDetailsDonateNShare from "./CampaignDetailsDonateNShare.vue";
 import CampaignDetailsCarousel from "./campaignDetailsCarousel.vue";
 import CampaignDetailsSec2 from "./CampaignDetailsSec2.vue";
+import CampaignDetailsSec3 from "./CampaignDetailsSec3.vue";
 @Component({
   name: "CampaignDetails",
   components: {
@@ -38,6 +40,7 @@ import CampaignDetailsSec2 from "./CampaignDetailsSec2.vue";
     CampaignDetailsCarousel,
     CampaignDetailsDonateNShare,
     CampaignDetailsSec2,
+    CampaignDetailsSec3,
   },
 })
 export default class CampaignDetails extends Vue {}
