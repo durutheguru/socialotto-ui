@@ -1,22 +1,34 @@
 <template>
   <div class="">
-    <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
+    <!-- <img
+      src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/default-img-md-bg.jpeg"
+      style="width:100%"
+    /> -->
     <div class="slideshow-container">
       <div class="mySlides fade">
         <div class="numbertext">1 / 3</div>
-        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
+        <img
+          src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/default-img-md-bg.jpeg"
+          style="width:100%; height: 360px;"
+        />
         <div class="text">Caption Text</div>
       </div>
 
       <div class="mySlides fade">
         <div class="numbertext">2 / 3</div>
-        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
+        <img
+          src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/images.jpg"
+          style="width:100% height: 360px;"
+        />
         <div class="text">Caption Two</div>
       </div>
 
       <div class="mySlides fade">
         <div class="numbertext">3 / 3</div>
-        <img src="i.stack.imgur.com/GsDIl.jpg" style="width:100%" />
+        <img
+          src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/images.jpg"
+          style="width:100% height: 360px;"
+        />
         <div class="text">Caption Three</div>
       </div>
 
@@ -68,8 +80,11 @@ export default class CampaignDetailsCarousel extends Vue {
         dots[i].className = dots[i].className.replace(" active", "");
       }
       slides[slideIndex - 1].style.display = "block";
+
       dots[slideIndex - 1].className += " active";
     };
+
+    this.showSlides(slideIndex);
 
     this.plusSlides = (n: number) => {
       this.showSlides((slideIndex += n));
@@ -78,8 +93,6 @@ export default class CampaignDetailsCarousel extends Vue {
     this.currentSlide = (n: number) => {
       this.showSlides((slideIndex = n));
     };
-
-    this.showSlides(slideIndex);
   }
   // private slideIndex: number = 1;
   // // private self = this;
