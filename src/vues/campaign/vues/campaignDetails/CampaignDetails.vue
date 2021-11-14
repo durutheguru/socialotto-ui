@@ -8,10 +8,10 @@
               20 regular and 5 VIP tickets to Wizkid’s MIL concert in December
             </h3>
           </div>
-          <div class="col-span-6 md:col-span-3">
+          <div class="col-span-4 col-start-2 lg:col-span-3">
             <CampaignDetailsCarousel />
           </div>
-          <div class=" col-span-6 md:col-span-2">
+          <div class=" col-span-4 col-start-2 lg:col-span-2 order-last">
             <CampaignDetailsDonateNShare />
           </div>
         </div>

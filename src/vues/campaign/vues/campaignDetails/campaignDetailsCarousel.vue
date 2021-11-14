@@ -5,7 +5,6 @@
       :key="index"
       :index="index"
       :visibleSlide="visibleSlide"
-      :direction="direction"
     >
       <!-- <img class="w-full" :src="slide" alt="" /> -->
 
@@ -54,6 +53,19 @@
         />
       </svg>
     </button>
+    <br />
+
+    <div style="text-align:center" class="absolute w-full bottom-0 mb-3">
+      <div>
+        <button
+          v-for="(slide, index) in slides"
+          :key="index"
+          class="dot"
+          :class="visibleSlide === index ? 'activeDot' : 'dot'"
+          @click="currentSlide(index)"
+        ></button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,10 +87,11 @@ export default class CampaignDetailsCarousel extends Vue {
   ];
   private visibleSlide = 0;
 
-  private direction = "";
+  private currentSlide(n: number) {
+    this.visibleSlide = n;
+  }
 
   private next() {
-    this.direction = "left";
     if (this.visibleSlide >= this.slides.length - 1) {
       this.visibleSlide = 0;
     } else {
@@ -87,7 +100,6 @@ export default class CampaignDetailsCarousel extends Vue {
   }
 
   private prev() {
-    this.direction = "right";
     if (this.visibleSlide <= 0) {
       this.visibleSlide = this.slides.length - 1;
     } else {
@@ -98,7 +110,30 @@ export default class CampaignDetailsCarousel extends Vue {
 </script>
 
 <style scoped>
-/* * {
-  box-sizing: border-box;
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.4s ease;
+  position: relative;
+}
+/* .active,
+.dot:focus {
+  background-color: #717171;
 } */
+.dot:hover {
+  background-color: #717171;
+}
+
+.activeDot {
+  background-color: #717171;
+}
+
+.inactiveDot {
+  background-color: blue;
+}
 </style>

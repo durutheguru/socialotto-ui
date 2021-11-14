@@ -63,13 +63,13 @@ export default new Vuex.Store({
     setUserMenu(state, payload) {
       state.userMenu = payload;
     },
-    setIsNoticeMenu(state, payload){
+    setIsNoticeMenu(state, payload) {
       state.isNoticeMenu = payload;
     },
-    setLastEventTarget(state, payload){
+    setLastEventTarget(state, payload) {
       state.lastEventTarget = payload;
     },
-    setIsRecentsMenu(state, payload){
+    setIsRecentsMenu(state, payload) {
       state.isRecentsMenu = payload;
     }
 

@@ -10,7 +10,7 @@ export default class Util {
 
     private static throttleObject: any = {};
 
-    public static clickOutside(menu: string, menuTrigger: string, storeMutation: string){
+    public static clickOutside(menu: string, menuTrigger: string, storeMutation: string) {
         let elem = document.getElementById(menu) as HTMLElement;
         let rect = elem.getBoundingClientRect();
         let rectx = Math.floor(rect.x);
@@ -20,7 +20,7 @@ export default class Util {
         let rectxspan = rectx + rectw;
         let rectyspan = recty + recth;
     
-        window.onclick = function(event: any) {
+        window.onclick = (event: any) => {
           let x = event.clientX;
           let y = event.clientY;
         //   let arr = ["recentsToggle", "noticeToggle", "dropdown"]
@@ -30,7 +30,7 @@ export default class Util {
          
     
           if (
-            event.target.id != menuTrigger && 
+            event.target.id !== menuTrigger && 
             (x < rectx || x > rectxspan || y < recty || y > rectyspan)
           ) {
             store.commit(storeMutation, false);

@@ -1,5 +1,5 @@
 <template>
-  <transition :name="direction">
+  <transition name="fade">
     <div v-show="visibleSlide === index" class="rounded-md carousel-slide">
       <slot></slot>
     </div>
@@ -24,16 +24,37 @@ import { Component, Vue } from "vue-property-decorator";
       required: true,
       type: Number,
     },
-    direction: {
-      required: true,
-      type: String,
-    },
   },
 })
 export default class CarouselSlides extends Vue {}
 </script>
 
 <style scoped>
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .carousel-slide {
   position: absolute;
   top: 0;
@@ -41,7 +62,7 @@ export default class CarouselSlides extends Vue {}
   left: 0;
   right: 0;
 }
-.left-enter-active {
+/* .left-enter-active {
   animation: leftInAnimation 0.4s ease-in-out;
 }
 
@@ -87,5 +108,5 @@ export default class CarouselSlides extends Vue {}
   to {
     transform: translateX(100%);
   }
-}
+} */
 </style>
