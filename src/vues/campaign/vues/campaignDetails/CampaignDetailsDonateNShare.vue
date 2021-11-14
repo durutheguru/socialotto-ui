@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col ml-10 spartan">
+  <div class="flex flex-col lg:ml-10 spartan">
     <div>
       <div class="relative pt-1">
         <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">

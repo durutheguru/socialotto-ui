@@ -1,6 +1,6 @@
 <template>
-  <div class="ml-10">
-    <h1 class="spartan text-grey-light text-sm font-medium mb-8">FAQ</h1>
+  <div class="lg:ml-10">
+    <h1 class="spartan text-grey-light text-sm font-medium mb-12">FAQ</h1>
     <div class="bg-dark-blue rounded-md p-4">
       <h1 class="spartan font-semibold text-white text-base mb-7">
         Other info
