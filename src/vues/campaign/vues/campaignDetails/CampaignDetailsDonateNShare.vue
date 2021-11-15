@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col lg:ml-10 spartan">
     <div>
-      <div class="relative pt-1">
+      <div class="relative">
         <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
           <div
             style="width: 30%"
@@ -88,7 +88,7 @@
     </div>
 
     <div class="grid grid-cols-2 h-14 mt-8">
-      <div class="flex items-center  justify-start">
+      <div class="flex items-end  justify-start">
         <div
           class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
         >
@@ -97,7 +97,7 @@
           >
         </div>
       </div>
-      <div class="flex items-center  justify-end">
+      <div class="flex items-end  justify-end">
         <div
           class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
         >

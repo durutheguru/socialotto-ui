@@ -17,7 +17,8 @@
     </carousel-slides>
     <button
       @click="next"
-      class="absolute right-0  top-1/3 px-2 py-4 bg-transparent-black cursor-pointer  hover:text-white"
+      style="top: calc(50% - 35px);"
+      class="absolute right-0  px-2 py-4 bg-transparent-black cursor-pointer  hover:text-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +37,8 @@
     </button>
     <button
       @click="prev"
-      class="absolute left-0 top-1/3 px-2 py-4 bg-transparent-black cursor-pointer hover:text-white"
+      style="top: calc(50% - 35px);"
+      class="absolute left-0  px-2 py-4 bg-transparent-black cursor-pointer hover:text-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

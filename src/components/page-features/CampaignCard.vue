@@ -30,7 +30,9 @@
             <div
               class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
-              <span>Details</span>
+              <router-link :to="`/campaign/${result.id}`"
+                ><span>Details</span></router-link
+              >
             </div>
           </div>
         </div>

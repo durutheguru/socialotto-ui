@@ -30,12 +30,16 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Util } from "@/components/util";
+import CampaignService from "@/services/campaign/CampaignService";
+import ApiResource from "@/components/core/ApiResource";
 import Incentives from "@/components/Incentives.vue";
 import Footer from "@/components/Footer.vue";
 import CampaignDetailsDonateNShare from "./CampaignDetailsDonateNShare.vue";
 import CampaignDetailsCarousel from "./campaignDetailsCarousel.vue";
 import CampaignDetailsSec2 from "./CampaignDetailsSec2.vue";
 import CampaignDetailsSec3 from "./CampaignDetailsSec3.vue";
+
 @Component({
   name: "CampaignDetails",
   components: {
@@ -47,7 +51,27 @@ import CampaignDetailsSec3 from "./CampaignDetailsSec3.vue";
     CampaignDetailsSec3,
   },
 })
-export default class CampaignDetails extends Vue {}
+export default class CampaignDetails extends Vue {
+  private campaignId: string = this.$route.params.id;
+  private campaignDetails: ApiResource = ApiResource.create();
+
+  private mounted() {
+    this.campaignDetails.loading = true;
+    this.campaignDetails.error = "";
+
+    CampaignService.getCampaignDetails(
+      this.campaignId,
+      (response: any) => {
+        this.campaignDetails.loading = false;
+        Log.info("campaignDetails In: " + JSON.stringify(response));
+      },
+      (error: any) => {
+        this.campaignDetails.loading = false;
+        Log.error("campaignDetails Error: " + JSON.stringify(error));
+      }
+    );
+  }
+}
 </script>
 
 <style scoped></style>
