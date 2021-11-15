@@ -54,8 +54,12 @@ import CampaignDetailsSec3 from "./CampaignDetailsSec3.vue";
 export default class CampaignDetails extends Vue {
   private campaignId: string = this.$route.params.id;
   private campaignDetails: ApiResource = ApiResource.create();
+  get campaignDetailsId() {
+    return this.campaignId;
+  }
 
   private mounted() {
+    console.log("campaignDetailsId: " + this.campaignDetailsId);
     this.campaignDetails.loading = true;
     this.campaignDetails.error = "";
 
@@ -63,7 +67,7 @@ export default class CampaignDetails extends Vue {
       this.campaignId,
       (response: any) => {
         this.campaignDetails.loading = false;
-        Log.info("campaignDetails In: " + JSON.stringify(response));
+        Log.info("campaignDetails In: " + JSON.stringify(response.data));
       },
       (error: any) => {
         this.campaignDetails.loading = false;

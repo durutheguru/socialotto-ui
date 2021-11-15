@@ -44,7 +44,7 @@
       <!-- ----------- -->
       <div class="h-14 items-center flex  justify-between">
         <span class="text-sm font-medium text-gray-400"
-          >Campaign Authenticity</span
+          >Campaign Documents</span
         >
         <div class="flex bg-blue-70 p-3 items-center rounded-md">
           <span class="text-base font-semibold text-gray-600 mr-3"
