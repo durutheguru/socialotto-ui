@@ -1,8 +1,8 @@
 <template>
   <div class="h-full relative rounded-md">
     <carousel-slides
-      v-for="(slide, index) in slides"
-      :key="index"
+      v-for="(slide, index) in images"
+      :key="slide.reference"
       :index="index"
       :visibleSlide="visibleSlide"
     >
@@ -11,7 +11,7 @@
       <div
         class="h-full bg-cover  bg-center rounded-md"
         :style="{
-          'background-image': 'url(' + slide + ')',
+          'background-image': `url(${slide.publicUrl})`,
         }"
       ></div>
     </carousel-slides>
@@ -60,8 +60,8 @@
     <div style="text-align:center" class="absolute w-full bottom-0 mb-3">
       <div>
         <button
-          v-for="(slide, index) in slides"
-          :key="index"
+          v-for="(slide, index) in images"
+          :key="slide.reference"
           class="dot"
           :class="visibleSlide === index ? 'activeDot' : 'dot'"
           @click="currentSlide(index)"
@@ -72,7 +72,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { Log } from "@/components/util";
 import CarouselSlides from "./CarouselSlides.vue";
 
 @Component({
@@ -80,13 +81,20 @@ import CarouselSlides from "./CarouselSlides.vue";
   components: {
     CarouselSlides,
   },
+  // props: {
+  //   images: Array,
+  // }
 })
 export default class CampaignDetailsCarousel extends Vue {
-  private slides = [
-    "https://picsum.photos/id/237/500/300",
-    "https://picsum.photos/id/238/500/300",
-    "https://picsum.photos/id/239/500/300",
-  ];
+  // private slides = [
+  //   "https://picsum.photos/id/237/500/300",
+  //   "https://picsum.photos/id/238/500/300",
+  //   "https://picsum.photos/id/239/500/300",
+  // ];
+  @Prop()
+  private images!: any[];
+  // private images!: Array<any>;
+
   private visibleSlide = 0;
 
   private currentSlide(n: number) {
@@ -94,16 +102,18 @@ export default class CampaignDetailsCarousel extends Vue {
   }
 
   private next() {
-    if (this.visibleSlide >= this.slides.length - 1) {
+    if (this.visibleSlide >= this.images.length - 1) {
       this.visibleSlide = 0;
     } else {
       this.visibleSlide++;
     }
+
+    // Log.info("");
   }
 
   private prev() {
     if (this.visibleSlide <= 0) {
-      this.visibleSlide = this.slides.length - 1;
+      this.visibleSlide = this.images.length - 1;
     } else {
       this.visibleSlide--;
     }

@@ -121,6 +121,14 @@ export default class Util {
         return arr.length && obj && obj.publicUrl ? obj.publicUrl : defaultBackground;
     }
 
+    // public static getPublicUrl(obj: any) {
+        
+        
+         
+
+    //     return obj && obj.publicUrl 
+    // }
+
 
     public static deepGet(parent: any, path: string) {
         const paths = path.split('.');

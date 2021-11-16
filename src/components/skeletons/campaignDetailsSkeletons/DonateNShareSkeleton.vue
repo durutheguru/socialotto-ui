@@ -2,8 +2,10 @@
   <div class="flex flex-col lg:ml-10 spartan">
     <div>
       <div class="relative">
-        <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
-          <div
+        <div
+          class="animate-pulse overflow-hidden h-2 text-xs flex rounded bg-gray-200"
+        >
+          <!-- <div
             :style="`width: ${(246000 * 100) / 700000}%`"
             class="
         shadow-none
@@ -14,44 +16,46 @@
         justify-center
         progressbar-green
         rounded-full
+        animate-pulse
+        
       "
-          ></div>
+          ></div> -->
         </div>
       </div>
     </div>
 
     <!-- -------------- -->
     <div
-      class="h-14 items-center flex border-b-2 border-gray-200 justify-between"
+      class="animate-pulse h-14 items-center flex border-b-2 border-gray-200 justify-between"
     >
-      <span class=" text-base font-semibold text-gray-600 "
+      <!-- <span class=" text-base font-semibold text-gray-600 "
         >N246, 000 <span class="font-medium text-gray-400">raised</span></span
       >
       <span class="text-base font-semibold text-gray-600 "
         >32 <span class="font-medium text-gray-400">days left</span></span
-      >
+      > -->
     </div>
     <div class="flex flex-col border-b-2 border-gray-200 pb-8 pt-2">
-      <div class="h-14 items-center flex  justify-between ">
-        <span class="text-sm font-medium text-gray-400">Campaign goal</span>
-        <span class="text-base font-semibold text-gray-600 ">N700,000</span>
+      <div class="animate-pulse h-14 items-center flex  justify-between ">
+        <!-- <span class="text-sm font-medium text-gray-400">Campaign goal</span>
+        <span class="text-base font-semibold text-gray-600 ">N700,000</span> -->
       </div>
       <!-- ----------- -->
-      <div class="h-14 items-center flex  justify-between">
-        <span class="text-sm font-medium text-gray-400">Contributors</span>
-        <span class="text-base font-semibold text-gray-600 ">234 people</span>
+      <div class="animate-pulse h-14 items-center flex  justify-between">
+        <!-- <span class="text-sm font-medium text-gray-400">Contributors</span>
+        <span class="text-base font-semibold text-gray-600 ">234 people</span> -->
       </div>
       <!-- ----------- -->
-      <div class="h-14 items-center flex  justify-between">
-        <span class="text-sm font-medium text-gray-400"
+      <div class="animate-pulse h-14 items-center flex  justify-between">
+        <!-- <span class="text-sm font-medium text-gray-400"
           >Campaign Documents</span
-        >
-        <div class="flex bg-blue-70 p-3 items-center rounded-md">
-          <span class="text-base font-semibold text-gray-600 mr-3"
+        > -->
+        <div class="animate-pulse flex bg-blue-70 p-3 items-center rounded-md">
+          <!-- <span class="text-base font-semibold text-gray-600 mr-3"
             >SOS Mr Pisvh.pdf</span
-          >
+          > -->
 
-          <div class="bg-blue-200 rounded-md">
+          <!-- <div class="bg-blue-200 rounded-md">
             <svg
               class="m-1"
               width="20"
@@ -82,7 +86,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -90,18 +94,18 @@
     <div class="grid grid-cols-2 h-14 mt-8">
       <div class="flex items-end  justify-start">
         <div
-          class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
+          class="animate-pulse bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
         >
-          <span class="text-white text-base font-semi-bold cursor-pointer"
+          <!-- <span class="text-white text-base font-semi-bold cursor-pointer"
             >Donate</span
-          >
+          > -->
         </div>
       </div>
       <div class="flex items-end  justify-end">
         <div
-          class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
+          class="animate-pulse bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
         >
-          <span class="text-base font-semi-bold cursor-pointer">Share</span>
+          <!-- <span class="text-base font-semi-bold cursor-pointer">Share</span> -->
         </div>
       </div>
     </div>
@@ -112,9 +116,9 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: "CampaignDetailsDonateNShare",
+  name: "DonateNShareSkeleton",
 })
-export default class CampaignDetailsDonateNShare extends Vue {}
+export default class DonateNShareSkeleton extends Vue {}
 </script>
 
 <style scoped></style>

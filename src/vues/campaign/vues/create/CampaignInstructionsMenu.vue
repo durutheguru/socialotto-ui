@@ -29,7 +29,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import ChevronDown from "@/components/svg/ChevronDown.vue";
 import ChevronUp from "@/components/svg/ChevronUp.vue";
-import CampaignInstructionsList from "@/components/page-features/CampaignInstructionsList.vue";
+import CampaignInstructionsList from "./CampaignInstructionsList.vue";
 
 @Component({
   name: "CampaignInstructionsMenu",

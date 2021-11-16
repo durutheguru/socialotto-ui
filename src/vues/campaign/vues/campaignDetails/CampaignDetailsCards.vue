@@ -10,7 +10,8 @@
         <div
           v-if="
             $apollo.queries.searchCampaigns.loading ||
-              $apollo.queries.searchLotteries.loading
+              $apollo.queries.searchLotteries.loading ||
+              loading
           "
           class=" auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
         >
@@ -80,12 +81,15 @@ import { searchCampaigns } from "@/services/campaign/campaign.query";
 import { ApolloError } from "apollo-client";
 import { Log, Util } from "@/components/util";
 
-import LotteryCard from "@/components/page-features/LotteryCard.vue";
-import CampaignCard from "@/components/page-features/CampaignCard.vue";
+import LotteryCard from "../../../lottery/LotteryCard.vue";
+import CampaignCard from "../../CampaignCard.vue";
 import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
 
 @Component({
   name: "CampaignDetailsSec3",
+  props: {
+    loading: Boolean,
+  },
   components: {
     CampaignCard,
     CardSkeleton,
@@ -105,7 +109,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
       },
 
       result({ data }) {
-        Log.info("Search Lotteries Data: " + JSON.stringify(data));
+        // Log.info("Search Lotteries Data: " + JSON.stringify(data));
         this.siteQuery.lotteryData = data.searchLotteries;
       },
 
@@ -129,7 +133,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
       },
 
       result({ data }) {
-        Log.info("Search Campaigns Data: " + JSON.stringify(data));
+        // Log.info("Search Campaigns Data: " + JSON.stringify(data));
         this.siteQuery.campaignData = data.searchCampaigns;
       },
 
@@ -154,7 +158,7 @@ export default class CampaignDetailsSec3 extends Vue {
   };
 
   private mounted() {
-    Log.info("joined Array: " + JSON.stringify(searchLotteries));
+    // Log.info("joined Array: " + JSON.stringify(searchLotteries));
   }
 
   get lotteriesNcampaigns() {
@@ -163,13 +167,13 @@ export default class CampaignDetailsSec3 extends Vue {
       this.siteQuery.campaignData
     );
 
-    Log.info("Unsorted Merged Data: " + JSON.stringify(mergedData));
+    // Log.info("Unsorted Merged Data: " + JSON.stringify(mergedData));
 
     mergedData.sort((o1: any, o2: any) => {
       return o1.name > o2.name ? -1 : 1;
     });
 
-    Log.info("Sorted Merged Data: " + JSON.stringify(mergedData));
+    // Log.info("Sorted Merged Data: " + JSON.stringify(mergedData));
 
     return mergedData;
     // return JSON.stringify(this.$apollo.queries.searchLotteries);

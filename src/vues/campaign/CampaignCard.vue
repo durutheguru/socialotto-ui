@@ -30,9 +30,9 @@
             <div
               class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
-              <router-link :to="`/campaign/${result.id}`"
-                ><span>Details</span></router-link
-              >
+              <div @click="showCampaignDetails(result)">
+                <span>Details</span>
+              </div>
             </div>
           </div>
         </div>
@@ -55,7 +55,16 @@ import BaseVue from "../../components/BaseVue";
     },
   },
 })
-export default class CampaignCard extends BaseVue {}
+export default class CampaignCard extends BaseVue {
+  // private scrollToTop = () => {
+  //   const page = document.getElementById("campaignDetails") as HTMLElement;
+  //   page.scroll(0, 0);
+  // };
+  private showCampaignDetails(campaign: any) {
+    this.$router.push(`/campaign/${campaign.id}`);
+    // this.scrollToTop;
+  }
+}
 </script>
 
 <style scoped></style>

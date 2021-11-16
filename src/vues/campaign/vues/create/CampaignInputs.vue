@@ -335,7 +335,7 @@ import { Component } from "vue-property-decorator";
 import FileUploader from "@/components/file-uploader/FileUploader";
 import { Log, Constants, Util } from "@/components/util";
 import CampaignService from "@/services/campaign/CampaignService";
-import CampaignInstructionsMenu from "@/components/page-features/CampaignInstructionsMenu.vue";
+import CampaignInstructionsMenu from "./CampaignInstructionsMenu.vue";
 import ApiResource from "@/components/core/ApiResource";
 import BaseVue from "@/components/BaseVue";
 // import ExpMenu from "../../../../protected/expMenu.vue";

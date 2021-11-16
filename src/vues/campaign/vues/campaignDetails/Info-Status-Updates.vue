@@ -30,25 +30,22 @@
         </h3>
         <div class="font-normal text-base">
           <p class="mb-10">
-            Aliqua id fugiat nostrud irure ex duis ea quis id quis ad et. Sunt
-            qui esse pariatur duis deserunt mollit dolore cillum minim tempor
-            enim. Elit aute irure tempor cupidatat incididunt sint deserunt ut
-            voluptate aute id deserunt nisi.
+            {{ campaignDescription }}
           </p>
 
-          <p>
+          <!-- <p>
             Elit aute irure tempor cupidatat incididunt sint deserunt ut
             voluptate aute id deserunt nisi. Aliqua id fugiat nostrud irure ex
             duis ea quis id quis ad et. Sunt qui esse pariatur duis deserunt
             mollit dolore cillum minim tempor enim.
-          </p>
+          </p> -->
         </div>
       </div>
 
       <!-- --------Campaign Status---------- -->
       <div v-if="view === 'Campaign Status'" class="spartan text-black">
-        <h3 class="spartan font-normal text-xl mb-8 text-black">
-          Active
+        <h3 class="spartan font-normal text-xl mb-8 text-black capitalize ">
+          {{ campaignStatus }}
         </h3>
       </div>
 
@@ -89,6 +86,10 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   name: "InfoStatusUpdates",
+  props: {
+    campaignStatus: String,
+    campaignDescription: String,
+  },
 })
 export default class InfoStatusUpdates extends Vue {
   private view: string = "info";
