@@ -16,7 +16,7 @@
         >
           <div class="mb-auto flex justify-end relative">
             <div
-              class="cursor-pointer block animate-pulse h-11 w-20  rounded-lg flex justify-center items-center"
+              class=" block animate-pulse h-11 w-20  rounded-lg flex justify-center items-center"
             >
               <!-- <span>Lottery</span> -->
             </div>
@@ -37,7 +37,7 @@
           </div>
           <div class="mt-0 flex items-center">
             <div
-              class="cursor-pointer animate-pulse block h-11 w-full buyLotteryBtn flex justify-center items-center active:translate-y-2"
+              class=" animate-pulse block h-11 w-full buyLotteryBtn flex justify-center items-center active:translate-y-2"
             >
               <!-- <span>Buy Ticket</span> -->
             </div>
@@ -45,7 +45,7 @@
 
           <div class="mt-6 flex justify-center">
             <div
-              class="cursor-pointer animate-pulse h-6 w-20 flex justify-center items-center"
+              class=" animate-pulse h-6 w-20 flex justify-center items-center"
             >
               <!-- <span>Details</span> -->
             </div>

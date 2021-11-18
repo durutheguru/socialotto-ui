@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import BaseVue from "../BaseVue";
+import BaseVue from "../../components/BaseVue";
 
 @Component({
   name: "LotteryCard",
