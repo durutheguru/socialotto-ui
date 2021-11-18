@@ -27,7 +27,7 @@
           class=" spartan flex my-auto relative right-0 flex justify-end"
           style="height: 40px; width: 552px;"
         >
-          <div class=" anchorDIv">
+          <div class="spartan anchorDIv">
             <router-link
               class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
               :to="'/about'"
@@ -47,7 +47,7 @@
             >
           </div>
           <div
-            class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+            class="spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             Support a campaign
           </div>
