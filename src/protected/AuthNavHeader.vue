@@ -5,7 +5,9 @@
       <div
         class="px-6 md:px-0 mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <span class="signupLogo my-auto">Socialotto</span>
+        <router-link class="my-auto focus:outline-none" :to="'/home'">
+          <span class="signupLogo ">Socialotto</span>
+        </router-link>
         <div class="menuIcon my-auto" @click="dropAuthMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
