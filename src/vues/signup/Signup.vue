@@ -5,7 +5,7 @@
     >
       <div class="signupMain bg-white py-8 px-10  sm:px-10 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
-          <h2 class="mt-3 text-center mainHeader">
+          <h2 class="mt-3 text-center mainHeader spartan">
             Signup to Socialotto
           </h2>
         </div>
@@ -396,9 +396,9 @@ a {
   color: #767676;
 }
 
-.spartan {
+/* .spartan {
   font-family: "Spartan", sans-serif;
-}
+} */
 
 .menuIcon {
   display: none;
@@ -483,7 +483,7 @@ a {
   /* top: 49px; */
   /* margin-bottom: 40px; */
   font-family: "Spartan", sans-serif;
-  font-style: normal;
+
   font-weight: 600;
   font-size: 24px;
   line-height: 100%;
