@@ -10,8 +10,7 @@
         <div class="mx-auto grid grid-cols-6 lg:grid-cols-5">
           <div class="col-span-6 lg:col-span-3">
             <h3 class="spartan font-semibold text-xl">
-              20 regular and 5 VIP tickets to Wizkid’s MIL concert in December
-              {{ campaignDetails.data.id }}
+              {{ campaignDetails.data.name }}
             </h3>
           </div>
           <div
@@ -30,7 +29,11 @@
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <DonateNShareSkeleton v-if="campaignDetails.loading" />
-            <CampaignDetailsDonateNShare v-else />
+            <CampaignDetailsDonateNShare
+              :totalFundsRaised="campaignDetails.data.totalFundsRaised"
+              :targetFunds="campaignDetails.data.targetFunds"
+              v-else
+            />
           </div>
         </div>
       </div>

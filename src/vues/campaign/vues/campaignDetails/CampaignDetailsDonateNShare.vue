@@ -4,7 +4,7 @@
       <div class="relative">
         <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
           <div
-            :style="`width: ${(246000 * 100) / 700000}%`"
+            :style="`width: ${(totalFundsRaised * 100) / targetFunds}%`"
             class="
         shadow-none
         flex flex-col
@@ -25,22 +25,25 @@
       class="h-14 items-center flex border-b-2 border-gray-200 justify-between"
     >
       <span class=" text-base font-semibold text-gray-600 "
-        >N246, 000 <span class="font-medium text-gray-400">raised</span></span
+        >N {{ totalFundsRaised }}
+        <span class="font-medium text-gray-400">raised</span></span
       >
-      <span class="text-base font-semibold text-gray-600 "
+      <!-- <span class="text-base font-semibold text-gray-600 "
         >32 <span class="font-medium text-gray-400">days left</span></span
-      >
+      > -->
     </div>
     <div class="flex flex-col border-b-2 border-gray-200 pb-8 pt-2">
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400">Campaign goal</span>
-        <span class="text-base font-semibold text-gray-600 ">N700,000</span>
+        <span class="text-base font-semibold text-gray-600 "
+          >N{{ targetFunds }}</span
+        >
       </div>
       <!-- ----------- -->
-      <div class="h-14 items-center flex  justify-between">
+      <!-- <div class="h-14 items-center flex  justify-between">
         <span class="text-sm font-medium text-gray-400">Contributors</span>
         <span class="text-base font-semibold text-gray-600 ">234 people</span>
-      </div>
+      </div> -->
       <!-- ----------- -->
       <div class="h-14 items-center flex  justify-between">
         <span class="text-sm font-medium text-gray-400"
@@ -113,6 +116,10 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   name: "CampaignDetailsDonateNShare",
+  props: {
+    targetFunds: Number,
+    totalFundsRaised: Number,
+  },
 })
 export default class CampaignDetailsDonateNShare extends Vue {}
 </script>
