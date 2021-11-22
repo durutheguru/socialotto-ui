@@ -25,6 +25,11 @@ export default function() {
     //     }
     //   })
 
+    // Validator.extend('truthy', {
+    //     getMessage: field  => 'The ' + field + ' value is not truthy.',
+    //     validate: value => !! value
+    //   });
+
 
     extend('required', {
         validate(value: string): any {
