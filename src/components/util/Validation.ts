@@ -66,12 +66,23 @@ export default function() {
     message: 'The {_field_} field must not have more than {length} characters'
     });
 
+  
+
     extend('numeric', {
     ...numeric, 
 
     computesRequired: true,
     message: 'The {_field_} field input must be a number'
     });
+
+
+    // extend('confirm', {
+    //     validate(value, { password}) {
+    //         return value !== password;
+    //     },
+    //     params: ['password'],
+    //     message: 'The {_field_} field must not have more than {length} characters'
+    //     });
 
     // extend('minmax', {
     //     validate(value, { min, max }) {
