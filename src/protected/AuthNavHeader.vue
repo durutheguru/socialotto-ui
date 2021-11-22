@@ -5,7 +5,10 @@
       <div
         class="px-6 md:px-0 mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <router-link class="my-auto focus:outline-none" :to="'/home'">
+        <router-link
+          class="my-auto focus:outline-none no-underline"
+          :to="'/home'"
+        >
           <span class="signupLogo ">Socialotto</span>
         </router-link>
         <div class="menuIcon my-auto" @click="dropAuthMenu">
