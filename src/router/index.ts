@@ -65,6 +65,19 @@ const routes = [
           skipAuth: true,
         },
       },
+
+
+
+
+
+  {
+    path: '/user_activation',
+    name: 'UserActivation',
+    component: () => import('@/vues/user_activation/UserActivation.vue'),
+    meta: {
+      skipAuth: true,
+    },
+  }
    
     ]
   },
@@ -98,19 +111,6 @@ const routes = [
 
     
     ]
-  },
-
-
-
-
-
-  {
-    path: '/user_activation',
-    name: 'UserActivation',
-    component: () => import('@/vues/user_activation/UserActivation.vue'),
-    meta: {
-      skipAuth: true,
-    },
   },
 
   {

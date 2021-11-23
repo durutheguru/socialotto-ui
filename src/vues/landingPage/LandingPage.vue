@@ -59,7 +59,7 @@
             <div class="relative h-full w-full">
               <div class="rounded-2xl" style="height: 28rem;">
                 <img
-                  class="absolute top-0 right-0 rounded-2xl z-20"
+                  class="absolute top-0 right-0 rounded-2xl z-20 my-auto"
                   style=" width: 28rem;"
                   src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/lotto-kids.png"
                   alt=""
