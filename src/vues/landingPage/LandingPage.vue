@@ -5,14 +5,14 @@
     <div
       class="  max-w-screen-xl mx-auto pt-5 md:pt-20 sm:w-11/12 px-6 md:px-0"
     >
-      <div class="mb-14 mt-36">
-        <div class="mx-auto grid grid-cols-6 lg:grid-cols-5">
+      <div class="xl:mb-14 mt-32 sm:mt-36">
+        <div class="mx-auto grid grid-cols-6 xl:grid-cols-5">
           <div
-            class="col-span-6 lg:col-span-3 lg:col-start-1 h-60 sm:h-80 lg:h-full"
+            class=" max-w-3xl col-span-6 mx-auto xl:mx-0 xl:col-span-3 xl:col-start-1  xl:h-full"
           >
-            <div class="h-full w-full flex items-center">
-              <div class="w-10/12 flex">
-                <div class="inline-block ">
+            <div class="h-full w-full flex items-center ">
+              <div class="w-full xl:w-10/12 flex">
+                <div class="inline-block landingPageText">
                   <h1 class="font-normal text-5xl leading-8 mb-4">
                     Support a cause
 
@@ -55,12 +55,15 @@
               </div>
             </div>
           </div>
-          <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0 ">
+          <div class="  col-span-6 xl:col-span-2 xl:col-start-4 mt-20 xl:mt-0 ">
             <div class="relative h-full w-full">
-              <div class="rounded-2xl" style="height: 28rem;">
+              <div
+                class="mx-auto relative landingPageImage"
+                style="height: 28rem;"
+              >
                 <img
-                  class="absolute top-0 right-0 rounded-2xl z-20 my-auto"
-                  style=" width: 28rem;"
+                  class=" mx-auto absolute xl:top-0 xl:right-0 rounded-2xl z-20 my-auto"
+                  style=" width: 28rem; min-height: 28rem; min-width: 28rem;"
                   src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/lotto-kids.png"
                   alt=""
                 />

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { extend } from 'vee-validate';
 import { email, numeric, min_value } from 'vee-validate/dist/rules';
+// import { Validator } from 'vee-validate';
 // import { configure } from 'vee-validate';
 // import VeeValidate from 'vee-validate';
 
@@ -30,6 +31,17 @@ export default function() {
     //     validate: value => !! value
     //   });
 
+    // extend("maxDifference", {
+    //     params: ["otherValue", "maxDifference"],
+    //     validate: (value, { otherValue, maxDifference }) => {
+    //       if (maxDifference === null || maxDifference === 0 || maxDifference >= Math.abs(value - otherValue)) {
+    //         return true;
+    //       }
+    //       return false;
+    //     },
+    //     message:
+    //       "The difference between the two numbers is too great. The maximum allowed is difference is {maxDifference}."
+    //   });
 
     extend('required', {
         validate(value: string): any {
