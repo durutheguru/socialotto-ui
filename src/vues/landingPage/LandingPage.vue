@@ -10,50 +10,64 @@
           <div
             class="col-span-6 lg:col-span-3 lg:col-start-1 h-60 sm:h-80 lg:h-full"
           >
-            <div class="w-10/12">
-              <h1 class="font-normal text-5xl leading-8 mb-4">
-                Support a cause
+            <div class="h-full w-full flex items-center">
+              <div class="w-10/12 flex">
+                <div class="inline-block ">
+                  <h1 class="font-normal text-5xl leading-8 mb-4">
+                    Support a cause
 
-                <span style="color: #52c8e9;" class="font-bold leading-tight"
-                  >you care</span
-                >
-                about
-              </h1>
-              <p class="text-xl leading-8 font-normal">
-                Participate in a fund raising campaign created by NGOs we have
-                partnered with or participate in our lotteries where you stand a
-                chance to win something and also help someone in need.
-              </p>
-
-              <div class="grid grid-cols-2 h-14 mt-8">
-                <div class="flex items-end  justify-start">
-                  <div
-                    class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
-                  >
                     <span
-                      class="text-white text-base font-semi-bold cursor-pointer"
-                      >Support a Campaign</span
+                      style="color: #52c8e9;"
+                      class="font-bold leading-tight"
+                      >you care</span
                     >
-                  </div>
-                </div>
-                <div class="flex items-end  justify-end">
-                  <div
-                    class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
-                  >
-                    <span class="text-base font-semi-bold cursor-pointer"
-                      >Participate in a Lottery</span
-                    >
+                    about
+                  </h1>
+                  <p class="text-xl leading-8 font-normal">
+                    Participate in a fund raising campaign created by NGOs we
+                    have partnered with or participate in our lotteries where
+                    you stand a chance to win something and also help someone in
+                    need.
+                  </p>
+
+                  <div class="grid grid-cols-2 h-14 mt-8">
+                    <div class="flex items-end  justify-start">
+                      <div
+                        class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
+                      >
+                        <span
+                          class="text-white text-base font-semi-bold cursor-pointer"
+                          >Support a Campaign</span
+                        >
+                      </div>
+                    </div>
+                    <div class="flex items-end  justify-end">
+                      <div
+                        class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
+                      >
+                        <span class="text-base font-semi-bold cursor-pointer"
+                          >Participate in a Lottery</span
+                        >
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0 ">
-            <div class="relative">
-              img
-              <RectanglesSvg />
+            <div class="relative h-full w-full">
+              <div class="rounded-2xl" style="height: 28rem;">
+                <img
+                  class="absolute top-0 right-0 rounded-2xl z-20"
+                  style=" width: 28rem;"
+                  src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/lotto-kids.png"
+                  alt=""
+                />
+                <RectanglesSvg style="right: -2.1rem; top: -2.1rem;" />
 
-              <RectanglesSvg />
+                <RectanglesSvg style="right: -2.1rem; bottom: -2.1rem;" />
+              </div>
             </div>
           </div>
         </div>
