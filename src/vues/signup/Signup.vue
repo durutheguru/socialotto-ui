@@ -3,9 +3,9 @@
     <div
       class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
     >
-      <div class="signupMain bg-white py-8 px-10  sm:px-10 border">
+      <div class="signupMain bg-white py-8 px-10  sm:px-10 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
-          <h2 class="mt-3 text-center mainHeader">
+          <h2 class="mt-3 text-center mainHeader spartan">
             Signup to Socialotto
           </h2>
         </div>
@@ -33,7 +33,7 @@
               Name
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ invalid }">
+              <validation-provider rules="required" v-slot="{ errors }">
                 <input
                   id="name"
                   name="name"
@@ -41,11 +41,14 @@
                   placeholder="name"
                   autocomplete="current-name"
                   v-model="platformUser.name"
-                  v-bind:class="{ 'invalid-field': invalid }"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
                   required
                   :disabled="userSignup.loading || userLogin.loading"
-                  class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                  class="border-gray-300 border-2 border-blue-dark appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -64,7 +67,7 @@
               Email address
             </label>
             <div class="mt-1">
-              <validation-provider rules="email_required" v-slot="{ invalid }">
+              <validation-provider rules="email_required" v-slot="{ errors }">
                 <input
                   id="email"
                   name="email"
@@ -74,9 +77,12 @@
                   v-model="platformUser.email"
                   required
                   :disabled="userSignup.loading || userLogin.loading"
-                  v-bind:class="{ 'invalid-field': invalid }"
-                  class="appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
+                  class="border-gray-300 border-2 border-blue-dark appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -95,7 +101,7 @@
               Password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ invalid }">
+              <validation-provider rules="required|min:6" v-slot="{ errors }">
                 <input
                   id="password"
                   name="password"
@@ -103,11 +109,14 @@
                   placeholder="(at least 6 characters)"
                   autocomplete="current-password"
                   v-model="platformUser.password"
-                  v-bind:class="{ 'invalid-field': invalid }"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
                   required
                   :disabled="userSignup.loading || userLogin.loading"
-                  class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                  class="border-gray-300 border-2 border-blue-dark appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -126,7 +135,7 @@
               Confirm password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ invalid }">
+              <validation-provider rules="required" v-slot="{ errors }">
                 <input
                   id="confirm-password"
                   name="confirm-password"
@@ -134,11 +143,14 @@
                   placeholder="confirm password"
                   autocomplete="current-password"
                   v-model="platformUser.confirmPassword"
-                  v-bind:class="{ 'invalid-field': invalid }"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
                   required
                   :disabled="userSignup.loading || userLogin.loading"
-                  class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                  class="border-gray-300 border-2 border-blue-dark appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -384,9 +396,9 @@ a {
   color: #767676;
 }
 
-.spartan {
+/* .spartan {
   font-family: "Spartan", sans-serif;
-}
+} */
 
 .menuIcon {
   display: none;
@@ -471,7 +483,7 @@ a {
   /* top: 49px; */
   /* margin-bottom: 40px; */
   font-family: "Spartan", sans-serif;
-  font-style: normal;
+
   font-weight: 600;
   font-size: 24px;
   line-height: 100%;
@@ -502,7 +514,6 @@ input {
   /* left: 520px; */
   /* top: 245px; */
 
-  border: 2px solid #2c5662;
   box-sizing: border-box;
   border-radius: 8px;
   padding: 0 24px;
