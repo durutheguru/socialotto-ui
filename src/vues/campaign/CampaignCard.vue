@@ -19,6 +19,28 @@
             {{ result.totalFundsRaised }} raised out of {{ result.targetFunds }}
           </p>
         </div>
+        <div class="pb-3">
+          <div class="relative">
+            <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+              <div
+                :style="
+                  `width: ${(result.totalFundsRaised * 100) /
+                    result.targetFunds}%`
+                "
+                class="
+        shadow-none
+        flex flex-col
+        text-center
+        whitespace-nowrap
+        text-white
+        justify-center
+        progressbar-green
+        rounded-full
+      "
+              ></div>
+            </div>
+          </div>
+        </div>
         <div class="mt-0 grid grid-cols-2 items-center">
           <div
             class="cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"

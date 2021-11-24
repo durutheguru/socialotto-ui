@@ -18,6 +18,10 @@
   border: 1px solid #767676;
 }
 
+.border-blue-dark:focus {
+  border-color: #2c5662;
+}
+
 .border-text-blue-200 {
   color: #4691a6;
   border: 1px solid #4691a6;
@@ -102,6 +106,10 @@
   height: 120px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+}
+
+.spartan {
+  font-family: "Spartan", sans-serif;
 }
 
 /* Safari */
