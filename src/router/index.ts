@@ -196,7 +196,16 @@ const routes = [
         component: () => import('@/vues/campaign/vues/details/CampaignDetails.vue'),
       },
     ]
-  }
+  },
+
+  {
+    path: '/payment_integration',
+    name: 'PaymentIntegration',
+    component: () => import('@/vues/payment_integration/PaymentIntegration.vue'),
+    meta: {
+      skipAuth: true,
+    },
+  },
 
 ];
 
