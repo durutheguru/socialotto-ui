@@ -137,6 +137,7 @@
     <!-- </div> -->
     <auth-hamburger-menu />
     <router-view @click="clearDropDowns"></router-view>
+    <donate-modal />
   </div>
 </template>
 
@@ -148,6 +149,7 @@ import { Component } from "vue-property-decorator";
 import AvatarMenu from "./AvatarMenu.vue";
 import Notificatons from "./Notifications.vue";
 import RecentActivities from "./RecentActivities.vue";
+import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ExpMenu from "./expMenu.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
@@ -165,6 +167,7 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
     AvatarMenu,
     Notificatons,
     RecentActivities,
+    DonateModal,
 
     // ExpMenu,
   },

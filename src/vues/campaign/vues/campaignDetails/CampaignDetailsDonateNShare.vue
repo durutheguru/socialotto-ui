@@ -93,6 +93,7 @@
     <div class="grid grid-cols-2 h-14 mt-8">
       <div class="flex items-end  justify-start">
         <div
+          @click="openDonateModal"
           class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
         >
           <span class="text-white text-base font-semi-bold cursor-pointer"
@@ -112,7 +113,11 @@
 </template>
 
 <script lang="ts">
+declare var MonnifySDK: any;
+
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Util } from "@/components/util";
+import store from "@/store/index";
 
 @Component({
   name: "CampaignDetailsDonateNShare",
@@ -121,7 +126,41 @@ import { Component, Vue } from "vue-property-decorator";
     totalFundsRaised: Number,
   },
 })
-export default class CampaignDetailsDonateNShare extends Vue {}
+export default class CampaignDetailsDonateNShare extends Vue {
+  private openDonateModal() {
+    // this.notifications = !this.notifications;
+    store.commit("setDonateModal", true);
+    Log.info("donateModalOpen");
+  }
+
+  public handlePayment() {
+    Log.info("Processing Payment Integration...");
+    MonnifySDK.initialize({
+      amount: 5000,
+      currency: "NGN",
+      reference: Util.uuidv5(new Date().getTime() + "", true),
+      customerName: "John Doe",
+      customerEmail: "monnify@monnify.com",
+      apiKey: process.env.VUE_APP_MONNIFY_API_KEY,
+      contractCode: process.env.VUE_APP_MONNIFY_CONTRACT_CODE,
+      paymentDescription: "<<Payment for Lottery>>",
+      isTestMode: true,
+      metadata: {
+        name: "User name",
+        email: "User email",
+      },
+      paymentMethods: ["CARD", "ACCOUNT_TRANSFER"],
+
+      onComplete(response: any) {
+        Log.info(`Payment completed. Data: ${JSON.stringify(response)}`);
+      },
+
+      onClose(data: any) {
+        Log.info(`Dialog was closed. Data: ${JSON.stringify(data)}`);
+      },
+    });
+  }
+}
 </script>
 
 <style scoped></style>

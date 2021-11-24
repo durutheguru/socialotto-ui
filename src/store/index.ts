@@ -21,6 +21,7 @@ export default new Vuex.Store({
     dropAuthMenu: false,
     userMenu: false,
     lastEventTarget: "",
+    donateModal: false
   },
 
 
@@ -71,6 +72,9 @@ export default new Vuex.Store({
     },
     setIsRecentsMenu(state, payload) {
       state.isRecentsMenu = payload;
+    },
+    setDonateModal(state, payload) {
+      state.donateModal = payload;
     }
 
 
