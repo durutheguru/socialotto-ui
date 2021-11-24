@@ -43,14 +43,6 @@ const routes = [
         },
       },
       {
-        path: "/home",
-        name: "Home",
-        component: () => import("@/vues/home/Home.vue"),
-        meta: {
-          skipAuth: true,
-        },
-      },
-      {
         path: "/forgotpassword",
         name: "Forgot Password",
         component: () => import('@/vues/forgotPassword/ForgotPassword.vue'),
@@ -73,14 +65,31 @@ const routes = [
     path: '/auth_home',
     name: "AuthNavHeader",
     component: AuthNavHeader,
+    meta: {
+      skipAuth: true,
+    },
    
     children: [
+      {
+        path: "/home",
+        name: "Home",
+        component: () => import("@/vues/home/Home.vue"),
+       
+      },
       {
         path: '/create_campaign',
         name: 'CreateCampaign',
         component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
        
+      },
+      {
+        path: "/campaign/:id",
+        name: "CampaignDetails",
+        component: () => import('@/vues/campaign/vues/campaignDetails/CampaignDetails.vue'),
+
       }
+
+    
     ]
   },
 

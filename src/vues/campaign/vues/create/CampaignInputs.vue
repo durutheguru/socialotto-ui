@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- <ExpMenu /> -->
     <div class="px-6 lg:px-0 mb-16 md:mb-0">
       <div class=" max-w-xl lg:max-w-3xl sm:mx-auto  lg:w-full lg:mx-0 ">
         <div class="mb-10">
@@ -37,7 +38,7 @@
                   <div class="w-full mb-6">
                     <label
                       for="email"
-                      class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                      class="spartan font-medium text-dark block text-sm text-gray-700"
                       >Campaign title</label
                     >
                     <div class="mt-1">
@@ -334,14 +335,15 @@ import { Component } from "vue-property-decorator";
 import FileUploader from "@/components/file-uploader/FileUploader";
 import { Log, Constants, Util } from "@/components/util";
 import CampaignService from "@/services/campaign/CampaignService";
-import CampaignInstructionsMenu from "@/components/page-features/CampaignInstructionsMenu.vue";
+import CampaignInstructionsMenu from "./CampaignInstructionsMenu.vue";
 import ApiResource from "@/components/core/ApiResource";
 import BaseVue from "@/components/BaseVue";
-
+// import ExpMenu from "../../../../protected/expMenu.vue";
 @Component({
   name: "CampaignInputs",
   components: {
     CampaignInstructionsMenu,
+    // ExpMenu,
   },
 })
 export default class CampaignInputs extends BaseVue {

@@ -1,20 +1,21 @@
 <template>
-  <div class="divContainer overflow-auto lg:overflow-y-scroll">
-    <div class="  max-w-screen-xl mx-auto pt-3 md:pt-20 sm:w-11/12">
-      <div class="px-6 md:px-0">
+  <div class="bg-blue-50">
+    <div class="max-w-screen-xl mx-auto pt-5 md:pt-20 sm:w-11/12 px-6 md:px-0">
+      <div class="pb-14">
+        <h1
+          class="spartan font-semibold flex justify-center md:justify-start text-2xl text-black"
+        >
+          Similar campaigns and lotteries
+        </h1>
         <div
-          class="mt-12 auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
           v-if="
             $apollo.queries.searchCampaigns.loading ||
-              $apollo.queries.searchLotteries.loading
+              $apollo.queries.searchLotteries.loading ||
+              loading
           "
+          class=" auto-cols-fr mx-auto grid gap-10 md:gap-10  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:max-w-none mb-16"
         >
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
-          <CardSkeleton />
+          <!-- <CampaignCard /> -->
           <CardSkeleton />
           <CardSkeleton />
           <CardSkeleton />
@@ -37,35 +38,62 @@
             </div>
           </div>
         </div>
+        <div class="w-full flex justify-end">
+          <router-link :to="'/home'" class="flex cursor-pointer">
+            <span
+              class="spartan leading-relaxed dark-blue-text text-sm font-semibold mr-3"
+              >See more</span
+            >
+            <svg
+              class="spartan dark-blue-text text-sm font-semibold "
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.8291 11.957L19.8291 11.957"
+                stroke="#1D414B"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15 5L22 12L15 19"
+                stroke="#1D414B"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </router-link>
+        </div>
       </div>
     </div>
-    <Incentives />
-    <Footer />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Log, Util } from "@/components/util";
-import Incentives from "../../components/Incentives.vue";
-import Footer from "../../components/Footer.vue";
-import SearchNFilter from "../../components/SearchNFilter.vue";
-import CampaignCard from "../campaign/CampaignCard.vue";
-import LotteryCard from "../lottery/LotteryCard.vue";
 import { searchLotteries } from "@/services/lottery/lottery.query";
 import { searchCampaigns } from "@/services/campaign/campaign.query";
 import { ApolloError } from "apollo-client";
-import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
+import { Log, Util } from "@/components/util";
+
+import LotteryCard from "../../../lottery/LotteryCard.vue";
+import CampaignCard from "../../CampaignCard.vue";
+import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
 
 @Component({
-  name: "Home",
+  name: "CampaignDetailsSec3",
+  props: {
+    loading: Boolean,
+  },
   components: {
-    Incentives,
-    Footer,
-    SearchNFilter,
     CampaignCard,
-    LotteryCard,
     CardSkeleton,
+    LotteryCard,
   },
   apollo: {
     $client: "anonymousClient",
@@ -76,7 +104,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
         return {
           searchKey: this.siteQuery.key,
           page: this.siteQuery.page,
-          size: this.siteQuery.size,
+          size: this.siteQuery.sizeLottery,
         };
       },
 
@@ -100,7 +128,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
         return {
           searchKey: this.siteQuery.key,
           page: this.siteQuery.page,
-          size: this.siteQuery.size,
+          size: this.siteQuery.sizeCampaign,
         };
       },
 
@@ -118,19 +146,20 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
     },
   },
 })
-export default class Home extends Vue {
+export default class CampaignDetailsSec3 extends Vue {
   private siteQuery: any = {
     key: "",
     error: "",
     lotteryData: [],
     campaignData: [],
     page: 0,
-    size: 9,
+    sizeCampaign: 2,
+    sizeLottery: 1,
   };
 
-  // private mounted() {
-  //   Log.info("joined Array: " + JSON.stringify(searchLotteries));
-  // }
+  private mounted() {
+    // Log.info("joined Array: " + JSON.stringify(searchLotteries));
+  }
 
   get lotteriesNcampaigns() {
     // let self = this;

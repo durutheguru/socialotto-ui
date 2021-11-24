@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import CampaignInstructionsList from "@/components/page-features/CampaignInstructionsList.vue";
+import CampaignInstructionsList from "./CampaignInstructionsList.vue";
 @Component({
   name: "CampaignInstructions",
   components: {
