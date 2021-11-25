@@ -21,7 +21,8 @@ export default new Vuex.Store({
     dropAuthMenu: false,
     userMenu: false,
     lastEventTarget: "",
-    donateModal: false
+    donateModal: false,
+    currentCampaignId: "",
   },
 
 
@@ -75,6 +76,9 @@ export default new Vuex.Store({
     },
     setDonateModal(state, payload) {
       state.donateModal = payload;
+    },
+    setCurrentCampaignId(state, payload){
+      state.currentCampaignId = payload;
     }
 
 

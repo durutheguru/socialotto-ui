@@ -123,7 +123,7 @@
                     >
                       <span
                         class="text-white text-base font-semi-bold cursor-pointer"
-                        >Donate</span
+                        >Proceed to pay</span
                       >
                     </div>
                   </div>
@@ -144,7 +144,7 @@ declare var MonnifySDK: any;
 
 import { Component, Vue } from "vue-property-decorator";
 import store from "@/store/index";
-import { Log, Util } from "@/components/util";
+import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   name: "DonateModal",
@@ -156,32 +156,61 @@ export default class DonateModal extends Vue {
     return store.state.donateModal;
   }
 
+  private get campaignId(): boolean {
+    return store.state.currentCampaignId;
+  }
+
   private close() {
     store.commit("setDonateModal", false);
     Log.info("closeModal");
   }
 
   public handlePayment() {
+    let self = this;
+    let userDescription: string = `CAMPAIGN_FUND//${this.campaignId}//${this.amount}//${store.getters["authToken/username"]}`;
+
+    let anonymousUserDescription: string = `CAMPAIGN_FUND//${this.campaignId}//${this.amount}//${Constants.anonymousUser} `;
+
+    let username = store.getters["authToken/loggedIn"]
+      ? store.getters["authToken/username"]
+      : Constants.anonymousUser;
+
     Log.info("Processing Payment Integration...");
-    console.log("Monnefy na");
+    Log.info(store.getters["authToken/username"]);
+    Log.info("user is " + Constants.anonymousUser);
+    Log.info(`userDescription ${userDescription}`);
+
+    Log.info(`anonymousUserDescription ${anonymousUserDescription}`);
+
     MonnifySDK.initialize({
       amount: this.amount,
       currency: "NGN",
       reference: Util.uuidv5(new Date().getTime() + "", true),
-      customerName: "John Doe",
-      customerEmail: "monnify@monnify.com",
+      customerName: username,
+      customerEmail: username,
       apiKey: process.env.VUE_APP_MONNIFY_API_KEY,
       contractCode: process.env.VUE_APP_MONNIFY_CONTRACT_CODE,
-      paymentDescription: "<<Payment for Lottery>>",
+      paymentDescription: store.getters["authToken/loggedIn"]
+        ? userDescription
+        : anonymousUserDescription,
       isTestMode: true,
       metadata: {
-        name: "User name",
-        email: "User email",
+        name: username,
+        email: username,
       },
       paymentMethods: ["CARD", "ACCOUNT_TRANSFER"],
 
       onComplete(response: any) {
+        self.close();
+
         Log.info(`Payment completed. Data: ${JSON.stringify(response)}`);
+        if (response.paymentStatus === "PAID") {
+          Util.handleGlobalAlert(
+            true,
+            "success",
+            "Your campaign donation was successful!!"
+          );
+        }
       },
 
       onClose(data: any) {

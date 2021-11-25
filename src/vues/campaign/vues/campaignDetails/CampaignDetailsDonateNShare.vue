@@ -126,9 +126,10 @@ import store from "@/store/index";
 })
 export default class CampaignDetailsDonateNShare extends Vue {
   private openDonateModal() {
+    store.commit("setCurrentCampaignId", this.$route.params.id);
     // this.notifications = !this.notifications;
     store.commit("setDonateModal", true);
-    Log.info("donateModalOpen");
+    Log.info("donateModalOpen id:" + this.$route.params.id);
   }
 }
 </script>
