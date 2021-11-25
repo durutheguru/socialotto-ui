@@ -44,7 +44,10 @@
       :campaignStatus="campaignDetails.data.campaignStatus"
       :campaignDescription="campaignDetails.data.description"
     />
-    <CampaignDetailsSec3 :loading="campaignDetails.loading" />
+    <CampaignDetailsCards
+      heading="Similar campaigns and lotteries"
+      :loading="campaignDetails.loading"
+    />
     <Incentives />
     <Footer />
   </div>
@@ -60,7 +63,7 @@ import Footer from "@/components/Footer.vue";
 import CampaignDetailsDonateNShare from "./CampaignDetailsDonateNShare.vue";
 import CampaignDetailsCarousel from "./campaignDetailsCarousel.vue";
 import InfoStatusUpdatesFAQ from "./info-status-updates-FAQ.vue";
-import CampaignDetailsSec3 from "./CampaignDetailsCards.vue";
+import CampaignDetailsCards from "./CampaignDetailsCards.vue";
 import DonateNShareSkeleton from "@/components/skeletons/campaignDetailsSkeletons/DonateNShareSkeleton.vue";
 
 @Component({
@@ -71,7 +74,7 @@ import DonateNShareSkeleton from "@/components/skeletons/campaignDetailsSkeleton
     CampaignDetailsCarousel,
     CampaignDetailsDonateNShare,
     InfoStatusUpdatesFAQ,
-    CampaignDetailsSec3,
+    CampaignDetailsCards,
     DonateNShareSkeleton,
   },
 })
