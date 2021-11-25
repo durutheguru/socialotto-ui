@@ -93,6 +93,7 @@
     <div class="grid grid-cols-2 h-14 mt-8">
       <div class="flex items-end  justify-start">
         <div
+          @click="openDonateModal"
           class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
         >
           <span class="text-white text-base font-semi-bold cursor-pointer"
@@ -113,6 +114,8 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Util } from "@/components/util";
+import store from "@/store/index";
 
 @Component({
   name: "CampaignDetailsDonateNShare",
@@ -121,7 +124,14 @@ import { Component, Vue } from "vue-property-decorator";
     totalFundsRaised: Number,
   },
 })
-export default class CampaignDetailsDonateNShare extends Vue {}
+export default class CampaignDetailsDonateNShare extends Vue {
+  private openDonateModal() {
+    store.commit("setCurrentCampaignId", this.$route.params.id);
+    // this.notifications = !this.notifications;
+    store.commit("setDonateModal", true);
+    Log.info("donateModalOpen id:" + this.$route.params.id);
+  }
+}
 </script>
 
 <style scoped></style>

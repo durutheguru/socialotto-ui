@@ -3,7 +3,7 @@
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
-        class="px-6 md:px-0 mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
+        class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <router-link
           class="my-auto focus:outline-none no-underline"
@@ -11,7 +11,7 @@
         >
           <span class="signupLogo ">Socialotto</span>
         </router-link>
-        <div class="menuIcon my-auto" @click="dropAuthMenu">
+        <div class="menuIcon my-auto " @click="dropAuthMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -28,7 +28,10 @@
           </svg>
         </div>
 
-        <div class=" spartan flex my-auto relative right-0 flex justify-end">
+        <div
+          class=" spartan flex my-auto relative right-0 flex justify-end"
+          style="height: 40px; width: 552px;"
+        >
           <div class=" anchorDIv" style="width: 60%; ">
             <!-- <ExpMenu /> -->
             <!-- -----Notifications----- -->
@@ -137,6 +140,7 @@
     <!-- </div> -->
     <auth-hamburger-menu />
     <router-view @click="clearDropDowns"></router-view>
+    <donate-modal />
   </div>
 </template>
 
@@ -148,6 +152,7 @@ import { Component } from "vue-property-decorator";
 import AvatarMenu from "./AvatarMenu.vue";
 import Notificatons from "./Notifications.vue";
 import RecentActivities from "./RecentActivities.vue";
+import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ExpMenu from "./expMenu.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
@@ -165,6 +170,7 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
     AvatarMenu,
     Notificatons,
     RecentActivities,
+    DonateModal,
 
     // ExpMenu,
   },

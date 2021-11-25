@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NavHeader from "../views/unprotected/NavHeader.vue";
 import AuthNavHeader from "../protected/AuthNavHeader.vue";
+import LandingPage from "../vues/landingPage/LandingPage.vue"
 
 import Login from '../vues/login/Login.vue';
 // import Signup from '../vues/signup/'
@@ -26,6 +27,12 @@ const routes = [
     name: "NavHeader",
     component: NavHeader,
     children: [
+      {
+        path: "/",
+        name: "LandingPage",
+        component: LandingPage
+
+      },
       {
         path: '/signup',
         name: 'Signup',
@@ -58,6 +65,19 @@ const routes = [
           skipAuth: true,
         },
       },
+
+
+
+
+
+  {
+    path: '/user_activation',
+    name: 'UserActivation',
+    component: () => import('@/vues/user_activation/UserActivation.vue'),
+    meta: {
+      skipAuth: true,
+    },
+  }
    
     ]
   },
@@ -91,19 +111,6 @@ const routes = [
 
     
     ]
-  },
-
-
-
-
-
-  {
-    path: '/user_activation',
-    name: 'UserActivation',
-    component: () => import('@/vues/user_activation/UserActivation.vue'),
-    meta: {
-      skipAuth: true,
-    },
   },
 
   {

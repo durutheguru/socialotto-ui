@@ -5,7 +5,7 @@
         <h1
           class="spartan font-semibold flex justify-center md:justify-start text-2xl text-black"
         >
-          Similar campaigns and lotteries
+          {{ heading }}
         </h1>
         <div
           v-if="
@@ -89,6 +89,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
   name: "CampaignDetailsSec3",
   props: {
     loading: Boolean,
+    heading: String,
   },
   components: {
     CampaignCard,
