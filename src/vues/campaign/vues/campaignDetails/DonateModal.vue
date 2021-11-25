@@ -30,13 +30,11 @@
                 <header class="space-y-1 py-2 px-4 bg-dark-color sm:px-6">
                   <div class="flex items-center justify-between space-x-3">
                     <div class="flex flex-col  py-4">
-                      <h2 class="text-lg leading-7 font-medium text-white">
-                        Merge Options
+                      <h2
+                        class="text-lg leading-7 font-medium light-blue-text spartan"
+                      >
+                        Enter amount you wish to donate
                       </h2>
-                      <p class="text-sm leading-5 text-gray-400">
-                        In case of duplicate secrets merge to onboard or service
-                        provider
-                      </p>
                     </div>
                     <div class="h-7 flex items-center">
                       <button
@@ -46,17 +44,32 @@
                       >
                         <!-- Heroicon name: x -->
                         <svg
-                          class="h-6 w-6"
-                          xmlns="http://www.w3.org/2000/svg"
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
                           fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
+                            d="M16.0003 29.3334C23.3641 29.3334 29.3337 23.3639 29.3337 16.0001C29.3337 8.63628 23.3641 2.66675 16.0003 2.66675C8.63653 2.66675 2.66699 8.63628 2.66699 16.0001C2.66699 23.3639 8.63653 29.3334 16.0003 29.3334Z"
+                            stroke="#898989"
+                            stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
+                          />
+                          <path
+                            d="M20 12L12 20"
+                            stroke="#898989"
                             stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          />
+                          <path
+                            d="M12 12L20 20"
+                            stroke="#898989"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
                           />
                         </svg>
                       </button>
@@ -64,22 +77,26 @@
                   </div>
                 </header>
                 <div class="flex-auto flex flex-col justify-between h-full ">
-                  <div class="flex flex-col rounded-md bg-white shadow-xs ">
+                  <div class="flex flex-col rounded-md bg-white ">
                     <!-- --------------------------Replace all secrets on netlify------------------------------- -->
                     <div
-                      class="relative h-12 px-6 flex items-start space-x-3  block w-full px-4 border-t border-gray-100 text-left text-md font-medium  focus:outline-none"
+                      class="relative h-12 px-6 flex items-start space-x-3  block w-full px-4  text-left text-md font-medium  focus:outline-none"
                     >
                       <div class="min-w-0 flex-1 h-full ">
                         <input
+                          id="donation_amount"
+                          name="donation_amount"
+                          placeholder="NGN
+1200"
                           type="number"
-                          class="h-full w-11/12"
+                          class="h-full rounded-md spartan bg-white border-gray-300 border-2 border-blue-dark spartan text-base appearance-none block w-full px-3 py-2 placeholder-gray-400 focus:outline-none sm:text-sm"
                           v-model="amount"
                         />
                       </div>
                     </div>
 
                     <!-- -------------------------------Merge secrets------------------------------- -->
-                    <div class="flex items-center ">
+                    <div class="flex  ">
                       <div
                         @click="handlePayment"
                         class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
