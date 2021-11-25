@@ -67,31 +67,27 @@
                   <div class="flex flex-col rounded-md bg-white shadow-xs ">
                     <!-- --------------------------Replace all secrets on netlify------------------------------- -->
                     <div
-                      class="relative group py-4 px-6 flex items-start space-x-3 hover:bg-gray-100 block w-full px-4 border-t border-gray-100 text-left text-xs font-medium text-ob-purple-color focus:outline-none"
+                      class="relative h-12 px-6 flex items-start space-x-3  block w-full px-4 border-t border-gray-100 text-left text-md font-medium  focus:outline-none"
                     >
-                      <div class="min-w-0 flex-1">
-                        <input type="text" v-model="amount" />
+                      <div class="min-w-0 flex-1 h-full ">
+                        <input
+                          type="number"
+                          class="h-full w-11/12"
+                          v-model="amount"
+                        />
                       </div>
                     </div>
 
                     <!-- -------------------------------Merge secrets------------------------------- -->
-                    <div
-                      class="relative group py-4 px-6 flex items-start space-x-3 hover:bg-gray-100 block w-full px-4 border-t border-gray-100 text-left text-xs font-medium text-ob-purple-color focus:outline-none"
-                    >
-                      <div class="min-w-0 flex-1 ">
-                        <div class="text-sm font-medium text-gray-900">
-                          <a href="#">
-                            <span
-                              class="absolute inset-0"
-                              aria-hidden="true"
-                            ></span>
-                            Merge on onboard
-                          </a>
-                        </div>
-                        <p class="text-xs text-gray-500">
-                          This action will merge all secrets for this project to
-                          onboard
-                        </p>
+                    <div class="flex items-center ">
+                      <div
+                        @click="handlePayment"
+                        class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
+                      >
+                        <span
+                          class="text-white text-base font-semi-bold cursor-pointer"
+                          >Donate</span
+                        >
                       </div>
                     </div>
                   </div>
@@ -106,6 +102,8 @@
 </template>
 
 <script lang="ts">
+declare var MonnifySDK: any;
+
 import { Component, Vue } from "vue-property-decorator";
 import store from "@/store/index";
 import { Log, Util } from "@/components/util";
@@ -123,6 +121,35 @@ export default class DonateModal extends Vue {
   private close() {
     store.commit("setDonateModal", false);
     Log.info("closeModal");
+  }
+
+  public handlePayment() {
+    Log.info("Processing Payment Integration...");
+    console.log("Monnefy na");
+    MonnifySDK.initialize({
+      amount: 5000,
+      currency: "NGN",
+      reference: Util.uuidv5(new Date().getTime() + "", true),
+      customerName: "John Doe",
+      customerEmail: "monnify@monnify.com",
+      apiKey: process.env.VUE_APP_MONNIFY_API_KEY,
+      contractCode: process.env.VUE_APP_MONNIFY_CONTRACT_CODE,
+      paymentDescription: "<<Payment for Lottery>>",
+      isTestMode: true,
+      metadata: {
+        name: "User name",
+        email: "User email",
+      },
+      paymentMethods: ["CARD", "ACCOUNT_TRANSFER"],
+
+      onComplete(response: any) {
+        Log.info(`Payment completed. Data: ${JSON.stringify(response)}`);
+      },
+
+      onClose(data: any) {
+        Log.info(`Dialog was closed. Data: ${JSON.stringify(data)}`);
+      },
+    });
   }
 }
 </script>
