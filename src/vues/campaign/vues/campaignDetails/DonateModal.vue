@@ -3,7 +3,7 @@
     <h1>Donate Modal</h1>
   </div> -->
 
-  <transition name="slide-rigth">
+  <transition name="fadeIn">
     <div
       v-if="isModalOpen"
       class="fixed z-50 inset-0 overflow-hidden modal-blur"
@@ -22,7 +22,7 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
         >&#8203;
         <section
-          class="inline-block bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
+          class="main inline-block bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
         >
           <div class="w-full h-full overflow-y-auto">
             <div class="flex flex-col h-full p-10">
@@ -39,36 +39,23 @@
                   <button
                     @click="close"
                     aria-label="Close panel"
-                    class=" cursor-pointer hover:text-white transition ease-in-out duration-150 focus:outline-none"
+                    class=" cursor-pointer transition ease-in-out duration-150 focus:outline-none"
                   >
                     <!-- Heroicon name: x -->
                     <svg
-                      width="32"
-                      height="32"
-                      viewBox="0 0 32 32"
-                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      height="32"
+                      width="32"
+                      class="text-gray-300 hover:text-gray-400 "
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
                     >
                       <path
-                        d="M16.0003 29.3334C23.3641 29.3334 29.3337 23.3639 29.3337 16.0001C29.3337 8.63628 23.3641 2.66675 16.0003 2.66675C8.63653 2.66675 2.66699 8.63628 2.66699 16.0001C2.66699 23.3639 8.63653 29.3334 16.0003 29.3334Z"
-                        stroke="#898989"
-                        stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                      />
-                      <path
-                        d="M20 12L12 20"
-                        stroke="#898989"
                         stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M12 12L20 20"
-                        stroke="#898989"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
                   </button>
@@ -81,7 +68,8 @@
                   id="donate_form"
                   tag="form"
                   role="form"
-                  v-slot="{ invalid }"
+                  v-slot="{ invalid, reset }"
+                  @reset.prevent="reset"
                   @submit.prevent="handlePayment"
                   novalidate
                 >
@@ -115,6 +103,9 @@
 
                   <!-- -------------------------------Merge secrets------------------------------- -->
                   <div class="flex  ">
+                    <button class="hidden" id="reset2" type="reset">
+                      Reset
+                    </button>
                     <div
                       @click="handlePayment"
                       :disabled="invalid"
@@ -160,9 +151,23 @@ export default class DonateModal extends Vue {
     return store.state.currentCampaignId;
   }
 
+  private resetButtonClick: any = function() {
+    let resetButton = document.getElementById("reset2") as HTMLElement;
+    resetButton.click();
+  };
+
   private close() {
     store.commit("setDonateModal", false);
+    this.resetButtonClick();
     Log.info("closeModal");
+  }
+
+  private reset() {
+    this.amount = "";
+
+    (this.$refs.observer as any).reset();
+
+    Log.info("Done Resetting form...");
   }
 
   public handlePayment() {
@@ -221,4 +226,26 @@ export default class DonateModal extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+  .main {
+    transition: all 0.3s ease-in-out;
+  }
+}
+.fadeIn-leave-to,
+.fadeIn-enter-from {
+  .main {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+.flag-icon1 {
+  color: #010101;
+}
+
+.flag-icon1:hover {
+  color: #ff721f;
+}
+</style>
