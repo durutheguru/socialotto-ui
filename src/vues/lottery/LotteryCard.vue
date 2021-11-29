@@ -46,7 +46,7 @@
           <div
             class=" spartan cursor-pointer h-6 w-20 flex justify-center items-center"
           >
-            <span>Details</span>
+            <div @click="showLotteryDetails(result)"><span>Details</span></div>
           </div>
         </div>
       </div>
@@ -68,7 +68,12 @@ import BaseVue from "../../components/BaseVue";
     },
   },
 })
-export default class LotteryCard extends BaseVue {}
+export default class LotteryCard extends BaseVue {
+  private showLotteryDetails(lottery: any) {
+    this.$router.push(`/lottery/${lottery.id}`);
+    // this.scrollToTop;
+  }
+}
 </script>
 
 <style scoped></style>
