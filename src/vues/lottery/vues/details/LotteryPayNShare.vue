@@ -91,9 +91,15 @@
               />
             </svg>
           </div>
-          <!-- 
-          <div></div>
-          <div></div> -->
+
+          <div
+            style="left: -2px;"
+            class="border-r-2 border-t-2 border-b-2 border-yellow h-6 absolute w-4 z-20 bg-blue-50"
+          ></div>
+          <div
+            style="right: -2px;"
+            class="border-l-2 border-t-2 border-b-2 border-yellow h-6 absolute w-4 z-20 bg-blue-50"
+          ></div>
         </div>
 
         <!-- --------------------- -->
