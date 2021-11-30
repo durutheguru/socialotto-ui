@@ -58,6 +58,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseVue from "../../components/BaseVue";
+import store from "@/store/index";
 
 @Component({
   name: "LotteryCard",
@@ -71,6 +72,7 @@ import BaseVue from "../../components/BaseVue";
 export default class LotteryCard extends BaseVue {
   private showLotteryDetails(lottery: any) {
     this.$router.push(`/lottery/${lottery.id}`);
+    // store.commit("setCurrentLotteryId", lottery.id);
     // this.scrollToTop;
   }
 }

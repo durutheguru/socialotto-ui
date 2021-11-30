@@ -170,7 +170,7 @@ export default class DonateModal extends Vue {
     Log.info("Done Resetting form...");
   }
 
-  public handlePayment() {
+  private handlePayment() {
     let self = this;
     let userDescription: string = `CAMPAIGN_FUND//${this.campaignId}//${this.amount}//${store.getters["authToken/username"]}`;
 

@@ -31,14 +31,24 @@
             />
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
-            <!-- <DonateNShareSkeleton v-if="campaignDetails.loading" /> -->
-            <LotteryPayNShare />
+            <LotteryPayNShareSkeleton v-if="lotteryDetails.loading" />
+            <LotteryPayNShare
+              :ticketCost="lotteryDetails.data.ticketCost"
+              :numberOfWinners="lotteryDetails.data.expectedWinnerCount"
+              :numberOfEntries="lotteryDetails.data.numberOfEntries"
+              :closureDate="lotteryDetails.data.endDate"
+              v-else
+            />
           </div>
         </div>
       </div>
     </div>
 
-    <LotteryInfoNFAQ />
+    <LotteryInfoNFAQ
+      :lotteryDescription="lotteryDetails.data.description"
+      :loading="lotteryDetails.loading"
+      :lotteryStatus="lotteryDetails.data.lotteryStatus"
+    />
     <!-- <CampaignDetailsCards
       heading="Similar campaigns and lotteries"
       :loading="campaignDetails.loading"
@@ -58,6 +68,7 @@ import { Log, Util } from "@/components/util";
 import LotteryPayNShare from "./LotteryPayNShare.vue";
 import LotteryInfoNFAQ from "./LotteryInfoNFAQ.vue";
 import LotteryDetailsCarousel from "./LotteryDetailsCarousel.vue";
+import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSkeleton.vue";
 // import LotteryDetailComponent from './LotteryDetailComponent';
 
 @Component({
@@ -68,16 +79,10 @@ import LotteryDetailsCarousel from "./LotteryDetailsCarousel.vue";
     Incentives,
     Footer,
     LotteryInfoNFAQ,
+    LotteryPayNShareSkeleton,
   },
 })
 export default class LotteryDetails extends Vue {
-  private slides = [
-    { publicUrl: "https://picsum.photos/id/237/500/300" },
-    { publicUrl: "https://picsum.photos/id/238/500/300" },
-    { publicUrl: "https://picsum.photos/id/239/500/300" },
-    { publicUrl: "https://picsum.photos/id/236/500/300" },
-  ];
-
   private lotteryDetails: ApiResource = ApiResource.create();
 
   get lotteryDetailsId() {

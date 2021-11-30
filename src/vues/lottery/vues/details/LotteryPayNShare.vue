@@ -17,28 +17,32 @@
       <!-- ----------- -->
       <div class="h-12 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400">Closure date </span>
-        <span class="text-base font-semibold text-gray-600 "
-          >31st October, 2021</span
-        >
+        <span class="text-base font-semibold text-gray-600 ">{{
+          closureDate
+        }}</span>
       </div>
       <!-- ----------- -->
       <div class="h-12 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400"
           >Number of winners
         </span>
-        <span class="text-base font-semibold text-gray-600 ">25</span>
+        <span class="text-base font-semibold text-gray-600 ">{{
+          numberOfWinners
+        }}</span>
       </div>
       <!-- ----------- -->
       <div class="h-12 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400"
-          >Max number of entries
+          >Number of entries
         </span>
-        <span class="text-base font-semibold text-gray-600 ">100</span>
+        <span class="text-base font-semibold text-gray-600 ">{{
+          numberOfEntries
+        }}</span>
       </div>
       <!-- ----------- -->
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-base font-semibold text-gray-600 "
-          >Number of tickets (Cost N200 per ticket)</span
+          >Number of tickets (Cost N{{ ticketCost }} per ticket)</span
         >
       </div>
       <!-- ----------- -->
@@ -51,7 +55,7 @@
             @click="decrement"
             :disabled="ticketAmount <= 0"
             :class="ticketAmount <= 0 && 'opacity-25'"
-            class="text-base font-semibold flex justify-center h-full w-full items-center"
+            class="cursor-pointer text-base font-semibold flex justify-center h-full w-full items-center"
           >
             <!-- -----Minus------ -->
             <svg
@@ -78,7 +82,7 @@
             @click="increment"
             :disabled="ticketAmount >= 10"
             :class="ticketAmount >= 10 && 'opacity-25'"
-            class="text-base font-semibold flex justify-center h-full w-full items-center"
+            class="cursor-pointer text-base font-semibold flex justify-center h-full w-full items-center"
           >
             <!-- -----Plus------ -->
 
@@ -109,15 +113,16 @@
         </div>
 
         <!-- --------------------- -->
-        <div
+        <button
+          @click="handleLotteryPayment"
           :disabled="ticketAmount <= 0"
           :class="ticketAmount <= 0 && 'opacity-25'"
-          class="flex bg-yellow h-14 w-full sm:w-6/12 items-center justify-center rounded-md"
+          class="cursor-pointer flex bg-yellow h-14 w-full sm:w-6/12 items-center justify-center rounded-md"
         >
           <span class="text-base font-semibold text-white "
             >Pay N{{ price }}</span
           >
-        </div>
+        </button>
       </div>
 
       <!-- ----------------- -->
@@ -138,18 +143,29 @@
 <script lang="ts">
 declare var MonnifySDK: any;
 
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import store from "@/store/index";
 import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   name: "LotteryPayNShare",
+  props: {
+    // ticketCost: String,
+    numberOfWinners: Number,
+    numberOfEntries: Number,
+    closureDate: String,
+  },
 })
 export default class LotteryPayNShare extends Vue {
   private ticketAmount: number = 0;
 
+  @Prop()
+  private ticketCost!: number;
+
+  private lotteryId = this.$route.params.id;
+
   get price() {
-    return this.ticketAmount * 200;
+    return this.ticketAmount * this.ticketCost;
   }
 
   private increment() {
@@ -160,9 +176,54 @@ export default class LotteryPayNShare extends Vue {
     this.ticketAmount--;
   }
 
-  // private handleLotteryPayment(){
+  private reset() {
+    this.ticketAmount = 0;
+    Log.info(`ticketAmount should be 0: ${this.ticketAmount}`);
+  }
 
-  // }
+  private handleLotteryPayment() {
+    let self = this;
+    let username = store.getters["authToken/username"];
+
+    let userDescription: string = `LOTTERY_TICKET//${this.lotteryId}//${this.ticketAmount}//${this.price}//${username}`;
+
+    Log.info(userDescription);
+
+    MonnifySDK.initialize({
+      amount: this.price,
+      currency: "NGN",
+      reference: Util.uuidv5(new Date().getTime() + "", true),
+      customerName: username,
+      customerEmail: username,
+      apiKey: process.env.VUE_APP_MONNIFY_API_KEY,
+      contractCode: process.env.VUE_APP_MONNIFY_CONTRACT_CODE,
+      paymentDescription: userDescription,
+
+      isTestMode: true,
+      metadata: {
+        name: username,
+        email: username,
+      },
+      paymentMethods: ["CARD", "ACCOUNT_TRANSFER"],
+
+      onComplete(response: any) {
+        self.reset();
+
+        Log.info(`Payment completed. Data: ${JSON.stringify(response)}`);
+        if (response.paymentStatus === "PAID") {
+          Util.handleGlobalAlert(
+            true,
+            "success",
+            "Your lottery payment was successful!!"
+          );
+        }
+      },
+
+      onClose(data: any) {
+        Log.info(`Dialog was closed. Data: ${JSON.stringify(data)}`);
+      },
+    });
+  }
 }
 </script>
 
