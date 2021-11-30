@@ -110,6 +110,8 @@
 
         <!-- --------------------- -->
         <div
+          :disabled="ticketAmount <= 0"
+          :class="ticketAmount <= 0 && 'opacity-25'"
           class="flex bg-yellow h-14 w-6/12 items-center justify-center rounded-md"
         >
           <span class="text-base font-semibold text-white "
