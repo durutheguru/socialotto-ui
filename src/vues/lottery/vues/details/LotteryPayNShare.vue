@@ -47,7 +47,10 @@
         <div
           class="relative grid grid-cols-3 bg-transparent border-2 border-yellow  h-14 w-5/12 items-center justify-center rounded-md"
         >
-          <div
+          <button
+            @click="decrement"
+            :disabled="ticketAmount <= 0"
+            :class="ticketAmount <= 0 && 'opacity-25'"
             class="text-base font-semibold flex justify-center h-full w-full items-center"
           >
             <!-- -----Minus------ -->
@@ -65,13 +68,16 @@
                 d="M18 12H6"
               />
             </svg>
-          </div>
+          </button>
           <div
             class="border-r-2 border-l-2 border-yellow border-dashed text-base font-semibold flex justify-center h-full w-full items-center"
           >
-            2
+            {{ ticketAmount }}
           </div>
-          <div
+          <button
+            @click="increment"
+            :disabled="ticketAmount >= 10"
+            :class="ticketAmount >= 10 && 'opacity-25'"
             class="text-base font-semibold flex justify-center h-full w-full items-center"
           >
             <!-- -----Plus------ -->
@@ -90,7 +96,7 @@
                 d="M12 6v6m0 0v6m0-6h6m-6 0H6"
               />
             </svg>
-          </div>
+          </button>
 
           <div
             style="left: -2px;"
@@ -106,7 +112,9 @@
         <div
           class="flex bg-yellow h-14 w-6/12 items-center justify-center rounded-md"
         >
-          <span class="text-base font-semibold text-white ">Pay N400</span>
+          <span class="text-base font-semibold text-white "
+            >Pay N{{ price }}</span
+          >
         </div>
       </div>
 
@@ -131,7 +139,21 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
   name: "LotteryPayNShare",
 })
-export default class LotteryPayNShare extends Vue {}
+export default class LotteryPayNShare extends Vue {
+  private ticketAmount: number = 0;
+
+  get price() {
+    return this.ticketAmount * 100;
+  }
+
+  private increment() {
+    this.ticketAmount++;
+  }
+
+  private decrement() {
+    this.ticketAmount--;
+  }
+}
 </script>
 
 <style scoped></style>

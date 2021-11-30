@@ -11,21 +11,24 @@
         <div class="mx-auto grid grid-cols-6 lg:grid-cols-5">
           <div class="col-span-6 lg:col-span-3">
             <h3 class="spartan font-semibold text-xl">
-              <!-- {{ campaignDetails.data.name }} -->
-              Lottery Title
+              {{ lotteryDetails.data.name }}
             </h3>
           </div>
           <div
             class="col-span-6 lg:col-span-3 lg:col-start-1 h-60 sm:h-80 lg:h-full"
           >
             <!------round loader------------ -->
-            <!-- <div
+            <div
+              v-if="lotteryDetails.loading"
               class="h-full relative rounded-md flex items-center justify-center"
             >
               <div class="roundLoader opacity-50"></div>
-            </div> -->
+            </div>
 
-            <LotteryDetailsCarousel :images="slides" />
+            <LotteryDetailsCarousel
+              v-else
+              :images="lotteryDetails.data.fileRefs"
+            />
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <!-- <DonateNShareSkeleton v-if="campaignDetails.loading" /> -->
