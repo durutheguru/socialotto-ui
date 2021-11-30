@@ -43,9 +43,9 @@
       </div>
       <!-- ----------- -->
 
-      <div class="h-14 items-center flex  justify-between">
+      <div class=" items-center flex flex-col sm:flex-row justify-between">
         <div
-          class="relative grid grid-cols-3 bg-transparent border-2 border-yellow  h-14 w-5/12 items-center justify-center rounded-md"
+          class="relative grid grid-cols-3 bg-transparent border-2 border-yellow  h-14 w-full sm:w-5/12 mb-6 sm:mb-0 items-center justify-center rounded-md"
         >
           <button
             @click="decrement"
@@ -112,7 +112,7 @@
         <div
           :disabled="ticketAmount <= 0"
           :class="ticketAmount <= 0 && 'opacity-25'"
-          class="flex bg-yellow h-14 w-6/12 items-center justify-center rounded-md"
+          class="flex bg-yellow h-14 w-full sm:w-6/12 items-center justify-center rounded-md"
         >
           <span class="text-base font-semibold text-white "
             >Pay N{{ price }}</span
@@ -136,7 +136,11 @@
 </template>
 
 <script lang="ts">
+declare var MonnifySDK: any;
+
 import { Component, Vue } from "vue-property-decorator";
+import store from "@/store/index";
+import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   name: "LotteryPayNShare",
@@ -145,7 +149,7 @@ export default class LotteryPayNShare extends Vue {
   private ticketAmount: number = 0;
 
   get price() {
-    return this.ticketAmount * 100;
+    return this.ticketAmount * 200;
   }
 
   private increment() {
@@ -155,6 +159,10 @@ export default class LotteryPayNShare extends Vue {
   private decrement() {
     this.ticketAmount--;
   }
+
+  // private handleLotteryPayment(){
+
+  // }
 }
 </script>
 
