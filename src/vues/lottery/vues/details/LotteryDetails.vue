@@ -37,6 +37,7 @@
               :numberOfWinners="lotteryDetails.data.expectedWinnerCount"
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
               :closureDate="lotteryDetails.data.endDate"
+              :lotteryOwner="lotteryDetails.data.lotteryOwner.name"
               v-else
             />
           </div>

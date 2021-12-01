@@ -12,7 +12,9 @@
         <span class="text-sm font-medium text-gray-400"
           >Celebrity Sponsor
         </span>
-        <span class="text-base font-semibold text-gray-600 ">Wizkid</span>
+        <span class="text-base font-semibold text-gray-600 ">{{
+          lotteryOwner
+        }}</span>
       </div>
       <!-- ----------- -->
       <div class="h-12 items-center flex  justify-between ">
@@ -42,7 +44,8 @@
       <!-- ----------- -->
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-base font-semibold text-gray-600 "
-          >Number of tickets (Cost N{{ ticketCost }} per ticket)</span
+          >Number of tickets (Cost
+          <span class="font-bold">N{{ ticketCost }}</span> per ticket)</span
         >
       </div>
       <!-- ----------- -->
@@ -154,6 +157,7 @@ import { Constants, Log, Util } from "@/components/util";
     numberOfWinners: Number,
     numberOfEntries: Number,
     closureDate: String,
+    lotteryOwner: String,
   },
 })
 export default class LotteryPayNShare extends Vue {
