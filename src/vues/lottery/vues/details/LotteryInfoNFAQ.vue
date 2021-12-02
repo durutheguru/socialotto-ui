@@ -6,22 +6,24 @@
           <div class="col-span-6 md:col-span-3">
             <InfoStatusUpdatesSkeleton />
           </div>
-          <div class="col-span-6 md:col-span-2 relative mt-20 lg:mt-0">
+          <!-- <div class="col-span-6 md:col-span-2 relative mt-20 lg:mt-0">
             <FAQSkeleton />
-          </div>
+          </div> -->
         </div>
 
         <!-- ----------------------- -->
-        <div v-else class="mx-auto grid grid-cols-6 md:grid-cols-5">
-          <div class="col-span-6 md:col-span-3">
+        <div v-else class="mx-auto ">
+          <div class="">
             <LotteryInformationSection
               :lotteryDescription="lotteryDescription"
               :lotteryStatus="lotteryStatus"
+              :supportedCampaigns="supportedCampaigns"
+              :loading="loading"
             />
           </div>
-          <div class="col-span-6 md:col-span-2 mt-20 lg:mt-0">
+          <!-- <div class="col-span-6 md:col-span-2 mt-20 lg:mt-0">
             <FAQ />
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -46,6 +48,7 @@ import LotteryInformationSection from "./LotteryInformationSection.vue";
     lotteryStatus: String,
     lotteryDescription: String,
     loading: Boolean,
+    supportedCampaigns: Array,
   },
 })
 export default class LotteryInfoNFAQ extends Vue {}

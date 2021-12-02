@@ -38,7 +38,7 @@
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
               :closureDate="lotteryDetails.data.endDate"
               :lotteryOwner="lotteryDetails.data.lotteryOwner.name"
-              v-else
+              v-else-if="isDataReceived"
             />
           </div>
         </div>
@@ -49,6 +49,7 @@
       :lotteryDescription="lotteryDetails.data.description"
       :loading="lotteryDetails.loading"
       :lotteryStatus="lotteryDetails.data.lotteryStatus"
+      :supportedCampaigns="lotteryDetails.data.campaigns"
     />
     <!-- <CampaignDetailsCards
       heading="Similar campaigns and lotteries"
@@ -90,7 +91,12 @@ export default class LotteryDetails extends Vue {
     return this.$route.params.id;
   }
 
+  // get dataReceived(){
+  //   return false
+  // }
+
   private lotteryId: string = this.lotteryDetailsId;
+  private isDataReceived = false;
 
   private getLotteryDetails() {
     let self = this;
@@ -103,9 +109,10 @@ export default class LotteryDetails extends Vue {
     LotteryService.getLotteryDetails(
       self.lotteryId,
       (response: any) => {
-        self.lotteryDetails.loading = false;
-
         self.lotteryDetails.data = response.data;
+
+        self.lotteryDetails.loading = false;
+        self.isDataReceived = true;
 
         Log.info(
           "lotteryDetails In: " + JSON.stringify(self.lotteryDetails.data)
