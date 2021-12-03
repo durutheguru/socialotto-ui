@@ -3,7 +3,9 @@
     class="h-full bg-cover  bg-center"
     :style="{
       'background-image':
-        'url(' + util.searchImageUrl(result.campaignFiles) + ')',
+        'url(' +
+        util.searchImageUrl(result.campaignFiles || result.files) +
+        ')',
     }"
   >
     <div class="h-full flex items-end  bg-transparent-black">

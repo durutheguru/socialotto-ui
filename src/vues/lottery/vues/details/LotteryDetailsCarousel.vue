@@ -2,7 +2,7 @@
   <div class="h-full relative rounded-md">
     <carousel-slides
       v-for="(slide, index) in images"
-      :key="slide.reference"
+      :key="index"
       :index="index"
       :visibleSlide="visibleSlide"
     >
@@ -73,24 +73,16 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Log } from "@/components/util";
-import CarouselSlides from "./CarouselSlides.vue";
+import CarouselSlides from "@/vues/campaign/vues/campaignDetails/CarouselSlides.vue";
+// import { Component, Vue,  } from "vue-property-decorator";
 
 @Component({
-  name: "CampaignDetailsCarousel",
+  name: "LotteryDetailsCarousel",
   components: {
     CarouselSlides,
   },
-  // props: {
-  //   images: Array,
-  // }
 })
-export default class CampaignDetailsCarousel extends Vue {
-  // private slides = [
-  //   "https://picsum.photos/id/237/500/300",
-  //   "https://picsum.photos/id/238/500/300",
-  //   "https://picsum.photos/id/239/500/300",
-  // ];
+export default class LotteryDetailsCarousel extends Vue {
   @Prop()
   private images!: any[];
   // private images!: Array<any>;
@@ -121,28 +113,4 @@ export default class CampaignDetailsCarousel extends Vue {
 }
 </script>
 
-<style scoped>
-/* .dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.4s ease;
-  position: relative;
-}
-
-.dot:hover {
-  background-color: #717171;
-}
-
-.activeDot {
-  background-color: #717171;
-}
-
-.inactiveDot {
-  background-color: blue;
-} */
-</style>
+<style scoped></style>
