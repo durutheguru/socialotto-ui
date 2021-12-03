@@ -113,7 +113,7 @@ export default class CampaignDetails extends Vue {
   @Watch("campaignDetailsId")
   private campaignDetailsRouteId(newValue: string, oldValue: string) {
     let self = this;
-    Log.info(`ids: ${newValue}${oldValue}`);
+    Log.info(`ids: ${newValue} to ${oldValue}`);
     self.campaignId = newValue;
 
     this.getCampaignDetails();
@@ -121,25 +121,6 @@ export default class CampaignDetails extends Vue {
 
   private mounted() {
     this.getCampaignDetails();
-    // Log.info("campaignDetailsId: " + this.campaignDetailsId);
-    // let campaignId: string = this.$route.params.id;
-    // this.campaignDetails.loading = true;
-    // this.campaignDetails.error = "";
-    // CampaignService.getCampaignDetails(
-    //   campaignId,
-    //   (response: any) => {
-    //     this.campaignDetails.loading = false;
-    //     // Log.info("campaignDetails In: " + JSON.stringify(response.data));
-    //     this.campaignDetails.data = response.data;
-    //     Log.info(
-    //       "campaignDetails In: " + JSON.stringify(this.campaignDetails.data)
-    //     );
-    //   },
-    //   (error: any) => {
-    //     this.campaignDetails.loading = false;
-    //     Log.error("campaignDetails Error: " + JSON.stringify(error));
-    //   }
-    // );
   }
 }
 </script>

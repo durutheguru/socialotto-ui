@@ -107,7 +107,12 @@ const routes = [
         name: "CampaignDetails",
         component: () => import('@/vues/campaign/vues/campaignDetails/CampaignDetails.vue'),
 
-      }
+      },
+      {
+        path: '/lottery/:id',
+        name: 'LotteryDetails',
+        component: () => import('@/vues/lottery/vues/details/LotteryDetails.vue'),
+      },
 
     
     ]
@@ -164,18 +169,15 @@ const routes = [
     path: '/lottery',
     name: 'Lottery',
     component: Lottery,
+  
     children: [
-      {
-        path: '',
-        name: 'LotteryHome',
-        component: () => import('@/vues/lottery/vues/list/LotteryHome.vue'),
-      },
+      // {
+      //   path: '',
+      //   name: 'LotteryHome',
+      //   component: () => import('@/vues/lottery/vues/list/LotteryHome.vue'),
+      // },
 
-      {
-        path: ':id',
-        name: 'LotteryDetail',
-        component: () => import('@/vues/lottery/vues/details/LotteryDetail.vue'),
-      },
+    
     ]
   },
 
@@ -184,17 +186,18 @@ const routes = [
     name: 'Campaign',
     component: Campaign,
     children: [
-      {
-        path: '',
-        name: 'CampaignHome',
-        component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
-      },
+      // {
+      //   path: '',
+      //   name: 'CampaignHome',
+      //   component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
+      // },
 
       {
         path: ':id',
         name: 'CampaignDetails',
         component: () => import('@/vues/campaign/vues/details/CampaignDetails.vue'),
       },
+ 
     ]
   },
 

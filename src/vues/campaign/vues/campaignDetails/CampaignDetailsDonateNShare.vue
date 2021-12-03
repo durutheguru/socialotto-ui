@@ -129,7 +129,7 @@ export default class CampaignDetailsDonateNShare extends Vue {
     store.commit("setCurrentCampaignId", this.$route.params.id);
     // this.notifications = !this.notifications;
     store.commit("setDonateModal", true);
-    Log.info("donateModalOpen id:" + this.$route.params.id);
+    Log.info("donateModalOpen campaignId:" + this.$route.params.id);
   }
 }
 </script>
