@@ -78,33 +78,75 @@
               </div>
 
               <!-- -------Lottery Owner------- -->
-              <div class="w-full mb-6 relative">
+              <div class="w-full mb-6 ">
                 <label
                   for="Lottery owner"
                   class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
                   >Lottery owner</label
                 >
-                <div class="mt-1">
-                  <validation-provider rules="required" v-slot="{ errors }">
-                    <input
-                      v-model="lottery.lotteryOwner"
-                      required
-                      type="text"
-                      name="Lottery owner"
-                      id="lottery owner"
-                      :class="{
-                        'border-red-400': errors.length > 0,
-                      }"
-                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
-                      placeholder="Search"
-                    />
+                <div v-if="chosenOwner.length === 0">
+                  <div class="mt-1 relative">
+                    <validation-provider rules="required" v-slot="{ errors }">
+                      <input
+                        v-model="lotteryOwner"
+                        required
+                        type="text"
+                        name="Lottery owner"
+                        id="lottery owner"
+                        :class="{
+                          'border-red-400': errors.length > 0,
+                        }"
+                        class="spartan h-12 bg-transparent border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                        placeholder="Search"
+                      />
 
-                    <span class="text-red-500 spartan">{{ errors[0] }}</span>
-                  </validation-provider>
+                      <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                    </validation-provider>
+                  </div>
+                  <ul class="absolute" v-if="lotteryOwner.length > 0">
+                    <li
+                      @click="selectOwner(owner)"
+                      v-for="owner in owners"
+                      :key="owner"
+                    >
+                      {{ owner }}
+                    </li>
+                  </ul>
                 </div>
-                <ul class="absolute" v-if="lottery.lotteryOwner.length > 0">
-                  <li v-for="owner in owners" :key="owner">{{ owner }}</li>
-                </ul>
+
+                <!-- -----v-if owner chosen------ -->
+                <div class="mt-1 relative" v-else>
+                  <input
+                    readonly
+                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                  />
+                  <div
+                    class="absolute left-0 top-0 h-full flex justify-center items-center"
+                  >
+                    <div
+                      class="h-4/6 flex justify-center items-center rounded-lg bg-gray-300 px-2 ml-3"
+                    >
+                      <span class="spartan text-sm">{{ chosenOwner }}</span>
+
+                      <div @click="cancelOwner">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="ml-2 h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- ------------- -->
             </div>
@@ -208,9 +250,15 @@ import { Log, Constants, Util } from "@/components/util";
   name: "CreateLottery",
 })
 export default class CreateLottery extends Vue {
-  private mounted() {
-    // this.populateOwnersArray();
-  }
+  // private mounted() {
+
+  // }
+  private chosenOwner: string = "";
+  private lotteryOwner: string = "";
+
+  // get chosenOwner() {
+  //   return this.myChosenOwner;
+  // }
   private owners: any = [];
 
   private populateOwnersArray() {
@@ -222,8 +270,20 @@ export default class CreateLottery extends Vue {
     Log.info("filteredOwners: " + this.owners + " " + this.getOwner);
   }
 
+  private selectOwner(owner: string) {
+    const chosen = owner;
+    this.chosenOwner = chosen;
+
+    Log.info(this.chosenOwner);
+  }
+
+  private cancelOwner() {
+    this.lotteryOwner = "";
+    this.chosenOwner = "";
+  }
+
   private get getOwner() {
-    return this.lottery.lotteryOwner;
+    return this.lotteryOwner;
   }
 
   @Watch("getOwner")
@@ -238,7 +298,7 @@ export default class CreateLottery extends Vue {
     description: "",
     ticketCost: "",
     numberOfWinners: "",
-    lotteryOwner: "",
+    lotteryOwner: this.chosenOwner,
   };
 
   private createLottery() {
