@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full grid grid-cols-6">
+  <div class="h-full w-full grid grid-cols-6 ">
     <BackofficeSidebar />
 
     <router-view></router-view>

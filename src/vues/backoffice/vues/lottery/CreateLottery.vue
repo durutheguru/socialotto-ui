@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-5 pt-20 px-10">
+  <div class="col-span-5 pt-20 px-10 h-screen overflow-y-auto">
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
     >
@@ -103,7 +103,7 @@
                       <span class="text-red-500 spartan">{{ errors[0] }}</span>
                     </validation-provider>
                   </div>
-                  <ul class="absolute" v-if="lotteryOwner.length > 0">
+                  <ul class="absolute" v-if="owners.length > 0">
                     <li
                       @click="selectOwner(owner)"
                       v-for="owner in owners"
@@ -148,7 +148,75 @@
                   </div>
                 </div>
               </div>
-              <!-- ------------- -->
+              <!-- -------Supported Campaigns------ -->
+
+              <div class="w-full mb-1">
+                <label
+                  for="Supported Campaigns"
+                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  >Supported Campaigns (max 3)</label
+                >
+                <div class="mt-1 relative">
+                  <validation-provider
+                    mode="aggressive"
+                    rules=""
+                    v-slot="{ errors }"
+                  >
+                    <input
+                      v-model="supportedCampaign"
+                      type="text"
+                      name="supported campaign"
+                      id="supported campaign"
+                      :class="{
+                        'border-red-400': errors.length > 0,
+                      }"
+                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      placeholder="campaign name"
+                    />
+                    <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                  </validation-provider>
+                </div>
+                <ul class="absolute" v-if="supportedCampaigns.length > 0">
+                  <li
+                    @click="selectCampaign(campaign)"
+                    v-for="campaign in supportedCampaigns"
+                    :key="campaign"
+                  >
+                    {{ campaign }}
+                  </li>
+                </ul>
+              </div>
+              <!-- ----------------- -->
+              <div
+                v-if="chosenCampaigns.length > 0"
+                class="mb-6 h-12 flex justify-start items-center"
+              >
+                <div
+                  v-for="(chosenCampaign, index) in chosenCampaigns"
+                  :key="chosenCampaign"
+                  class="h-4/6 flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-3"
+                >
+                  <span class="spartan text-sm">{{ chosenCampaign }}</span>
+
+                  <div @click="cancelSupportedCampaign(index)">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="ml-2 h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <!-- ------------------- -->
             </div>
           </div>
         </div>
@@ -255,19 +323,35 @@ export default class CreateLottery extends Vue {
   // }
   private chosenOwner: string = "";
   private lotteryOwner: string = "";
+  private supportedCampaign: string = "";
+  private chosenCampaigns: any = [];
 
-  // get chosenOwner() {
-  //   return this.myChosenOwner;
-  // }
   private owners: any = [];
+  private supportedCampaigns: any = [];
 
   private populateOwnersArray() {
-    const ownersList = ["dumebi", "kaine"];
+    const ownersList = ["kai", "dumebi", "kaine"];
     this.owners = ownersList.filter((owner) => {
-      return owner.match(this.getOwner);
+      return this.getOwner.length > 0 ? owner.match(this.getOwner) : false;
     });
 
     Log.info("filteredOwners: " + this.owners + " " + this.getOwner);
+  }
+
+  private populateSupportedCampaigns() {
+    const supportedCampaignsList = ["help me", "build me"];
+    this.supportedCampaigns = supportedCampaignsList.filter((campaignName) => {
+      return this.supportedCampaign.length > 0
+        ? campaignName.match(this.supportedCampaign)
+        : false;
+    });
+
+    Log.info(
+      "filteredsupportedCampaignsList: " +
+        this.supportedCampaigns +
+        " " +
+        this.supportedCampaign
+    );
   }
 
   private selectOwner(owner: string) {
@@ -277,9 +361,19 @@ export default class CreateLottery extends Vue {
     Log.info(this.chosenOwner);
   }
 
+  private selectCampaign(campaign: string) {
+    const chosen = campaign;
+    this.chosenCampaigns.push(chosen);
+    this.supportedCampaign = "";
+  }
+
   private cancelOwner() {
     this.lotteryOwner = "";
     this.chosenOwner = "";
+  }
+
+  private cancelSupportedCampaign(index: number) {
+    this.chosenCampaigns.splice(index, 1);
   }
 
   private get getOwner() {
@@ -291,6 +385,11 @@ export default class CreateLottery extends Vue {
     this.populateOwnersArray();
   }
 
+  @Watch("supportedCampaign")
+  private supportedCampaignFilter(newValue: string, oldValue: string) {
+    this.populateSupportedCampaigns();
+  }
+
   private saveLottery: ApiResource = ApiResource.create();
 
   private lottery: any = {
@@ -299,6 +398,7 @@ export default class CreateLottery extends Vue {
     ticketCost: "",
     numberOfWinners: "",
     lotteryOwner: this.chosenOwner,
+    supportedCampaigns: [],
   };
 
   private createLottery() {
