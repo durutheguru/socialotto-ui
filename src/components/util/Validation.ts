@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { extend } from 'vee-validate';
-import { email, numeric, min_value } from 'vee-validate/dist/rules';
+import { email, numeric } from 'vee-validate/dist/rules';
+
 // import { Validator } from 'vee-validate';
 // import { configure } from 'vee-validate';
 // import VeeValidate from 'vee-validate';
-
-
-
-
-
 
 
 export default function() {
@@ -72,7 +68,6 @@ export default function() {
     });
 
 
-
     extend('min', {
     validate(value, {length}) {
         return value.length >= length;
@@ -80,6 +75,7 @@ export default function() {
     params: ['length'],
     message: 'The {_field_} field must have at least {length} characters'
     });
+
 
     extend('max', {
     validate(value, {length}) {
@@ -90,7 +86,6 @@ export default function() {
     });
 
   
-
     extend('numeric', {
     ...numeric, 
 
@@ -137,3 +132,5 @@ export default function() {
     //   });
 
 }
+
+

@@ -134,7 +134,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
       },
 
       result({ data }) {
-        // Log.info("Search Campaigns Data: " + JSON.stringify(data));
+        Log.info("Search Campaigns Data: " + JSON.stringify(data));
         this.siteQuery.campaignData = data.searchCampaigns;
       },
 

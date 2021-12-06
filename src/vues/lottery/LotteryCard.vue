@@ -46,7 +46,7 @@
           <div
             class=" spartan cursor-pointer h-6 w-20 flex justify-center items-center"
           >
-            <span>Details</span>
+            <div @click="showLotteryDetails(result)"><span>Details</span></div>
           </div>
         </div>
       </div>
@@ -58,6 +58,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseVue from "../../components/BaseVue";
+import store from "@/store/index";
 
 @Component({
   name: "LotteryCard",
@@ -68,7 +69,13 @@ import BaseVue from "../../components/BaseVue";
     },
   },
 })
-export default class LotteryCard extends BaseVue {}
+export default class LotteryCard extends BaseVue {
+  private showLotteryDetails(lottery: any) {
+    this.$router.push(`/lottery/${lottery.id}`);
+    // store.commit("setCurrentLotteryId", lottery.id);
+    // this.scrollToTop;
+  }
+}
 </script>
 
 <style scoped></style>

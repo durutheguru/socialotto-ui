@@ -23,6 +23,7 @@ export default new Vuex.Store({
     lastEventTarget: "",
     donateModal: false,
     currentCampaignId: "",
+    currentLotteryId: ""
   },
 
 
@@ -79,6 +80,9 @@ export default new Vuex.Store({
     },
     setCurrentCampaignId(state, payload) {
       state.currentCampaignId = payload;
+    },
+    setCurrentLotteryId(state, payload) {
+      state.currentLotteryId = payload;
     }
 
 
