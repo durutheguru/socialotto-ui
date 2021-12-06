@@ -176,8 +176,12 @@
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
                   </validation-provider>
                 </div>
-                <ul class="absolute" v-if="supportedCampaigns.length > 0">
+                <ul
+                  class="absolute p-2 bg-blue-50 rounded-md "
+                  v-if="supportedCampaigns.length > 0"
+                >
                   <li
+                    class="cursor-pointer"
                     @click="selectCampaign(campaign)"
                     v-for="campaign in supportedCampaigns"
                     :key="campaign"
@@ -342,7 +346,8 @@ export default class CreateLottery extends Vue {
     const supportedCampaignsList = ["help me", "build me"];
     this.supportedCampaigns = supportedCampaignsList.filter((campaignName) => {
       return this.supportedCampaign.length > 0
-        ? campaignName.match(this.supportedCampaign)
+        ? campaignName.match(this.supportedCampaign) &&
+            !this.chosenCampaigns.includes(campaignName)
         : false;
     });
 
