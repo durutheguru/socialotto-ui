@@ -50,8 +50,8 @@ import { Log, Util } from "@/components/util";
 import Incentives from "../../components/Incentives.vue";
 import Footer from "../../components/Footer.vue";
 import SearchNFilter from "../../components/SearchNFilter.vue";
-import CampaignCard from "../../components/page-features/CampaignCard.vue";
-import LotteryCard from "../../components/page-features/LotteryCard.vue";
+import CampaignCard from "../campaign/CampaignCard.vue";
+import LotteryCard from "../lottery/LotteryCard.vue";
 import { searchLotteries } from "@/services/lottery/lottery.query";
 import { searchCampaigns } from "@/services/campaign/campaign.query";
 import { ApolloError } from "apollo-client";
@@ -81,7 +81,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
       },
 
       result({ data }) {
-        Log.info("Search Lotteries Data: " + JSON.stringify(data));
+        // Log.info("Search Lotteries Data: " + JSON.stringify(data));
         this.siteQuery.lotteryData = data.searchLotteries;
       },
 
@@ -105,7 +105,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
       },
 
       result({ data }) {
-        Log.info("Search Campaigns Data: " + JSON.stringify(data));
+        // Log.info("Search Campaigns Data: " + JSON.stringify(data));
         this.siteQuery.campaignData = data.searchCampaigns;
       },
 
@@ -128,9 +128,9 @@ export default class Home extends Vue {
     size: 9,
   };
 
-  private mounted() {
-    Log.info("joined Array: " + JSON.stringify(searchLotteries));
-  }
+  // private mounted() {
+  //   Log.info("joined Array: " + JSON.stringify(searchLotteries));
+  // }
 
   get lotteriesNcampaigns() {
     // let self = this;
@@ -138,13 +138,13 @@ export default class Home extends Vue {
       this.siteQuery.campaignData
     );
 
-    Log.info("Unsorted Merged Data: " + JSON.stringify(mergedData));
+    // Log.info("Unsorted Merged Data: " + JSON.stringify(mergedData));
 
     mergedData.sort((o1: any, o2: any) => {
       return o1.name > o2.name ? -1 : 1;
     });
 
-    Log.info("Sorted Merged Data: " + JSON.stringify(mergedData));
+    // Log.info("Sorted Merged Data: " + JSON.stringify(mergedData));
 
     return mergedData;
     // return JSON.stringify(this.$apollo.queries.searchLotteries);

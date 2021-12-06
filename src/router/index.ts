@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import NavHeader from "../views/unprotected/NavHeader.vue";
 import AuthNavHeader from "../protected/AuthNavHeader.vue";
+import LandingPage from "../vues/landingPage/LandingPage.vue"
 
 import Login from '../vues/login/Login.vue';
 // import Signup from '../vues/signup/'
@@ -27,6 +28,12 @@ const routes = [
     component: NavHeader,
     children: [
       {
+        path: "/",
+        name: "LandingPage",
+        component: LandingPage
+
+      },
+      {
         path: '/signup',
         name: 'Signup',
         component: () => import('@/vues/signup/Signup.vue'),
@@ -38,14 +45,6 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login,
-        meta: {
-          skipAuth: true,
-        },
-      },
-      {
-        path: "/home",
-        name: "Home",
-        component: () => import("@/vues/home/Home.vue"),
         meta: {
           skipAuth: true,
         },
@@ -66,23 +65,6 @@ const routes = [
           skipAuth: true,
         },
       },
-   
-    ]
-  },
-  {
-    path: '/auth_home',
-    name: "AuthNavHeader",
-    component: AuthNavHeader,
-   
-    children: [
-      {
-        path: '/create_campaign',
-        name: 'CreateCampaign',
-        component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
-       
-      }
-    ]
-  },
 
 
 
@@ -95,6 +77,49 @@ const routes = [
     meta: {
       skipAuth: true,
     },
+  }
+   
+    ]
+  },
+  {
+    path: '/auth_home',
+    name: "AuthNavHeader",
+    component: AuthNavHeader,
+    meta: {
+      skipAuth: true,
+    },
+   
+    children: [
+      {
+        path: "/home",
+        name: "Home",
+        component: () => import("@/vues/home/Home.vue"),
+       
+      },
+
+      {
+        path: '/create_campaign',
+        name: 'CreateCampaign',
+        component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
+       
+      },
+
+      {
+        path: "/campaign/:id",
+        name: "CampaignDetails",
+        component: () => import('@/vues/campaign/vues/campaignDetails/CampaignDetails.vue'),
+        meta: {
+          skipAuth: true,
+        },
+      },
+
+      {
+        path: '/lottery/:id',
+        name: 'LotteryDetails',
+        component: () => import('@/vues/lottery/vues/details/LotteryDetails.vue'),
+      },
+
+    ]
   },
 
   {
@@ -148,18 +173,15 @@ const routes = [
     path: '/lottery',
     name: 'Lottery',
     component: Lottery,
+  
     children: [
-      {
-        path: '',
-        name: 'LotteryHome',
-        component: () => import('@/vues/lottery/vues/list/LotteryHome.vue'),
-      },
+      // {
+      //   path: '',
+      //   name: 'LotteryHome',
+      //   component: () => import('@/vues/lottery/vues/list/LotteryHome.vue'),
+      // },
 
-      {
-        path: ':id',
-        name: 'LotteryDetail',
-        component: () => import('@/vues/lottery/vues/details/LotteryDetail.vue'),
-      },
+    
     ]
   },
 
@@ -168,19 +190,29 @@ const routes = [
     name: 'Campaign',
     component: Campaign,
     children: [
-      {
-        path: '',
-        name: 'CampaignHome',
-        component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
-      },
+      // {
+      //   path: '',
+      //   name: 'CampaignHome',
+      //   component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
+      // },
 
       {
         path: ':id',
         name: 'CampaignDetails',
         component: () => import('@/vues/campaign/vues/details/CampaignDetails.vue'),
       },
+ 
     ]
-  }
+  },
+
+  {
+    path: '/payment_integration',
+    name: 'PaymentIntegration',
+    component: () => import('@/vues/payment_integration/PaymentIntegration.vue'),
+    meta: {
+      skipAuth: true,
+    },
+  },
 
 ];
 

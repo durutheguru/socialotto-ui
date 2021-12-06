@@ -3,7 +3,9 @@
     class="h-full bg-cover  bg-center"
     :style="{
       'background-image':
-        'url(' + util.searchImageUrl(result.campaignFiles) + ')',
+        'url(' +
+        util.searchImageUrl(result.campaignFiles || result.files) +
+        ')',
     }"
   >
     <div class="h-full flex items-end  bg-transparent-black">
@@ -19,6 +21,28 @@
             {{ result.totalFundsRaised }} raised out of {{ result.targetFunds }}
           </p>
         </div>
+        <div class="pb-3">
+          <div class="relative">
+            <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
+              <div
+                :style="
+                  `width: ${(result.totalFundsRaised * 100) /
+                    result.targetFunds}%`
+                "
+                class="
+        shadow-none
+        flex flex-col
+        text-center
+        whitespace-nowrap
+        text-white
+        justify-center
+        progressbar-green
+        rounded-full
+      "
+              ></div>
+            </div>
+          </div>
+        </div>
         <div class="mt-0 grid grid-cols-2 items-center">
           <div
             class="cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"
@@ -30,7 +54,9 @@
             <div
               class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
-              <span>Details</span>
+              <div @click="showCampaignDetails(result)">
+                <span>Details</span>
+              </div>
             </div>
           </div>
         </div>
@@ -53,7 +79,16 @@ import BaseVue from "../../components/BaseVue";
     },
   },
 })
-export default class CampaignCard extends BaseVue {}
+export default class CampaignCard extends BaseVue {
+  // private scrollToTop = () => {
+  //   const page = document.getElementById("campaignDetails") as HTMLElement;
+  //   page.scroll(0, 0);
+  // };
+  private showCampaignDetails(campaign: any) {
+    this.$router.push(`/campaign/${campaign.id}`);
+    // this.scrollToTop;
+  }
+}
 </script>
 
 <style scoped></style>

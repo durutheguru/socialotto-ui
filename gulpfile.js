@@ -74,7 +74,8 @@ var vendorJSList = gulp_helper.mergePathRoot(VENDOR_JS_ROOT, [
     "/respond.min.js",
     "/slidebars.min.js",
     "/common-scripts.js",
-    "/video.min.js"
+    "/video.min.js",
+    "/monnify.js"
 ]);
 
 //vendorJSList = vendorJSList.concat([
