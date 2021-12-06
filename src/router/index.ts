@@ -106,7 +106,9 @@ const routes = [
         path: "/campaign/:id",
         name: "CampaignDetails",
         component: () => import('@/vues/campaign/vues/campaignDetails/CampaignDetails.vue'),
-
+        meta: {
+          skipAuth: true,
+        },
       }
 
     

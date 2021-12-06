@@ -77,7 +77,7 @@ export default new Vuex.Store({
     setDonateModal(state, payload) {
       state.donateModal = payload;
     },
-    setCurrentCampaignId(state, payload){
+    setCurrentCampaignId(state, payload) {
       state.currentCampaignId = payload;
     }
 
