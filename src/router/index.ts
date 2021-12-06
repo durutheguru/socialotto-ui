@@ -96,25 +96,29 @@ const routes = [
         component: () => import("@/vues/home/Home.vue"),
        
       },
+
       {
         path: '/create_campaign',
         name: 'CreateCampaign',
         component: () => import('@/vues/campaign/vues/create/CreateCampaign.vue'),
        
       },
+
       {
         path: "/campaign/:id",
         name: "CampaignDetails",
         component: () => import('@/vues/campaign/vues/campaignDetails/CampaignDetails.vue'),
-
+        meta: {
+          skipAuth: true,
+        },
       },
+
       {
         path: '/lottery/:id',
         name: 'LotteryDetails',
         component: () => import('@/vues/lottery/vues/details/LotteryDetails.vue'),
       },
 
-    
     ]
   },
 

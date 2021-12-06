@@ -8,30 +8,42 @@ import { email, numeric } from 'vee-validate/dist/rules';
 // import VeeValidate from 'vee-validate';
 
 
-
-
-
-
-
 export default function() {
    
     Vue.component('ValidationProvider', ValidationProvider);
     Vue.component('ValidationObserver', ValidationObserver);
 
-    // configure({
-    //     classes: {
-    //       valid: 'is-valid',
-    //       invalid: 'is-invalid',
-    //       dirty: ['is-dirty', 'is-dirty'], // multiple classes per flag!
-    //       // ...
-    //     }
-    //   })
+/*
+     
+    configure({
+        classes: {
+          valid: 'is-valid',
+          invalid: 'is-invalid',
+          dirty: ['is-dirty', 'is-dirty'], // multiple classes per flag!
+          // ...
+        }
+      })
 
-    // Validator.extend('truthy', {
-    //     getMessage: field  => 'The ' + field + ' value is not truthy.',
-    //     validate: value => !! value
-    //   });
+    Validator.extend('truthy', {
+        getMessage: field  => 'The ' + field + ' value is not truthy.',
+        validate: value => !! value
+      });
 
+    extend("maxDifference", {
+        params: ["otherValue", "maxDifference"],
+        validate: (value, { otherValue, maxDifference }) => {
+          if (maxDifference === null || maxDifference === 0 || 
+             maxDifference >= Math.abs(value - otherValue)) {
+            return true;
+          }
+          return false;
+        },
+        message:
+          "The difference between the two numbers is too great. 
+    The maximum allowed is difference is {maxDifference}."
+      });
+
+*/
 
     extend('required', {
         validate(value: string): any {
@@ -56,7 +68,6 @@ export default function() {
     });
 
 
-
     extend('min', {
     validate(value, {length}) {
         return value.length >= length;
@@ -64,6 +75,7 @@ export default function() {
     params: ['length'],
     message: 'The {_field_} field must have at least {length} characters'
     });
+
 
     extend('max', {
     validate(value, {length}) {
@@ -74,7 +86,6 @@ export default function() {
     });
 
   
-
     extend('numeric', {
     ...numeric, 
 
@@ -121,3 +132,5 @@ export default function() {
     //   });
 
 }
+
+

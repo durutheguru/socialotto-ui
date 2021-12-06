@@ -40,13 +40,12 @@
           </a>
           <a
             href="#"
+            @click="logout()"
             class=" p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
           >
             <p
               class=" mb-0 spartan text-base leading-6 font-medium text-gray-900"
-            >
-              Logout
-            </p>
+            >Logout</p>
           </a>
         </div>
       </div>
@@ -57,6 +56,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Log, Util } from "@/components/util";
+import LoginService from '@/vues/login/service/LoginService';
 import store from "../store/index";
 
 @Component({
@@ -74,6 +74,12 @@ export default class AvatarMenu extends Vue {
   private mounted() {
     Util.clickOutside("avatarMenu", "dropdown", "setUserMenu");
   }
+
+
+  public logout() {
+    LoginService.doLogout();
+  }
+
 }
 </script>
 
