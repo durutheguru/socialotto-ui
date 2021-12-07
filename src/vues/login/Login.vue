@@ -1,5 +1,5 @@
 <template>
-  <div class="divContainer overflow-auto lg:overflow-y-scroll">
+  <div class="divContainer overflow-auto lg:overflow-y-scroll spartan">
     <div
       class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
     >
@@ -33,7 +33,7 @@
               Email address
             </label>
             <div class="mt-1">
-              <validation-provider rules="email_required" v-slot="{ invalid }">
+              <validation-provider rules="email_required" v-slot="{ errors }">
                 <input
                   id="email"
                   name="email"
@@ -43,10 +43,12 @@
                   v-model="platformUser.email"
                   required
                   :disabled="userLogin.loading"
-                  v-bind:class="{ 'invalid-field': invalid }"
-                  class="spartan text-base appearance-none block w-full px-3 py-2  placeholder-gray-400 focus:outline-none sm:text-sm"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
+                  class="spartan bg-white border-gray-300 border-2 border-blue-dark spartan text-base appearance-none block w-full px-3 py-2 placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
-                <!-- <span>{{ errors[0] }}</span> -->
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -65,7 +67,7 @@
               Password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ invalid }">
+              <validation-provider rules="required" v-slot="{ errors }">
                 <input
                   id="password"
                   name="password"
@@ -73,11 +75,14 @@
                   placeholder="password"
                   autocomplete="current-password"
                   v-model="platformUser.password"
-                  v-bind:class="{ 'invalid-field': invalid }"
+                  :class="{
+                    'border-red-400': errors.length > 0,
+                  }"
                   required
                   :disabled="userLogin.loading"
-                  class="appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                  class="spartan border-gray-300 border-2 border-blue-dark bg-white appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                 />
+                <span class="text-red-500 spartan">{{ errors[0] }}</span>
               </validation-provider>
             </div>
           </div>
@@ -473,7 +478,6 @@ input {
   /* left: 520px; */
   /* top: 245px; */
 
-  border: 2px solid #2c5662;
   box-sizing: border-box;
   border-radius: 8px;
   padding: 0 24px;

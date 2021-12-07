@@ -15,7 +15,15 @@ export default new Vuex.Store({
   state : {
     entryUrl : null,
     globalAlert: { show: false, text: "", type: "" },
-    dropMenu: false
+    dropMenu: false,
+    isNoticeMenu: false,
+    isRecentsMenu: false,
+    dropAuthMenu: false,
+    userMenu: false,
+    lastEventTarget: "",
+    donateModal: false,
+    currentCampaignId: "",
+    currentLotteryId: ""
   },
 
 
@@ -51,6 +59,30 @@ export default new Vuex.Store({
 
     setDropMenu(state, payload) {
       state.dropMenu = payload;
+    },
+    setDropAuthMenu(state, payload) {
+      state.dropAuthMenu = payload;
+    },
+    setUserMenu(state, payload) {
+      state.userMenu = payload;
+    },
+    setIsNoticeMenu(state, payload) {
+      state.isNoticeMenu = payload;
+    },
+    setLastEventTarget(state, payload) {
+      state.lastEventTarget = payload;
+    },
+    setIsRecentsMenu(state, payload) {
+      state.isRecentsMenu = payload;
+    },
+    setDonateModal(state, payload) {
+      state.donateModal = payload;
+    },
+    setCurrentCampaignId(state, payload) {
+      state.currentCampaignId = payload;
+    },
+    setCurrentLotteryId(state, payload) {
+      state.currentLotteryId = payload;
     }
 
 

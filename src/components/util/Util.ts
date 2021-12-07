@@ -2,13 +2,43 @@ import { LocalDate, LocalDateTime, LocalTime, ZonedDateTime, ZoneId } from "@js-
 import { ApolloError } from "apollo-client";
 import moment from "moment";
 import { Constants } from ".";
-import store from "../../store/index"
+import store from "../../store/index";
+import { v4 as uuidv4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 
 
 export default class Util {
 
 
     private static throttleObject: any = {};
+
+    public static clickOutside(menu: string, menuTrigger: string, storeMutation: string) {
+        let elem = document.getElementById(menu) as HTMLElement;
+        let rect = elem.getBoundingClientRect();
+        let rectx = Math.floor(rect.x);
+        let recty = Math.floor(rect.y);
+        let recth = Math.floor(rect.height);
+        let rectw = Math.floor(rect.width);
+        let rectxspan = rectx + rectw;
+        let rectyspan = recty + recth;
+    
+        window.onclick = (event: any) => {
+          let x = event.clientX;
+          let y = event.clientY;
+        //   let arr = ["recentsToggle", "noticeToggle", "dropdown"]
+        //   arr.includes(event.target.id) 
+    
+          // if(self.menu)
+         
+    
+          if (
+            event.target.id !== menuTrigger && 
+            (x < rectx || x > rectxspan || y < recty || y > rectyspan)
+          ) {
+            store.commit(storeMutation, false);
+          }
+        };
+    }
     
     public static handleGlobalAlert(show: boolean, type: string, text: string) {
         store.commit("setGlobalAlert", { show, type, text });
@@ -92,6 +122,14 @@ export default class Util {
 
         return arr.length && obj && obj.publicUrl ? obj.publicUrl : defaultBackground;
     }
+
+    // public static getPublicUrl(obj: any) {
+        
+        
+         
+
+    //     return obj && obj.publicUrl 
+    // }
 
 
     public static deepGet(parent: any, path: string) {
@@ -273,6 +311,11 @@ export default class Util {
         zoneOffset = zoneOffset.replace(':', '');
 
         return `${formattedTime.substring(0, 16)} ${zoneOffset}`;
+    }
+
+
+    public static uuidv5(input?: string, pad?: boolean): string {
+        return uuidv5(input || '', Util.uuid()) + (pad ? Util.uuid() : '');
     }
 
 

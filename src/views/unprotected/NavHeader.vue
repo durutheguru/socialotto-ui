@@ -5,7 +5,12 @@
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <span class="signupLogo my-auto">Socialotto</span>
+        <router-link
+          class="signupLogo cursor-pointer my-auto no-underline"
+          :to="'/home'"
+        >
+          <span class="">Socialotto</span>
+        </router-link>
         <div class="menuIcon my-auto" @click="dropMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +32,7 @@
           class=" spartan flex my-auto relative right-0 flex justify-end"
           style="height: 40px; width: 552px;"
         >
-          <div class=" anchorDIv">
+          <div class="spartan anchorDIv">
             <router-link
               class="spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
               :to="'/about'"
@@ -47,7 +52,7 @@
             >
           </div>
           <div
-            class="customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+            class="spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             Support a campaign
           </div>
@@ -137,10 +142,6 @@ a {
   /* margin: auto 0; */
 
   color: #767676;
-}
-
-.spartan {
-  font-family: "Spartan", sans-serif;
 }
 
 .menuIcon {
