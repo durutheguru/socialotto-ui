@@ -84,7 +84,7 @@
                   class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
                   >Lottery owner</label
                 >
-                <div v-if="chosenOwner.length === 0">
+                <div v-if="lottery.lotteryOwner.length === 0">
                   <div class="mt-1 relative">
                     <validation-provider rules="required" v-slot="{ errors }">
                       <input
@@ -103,8 +103,10 @@
                       <span class="text-red-500 spartan">{{ errors[0] }}</span>
                     </validation-provider>
                   </div>
-                  <ul class="absolute" v-if="owners.length > 0">
+                  <div class="relative bg-white z-20"  v-if="owners.length > 0" >
+                    <ul class="py-2 absolute w-full rounded-md shadow-md bg-white">
                     <li
+                    class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
                       @click="selectOwner(owner)"
                       v-for="owner in owners"
                       :key="owner"
@@ -112,6 +114,7 @@
                       {{ owner }}
                     </li>
                   </ul>
+                  </div>
                 </div>
 
                 <!-- -----v-if owner chosen------ -->
@@ -126,7 +129,7 @@
                     <div
                       class="h-4/6 flex justify-center items-center rounded-lg bg-gray-300 px-2 ml-3"
                     >
-                      <span class="spartan text-sm">{{ chosenOwner }}</span>
+                      <span class="spartan text-sm">{{ lottery.lotteryOwner }}</span>
 
                       <div @click="cancelOwner">
                         <svg
@@ -176,24 +179,26 @@
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
                   </validation-provider>
                 </div>
+                <div class="relative bg-white z-20" v-if="searchCampaignsNamesQuery.campaignData.length > 0" >
                 <ul
-                  class="absolute p-2 bg-blue-50 rounded-md "
-                  v-if="supportedCampaigns.length > 0"
+                  class="py-2 absolute w-full rounded-md shadow-md bg-white "
+                  
                 >
                   <li
-                    class="cursor-pointer"
+                    class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
                     @click="selectCampaign(campaign)"
-                    v-for="campaign in supportedCampaigns"
-                    :key="campaign"
+                    v-for="campaign in searchCampaignsNamesQuery.campaignData"
+                    :key="campaign.id"
                   >
-                    {{ campaign }}
+                    {{ campaign.name }}
                   </li>
                 </ul>
+                </div>
               </div>
               <!-- ----------------- -->
               <div
                 v-if="chosenCampaigns.length > 0"
-                class="mb-6 h-12 flex justify-start items-center"
+                class=" h-12 flex justify-start items-center"
               >
                 <div
                   v-for="(chosenCampaign, index) in chosenCampaigns"
@@ -221,6 +226,97 @@
                 </div>
               </div>
               <!-- ------------------- -->
+
+              <div class="w-full mb-6 mt-6">
+                    <label
+                      for="email"
+                      class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                      >Lottery file uploads</label
+                    >
+                    <div class="mt-1">
+                      <validation-provider rules="required" v-slot="{}">
+                        <div
+                          class="spartan h-12 flex bg-transparent border border-solid rounded-md"
+                        >
+                          <input
+                            readonly
+                            type="text"
+                            name="Lottery file uploads"
+                            id="Lottery file uploads"
+                            class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                            placeholder="select files"
+                          />
+                          <div
+                            @click="chooseFiles"
+                            class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-36 h-10 my-auto mr-0.5"
+                          >
+                            <span class="spartan text-sm">Upload</span>
+
+                            <input
+                              required
+                              autocomplete="off"
+                              multiple
+                              type="file"
+                              id="lottery_file"
+                              name="lottery_file"
+                              accept="image/png, image/jpeg, .pdf, .doc"
+                              placeholder="upload file"
+                              class="hidden"
+                              v-on:change="fileChanged"
+                            />
+                          </div>
+                        </div>
+                      </validation-provider>
+                    </div>
+                    <div v-if="fileUploader.uploads.length > 0">
+                      <table
+                        role="presentation"
+                        class="table v-margin-medium table-striped"
+                      >
+                        <tbody class="files">
+                          <tr
+                            v-for="fileUpload in fileUploader.uploads"
+                            :key="fileUpload.getFile().name"
+                          >
+                            <td class="col--4">
+                              <p>{{ fileUpload.getFile().name }}</p>
+                            </td>
+                            <td class="col--5">
+                              <br />
+                              <div
+                                v-if="fileUpload.getResource().loading"
+                                class="progress progress-striped active"
+                                role="progressbar"
+                                aria-valuemin="0"
+                                aria-valuemax="100"
+                                aria-valuenow="0"
+                              >
+                                <div
+                                  class="progress-bar progress-bar-success"
+                                  role="progressbar"
+                                  aria-valuenow="45"
+                                  aria-valuemin="0"
+                                  aria-valuemax="100"
+                                  style="width:100%"
+                                ></div>
+                              </div>
+                            </td>
+                            <td class="col--3">
+                              <button
+                                data-toggle="button"
+                                class="pull-right btn btn-danger"
+                                @click="
+                                  fileUploader.removeFile(fileUpload.getFile())
+                                "
+                              >
+                                <i class="fa fa-trash slight-bigger-text"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
             </div>
           </div>
         </div>
@@ -294,7 +390,77 @@
             </div>
 
             <!-- ---------- -->
+
+            
+            <!-- ------End date of registration------ -->
+
+            <div class="w-full mb-6">
+              <label
+                for="Number of winners"
+                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                >End date of registration</label
+              >
+              <div class="mt-1">
+                <validation-provider
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <input
+                    v-model="lottery.endDate"
+                    required
+                   
+                    type="date"
+                    name="End date of registration"
+                    id="end date of registration"
+                    :class="{
+                      'border-red-400': errors.length > 0,
+                    }"
+                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    placeholder="13/01/2022"
+                  />
+
+                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                </validation-provider>
+              </div>
+            </div>
+
+            <!-- ---------- -->
+
+                <!-- ------Date and time of evaluation------ -->
+
+            <div class="w-full mb-6">
+              <label
+                for="Number of winners"
+                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                >Date and time of evaluation</label
+              >
+              <div class="mt-1">
+                <validation-provider
+                  rules="required"
+                  v-slot="{ errors }"
+                >
+                  <input
+                    v-model="lottery.evaluationDate"
+                    required
+                   
+                    type="date"
+                    name="Date and time of evaluation"
+                    id="date and time evaluation"
+                    :class="{
+                      'border-red-400': errors.length > 0,
+                    }"
+                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    placeholder="13/01/2022"
+                  />
+
+                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                </validation-provider>
+              </div>
+            </div>
+
+            <!-- ---------- -->
             <button
+            @click="createLottery"
               :disabled="invalid"
               :class="[invalid ? 'opacity-25' : 'opacity-100']"
               class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -302,7 +468,7 @@
               Create lottery
               <!-- <i
               class="ml-px fa fa-spinner fa-spin"
-              v-if="saveCampaign.loading"
+              v-if="saveLottery.loading"
             ></i> -->
             </button>
           </div>
@@ -317,21 +483,104 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import { Log, Constants, Util } from "@/components/util";
+import FileUploader from "@/components/file-uploader/FileUploader";
+import { searchCampaignNames } from "@/services/campaign/campaign.query";
+import { ApolloError } from "apollo-client";
+
+// import LotteryService from "@/services/lottery/LotteryService";
+
 
 @Component({
   name: "CreateLottery",
+  apollo: {
+     $client: "anonymousClient",
+     searchCampaigns: {
+       query: searchCampaignNames,
+
+       variables() {
+         return {
+            searchKey: this.supportedCampaign,
+          page: this.searchCampaignsNamesQuery.page,
+          size: this.searchCampaignsNamesQuery.size,
+         };
+       },
+        skip () {
+          return !this.supportedCampaign;
+        },
+
+       result({data}){
+
+         this.searchCampaignsNamesQuery.campaignData = data.searchCampaigns;
+         Log.info("searchCampaignsNamesQuery data : " + JSON.stringify(this.searchCampaignsNamesQuery.campaignData));
+       },
+
+       error(error: ApolloError) {
+         this.searchCampaignsNamesQuery.error = Util.extractGqlError(error);
+         if(Util.isValidString(this.searchCampaignsNamesQuery.error)) {
+           this.$apollo.queries.searchCampaignNames.refetch();
+         }
+       }
+
+     }
+  }
 })
 export default class CreateLottery extends Vue {
   // private mounted() {
 
   // }
-  private chosenOwner: string = "";
+ 
+
+  private searchCampaignsNamesQuery: any = {
+    // key: "",
+    campaignData: [],
+     page: 0,
+    size: 9,
+    error: ""
+  };
   private lotteryOwner: string = "";
   private supportedCampaign: string = "";
   private chosenCampaigns: any = [];
 
   private owners: any = [];
   private supportedCampaigns: any = [];
+   private saveLottery: ApiResource = ApiResource.create();
+
+  //  get owner(){
+  //    return this.chosenOwner;
+  //  }
+
+  private lottery: any = {
+    name: "",
+    description: "",
+    ticketCost: "",
+    numberOfWinners: "",
+    lotteryOwner: "",
+    supportedCampaigns: this.chosenCampaigns,
+    endDate: "",
+    evaluationDate: ""
+  };
+
+  private createLottery() {
+    Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
+    // LotteryService.createLottery()
+  }
+
+  private fileUploader: FileUploader = new FileUploader(
+    "/upload",
+    5,
+    Constants.defaultFileUploadExtensions,
+    Constants.defaultMaxFileUploadSize
+  );
+
+  public fileChanged(event: any) {
+    this.fileUploader.fileChange(event);
+    // this.$forceUpdate();
+  }
+
+  private chooseFiles() {
+    const showFilesToSelect: any = document.getElementById("lottery_file");
+    showFilesToSelect.click();
+  }
 
   private populateOwnersArray() {
     const ownersList = ["kai", "dumebi", "kaine"];
@@ -361,9 +610,9 @@ export default class CreateLottery extends Vue {
 
   private selectOwner(owner: string) {
     const chosen = owner;
-    this.chosenOwner = chosen;
+    this.lottery.lotteryOwner = chosen;
 
-    Log.info(this.chosenOwner);
+    Log.info(this.lottery.lotteryOwner);
   }
 
   private selectCampaign(campaign: string) {
@@ -374,7 +623,7 @@ export default class CreateLottery extends Vue {
 
   private cancelOwner() {
     this.lotteryOwner = "";
-    this.chosenOwner = "";
+    this.lottery.lotteryOwner = "";
   }
 
   private cancelSupportedCampaign(index: number) {
@@ -395,20 +644,7 @@ export default class CreateLottery extends Vue {
     this.populateSupportedCampaigns();
   }
 
-  private saveLottery: ApiResource = ApiResource.create();
-
-  private lottery: any = {
-    name: "",
-    description: "",
-    ticketCost: "",
-    numberOfWinners: "",
-    lotteryOwner: this.chosenOwner,
-    supportedCampaigns: [],
-  };
-
-  private createLottery() {
-    Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
-  }
+ 
 }
 </script>
 

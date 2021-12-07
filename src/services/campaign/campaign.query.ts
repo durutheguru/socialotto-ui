@@ -23,6 +23,17 @@ query searchCampaigns($searchKey: String, $page: Int, $size: Int) {
 }
 `
 
+const searchCampaignNames = gql`
+query searchCampaignNames($searchKey: String, $page: Int, $size: Int) {
+    searchCampaigns(searchKey: $searchKey, page: $page, size: $size) {
+        id
+        name
+   
+    }
+}
+`
+
 export {
     searchCampaigns,
+    searchCampaignNames
 };
