@@ -104,7 +104,7 @@
                     </validation-provider>
                   </div>
                   <div class="relative bg-white z-20"  v-if="owners.length > 0" >
-                    <ul class="py-2 absolute w-full rounded-md shadow-md bg-white">
+                    <ul class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm">
                     <li
                     class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
                       @click="selectOwner(owner)"
@@ -157,7 +157,7 @@
                 <label
                   for="Supported Campaigns"
                   class="spartan font-medium text-dark block text-sm text-gray-700"
-                  >Supported Campaigns (max 3)</label
+                  >Supported Campaigns (max {{maxCampaigns}})</label
                 >
                 <div class="mt-1 relative">
                   <validation-provider
@@ -181,7 +181,7 @@
                 </div>
                 <div class="relative bg-white z-20" v-if="searchCampaignsNamesQuery.campaignData.length > 0" >
                 <ul
-                  class="py-2 absolute w-full rounded-md shadow-md bg-white "
+                  class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
                   
                 >
                   <li
@@ -202,10 +202,11 @@
               >
                 <div
                   v-for="(chosenCampaign, index) in chosenCampaigns"
-                  :key="chosenCampaign"
+                  :key="chosenCampaign.id"
+                  style="max-width: 11rem;"
                   class="h-4/6 flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-3"
                 >
-                  <span class="spartan text-sm">{{ chosenCampaign }}</span>
+                  <span  class="spartan text-sm truncate">{{ chosenCampaign.name }}</span>
 
                   <div @click="cancelSupportedCampaign(index)">
                     <svg
@@ -540,9 +541,10 @@ export default class CreateLottery extends Vue {
   private lotteryOwner: string = "";
   private supportedCampaign: string = "";
   private chosenCampaigns: any = [];
+  private maxCampaigns = 3;
 
   private owners: any = [];
-  private supportedCampaigns: any = [];
+  // private supportedCampaigns: any = [];
    private saveLottery: ApiResource = ApiResource.create();
 
   //  get owner(){
@@ -559,6 +561,15 @@ export default class CreateLottery extends Vue {
     endDate: "",
     evaluationDate: ""
   };
+
+  // private get campaignsArray(){
+  //   const result = this.searchCampaignsNamesQuery.campaignData
+  //   .filter((campaign: any) => {
+  //     return   !this.chosenCampaigns.includes(campaign)
+  //       : false;
+  //   });
+  //   return result;
+  // }
 
   private createLottery() {
     Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
@@ -591,22 +602,23 @@ export default class CreateLottery extends Vue {
     Log.info("filteredOwners: " + this.owners + " " + this.getOwner);
   }
 
-  private populateSupportedCampaigns() {
-    const supportedCampaignsList = ["help me", "build me"];
-    this.supportedCampaigns = supportedCampaignsList.filter((campaignName) => {
-      return this.supportedCampaign.length > 0
-        ? campaignName.match(this.supportedCampaign) &&
-            !this.chosenCampaigns.includes(campaignName)
-        : false;
-    });
+  // private populateSupportedCampaigns() {
+  //   // const supportedCampaignsList = ["help me", "build me"];
+  //   this.supportedCampaigns = this.searchCampaignsNamesQuery.campaignData;
+  //   this.supportedCampaigns.filter((campaign: any) => {
+  //     return this.supportedCampaign.length > 0
+  //       ? campaign.match(this.supportedCampaign) &&
+  //           !this.chosenCampaigns.includes(campaign)
+  //       : false;
+  //   });
 
-    Log.info(
-      "filteredsupportedCampaignsList: " +
-        this.supportedCampaigns +
-        " " +
-        this.supportedCampaign
-    );
-  }
+  //   Log.info(
+  //     "filteredsupportedCampaignsList: " +
+  //       this.supportedCampaigns +
+  //       " " +
+  //       this.supportedCampaign
+  //   );
+  // }
 
   private selectOwner(owner: string) {
     const chosen = owner;
@@ -615,10 +627,25 @@ export default class CreateLottery extends Vue {
     Log.info(this.lottery.lotteryOwner);
   }
 
-  private selectCampaign(campaign: string) {
+  private selectCampaign(campaign: any) {
     const chosen = campaign;
-    this.chosenCampaigns.push(chosen);
+    console.log("chosen:" + chosen)
+    console.log("chosenCampaigns:" + this.chosenCampaigns)
+    const check = this.chosenCampaigns.length === 0 ? true : this.chosenCampaigns.some((chosenCampaign: any) => chosenCampaign.id !== chosen.id);
+    Log.info(`check: ${check}`)
+    if(check){
+     
+      if(this.chosenCampaigns.length < this.maxCampaigns){
+        this.chosenCampaigns.push(chosen);
+     
+      this.supportedCampaign = "";
+      } else {
+        Util.handleGlobalAlert(true, "failed", "maximum number reached")
+      }
+    }
+    
     this.supportedCampaign = "";
+    //  this.searchCampaignsNamesQuery.campaignData = [];
   }
 
   private cancelOwner() {
@@ -634,14 +661,14 @@ export default class CreateLottery extends Vue {
     return this.lotteryOwner;
   }
 
-  @Watch("getOwner")
-  private ownersFilter(newValue: string, oldValue: string) {
-    this.populateOwnersArray();
-  }
+  // @Watch("searchCampaignsNamesQuery.campaignData")
+  // private ownersFilter(newValue: string, oldValue: string) {
+  //   this.populateOwnersArray();
+  // }
 
   @Watch("supportedCampaign")
   private supportedCampaignFilter(newValue: string, oldValue: string) {
-    this.populateSupportedCampaigns();
+    this.searchCampaignsNamesQuery.campaignData = [];
   }
 
  
