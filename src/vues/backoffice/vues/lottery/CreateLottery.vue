@@ -112,7 +112,7 @@
                     >
                       <li
                         class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                        @click="selectOwner(owner.name)"
+                        @click="selectOwner(owner)"
                         v-for="(owner, index) in owners"
                         :key="index"
                       >
@@ -505,6 +505,13 @@
               Reset
             </button>
             <!-- --- -->
+            <!-- :disabled="
+                invalid ||
+                  fileUploader.uploads.length === 0 ||
+                  saveLottery.loading ||
+                  !dateCheck
+              " -->
+            <!-- --- -->
             <button
               @click="createLottery"
               :disabled="
@@ -610,6 +617,7 @@ export default class CreateLottery extends BaseVue {
     ticketCost: "",
     numberOfWinners: "",
     lotteryOwner: "",
+    lotteryUserName: "",
     supportedCampaigns: this.chosenCampaigns,
     endDate: "",
     evaluationDate: "",
@@ -636,7 +644,7 @@ export default class CreateLottery extends BaseVue {
         self.saveLottery.loading = false;
         Util.handleGlobalAlert(true, "success", "Successfully created lottery");
 
-        let resetButton: any = document.getElementById("reset");
+        let resetButton: any = document.getElementById("clearLotteryInput");
         resetButton.click();
       },
       (error: any) => {
@@ -649,8 +657,17 @@ export default class CreateLottery extends BaseVue {
   }
 
   private prepareLotteryRequest() {
+    const time = Util.formatTime(
+      `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
+      "YYYY-MM-DD HH:mm",
+      "YYYY-MM-DD HH:mm:ss.SSSS Z"
+    );
+
+    Log.info(Util.removeLastChar(time, ":"));
+
+    Log.info(time);
     let request = {
-      ownerUsername: this.lottery.lotteryOwner,
+      ownerUsername: this.lottery.lotteryUserName,
       lottery: {
         name: this.lottery.name,
         description: this.lottery.description,
@@ -660,14 +677,16 @@ export default class CreateLottery extends BaseVue {
           {
             stage: "FIRST",
             winnersCount: this.lottery.numberOfWinners,
-            evaluationTime: `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
+            evaluationTime: Util.removeLastChar(time, ":"),
           },
         ],
       },
       fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
       beneficiaries: this.wallets.map((wallet: any) => {
         const obj = {
-          wallet: wallet,
+          wallet: {
+            id: wallet.id,
+          },
         };
         return obj;
       }),
@@ -705,11 +724,17 @@ export default class CreateLottery extends BaseVue {
     );
   }
 
-  private selectOwner(owner: string) {
+  private selectOwner(owner: any) {
     const chosen = owner;
-    this.lottery.lotteryOwner = chosen;
-
+    this.lottery.lotteryOwner = chosen.name;
+    this.lottery.lotteryUserName = chosen.username;
     Log.info(this.lottery.lotteryOwner);
+    Log.info(this.lottery.lotteryUserName);
+  }
+
+  private cancelOwner() {
+    this.lotteryOwner = "";
+    this.lottery.lotteryOwner = "";
   }
 
   private selectCampaign(campaign: any) {
@@ -748,6 +773,7 @@ export default class CreateLottery extends BaseVue {
     this.lottery.ticketCost = "";
     this.lottery.numberOfWinners = "";
     this.lottery.lotteryOwner = "";
+    this.lottery.lotteryUserName = "";
     this.lottery.supportedCampaigns = [];
     this.lottery.endDate = "";
     this.lottery.evaluationDate = "";
@@ -759,11 +785,6 @@ export default class CreateLottery extends BaseVue {
     (this.$refs.vObserver as any).reset();
 
     Log.info("Done Resetting form...");
-  }
-
-  private cancelOwner() {
-    this.lotteryOwner = "";
-    this.lottery.lotteryOwner = "";
   }
 
   private cancelSupportedCampaign(index: number) {

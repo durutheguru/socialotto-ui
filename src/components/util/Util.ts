@@ -12,6 +12,12 @@ export default class Util {
 
     private static throttleObject: any = {};
 
+    public static removeLastChar(string: string, char: string){
+
+        let newTime = string.slice(0, string.lastIndexOf(char)) + string.slice(string.lastIndexOf(char) + 1, string.length) 
+            return newTime
+        }
+
     public static clickOutside(menu: string, menuTrigger: string, storeMutation: string) {
         let elem = document.getElementById(menu) as HTMLElement;
         let rect = elem.getBoundingClientRect();
