@@ -91,6 +91,8 @@
                     <validation-provider rules="required" v-slot="{ errors }">
                       <input
                         v-model="lotteryOwner"
+                        @focus="ownerlistIsVisible = true"
+                        @blur="ownerlistIsVisible = false"
                         required
                         type="text"
                         name="Lottery owner"
@@ -106,13 +108,16 @@
                       <span class="text-red-500 spartan">{{ errors[0] }}</span>
                     </validation-provider>
                   </div>
-                  <div class="relative bg-white z-20" v-if="owners.length > 0">
+                  <div
+                    class="relative bg-white z-20"
+                    v-if="owners.length > 0 && ownerlistIsVisible"
+                  >
                     <ul
                       class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
                     >
                       <li
                         class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                        @click="selectOwner(owner)"
+                        @mousedown="selectOwner(owner)"
                         v-for="(owner, index) in owners"
                         :key="index"
                       >
@@ -175,6 +180,8 @@
                   >
                     <input
                       v-model="supportedCampaign"
+                      @focus="campaignListIsVisible = true"
+                      @blur="campaignListIsVisible = false"
                       type="text"
                       name="supported campaign"
                       id="supported campaign"
@@ -191,14 +198,17 @@
                 </div>
                 <div
                   class="relative bg-white z-20"
-                  v-if="searchCampaignsNamesQuery.campaignData.length > 0"
+                  v-if="
+                    searchCampaignsNamesQuery.campaignData.length > 0 &&
+                      campaignListIsVisible
+                  "
                 >
                   <ul
                     class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
                   >
                     <li
                       class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                      @click="selectCampaign(campaign)"
+                      @mousedown="selectCampaign(campaign)"
                       v-for="campaign in searchCampaignsNamesQuery.campaignData"
                       :key="campaign.id"
                     >
@@ -603,6 +613,9 @@ export default class CreateLottery extends BaseVue {
     size: 9,
     error: "",
   };
+
+  private ownerlistIsVisible: boolean = false;
+  private campaignListIsVisible: boolean = false;
   private lotteryOwner: any = "";
   private supportedCampaign: string = "";
   private chosenCampaigns: any = [];
