@@ -603,7 +603,7 @@ export default class CreateLottery extends BaseVue {
     size: 9,
     error: "",
   };
-  private lotteryOwner: string = "";
+  private lotteryOwner: any = "";
   private supportedCampaign: string = "";
   private chosenCampaigns: any = [];
   private maxCampaigns = 3;
@@ -780,7 +780,7 @@ export default class CreateLottery extends BaseVue {
     this.lottery.evaluationTime = "";
     this.fileUploader.uploads = [];
     this.chosenCampaigns = [];
-    // this.lotteryOwner = ""
+    this.lotteryOwner = null;
 
     (this.$refs.vObserver as any).reset();
 
