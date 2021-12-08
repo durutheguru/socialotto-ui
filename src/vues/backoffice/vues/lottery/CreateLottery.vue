@@ -100,6 +100,7 @@
                         }"
                         class="spartan h-12 bg-transparent border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
                         placeholder="Search"
+                        autocomplete="off"
                       />
 
                       <span class="text-red-500 spartan">{{ errors[0] }}</span>
@@ -184,6 +185,7 @@
                       class="spartan  h-12 bg-transparent  border-gray-300 border-2  pl-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
                       style="padding-right: 65%"
                       placeholder="campaign name"
+                      autocomplete="off"
                     />
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
                   </validation-provider>

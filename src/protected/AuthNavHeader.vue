@@ -157,7 +157,7 @@ import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
-// import ClickOutside from 'vue-click-outside';
+// import {ClickOutside } from 'vue-click-outside';
 // import SignupService from "./service/SignupService";
 // import LoginService from "../login/service/LoginService";
 // import store from "@/store";
@@ -193,6 +193,10 @@ export default class AuthNavHeader extends BaseVue {
   private get noticeMenu(): boolean {
     return store.state.isNoticeMenu;
   }
+
+  // private hide () {
+  //   store.commit("setIsNoticeMenu", false);
+  // }
 
   private get recentsMenu(): boolean {
     return store.state.isRecentsMenu;
