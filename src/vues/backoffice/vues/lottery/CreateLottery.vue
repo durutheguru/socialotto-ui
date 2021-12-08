@@ -158,7 +158,7 @@
               </div>
               <!-- -------Supported Campaigns------ -->
 
-              <div class="w-full mb-1">
+              <div class="w-full mb-1 relative">
                 <label
                   for="Supported Campaigns"
                   class="spartan font-medium text-dark block text-sm text-gray-700"
@@ -178,7 +178,8 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="spartan  h-12 bg-transparent  border-gray-300 border-2  pl-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      style="padding-right: 65%"
                       placeholder="campaign name"
                     />
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
@@ -201,41 +202,45 @@
                     </li>
                   </ul>
                 </div>
-              </div>
-              <!-- ----------------- -->
-              <div
-                v-if="chosenCampaigns.length > 0"
-                class=" h-12 flex justify-start items-center"
-              >
-                <div
-                  v-for="(chosenCampaign, index) in chosenCampaigns"
-                  :key="chosenCampaign.id"
-                  style="max-width: 11rem;"
-                  class="h-4/6 flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-3"
-                >
-                  <span class="spartan text-sm truncate">{{
-                    chosenCampaign.name
-                  }}</span>
 
-                  <div @click="cancelSupportedCampaign(index)">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="ml-2 h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
+                <!-- -------chosenCampaigns------- -->
+                <div
+                  v-if="chosenCampaigns.length > 0"
+                  style="width: 65%"
+                  class="absolute right-0 bottom-0 h-12  grid grid-cols-3 gap-1 justify-start items-center"
+                >
+                  <div
+                    v-for="(chosenCampaign, index) in chosenCampaigns"
+                    :key="chosenCampaign.id"
+                    style="max-width: 100%;"
+                    class="h-4/6 cursor-pointer col-span-1 flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-3"
+                  >
+                    <span class="spartan text-sm truncate">{{
+                      chosenCampaign.name
+                    }}</span>
+
+                    <div @click="cancelSupportedCampaign(index)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="ml-2 h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
+                <!-- ------------------- -->
               </div>
-              <!-- ------------------- -->
+
+              <!-- ----------------- -->
 
               <div class="w-full mb-6 mt-6">
                 <label
