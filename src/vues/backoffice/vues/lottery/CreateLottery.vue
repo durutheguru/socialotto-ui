@@ -42,6 +42,7 @@
                       }"
                       class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
                       placeholder="title"
+                      autocomplete="off"
                     />
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
                   </validation-provider>
@@ -90,7 +91,6 @@
                     <validation-provider rules="required" v-slot="{ errors }">
                       <input
                         v-model="lotteryOwner"
-                        @blur="owners = []"
                         required
                         type="text"
                         name="Lottery owner"
@@ -176,7 +176,6 @@
                     <input
                       v-model="supportedCampaign"
                       type="text"
-                      @blur="searchCampaignsNamesQuery.campaignData = []"
                       name="supported campaign"
                       id="supported campaign"
                       :class="{
@@ -511,12 +510,14 @@
               :disabled="
                 invalid ||
                   fileUploader.uploads.length === 0 ||
-                  saveLottery.loading
+                  saveLottery.loading ||
+                  !dateCheck
               "
               :class="[
                 invalid ||
                 fileUploader.uploads.length === 0 ||
-                saveLottery.loading
+                saveLottery.loading ||
+                !dateCheck
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
@@ -601,7 +602,6 @@ export default class CreateLottery extends BaseVue {
   private maxCampaigns = 3;
   private wallets: any = [];
   private owners: any = [];
-  // private supportedCampaigns: any = [];
   private saveLottery: ApiResource = ApiResource.create();
 
   private lottery: any = {
@@ -616,13 +616,18 @@ export default class CreateLottery extends BaseVue {
     evaluationTime: "",
   };
 
+  private get dateCheck() {
+    return this.lottery.evaluationDate > this.lottery.endDate;
+  }
+
   private createLottery() {
     let self = this;
+
+    Log.info(`datecheck: ${this.dateCheck}`);
 
     self.saveLottery.loading = true;
     self.saveLottery.error = "";
 
-    Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
     const lotteryRequest = this.prepareLotteryRequest();
     Log.info("lotteryDetails: " + JSON.stringify(lotteryRequest));
     LotteryService.createLottery(
