@@ -207,13 +207,13 @@
                 <div
                   v-if="chosenCampaigns.length > 0"
                   style="width: 65%"
-                  class="absolute right-0 bottom-0 h-12  grid grid-cols-3 gap-1 justify-start items-center"
+                  class="absolute right-0 bottom-0 h-12  flex justify-end items-center"
                 >
                   <div
                     v-for="(chosenCampaign, index) in chosenCampaigns"
                     :key="chosenCampaign.id"
-                    style="max-width: 100%;"
-                    class="h-4/6 cursor-pointer col-span-1 flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-3"
+                    style="max-width: 30%;"
+                    class="h-4/6 cursor-pointer  flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-2.5"
                   >
                     <span class="spartan text-sm truncate">{{
                       chosenCampaign.name
