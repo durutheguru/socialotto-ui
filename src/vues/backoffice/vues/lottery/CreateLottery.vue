@@ -6,12 +6,13 @@
       Create your campaign
     </h1>
     <validation-observer
-      ref="observer"
+      ref="vObserver"
       id="createLottery_form"
       tag="form"
       role="form"
-      v-slot="{ invalid }"
+      v-slot="{ invalid, reset }"
       @submit.prevent="createLottery"
+      @reset.prevent="reset"
       novalidate
     >
       <div class=" grid grid-cols-6 ">
@@ -89,6 +90,7 @@
                     <validation-provider rules="required" v-slot="{ errors }">
                       <input
                         v-model="lotteryOwner"
+                        @blur="owners = []"
                         required
                         type="text"
                         name="Lottery owner"
@@ -173,6 +175,7 @@
                     <input
                       v-model="supportedCampaign"
                       type="text"
+                      @blur="searchCampaignsNamesQuery.campaignData = []"
                       name="supported campaign"
                       id="supported campaign"
                       :class="{
@@ -206,16 +209,16 @@
                 <!-- -------chosenCampaigns------- -->
                 <div
                   v-if="chosenCampaigns.length > 0"
-                  style="width: 65%"
-                  class="absolute right-0 bottom-0 h-12  flex justify-end items-center"
+                  style="max-width: 65%"
+                  class="absolute  right-0 bottom-0 h-12  flex justify-end items-center"
                 >
                   <div
                     v-for="(chosenCampaign, index) in chosenCampaigns"
                     :key="chosenCampaign.id"
-                    style="max-width: 30%;"
-                    class="h-4/6 cursor-pointer  flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-2.5"
+                    style="max-width: 7rem; width: 7rem;"
+                    class=" h-4/6 cursor-pointer  flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-2.5"
                   >
-                    <span class="spartan text-sm truncate">{{
+                    <span class=" spartan text-sm truncate">{{
                       chosenCampaign.name
                     }}</span>
 
@@ -235,6 +238,9 @@
                         />
                       </svg>
                     </div>
+                    <!-- <span class=" spartan text-sm">{{
+                      chosenCampaign.name
+                    }}</span> -->
                   </div>
                 </div>
                 <!-- ------------------- -->
@@ -494,17 +500,31 @@
             </div>
 
             <!-- ---------- -->
+            <button class="hidden" id="clearLotteryInput" type="reset">
+              Reset
+            </button>
+            <!-- --- -->
             <button
               @click="createLottery"
-              :disabled="invalid"
-              :class="[invalid ? 'opacity-25' : 'opacity-100']"
+              :disabled="
+                invalid ||
+                  fileUploader.uploads.length === 0 ||
+                  saveLottery.loading
+              "
+              :class="[
+                invalid ||
+                fileUploader.uploads.length === 0 ||
+                saveLottery.loading
+                  ? 'opacity-25'
+                  : 'opacity-100',
+              ]"
               class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               Create lottery
-              <!-- <i
-              class="ml-px fa fa-spinner fa-spin"
-              v-if="saveLottery.loading"
-            ></i> -->
+              <i
+                class="ml-px fa fa-spinner fa-spin"
+                v-if="saveLottery.loading"
+              ></i>
             </button>
           </div>
         </div>
@@ -522,6 +542,7 @@ import FileUploader from "@/components/file-uploader/FileUploader";
 import { searchCampaignNames } from "@/services/campaign/campaign.query";
 import { ApolloError } from "apollo-client";
 import LotteryService from "@/services/lottery/LotteryService";
+import BaseVue from "@/components/BaseVue";
 
 // import LotteryService from "@/services/lottery/LotteryService";
 
@@ -560,7 +581,7 @@ import LotteryService from "@/services/lottery/LotteryService";
     },
   },
 })
-export default class CreateLottery extends Vue {
+export default class CreateLottery extends BaseVue {
   // private mounted() {
 
   // }
@@ -594,10 +615,30 @@ export default class CreateLottery extends Vue {
   };
 
   private createLottery() {
+    let self = this;
+
+    self.saveLottery.loading = true;
+    self.saveLottery.error = "";
+
     Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
     const lotteryRequest = this.prepareLotteryRequest();
     Log.info("lotteryDetails: " + JSON.stringify(lotteryRequest));
-    // LotteryService.createLottery()
+    LotteryService.createLottery(
+      lotteryRequest,
+      (response: any) => {
+        self.saveLottery.loading = false;
+        Util.handleGlobalAlert(true, "success", "Successfully created lottery");
+
+        let resetButton: any = document.getElementById("reset");
+        resetButton.click();
+      },
+      (error: any) => {
+        self.saveLottery.loading = false;
+        self.saveLottery.error = self.extractError(error);
+        Log.error(`Error while creating lottery: ${error}`);
+        Util.handleGlobalAlert(true, "failed", self.saveLottery.error);
+      }
+    );
   }
 
   private prepareLotteryRequest() {
@@ -692,6 +733,25 @@ export default class CreateLottery extends Vue {
 
     this.supportedCampaign = "";
     //  this.searchCampaignsNamesQuery.campaignData = [];
+  }
+
+  private reset() {
+    this.lottery.name = "";
+    this.lottery.description = "";
+    this.lottery.ticketCost = "";
+    this.lottery.numberOfWinners = "";
+    this.lottery.lotteryOwner = "";
+    this.lottery.supportedCampaigns = [];
+    this.lottery.endDate = "";
+    this.lottery.evaluationDate = "";
+    this.lottery.evaluationTime = "";
+    this.fileUploader.uploads = [];
+    this.chosenCampaigns = [];
+    // this.lotteryOwner = ""
+
+    (this.$refs.vObserver as any).reset();
+
+    Log.info("Done Resetting form...");
   }
 
   private cancelOwner() {

@@ -1,6 +1,9 @@
 <template>
   <div class="col-span-1 w-full h-full">
-    <div class="flex-1 flex flex-col h-full backOfficeSidebar">
+    <div
+      style="min-width: 17rem;"
+      class="flex-1 flex flex-col h-full backOfficeSidebar"
+    >
       <div class="flex-1 flex flex-col pt-16 pb-4 overflow-y-auto w-56 mx-auto">
         <div class="">
           <div
