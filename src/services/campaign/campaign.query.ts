@@ -28,6 +28,10 @@ query searchCampaignNames($searchKey: String, $page: Int, $size: Int) {
     searchCampaigns(searchKey: $searchKey, page: $page, size: $size) {
         id
         name
+        wallet {
+            id
+           
+        }
    
     }
 }

@@ -129,9 +129,10 @@
                     class="absolute left-0 top-0 h-full flex justify-center items-center"
                   >
                     <div
+                      style="max-width: 11rem;"
                       class="h-4/6 flex justify-center items-center rounded-lg bg-gray-300 px-2 ml-3"
                     >
-                      <span class="spartan text-sm">{{
+                      <span class="spartan text-sm truncate">{{
                         lottery.lotteryOwner
                       }}</span>
 
@@ -432,30 +433,59 @@
 
             <!-- ------Date and time of evaluation------ -->
 
-            <div class="w-full mb-6">
-              <label
-                for="Number of winners"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
-                >Date and time of evaluation</label
-              >
-              <div class="mt-1">
-                <validation-provider rules="required" v-slot="{ errors }">
-                  <input
-                    v-model="lottery.evaluationDate"
-                    required
-                    type="date"
-                    name="Date and time of evaluation"
-                    id="date and time evaluation"
-                    :class="{
-                      'border-red-400': errors.length > 0,
-                    }"
-                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
-                    placeholder="13/01/2022"
-                  />
+            <div class="w-full mb-6 grid grid-cols-2 gap-4">
+              <div class="col-span-1">
+                <label
+                  for="Date of evaluation"
+                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  >Date of evaluation</label
+                >
+                <div class="mt-1">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <input
+                      v-model="lottery.evaluationDate"
+                      required
+                      type="date"
+                      name="date of evaluation"
+                      id="date of evaluation"
+                      :class="{
+                        'border-red-400': errors.length > 0,
+                      }"
+                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      placeholder="13/01/2022"
+                    />
 
-                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
-                </validation-provider>
+                    <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                  </validation-provider>
+                </div>
               </div>
+
+              <!-- --------time------- -->
+              <div class="col-span-1">
+                <label
+                  for="Number of winners"
+                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  >Time of evaluation</label
+                >
+                <div class="mt-1">
+                  <validation-provider rules="required" v-slot="{ errors }">
+                    <input
+                      v-model="lottery.evaluationTime"
+                      required
+                      type="time"
+                      name=" time of evaluation"
+                      id="time of evaluation"
+                      :class="{
+                        'border-red-400': errors.length > 0,
+                      }"
+                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    />
+
+                    <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                  </validation-provider>
+                </div>
+              </div>
+              <!-- ---------- -->
             </div>
 
             <!-- ---------- -->
@@ -541,14 +571,10 @@ export default class CreateLottery extends Vue {
   private supportedCampaign: string = "";
   private chosenCampaigns: any = [];
   private maxCampaigns = 3;
-
+  private wallets: any = [];
   private owners: any = [];
   // private supportedCampaigns: any = [];
   private saveLottery: ApiResource = ApiResource.create();
-
-  //  get owner(){
-  //    return this.chosenOwner;
-  //  }
 
   private lottery: any = {
     name: "",
@@ -559,20 +585,41 @@ export default class CreateLottery extends Vue {
     supportedCampaigns: this.chosenCampaigns,
     endDate: "",
     evaluationDate: "",
+    evaluationTime: "",
   };
-
-  // private get campaignsArray(){
-  //   const result = this.searchCampaignsNamesQuery.campaignData
-  //   .filter((campaign: any) => {
-  //     return   !this.chosenCampaigns.includes(campaign)
-  //       : false;
-  //   });
-  //   return result;
-  // }
 
   private createLottery() {
     Log.info("lotteryDetails: " + JSON.stringify(this.lottery));
+    const lotteryRequest = this.prepareLotteryRequest();
+    Log.info("lotteryDetails: " + JSON.stringify(lotteryRequest));
     // LotteryService.createLottery()
+  }
+
+  private prepareLotteryRequest() {
+    let request = {
+      ownerUsername: this.lottery.lotteryOwner,
+      lottery: {
+        name: this.lottery.name,
+        description: this.lottery.description,
+        endDate: this.lottery.endDate,
+        ticketCost: this.lottery.ticketCost,
+        stageDescriptions: [
+          {
+            stage: "FIRST",
+            winnersCount: this.lottery.numberOfWinners,
+            evaluationTime: `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
+          },
+        ],
+      },
+      fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
+      beneficiaries: this.wallets.map((wallet: any) => {
+        const obj = {
+          wallet: wallet,
+        };
+        return obj;
+      }),
+    };
+    return request;
   }
 
   private fileUploader: FileUploader = new FileUploader(
@@ -614,18 +661,23 @@ export default class CreateLottery extends Vue {
 
   private selectCampaign(campaign: any) {
     const chosen = campaign;
-    console.log("chosen:" + chosen);
-    console.log("chosenCampaigns:" + this.chosenCampaigns);
+
     const check =
-      this.chosenCampaigns.length === 0
+      this.chosenCampaigns.length === 0 ||
+      this.chosenCampaigns.some(
+        (chosenCampaign: any) => chosenCampaign.id !== chosen.id
+      )
         ? true
-        : this.chosenCampaigns.some(
-            (chosenCampaign: any) => chosenCampaign.id !== chosen.id
-          );
+        : false;
+
     Log.info(`check: ${check}`);
-    if (check) {
+
+    if (check === true) {
       if (this.chosenCampaigns.length < this.maxCampaigns) {
         this.chosenCampaigns.push(chosen);
+        this.wallets.push(chosen.wallet);
+
+        console.log("wallets:", this.wallets);
 
         this.supportedCampaign = "";
       } else {
@@ -644,6 +696,7 @@ export default class CreateLottery extends Vue {
 
   private cancelSupportedCampaign(index: number) {
     this.chosenCampaigns.splice(index, 1);
+    this.wallets.splice(index, 1);
   }
 
   private get getOwner() {
