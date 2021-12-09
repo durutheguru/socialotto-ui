@@ -22,16 +22,14 @@
             >
               <div class="roundLoader opacity-50"></div>
             </div>
-            <CampaignDetailsCarousel
-              v-else
-              :images="campaignDetails.data.fileRefs"
-            />
+            <CampaignDetailsCarousel v-else :images="carouselImages" />
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <DonateNShareSkeleton v-if="campaignDetails.loading" />
             <CampaignDetailsDonateNShare
               :totalFundsRaised="campaignDetails.data.totalFundsRaised"
               :targetFunds="campaignDetails.data.targetFunds"
+              :document="campaignDocuments"
               v-else
             />
           </div>
@@ -55,7 +53,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Constants } from "@/components/util";
 import CampaignService from "@/services/campaign/CampaignService";
 import ApiResource from "@/components/core/ApiResource";
 import Incentives from "@/components/Incentives.vue";
@@ -79,6 +77,13 @@ import DonateNShareSkeleton from "@/components/skeletons/campaignDetailsSkeleton
   },
 })
 export default class CampaignDetails extends Vue {
+  private mounted() {
+    this.getCampaignDetails();
+  }
+
+  private carouselImages: any = [];
+  private campaignDocuments: any = [];
+
   private campaignDetails: ApiResource = ApiResource.create();
 
   get campaignDetailsId() {
@@ -99,8 +104,23 @@ export default class CampaignDetails extends Vue {
         self.campaignDetails.loading = false;
         // Log.info("campaignDetails In: " + JSON.stringify(response.data));
         self.campaignDetails.data = response.data;
+
+        self.campaignDocuments = Util.pickFileType(
+          self.campaignDetails.data.fileRefs,
+          Constants.documentFileTypes
+        );
+
+        self.carouselImages = Util.pickFileType(
+          self.campaignDetails.data.fileRefs,
+          Constants.mediaFileTypes
+        );
+
+        Log.info("images:" + JSON.stringify(self.carouselImages));
+        Log.info("docs:" + JSON.stringify(self.campaignDocuments));
+
         Log.info(
-          "campaignDetails In: " + JSON.stringify(self.campaignDetails.data)
+          "campaignDetails fileRefs: " +
+            JSON.stringify(self.campaignDetails.data.fileRefs)
         );
       },
       (error: any) => {
@@ -108,6 +128,8 @@ export default class CampaignDetails extends Vue {
         Log.error("campaignDetails Error: " + JSON.stringify(error));
       }
     );
+
+    // function goes here
   }
 
   @Watch("campaignDetailsId")
@@ -116,10 +138,6 @@ export default class CampaignDetails extends Vue {
     Log.info(`ids: ${newValue} to ${oldValue}`);
     self.campaignId = newValue;
 
-    this.getCampaignDetails();
-  }
-
-  private mounted() {
     this.getCampaignDetails();
   }
 }

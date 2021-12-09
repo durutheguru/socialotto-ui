@@ -12,6 +12,17 @@ export default class Util {
 
     private static throttleObject: any = {};
 
+    public static pickFileType(fileRefs: any, filetypes:any) {
+        let array = [];
+        for (let i = 0; i < fileRefs.length; i++) {
+          if (filetypes.includes(fileRefs[i].fileType)) {
+            array.push(fileRefs[i]);
+          }
+        }
+  
+        return array;
+      }
+
     public static removeLastChar(string: string, char: string){
 
         let newTime = string.slice(0, string.lastIndexOf(char)) + string.slice(string.lastIndexOf(char) + 1, string.length) 
