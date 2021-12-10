@@ -12,9 +12,9 @@ export default class Util {
 
     private static throttleObject: any = {};
 
-    public static pickFileType(fileRefs: any, filetypes:any) {
+    public static pickFileType(fileRefs: any, filetypes: any) {
         let array = [];
-        for (let i = 0; i < fileRefs.length; i++) {
+        for (let i of fileRefs) {
           if (filetypes.includes(fileRefs[i].fileType)) {
             array.push(fileRefs[i]);
           }
@@ -23,11 +23,12 @@ export default class Util {
         return array;
       }
 
-    public static removeLastChar(string: string, char: string){
+    public static removeLastChar(theString: string, char: string) {
 
-        let newTime = string.slice(0, string.lastIndexOf(char)) + string.slice(string.lastIndexOf(char) + 1, string.length) 
-            return newTime
-        }
+        let newTime = theString.slice(0, theString.lastIndexOf(char)) 
+        + theString.slice(theString.lastIndexOf(char) + 1, theString.length);
+        return newTime;
+    }
 
     public static clickOutside(menu: string, menuTrigger: string, storeMutation: string) {
         let elem = document.getElementById(menu) as HTMLElement;

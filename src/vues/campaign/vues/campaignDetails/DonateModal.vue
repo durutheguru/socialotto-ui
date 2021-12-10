@@ -151,7 +151,7 @@ export default class DonateModal extends Vue {
     return store.state.currentCampaignId;
   }
 
-  private resetButtonClick: any = function() {
+  private resetButtonClick: any = () => {
     let resetButton = document.getElementById("reset2") as HTMLElement;
     resetButton.click();
   };
