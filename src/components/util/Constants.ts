@@ -26,7 +26,10 @@ export default class Constants {
 
     public static defaultCardBackgroundUrl: string = 'https://socialotto.s3.ca-central-1.amazonaws.com/uploads/default-img-md-bg.jpeg';
 
-    public static anonymousUser: string = 'anonymous'
+    public static anonymousUser: string = 'anonymous';
+
+    public static mediaFileTypes: any = ["image/png", "image/jpeg", ".png", ".jpg", ".jpeg"];
+    public static documentFileTypes: any = ["application/pdf", "application/msword"];
 
     // APIs to exclude authorization
     public static authExcludeApiPaths: string[] = [
