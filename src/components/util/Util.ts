@@ -12,6 +12,24 @@ export default class Util {
 
     private static throttleObject: any = {};
 
+    public static pickFileType(fileRefs: any, filetypes: any) {
+        let array = [];
+        for (let i of fileRefs) {
+          if (filetypes.includes(fileRefs[i].fileType)) {
+            array.push(fileRefs[i]);
+          }
+        }
+  
+        return array;
+      }
+
+    public static removeLastChar(theString: string, char: string) {
+
+        let newTime = theString.slice(0, theString.lastIndexOf(char)) 
+        + theString.slice(theString.lastIndexOf(char) + 1, theString.length);
+        return newTime;
+    }
+
     public static clickOutside(menu: string, menuTrigger: string, storeMutation: string) {
         let elem = document.getElementById(menu) as HTMLElement;
         let rect = elem.getBoundingClientRect();

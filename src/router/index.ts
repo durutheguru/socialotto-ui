@@ -13,6 +13,7 @@ import BackOffice from '../vues/backoffice/BackOffice.vue';
 
 import Lottery from '@/vues/lottery/Lottery.vue';
 import Campaign from '@/vues/campaign/Campaign.vue';
+import CreateLottery from "@/vues/backoffice/vues/lottery/CreateLottery.vue"
 
 import guard from './util/guard';
 import afterRouteScriptLoader from './util/afterRouteScriptLoader';
@@ -128,44 +129,49 @@ const routes = [
     component: BackOffice,
     children: [
       {
-        path: 'users',
-        name: 'Users',
-        component: Users,
-        children: [
-          {
-            path: 'back-office',
-            component: () => import('@/vues/backoffice/vues/users/backoffice-users/BackOfficeUsers.vue'),
-          },
-    
-          {
-            path: 'partner',
-            component: () => import('@/vues/backoffice/vues/users/partner-users/PartnerUsers.vue'),
-          },
-    
-          {
-            path: 'lottery',
-            component: () => import('@/vues/backoffice/vues/users/lottery-users/LotteryUsers.vue')
-          },
-        ],
-      },
-
-      {
-        path: 'partner',
-        name: 'Partners',
-        component: () => import('@/vues/backoffice/vues/partner/Partner.vue'),
-      },
-
-      {
-        path: 'campaign',
-        name: 'Campaigns',
-        component: () => import('@/vues/backoffice/vues/campaign/Campaign.vue'),
-      },
-
-      {
-        name: 'Campaign Approval',
-        path: 'campaign/awaiting_approval',
-        component: () => import('@/vues/backoffice/vues/campaign/modules/approvals/CampaignApproval.vue'),
+        path: "/back-office/create-lottery",
+        name: "CreateLottery",
+        component: CreateLottery
       }
+      // {
+      //   path: 'users',
+      //   name: 'Users',
+      //   component: Users,
+      //   children: [
+      //     {
+      //       path: 'back-office',
+      //       component: () => import('@/vues/backoffice/vues/users/backoffice-users/BackOfficeUsers.vue'),
+      //     },
+    
+      //     {
+      //       path: 'partner',
+      //       component: () => import('@/vues/backoffice/vues/users/partner-users/PartnerUsers.vue'),
+      //     },
+    
+      //     {
+      //       path: 'lottery',
+      //       component: () => import('@/vues/backoffice/vues/users/lottery-users/LotteryUsers.vue')
+      //     },
+      //   ],
+      // },
+
+      // {
+      //   path: 'partner',
+      //   name: 'Partners',
+      //   component: () => import('@/vues/backoffice/vues/partner/Partner.vue'),
+      // },
+
+      // {
+      //   path: 'campaign',
+      //   name: 'Campaigns',
+      //   component: () => import('@/vues/backoffice/vues/campaign/Campaign.vue'),
+      // },
+
+      // {
+      //   name: 'Campaign Approval',
+      //   path: 'campaign/awaiting_approval',
+      //   component: () => import('@/vues/backoffice/vues/campaign/modules/approvals/CampaignApproval.vue'),
+      // }
     ]
   },
 

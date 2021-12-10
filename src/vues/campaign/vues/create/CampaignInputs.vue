@@ -37,7 +37,7 @@
                 <div class="w-full lg:w-4/5">
                   <div class="w-full mb-6">
                     <label
-                      for="email"
+                      for="Campaign_title"
                       class="spartan font-medium text-dark block text-sm text-gray-700"
                       >Campaign title</label
                     >
@@ -208,7 +208,7 @@
                 <div class="w-full  lg:w-4/5">
                   <div class="w-full mb-6">
                     <label
-                      for="email"
+                      for="Total amount"
                       class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
                       >Total amount</label
                     >
