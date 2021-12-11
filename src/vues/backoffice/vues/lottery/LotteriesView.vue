@@ -18,6 +18,7 @@
                 <div class="h-20 px-6 flex items-center">
                   <div class="relative h-11 ">
                     <input
+                      v-model="lotteryQuery.key"
                       class="h-full rounded-lg pl-5 w-27rem border border-gray-200"
                       type="text"
                       placeholder="Search"
@@ -42,7 +43,7 @@
                 </div>
               </div>
               <table
-                class="min-w-full overflow-y-scroll divide-y divide-gray-200"
+                class="min-w-full overflow-y-scroll divide-y divide-gray-200 bg-white"
               >
                 <thead class="th-bg">
                   <tr>
@@ -121,64 +122,79 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200 ">
+                <tbody class="bg-white divide-y divide-gray-200 mb-12">
                   <tr
                     class="border border-b"
-                    v-for="person in people"
-                    :key="person.email"
+                    v-for="lottery in lotteryQuery.data"
+                    :key="lottery.id"
                   >
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
                     >
-                      {{ person.id }}
+                      {{ lottery.id }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ person.title }}
+                      {{ lottery.name }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ person.lotteryOwner }}
+                      {{ lottery.owner.username }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ person.amountRaised }}
+                      {{ lottery.totalFundsRaised }}
                     </td>
 
                     <td
                       :class="{
-                        statusDeclined: person.status === 'Declined',
-                        statusActive: person.status === 'Active',
-                        statusPending: person.status === 'Pending',
+                        statusDeclined:
+                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
+                          'Declined',
+                        statusActive:
+                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
+                          'Active',
+                        statusPending:
+                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
+                          'Pending',
+                        statusUnsettled:
+                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
+                          'Unsettled',
+                        statusSettled:
+                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
+                          'settled',
                       }"
                       class="fw-600 px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ person.status }}
+                      {{ lotteryStatuses[`${lottery.lotteryStatus}`] }}
                     </td>
 
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ person.endDate }}
+                      {{ lottery.endDate }}
                     </td>
 
                     <td
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <LotteryRowMenu :status="person.status" />
+                        <LotteryRowMenu :status="lottery.status" />
                       </div>
                     </td>
                   </tr>
+                  <tr class="h-36 bg-white"></tr>
                 </tbody>
               </table>
             </div>
             <div class="px-6 h-16 sm:rounded-b-lg bg-white">
               <div class="px-1 h-full flex justify-between items-center">
-                <p class="my-auto">Showing 1-15 of 300 entries</p>
+                <div>
+                  <p class="my-auto hidden">Showing 1-15 of 300 entries</p>
+                </div>
 
                 <div class="flex">
                   <div>
@@ -228,14 +244,73 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import LotteryRowMenu from "./LotteryRowMenu.vue";
+import { ApolloError } from "apollo-client";
+import { Log, Constants, Util } from "@/components/util";
+import { searchLotteries } from "@/services/lottery/lottery.query";
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteriesView",
+  apollo: {
+    $client: "anonymousClient",
+    searchLotteries: {
+      query: searchLotteries,
+      variables() {
+        return {
+          searchKey: this.lotteryQuery.key,
+          page: this.lotteryQuery.page,
+          size: this.lotteryQuery.size,
+        };
+      },
+      result({ data }) {
+        Log.info("Search Lotteries Data: " + JSON.stringify(data));
+
+        this.lotteryQuery.data = data.searchLotteries;
+      },
+      error(error: ApolloError) {
+        this.lotteryQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.lotteryQuery.error)) {
+          this.$apollo.queries.searchLotteries.refetch();
+        }
+      },
+    },
+  },
   components: {
     LotteryRowMenu,
   },
 })
-export default class LotteriesView extends Vue {
+export default class LotteriesView extends BaseVue {
+  private lotteryQuery: any = {
+    key: "",
+    page: 0,
+    size: 10,
+    data: [],
+    error: "",
+  };
+
+  private lotteryStatuses: any = {
+    PENDING_APPROVAL: "Pending",
+    ACTIVE: "Active",
+    DISAPPROVED: "Declined",
+    EVALUATING: "Active",
+    CANCELLED: "Cancelled",
+    AWAITING_CLEARING: "Unsettled",
+    CLEARING_IN_PROGRESS: "Unsettled",
+    REVERSED_TO_PARTICIPANTS: "Settled",
+    CREDITED_TO_BENEFICIARIES: "Settled",
+  };
+
+  // mounted(){
+
+  // }
+
+  private getLotteryData() {
+    // const obj = {};
+    // const lotteryData = this.lotteryQuery.data.forEach((element:any) => {
+    this.lotteryStatuses[""];
+    // });
+  }
+
   private people: any = [
     {
       id: "2011201122",
@@ -244,51 +319,6 @@ export default class LotteriesView extends Vue {
       amountRaised: 20,
       status: "Active",
       color: "statusActive",
-      endDate: "23/2/2022",
-    },
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Pending",
-      color: "statusPending",
-      endDate: "23/2/2022",
-    },
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Declined",
-      color: "statusDeclined",
-      endDate: "23/2/2022",
-    },
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Active",
-      color: "statusActive",
-      endDate: "23/2/2022",
-    },
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Pending",
-      color: "statusPending",
-      endDate: "23/2/2022",
-    },
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Declined",
-      color: "statusDeclined",
       endDate: "23/2/2022",
     },
 

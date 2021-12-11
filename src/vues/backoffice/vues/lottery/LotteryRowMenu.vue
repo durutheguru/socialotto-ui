@@ -20,19 +20,19 @@
       </svg>
     </div>
     <div class="absolute shadow-sm rounded-md  right-0 top-0 z-50" v-if="show">
-      <ul class="h-44 w-40 grid grid-rows-3">
+      <ul class="h-44 w-40 grid grid-rows-3 bg-white mb-0">
         <li
-          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center td-elipsis-menu "
+          class="grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
         >
           View Details
         </li>
         <li
-          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
+          class="grid-rows-1  hover:bg-gray-200 grid justify-center items-center"
         >
           Extend
         </li>
         <li
-          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
+          class="grid-rows-1 hover:bg-gray-200 grid justify-center items-center"
         >
           Suspend
         </li>

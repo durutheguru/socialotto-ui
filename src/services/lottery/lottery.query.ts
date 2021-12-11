@@ -10,6 +10,7 @@ const searchLotteries = gql `
             description
             lotteryStatus
             ticketCost
+            totalFundsRaised
             endDate
             lotteryFiles {
                 reference
