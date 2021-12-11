@@ -13,8 +13,8 @@ import BackOffice from '../vues/backoffice/BackOffice.vue';
 
 import Lottery from '@/vues/lottery/Lottery.vue';
 import Campaign from '@/vues/campaign/Campaign.vue';
-import CreateLottery from "@/vues/backoffice/vues/lottery/CreateLottery.vue"
-
+import CreateLottery from "@/vues/backoffice/vues/lottery/CreateLottery.vue";
+import LotteriesView from "@/vues/backoffice/vues/lottery/LotteriesView.vue";
 import guard from './util/guard';
 import afterRouteScriptLoader from './util/afterRouteScriptLoader';
 
@@ -132,6 +132,12 @@ const routes = [
         path: "/back-office/create-lottery",
         name: "CreateLottery",
         component: CreateLottery
+      },
+      {
+        path: "/back-office/lotteries",
+        name: "LotteriesView",
+        component: LotteriesView
+
       }
       // {
       //   path: 'users',

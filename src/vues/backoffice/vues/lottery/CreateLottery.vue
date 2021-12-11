@@ -3,7 +3,7 @@
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
     >
-      Create your campaign
+      Create your lottery
     </h1>
     <validation-observer
       ref="vObserver"
