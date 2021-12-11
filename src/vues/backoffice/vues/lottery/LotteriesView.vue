@@ -73,9 +73,13 @@
                     </th>
                     <th
                       scope="col"
-                      class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
+                      class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 "
                     >
-                      <div class="flex relative h-full">
+                      <div
+                        @click="toggleStatusMenu"
+                        style="{max-width: 75px; min-width: 75px;}"
+                        class="relative flex cursor-pointer justify-between relative h-full"
+                      >
                         <div>
                           <span>Status</span>
                         </div>
@@ -93,6 +97,20 @@
                             />
                           </svg>
                         </div>
+                      </div>
+                      <div v-if="showStatuses" class="absolute">
+                        <ul
+                          class="bg-white"
+                          v-for="item in Object.keys(lotteryStatuses)"
+                          :key="item"
+                        >
+                          <li
+                            @click="searchStatus(item)"
+                            class="cursor-pointer"
+                          >
+                            {{ item }}
+                          </li>
+                        </ul>
                       </div>
                     </th>
                     <th
@@ -148,9 +166,7 @@
                     >
                       {{ lottery.totalFundsRaised }}
                     </td>
-
-                    <td
-                      :class="{
+                    <!-- :class="{
                         statusDeclined:
                           lotteryStatuses[`${lottery.lotteryStatus}`] ===
                           'Declined',
@@ -166,7 +182,13 @@
                         statusSettled:
                           lotteryStatuses[`${lottery.lotteryStatus}`] ===
                           'settled',
-                      }"
+                      }" -->
+                    <td
+                      :class="
+                        displayColor(
+                          lotteryStatuses[`${lottery.lotteryStatus}`]
+                        )
+                      "
                       class="fw-600 px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
                       {{ lotteryStatuses[`${lottery.lotteryStatus}`] }}
@@ -258,12 +280,13 @@ import BaseVue from "@/components/BaseVue";
       variables() {
         return {
           searchKey: this.lotteryQuery.key,
+          status: this.lotteryQuery.status,
           page: this.lotteryQuery.page,
           size: this.lotteryQuery.size,
         };
       },
       result({ data }) {
-        Log.info("Search Lotteries Data: " + JSON.stringify(data));
+        Log.info("Search Lotteries Query: " + JSON.stringify(data));
 
         this.lotteryQuery.data = data.searchLotteries;
       },
@@ -286,7 +309,10 @@ export default class LotteriesView extends BaseVue {
     size: 10,
     data: [],
     error: "",
+    status: null,
   };
+
+  private showStatuses: boolean = false;
 
   private lotteryStatuses: any = {
     PENDING_APPROVAL: "Pending",
@@ -300,16 +326,51 @@ export default class LotteriesView extends BaseVue {
     CREDITED_TO_BENEFICIARIES: "Settled",
   };
 
+  private searchStatus(status: any) {
+    // Log.info("status:" + status);
+    this.lotteryQuery.status = status;
+  }
+
+  private displayColor(status: any) {
+    Log.info("Status: " + status);
+    if (status === "Declined" || status === "Cancelled") {
+      return "statusDeclined";
+    } else if (status === "Active") {
+      return "statusActive";
+    } else if (status === "Pending") {
+      return "statusPending";
+    } else if (status === "Unsettled") {
+      return "statusUnsettled";
+    } else if (status === "Settled") {
+      return "statusSettled";
+    }
+  }
+
+  private toggleStatusMenu() {
+    this.showStatuses = !this.showStatuses;
+  }
+
+  //   private displayColor(status: any) {
+  //   Log.info("Status: " + status);
+  //   let klass = "";
+  //   if (status === "Declined" || "Cancelled") {
+  //     klass = "statusDeclined";
+  //   } else if (status === "Active") {
+  //     klass = "statusActive";
+  //   } else if (status === "Pending") {
+  //     klass = "statusPending";
+  //   } else if (status === "Unsettled") {
+  //     klass = "statusUnsettled";
+  //   } else if (status === "Settled") {
+  //     klass = "statusSettled";
+  //   }
+
+  //   return { [klass]: true };
+  // }
+
   // mounted(){
 
   // }
-
-  private getLotteryData() {
-    // const obj = {};
-    // const lotteryData = this.lotteryQuery.data.forEach((element:any) => {
-    this.lotteryStatuses[""];
-    // });
-  }
 
   private people: any = [
     {

@@ -3,8 +3,8 @@ import gql from "graphql-tag";
 
 
 const searchLotteries = gql `
-	query searchLotteries($searchKey: String, $page: Int, $size: Int) {
-        searchLotteries(searchKey: $searchKey, page: $page, size: $size) {
+	query searchLotteries($searchKey: String, $status: LotteryStatus, $page: Int, $size: Int) {
+        searchLotteries(searchKey: $searchKey, status: $status, page: $page, size: $size) {
             id
             name
             description
