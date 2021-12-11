@@ -1,9 +1,9 @@
 <template>
   <div
     @click="toggleMenu"
-    class=" cursor-pointer relative h-8 w-8 rounded-full flex justify-center items-center my-auto "
+    class="relative cursor-pointer relative h-8 w-8 rounded-full flex justify-center items-center my-auto "
   >
-    <div class="relative">
+    <div class="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-6 w-6"
@@ -19,22 +19,27 @@
         />
       </svg>
     </div>
-    <div class="absolute h-44 w-40 grid grid-rows-3 right-0 top-0" v-if="show">
-      <div
-        class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
-      >
-        View Details
-      </div>
-      <div
-        class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
-      >
-        Extend
-      </div>
-      <div
-        class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
-      >
-        Suspend
-      </div>
+    <div class="absolute shadow-sm rounded-md  right-0 top-0 z-50" v-if="show">
+      <ul class="h-44 w-40 grid grid-rows-3">
+        <li
+          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center td-elipsis-menu "
+        >
+          View Details
+        </li>
+        <li
+          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
+        >
+          Extend
+        </li>
+        <li
+          class="grid-rows-1 bg-white hover:bg-gray-200 grid justify-center items-center"
+        >
+          Suspend
+        </li>
+      </ul>
+      <!-- <ul class="h-44 w-40 flex flex-col">
+        <li class="bg-white hover:bg-gray-200">view</li>
+      </ul> -->
     </div>
   </div>
 </template>

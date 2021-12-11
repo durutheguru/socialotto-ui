@@ -41,7 +41,9 @@
                   </div>
                 </div>
               </div>
-              <table class="min-w-full divide-y divide-gray-200">
+              <table
+                class="min-w-full overflow-y-scroll divide-y divide-gray-200"
+              >
                 <thead class="th-bg">
                   <tr>
                     <th
@@ -73,8 +75,10 @@
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
                       <div class="flex relative h-full">
-                        <span>Status</span>
-                        <div class="absolute th-chevron">
+                        <div>
+                          <span>Status</span>
+                        </div>
+                        <div class="relative th-chevron">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-5 w-5 "
@@ -174,9 +178,8 @@
             </div>
             <div class="px-6 h-16 sm:rounded-b-lg bg-white">
               <div class="px-1 h-full flex justify-between items-center">
-                <!-- <div> -->
                 <p class="my-auto">Showing 1-15 of 300 entries</p>
-                <!-- </div> -->
+
                 <div class="flex">
                   <div>
                     <svg
@@ -234,6 +237,33 @@ import LotteryRowMenu from "./LotteryRowMenu.vue";
 })
 export default class LotteriesView extends Vue {
   private people: any = [
+    {
+      id: "2011201122",
+      lotteryOwner: "Jane Cooper",
+      title: "Chill with Wizkid",
+      amountRaised: 20,
+      status: "Active",
+      color: "statusActive",
+      endDate: "23/2/2022",
+    },
+    {
+      id: "2011201122",
+      lotteryOwner: "Jane Cooper",
+      title: "Chill with Wizkid",
+      amountRaised: 20,
+      status: "Pending",
+      color: "statusPending",
+      endDate: "23/2/2022",
+    },
+    {
+      id: "2011201122",
+      lotteryOwner: "Jane Cooper",
+      title: "Chill with Wizkid",
+      amountRaised: 20,
+      status: "Declined",
+      color: "statusDeclined",
+      endDate: "23/2/2022",
+    },
     {
       id: "2011201122",
       lotteryOwner: "Jane Cooper",
