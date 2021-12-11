@@ -1,7 +1,8 @@
 <template>
   
   <div>
-    <button @click='handlePayment'>Make Payment</button>
+        {{timeText}}<br />
+        <button @click='handlePayment'>Make Payment</button>
   </div>
 
 </template>
@@ -16,6 +17,12 @@ import { Component, Vue } from 'vue-property-decorator';
 @Component
 export default class PaymentIntegration extends Vue {
   
+
+    private timeText: string = Util.formatTime(
+        '2020-10-02 16:47',
+        'YYYY-MM-DD HH:mm',
+        'YYYY-MM-DD HH:mm:ss.SSSS Z'
+    );
     
 
     public handlePayment() {
