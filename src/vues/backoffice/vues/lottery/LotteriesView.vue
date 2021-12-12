@@ -95,35 +95,25 @@
                     </th>
                     <th
                       scope="col"
-                      class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 "
+                      class="relative text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 "
                     >
                       <div
                         @click="toggleStatusMenu"
-                        style="{max-width: 75px; min-width: 75px;}"
-                        class="relative flex cursor-pointer justify-between relative h-full"
+                        class="tableHeaderInnerDiv flex cursor-pointer justify-between relative h-full"
                       >
                         <div>
                           <span>Status</span>
                         </div>
-                        <div class="relative th-chevron">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 "
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path
-                              fill-rule="evenodd"
-                              d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                              clip-rule="evenodd"
-                            />
-                          </svg>
-                        </div>
+                        <SmallChevronUp v-if="showStatuses" />
+                        <SmallChevronDown v-else />
                       </div>
-                      <div v-if="showStatuses" class="absolute">
-                        <ul class="bg-white">
+                      <div
+                        v-if="showStatuses"
+                        class="absolute bg-white shadow-md rounded-md right-0"
+                      >
+                        <ul class=" pt-3 rounded-md">
                           <li
-                            class="cursor-pointer"
+                            class="cursor-pointer px-3 py-3 hover:bg-gray-200"
                             @click="searchStatus(null)"
                           >
                             ALL
@@ -132,7 +122,7 @@
                             v-for="item in Object.keys(lotteryStatuses)"
                             :key="item"
                             @click="searchStatus(item)"
-                            class="cursor-pointer"
+                            class="cursor-pointer px-3  py-3 hover:bg-gray-200"
                           >
                             {{ item }}
                           </li>
@@ -192,23 +182,7 @@
                     >
                       {{ lottery.totalFundsRaised }}
                     </td>
-                    <!-- :class="{
-                        statusDeclined:
-                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
-                          'Declined',
-                        statusActive:
-                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
-                          'Active',
-                        statusPending:
-                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
-                          'Pending',
-                        statusUnsettled:
-                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
-                          'Unsettled',
-                        statusSettled:
-                          lotteryStatuses[`${lottery.lotteryStatus}`] ===
-                          'settled',
-                      }" -->
+
                     <td
                       :class="
                         displayColor(
@@ -230,7 +204,10 @@
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <LotteryRowMenu :status="lottery.status" />
+                        <LotteryRowMenu
+                          :lotteryId="lottery.id"
+                          :status="lotteryStatuses[`${lottery.lotteryStatus}`]"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -296,6 +273,9 @@ import { ApolloError } from "apollo-client";
 import { Log, Constants, Util } from "@/components/util";
 import { searchLotteries } from "@/services/lottery/lottery.query";
 import BaseVue from "@/components/BaseVue";
+// import ChevronUp from "@/components/svg/ChevronUp.vue";
+import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
+import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
 
 @Component({
   name: "LotteriesView",
@@ -326,6 +306,8 @@ import BaseVue from "@/components/BaseVue";
   },
   components: {
     LotteryRowMenu,
+    SmallChevronUp,
+    SmallChevronDown,
   },
 })
 export default class LotteriesView extends BaseVue {

@@ -19,24 +19,73 @@
         />
       </svg>
     </div>
-    <div class="absolute shadow-sm rounded-md  right-0 top-0 z-50" v-if="show">
-      <ul class="h-44 w-40 grid grid-rows-3 bg-white mb-0">
-        <li
-          class="grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
-        >
-          View Details
-        </li>
-        <li
-          class="grid-rows-1  hover:bg-gray-200 grid justify-center items-center"
-        >
-          Extend
-        </li>
-        <li
-          class="grid-rows-1 hover:bg-gray-200 grid justify-center items-center"
-        >
-          Suspend
-        </li>
-      </ul>
+
+    <div
+      class="absolute mt-8 shadow-sm rounded-md  right-0 top-0 z-50"
+      v-if="show"
+    >
+      <!-- ----pending---- -->
+      <div>
+        <ul class=" w-40 flex flex-col bg-white mb-0">
+          <li
+            class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
+          >
+            View Details
+          </li>
+          <li
+            @mousedown="approveLottery(lotteryId)"
+            v-if="status === 'Pending'"
+            class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
+          >
+            Approve
+          </li>
+          <li
+            @click="disApproveLottery(lotteryId)"
+            v-if="status === 'Pending'"
+            class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
+          >
+            Decline
+          </li>
+          <li
+            v-if="status === 'Active'"
+            class="lotteryTableMenuListGreen py-3  hover:bg-gray-200 grid justify-center items-center"
+          >
+            Extend
+          </li>
+          <li
+            v-if="status === 'Active'"
+            class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
+          >
+            Suspend
+          </li>
+          <li
+            v-if="status === 'Unsettled'"
+            class="lotteryTableMenuListGreen py-3  hover:bg-gray-200 grid justify-center items-center"
+          >
+            Raise Expense
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div >
+        <ul class="h-44 w-40 grid grid-rows-3 bg-white mb-0">
+          <li
+            class="grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
+          >
+            View Details
+          </li>
+          <li
+            class="lotteryTableMenuListGreen grid-rows-1  hover:bg-gray-200 grid justify-center items-center"
+          >
+            Extend
+          </li>
+          <li
+            class="lotteryTableMenuRed grid-rows-1 hover:bg-gray-200 grid justify-center items-center"
+          >
+            Suspend
+          </li>
+        </ul>
+      </div> -->
       <!-- <ul class="h-44 w-40 flex flex-col">
         <li class="bg-white hover:bg-gray-200">view</li>
       </ul> -->
@@ -46,18 +95,54 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import ApiResource from "@/components/core/ApiResource";
+import { Log, Util, Web } from "@/components/util";
+import LotteryService from "@/services/lottery/LotteryService";
 
 @Component({
   name: "LotteryRowMenu",
   props: {
     status: String,
+    lotteryId: String,
   },
 })
 export default class LotteryRowMenu extends Vue {
   private show: boolean = false;
 
+  private approval: ApiResource = ApiResource.create();
+
+  private approvalJson: any = {
+    lotteryId: "",
+    approvalAction: "",
+    message: "",
+  };
+
   private toggleMenu() {
     this.show = !this.show;
+  }
+
+  private approveLottery(lotteryId: string) {
+    this.approvalJson.lotteryId = lotteryId;
+    this.approvalJson.approvalAction = "APPROVED";
+    this.approval.loading = true;
+
+    LotteryService.approveOrDecline(
+      this.approvalJson,
+      (response: any) => {
+        this.approval.loading = false;
+        Log.info("ApprovalResponse: " + JSON.stringify(response));
+      },
+      (error) => {}
+    );
+
+    // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
+  }
+
+  private disApproveLottery(lotteryId: string) {
+    this.approvalJson.lotteryId = lotteryId;
+    this.approvalJson.approvalAction = "DISAPPROVED";
+
+    // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
   }
 }
 </script>

@@ -111,6 +111,14 @@
   background-color: #343434;
 }
 
+.lotteryTableMenuListGreen {
+  color: #09aa09;
+}
+
+.lotteryTableMenuRed {
+  color: #ff0000;
+}
+
 .dark-blue-text {
   color: #2c5662;
 }
@@ -135,6 +143,11 @@
   // overflow-y: scroll;
   height: calc(100% - 84px);
   margin-top: 84px;
+}
+
+.tableHeaderInnerDiv {
+  max-width: 75px;
+  min-width: 75px;
 }
 
 .overflow-y {
