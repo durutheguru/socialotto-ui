@@ -23,7 +23,27 @@
                       type="text"
                       placeholder="Search"
                     />
+
+                    <div
+                      @click="lotteryQuery.key = ''"
+                      class="absolute right-0 top-0 h-full w-8 flex justify-center items-center"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    </div>
                   </div>
+
+                  <!-- ------SearchIcon----- -->
                   <div class="absolute ml-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +60,8 @@
                       />
                     </svg>
                   </div>
+
+                  <!-- ----cancel------- -->
                 </div>
               </div>
               <table
@@ -99,12 +121,16 @@
                         </div>
                       </div>
                       <div v-if="showStatuses" class="absolute">
-                        <ul
-                          class="bg-white"
-                          v-for="item in Object.keys(lotteryStatuses)"
-                          :key="item"
-                        >
+                        <ul class="bg-white">
                           <li
+                            class="cursor-pointer"
+                            @click="searchStatus(null)"
+                          >
+                            ALL
+                          </li>
+                          <li
+                            v-for="item in Object.keys(lotteryStatuses)"
+                            :key="item"
                             @click="searchStatus(item)"
                             class="cursor-pointer"
                           >
@@ -219,7 +245,7 @@
                 </div>
 
                 <div class="flex">
-                  <div>
+                  <div @click="prev" class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 "
@@ -233,8 +259,8 @@
                       />
                     </svg>
                   </div>
-                  <span class="mx-3.5"> Page 1</span>
-                  <div>
+                  <span class="mx-3.5"> Page {{ lotteryQuery.page }}</span>
+                  <div @click="next" class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5"
@@ -343,6 +369,16 @@ export default class LotteriesView extends BaseVue {
       return "statusUnsettled";
     } else if (status === "Settled") {
       return "statusSettled";
+    }
+  }
+
+  private next() {
+    this.lotteryQuery.page++;
+  }
+
+  private prev() {
+    if (this.lotteryQuery.page > 0) {
+      this.lotteryQuery.page--;
     }
   }
 
