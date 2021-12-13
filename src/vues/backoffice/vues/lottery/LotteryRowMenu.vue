@@ -28,6 +28,7 @@
       <div>
         <ul class=" w-40 flex flex-col bg-white mb-0">
           <li
+            @click="goToLotteryDetails(lotteryId)"
             class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
           >
             View Details
@@ -40,7 +41,7 @@
             Approve
           </li>
           <li
-            @click="disApproveLottery(lotteryId)"
+            @click="openDisapprovalModal(lotteryId)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
           >
@@ -98,6 +99,7 @@ import { Component, Vue } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import { Log, Util, Web } from "@/components/util";
 import LotteryService from "@/services/lottery/LotteryService";
+import store from "@/store/index";
 
 @Component({
   name: "LotteryRowMenu",
@@ -122,27 +124,34 @@ export default class LotteryRowMenu extends Vue {
   }
 
   private approveLottery(lotteryId: string) {
-    this.approvalJson.lotteryId = lotteryId;
-    this.approvalJson.approvalAction = "APPROVED";
-    this.approval.loading = true;
+    let self = this;
+    self.approvalJson.lotteryId = lotteryId;
+    self.approvalJson.approvalAction = "APPROVED";
+    self.approval.loading = true;
 
     LotteryService.approveOrDecline(
-      this.approvalJson,
+      self.approvalJson,
       (response: any) => {
-        this.approval.loading = false;
+        self.approval.loading = false;
         Log.info("ApprovalResponse: " + JSON.stringify(response));
       },
       (error) => {}
     );
 
+    // Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));
+  }
+
+  private openDisapprovalModal(lotteryId: string) {
+    store.commit("setIsLotteryDisapproval", {
+      show: true,
+      lotteryId: lotteryId,
+    });
+
     // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
   }
 
-  private disApproveLottery(lotteryId: string) {
-    this.approvalJson.lotteryId = lotteryId;
-    this.approvalJson.approvalAction = "DISAPPROVED";
-
-    // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
+  private goToLotteryDetails(lotteryId: string) {
+    this.$router.push(`/lottery/${lotteryId}`);
   }
 }
 </script>
