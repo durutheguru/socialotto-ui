@@ -170,32 +170,32 @@ const routes = [
       // }
     ],
   },
-  // {
-  //   path: "/back-office-page",
-  //   // redirect: "/back-office",
-  //   name: "BackOfficeHeader",
-  //   component: () => {
-  //     return import("@/vues/backoffice/vues/lottery/BackOfficeHeader.vue");
-  //   },
-  //   children: [
-  //     {
-  //       path: "/viewLottery",
-  //       name: "ViewLotteryDetails",
-  //       components: () => {
-  //         return import(
-  //           "@/vues/backoffice/vues/lottery/ViewLotteryDetails.vue"
-  //         );
-  //       },
-  //     },
+  {
+    path: "/back-office-page",
+    // redirect: "/back-office",
+    name: "BackOfficeHeader",
+    component: () => {
+      return import("@/vues/backoffice/vues/lottery/BackOfficeHeader.vue");
+    },
+    // children: [
+    //   {
+    //     path: "/viewLottery",
+    //     name: "ViewLotteryDetails",
+    //     components: () => {
+    //       return import(
+    //         "@/vues/backoffice/vues/lottery/ViewLotteryDetails.vue"
+    //       );
+    //     },
+    //   },
 
-  //     {
-  //       path: "/back-office-page/viewlottery/:id",
-  //       name: "LotteryDetails",
-  //       component: () =>
-  //         import("@/vues/lottery/vues/details/LotteryDetails.vue"),
-  //     },
-  //   ],
-  // },
+    //   {
+    //     path: "/back-office-page/viewlottery/:id",
+    //     name: "LotteryDetails",
+    //     component: () =>
+    //       import("@/vues/lottery/vues/details/LotteryDetails.vue"),
+    //   },
+    // ],
+  },
 
   {
     path: "/lottery",
