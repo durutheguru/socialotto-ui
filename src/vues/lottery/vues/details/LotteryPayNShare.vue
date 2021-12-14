@@ -18,9 +18,18 @@
       </div>
       <!-- ----------- -->
       <div class="h-12 items-center flex  justify-between ">
-        <span class="text-sm font-medium text-gray-400">Closure date </span>
+        <span class="text-sm font-medium text-gray-400">Registration Ends </span>
         <span class="text-base font-semibold text-gray-600 ">{{
           closureDate
+        }}</span>
+      </div>
+      <!-- ----------- -->
+      <div class="h-12 items-center flex  justify-between ">
+        <span class="text-sm font-medium text-gray-400"
+          >Tickets sold
+        </span>
+        <span class="text-base font-semibold text-gray-600 ">{{
+          numberOfEntries
         }}</span>
       </div>
       <!-- ----------- -->
@@ -33,18 +42,9 @@
         }}</span>
       </div>
       <!-- ----------- -->
-      <div class="h-12 items-center flex  justify-between ">
-        <span class="text-sm font-medium text-gray-400"
-          >Number of entries
-        </span>
-        <span class="text-base font-semibold text-gray-600 ">{{
-          numberOfEntries
-        }}</span>
-      </div>
-      <!-- ----------- -->
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-base font-semibold text-gray-600 "
-          >Number of tickets (Cost
+          >Buy Tickets (Cost
           <span class="font-bold">N{{ ticketCost }}</span> per ticket)</span
         >
       </div>
@@ -83,8 +83,6 @@
           </div>
           <button
             @click="increment"
-            :disabled="ticketAmount >= 10"
-            :class="ticketAmount >= 10 && 'opacity-25'"
             class="cursor-pointer text-base font-semibold flex justify-center h-full w-full items-center"
           >
             <!-- -----Plus------ -->

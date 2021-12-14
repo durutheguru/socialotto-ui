@@ -35,9 +35,9 @@
     <div class="flex flex-col border-b-2 border-gray-200 pb-8 pt-2">
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400">Campaign goal</span>
-        <span class="text-base font-semibold text-gray-600 "
-          >N{{ targetFunds }}</span
-        >
+        <span class="text-base font-semibold text-gray-600 ">
+          N{{ targetFunds }}
+        </span>
       </div>
       <!-- ----------- -->
       <!-- <div class="h-14 items-center flex  justify-between">
