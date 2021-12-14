@@ -1,22 +1,22 @@
 <template>
-  <div class="wrapper ">
-    <div class="background h-20">
-      <div
-        class="flex items-center justify-between h-full max-w-screen-xl spartan mx-auto"
-      >
-        <div>
+  <!-- <div class="wrapper "> -->
+  <div class="background h-20 signupHeader">
+    <div
+      class="flex items-center justify-end h-full max-w-screen-xl spartan mx-auto"
+    >
+      <!-- <div>
           <router-link class="text-white" to="/back-office/lotteries"
             >Back to lottery page</router-link
           >
-        </div>
-        <div>
-          <router-link class="text-white" to="/back-office"
-            >Dashboard</router-link
-          >
-        </div>
+        </div> -->
+      <div>
+        <router-link class="text-white" to="/back-office"
+          >Dashboard</router-link
+        >
       </div>
     </div>
   </div>
+  <!-- </div> -->
 </template>
 
 <script lang="ts">

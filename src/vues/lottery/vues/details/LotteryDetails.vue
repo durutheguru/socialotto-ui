@@ -55,8 +55,8 @@
       heading="Similar campaigns and lotteries"
       :loading="campaignDetails.loading"
     /> -->
-    <Incentives />
-    <Footer />
+    <Incentives v-if="!isBackOfficeUser" />
+    <Footer v-if="!isBackOfficeUser" />
   </div>
 </template>
 
@@ -72,6 +72,7 @@ import LotteryInfoNFAQ from "./LotteryInfoNFAQ.vue";
 import LotteryDetailsCarousel from "./LotteryDetailsCarousel.vue";
 import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSkeleton.vue";
 // import LotteryDetailComponent from './LotteryDetailComponent';
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryDetails",
@@ -84,7 +85,7 @@ import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSke
     LotteryPayNShareSkeleton,
   },
 })
-export default class LotteryDetails extends Vue {
+export default class LotteryDetails extends BaseVue {
   private lotteryDetails: ApiResource = ApiResource.create();
 
   get lotteryDetailsId() {

@@ -1,7 +1,8 @@
 <template>
   <div class="wrapper">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
-    <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
+    <BackOfficeHeader v-if="isBackOfficeUser" />
+    <div v-else class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
@@ -132,6 +133,7 @@
         </div>
       </div>
     </div>
+
     <!-- </div> -->
     <auth-hamburger-menu />
     <router-view @click="clearDropDowns"></router-view>
@@ -152,6 +154,7 @@ import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
+import BackOfficeHeader from "@/vues/backoffice/BackOfficeHeader.vue";
 
 @Component({
   name: "AuthNavHeader",
@@ -161,6 +164,7 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
     Notificatons,
     RecentActivities,
     DonateModal,
+    BackOfficeHeader,
 
     // ExpMenu,
   },

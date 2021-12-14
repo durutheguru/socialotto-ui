@@ -14,7 +14,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class PaymentIntegration extends Vue {
   private securityTest: boolean = Security.hasAuthorization(
-    Constants.AUTHORITIES.PLATFORM_USER
+    Constants.AUTHORITIES.BACK_OFFICE_USER
   );
 
   private timeText: string = Util.formatTime(
