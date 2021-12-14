@@ -33,6 +33,7 @@
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <LotteryPayNShareSkeleton v-if="lotteryDetails.loading" />
             <LotteryPayNShare
+              :lotteryStatus="lotteryDetails.data.lotteryStatus"
               :ticketCost="lotteryDetails.data.ticketCost"
               :numberOfWinners="lotteryDetails.data.expectedWinnerCount"
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
