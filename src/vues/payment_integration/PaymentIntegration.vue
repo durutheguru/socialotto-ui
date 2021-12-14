@@ -1,7 +1,7 @@
 <template>
   
   <div>
-        {{timeText}}<br />
+        {{securityTest}}<br />
         <button @click='handlePayment'>Make Payment</button>
   </div>
 
@@ -11,11 +11,14 @@
 
 declare var MonnifySDK: any;
 
-import { Log, Util } from '@/components/util';
+import { Log, Util, Security } from '@/components/util';
 import { Component, Vue } from 'vue-property-decorator';
 
 @Component
 export default class PaymentIntegration extends Vue {
+
+
+    private securityTest: boolean = Security.hasAuthorization('REGULATORY_USER');
   
 
     private timeText: string = Util.formatTime(
