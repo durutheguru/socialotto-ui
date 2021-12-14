@@ -7,7 +7,7 @@ export default class PlatformUserAuthDescriptor implements AuthContextDescriptor
     public name: string = 'PLATFORM_USER';
 
 
-    public homeUrl: string = '/lottery';
+    public homeUrl: string = '/';
 
 
     public accessList: string[] = [];

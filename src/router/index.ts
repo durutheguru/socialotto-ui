@@ -176,42 +176,6 @@ const routes = [
   },
 
   {
-    path: '/lottery',
-    name: 'Lottery',
-    component: Lottery,
-  
-    children: [
-      // {
-      //   path: '',
-      //   name: 'LotteryHome',
-      //   component: () => import('@/vues/lottery/vues/list/LotteryHome.vue'),
-      // },
-
-    
-    ]
-  },
-
-  {
-    path: '/campaign',
-    name: 'Campaign',
-    component: Campaign,
-    children: [
-      // {
-      //   path: '',
-      //   name: 'CampaignHome',
-      //   component: () => import('@/vues/campaign/vues/list/CampaignHome.vue'),
-      // },
-
-      {
-        path: ':id',
-        name: 'CampaignDetails',
-        component: () => import('@/vues/campaign/vues/details/CampaignDetails.vue'),
-      },
- 
-    ]
-  },
-
-  {
     path: '/payment_integration',
     name: 'PaymentIntegration',
     component: () => import('@/vues/payment_integration/PaymentIntegration.vue'),
