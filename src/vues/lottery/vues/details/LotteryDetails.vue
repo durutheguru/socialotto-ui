@@ -33,6 +33,7 @@
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <LotteryPayNShareSkeleton v-if="lotteryDetails.loading" />
             <LotteryPayNShare
+              :lotteryStatus="lotteryDetails.data.lotteryStatus"
               :ticketCost="lotteryDetails.data.ticketCost"
               :numberOfWinners="lotteryDetails.data.expectedWinnerCount"
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
@@ -55,8 +56,8 @@
       heading="Similar campaigns and lotteries"
       :loading="campaignDetails.loading"
     /> -->
-    <Incentives />
-    <Footer />
+    <Incentives v-if="!isBackOfficeUser" />
+    <Footer v-if="!isBackOfficeUser" />
   </div>
 </template>
 
@@ -72,6 +73,7 @@ import LotteryInfoNFAQ from "./LotteryInfoNFAQ.vue";
 import LotteryDetailsCarousel from "./LotteryDetailsCarousel.vue";
 import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSkeleton.vue";
 // import LotteryDetailComponent from './LotteryDetailComponent';
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryDetails",
@@ -84,7 +86,7 @@ import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSke
     LotteryPayNShareSkeleton,
   },
 })
-export default class LotteryDetails extends Vue {
+export default class LotteryDetails extends BaseVue {
   private lotteryDetails: ApiResource = ApiResource.create();
 
   get lotteryDetailsId() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-1 w-full h-full">
+  <div class="col-span-1 w-full h-full relative">
     <div
       style="min-width: 17rem;"
       class="flex-1 flex flex-col h-full backOfficeSidebar"
@@ -107,13 +107,14 @@ export default class BackofficeSidebar extends Vue {
     {
       name: "Create A Lottery",
       href: "create-lottery",
-      count: 3,
+
       current: false,
     },
-    { name: "Campaign Requests", href: "#", count: 4, current: false },
+    { name: "Lotteries", href: "lotteries", current: false },
+    { name: "Campaign Requests", href: "#", current: false },
     { name: "Raise Lottery Expense", href: "#", current: false },
     { name: "Manage Users", href: "#", current: false },
-    { name: "Approval Requests", href: "#", count: 12, current: false },
+    { name: "Approval Requests", href: "#", current: false },
   ];
 }
 </script>
