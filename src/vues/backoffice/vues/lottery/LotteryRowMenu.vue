@@ -95,11 +95,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
-import { Log, Util, Web } from "@/components/util";
+import { Log, Util } from "@/components/util";
 import LotteryService from "@/services/lottery/LotteryService";
 import store from "@/store/index";
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryRowMenu",
@@ -108,7 +109,7 @@ import store from "@/store/index";
     lotteryId: String,
   },
 })
-export default class LotteryRowMenu extends Vue {
+export default class LotteryRowMenu extends BaseVue {
   private show: boolean = false;
 
   private approval: ApiResource = ApiResource.create();
@@ -134,8 +135,17 @@ export default class LotteryRowMenu extends Vue {
       (response: any) => {
         self.approval.loading = false;
         Log.info("ApprovalResponse: " + JSON.stringify(response));
+        Util.handleGlobalAlert(
+          true,
+          "success",
+          "Lottery approval was successful"
+        );
       },
-      (error) => {}
+      (error) => {
+        self.approval.loading = false;
+        self.approval.error = self.extractError(error);
+        Util.handleGlobalAlert(true, "failed", self.approval.error);
+      }
     );
 
     // Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));
@@ -144,7 +154,7 @@ export default class LotteryRowMenu extends Vue {
   private openDisapprovalModal(lotteryId: string) {
     store.commit("setIsLotteryDisapproval", {
       show: true,
-      lotteryId: lotteryId,
+      lotteryId,
     });
 
     // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));

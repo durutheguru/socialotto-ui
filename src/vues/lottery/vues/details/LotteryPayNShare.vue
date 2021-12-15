@@ -236,8 +236,17 @@ export default class LotteryPayNShare extends BaseVue {
       (response: any) => {
         self.approval.loading = false;
         Log.info("ApprovalResponse: " + JSON.stringify(response));
+        Util.handleGlobalAlert(
+          true,
+          "success",
+          "Lottery approval was successful"
+        );
       },
-      (error) => {}
+      (error) => {
+        self.approval.loading = false;
+        self.approval.error = self.extractError(error);
+        Util.handleGlobalAlert(true, "failed", self.approval.error);
+      }
     );
 
     Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));

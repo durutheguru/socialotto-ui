@@ -139,11 +139,12 @@ import store from "@/store/index";
 import { Constants, Log, Util } from "@/components/util";
 import LotteryService from "@/services/lottery/LotteryService";
 import ApiResource from "@/components/core/ApiResource";
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryDisapprovalModal",
 })
-export default class DonateModal extends Vue {
+export default class DonateModal extends BaseVue {
   private message: string = "";
   private disapproval: ApiResource = ApiResource.create();
 
@@ -196,8 +197,13 @@ export default class DonateModal extends Vue {
       (response: any) => {
         self.disapproval.loading = false;
         Log.info("disapprovalResponse: " + JSON.stringify(response));
+        Util.handleGlobalAlert(true, "success", "Lottery has been disapproved");
       },
-      (error) => {}
+      (error) => {
+        self.disapproval.loading = false;
+        self.disapproval.error = self.extractError(error);
+        Util.handleGlobalAlert(true, "failed", self.disapproval.error);
+      }
     );
   }
 }
