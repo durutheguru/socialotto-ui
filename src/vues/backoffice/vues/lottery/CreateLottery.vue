@@ -36,7 +36,7 @@
                       required
                       type="text"
                       name="lottery title"
-                      id="campaign_title"
+                      id="lottery_title"
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
