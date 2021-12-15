@@ -1,19 +1,17 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import authToken from './modules/authToken';
-import lottery from './modules/lottery';
-import campaign from './modules/campaign';
-import wallet from './modules/wallet';
-import notification from './modules/notification';
-import createPersistedState from 'vuex-persistedstate';
-
+import Vue from "vue";
+import Vuex from "vuex";
+import authToken from "./modules/authToken";
+import lottery from "./modules/lottery";
+import campaign from "./modules/campaign";
+import wallet from "./modules/wallet";
+import notification from "./modules/notification";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 let timer: any;
 export default new Vuex.Store({
-
-  state : {
-    entryUrl : null,
+  state: {
+    entryUrl: null,
     globalAlert: { show: false, text: "", type: "" },
     dropMenu: false,
     isNoticeMenu: false,
@@ -23,39 +21,37 @@ export default new Vuex.Store({
     lastEventTarget: "",
     donateModal: false,
     currentCampaignId: "",
-    currentLotteryId: ""
+    currentLotteryId: "",
+    isLotteryDisapproval: { show: false, lotteryId: "" },
   },
 
-
-  getters : {
-
+  getters: {
     entryUrl(context: any) {
       return context.entryUrl;
     },
-
   },
 
-
-  mutations : {
-
+  mutations: {
     entryUrl(context: any, url: string) {
       context.entryUrl = url;
     },
-    
+
     setGlobalAlert(state, payload) {
+      // Clear previous timer
 
-			// Clear previous timer
+      clearTimeout(timer);
 
-			clearTimeout(timer);
+      // update alert state
 
-			// update alert state
+      state.globalAlert = payload;
 
-			state.globalAlert = payload;
+      // set new timer
 
-			// set new timer
-
-			timer = setTimeout(() => (state.globalAlert = { show: false, text: "", type: "" }), 5000);
-		},
+      timer = setTimeout(
+        () => (state.globalAlert = { show: false, text: "", type: "" }),
+        5000
+      );
+    },
 
     setDropMenu(state, payload) {
       state.dropMenu = payload;
@@ -83,13 +79,13 @@ export default new Vuex.Store({
     },
     setCurrentLotteryId(state, payload) {
       state.currentLotteryId = payload;
-    }
-
-
+    },
+    setIsLotteryDisapproval(state, payload) {
+      state.isLotteryDisapproval = payload;
+    },
   },
 
-
-  modules : {
+  modules: {
     authToken,
     lottery,
     campaign,
@@ -97,11 +93,5 @@ export default new Vuex.Store({
     notification,
   },
 
-
-  plugins: [
-    createPersistedState(),
-  ],
-
-
+  plugins: [createPersistedState()],
 });
-
