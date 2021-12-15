@@ -109,14 +109,18 @@
                     </button>
                     <div
                       @click="disapproveLottery"
-                      :disabled="invalid"
+                      :disabled="invalid || disapproval.loading"
                       :class="[invalid ? 'opacity-25' : 'opacity-100']"
                       class="bg-blue-200 h-12  w-full rounded-md flex items-center spartan justify-center cursor-pointer"
                     >
                       <span
                         class="text-white text-base font-semi-bold cursor-pointer"
-                        >Proceed to pay</span
+                        >Submit</span
                       >
+                      <i
+                        class="ml-px fa fa-spinner fa-spin"
+                        v-if="disapproval.loading"
+                      ></i>
                     </div>
                   </div>
                 </validation-observer>
@@ -197,11 +201,15 @@ export default class DonateModal extends BaseVue {
       (response: any) => {
         self.disapproval.loading = false;
         Log.info("disapprovalResponse: " + JSON.stringify(response));
+        self.close();
+        this.message = "";
         Util.handleGlobalAlert(true, "success", "Lottery has been disapproved");
       },
       (error) => {
         self.disapproval.loading = false;
         self.disapproval.error = self.extractError(error);
+        self.close();
+        this.message = "";
         Util.handleGlobalAlert(true, "failed", self.disapproval.error);
       }
     );

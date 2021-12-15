@@ -60,6 +60,7 @@
             Suspend
           </li>
           <li
+            @click="raiseExpense(lotteryId)"
             v-if="status === 'Unsettled'"
             class="lotteryTableMenuListGreen py-3  hover:bg-gray-200 grid justify-center items-center"
           >
@@ -162,6 +163,10 @@ export default class LotteryRowMenu extends BaseVue {
 
   private goToLotteryDetails(lotteryId: string) {
     this.$router.push(`/lottery/${lotteryId}`);
+  }
+
+  private raiseExpense(lotteryId: string) {
+    this.$router.push(`/back-office/raise_lottery_expense/${lotteryId}"`);
   }
 }
 </script>

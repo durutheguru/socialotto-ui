@@ -7,7 +7,13 @@
     >
       Lotteries
     </h1>
-    <div>
+    <div
+      v-if="$apollo.queries.searchLotteries.loading"
+      class="h-full relative rounded-md flex items-center justify-center"
+    >
+      <div class="roundLoader opacity-50"></div>
+    </div>
+    <div v-else>
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div

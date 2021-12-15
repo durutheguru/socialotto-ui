@@ -45,13 +45,6 @@
         }}</span>
       </div>
       <!-- ----------- -->
-      <div class="h-14 items-center flex  justify-between ">
-        <span class="text-base font-semibold text-gray-600 "
-          >Buy Tickets (Cost
-          <span class="font-bold">N{{ ticketCost }}</span> per ticket)</span
-        >
-      </div>
-      <!-- ----------- -->
 
       <div v-if="isBackOfficeUser && lotteryStatus === 'PENDING_APPROVAL'">
         <div>
@@ -78,7 +71,14 @@
         </div>
       </div>
 
-      <div v-else>
+      <div v-if="isPlatformUser && lotteryStatus === 'ACTIVE'">
+        <div class="h-14 items-center flex  justify-between ">
+          <span class="text-base font-semibold text-gray-600 "
+            >Buy Tickets (Cost
+            <span class="font-bold">N{{ ticketCost }}</span> per ticket)</span
+          >
+        </div>
+        <!-- ----------- -->
         <div class=" items-center flex flex-col sm:flex-row justify-between">
           <div
             class="relative grid grid-cols-3 bg-transparent border-2 border-yellow  h-14 w-full sm:w-5/12 mb-6 sm:mb-0 items-center justify-center rounded-md"

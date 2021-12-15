@@ -63,4 +63,8 @@ export default class BaseVue extends Vue {
   public get isBackOfficeUser(): boolean {
     return Security.hasAuthorization(Constants.AUTHORITIES.BACK_OFFICE_USER);
   }
+
+  public get isPlatformUser(): boolean {
+    return Security.hasAuthorization(Constants.AUTHORITIES.PLATFORM_USER);
+  }
 }
