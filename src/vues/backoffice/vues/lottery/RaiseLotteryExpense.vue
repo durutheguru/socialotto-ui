@@ -22,6 +22,7 @@
           </div>
 
           <div
+            @click="addInput"
             class="mb-10 w-2/4 cursor-pointer bo-bg-dark-blue text-white flex h-14 rounded-md justify-center items-center"
           >
             <div class="flex items-center ">
@@ -63,7 +64,7 @@
                 type="number"
                 name="Cost"
                 id="cost"
-                class=" spartan h-12 bg-transparent border-gray-300 border-2  px-2  focus:border-blue-500 block sm:text-sm rounded-md"
+                class=" spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
                 placeholder="N200"
                 autocomplete="off"
               />
@@ -92,7 +93,7 @@
         </div>
       </div>
       <!-- ---------- -->
-      <div class="col-span-3 justify-end">
+      <div class="col-span-3 ">
         <RaiseExpenseAmountPlate />
       </div>
     </div>
@@ -102,6 +103,7 @@
 </template>
 
 <script lang="ts">
+import { Log } from "@/components/util";
 import { Component, Vue } from "vue-property-decorator";
 import SmallPlus from "@/components/svg/SmallPlus.vue";
 import RaiseExpenseAmountPlate from "./RaiseExpenseAmountPlate.vue";
@@ -112,7 +114,12 @@ import RaiseExpenseAmountPlate from "./RaiseExpenseAmountPlate.vue";
     RaiseExpenseAmountPlate,
   },
 })
-export default class RaiseLotteryExpense extends Vue {}
+export default class RaiseLotteryExpense extends Vue {
+  // private
+  private addInput() {
+    return Log.info("input added");
+  }
+}
 </script>
 
 <style scoped></style>

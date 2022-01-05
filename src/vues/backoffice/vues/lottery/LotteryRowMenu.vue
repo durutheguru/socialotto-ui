@@ -162,7 +162,13 @@ export default class LotteryRowMenu extends BaseVue {
   }
 
   private goToLotteryDetails(lotteryId: string) {
-    this.$router.push(`/lottery/${lotteryId}`);
+    // this.$router.push(`/lottery/${lotteryId}`);
+    let routeData = this.$router.resolve({
+      name: "LotteryDetails",
+      // path: "/lottery",
+      params: { id: lotteryId },
+    });
+    window.open(routeData.href, "_blank");
   }
 
   private raiseExpense(lotteryId: string) {

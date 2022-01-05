@@ -360,13 +360,19 @@ export default class LotteriesView extends BaseVue {
     }
   }
 
+  private topFunction() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   private next() {
     this.lotteryQuery.page++;
+    this.topFunction();
   }
 
   private prev() {
     if (this.lotteryQuery.page > 0) {
       this.lotteryQuery.page--;
+      this.topFunction();
     }
   }
 
