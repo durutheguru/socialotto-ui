@@ -125,17 +125,29 @@ export default class LotteryRowMenu extends BaseVue {
     this.show = !this.show;
   }
 
+  private rerenderTable() {
+    store.commit("setTbodyKey", 1);
+    Log.info(String(store.state.tbodyKey));
+  }
+
   private approveLottery(lotteryId: string) {
     let self = this;
     self.approvalJson.lotteryId = lotteryId;
     self.approvalJson.approvalAction = "APPROVED";
     self.approval.loading = true;
+    store.commit("setPendingApprovalLoading", true);
 
     LotteryService.approveOrDecline(
       self.approvalJson,
       (response: any) => {
         self.approval.loading = false;
+
+        store.commit("setPendingApprovalLoading", false);
+
+        this.rerenderTable();
+
         Log.info("ApprovalResponse: " + JSON.stringify(response));
+
         Util.handleGlobalAlert(
           true,
           "success",
