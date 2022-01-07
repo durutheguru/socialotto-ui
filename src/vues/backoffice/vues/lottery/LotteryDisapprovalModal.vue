@@ -196,10 +196,14 @@ export default class DonateModal extends BaseVue {
 
     Log.info("disapprovalJson: " + JSON.stringify(this.disapprovalJson));
 
+    store.commit("setPendingDisapprovalLoading", true);
+
     LotteryService.approveOrDecline(
       self.disapprovalJson,
       (response: any) => {
         self.disapproval.loading = false;
+        store.commit("setPendingDisapprovalLoading", false);
+        store.commit("setTbodyKey", 1);
         Log.info("disapprovalResponse: " + JSON.stringify(response));
         self.close();
         this.message = "";
@@ -207,6 +211,7 @@ export default class DonateModal extends BaseVue {
       },
       (error) => {
         self.disapproval.loading = false;
+        store.commit("setPendingDisapprovalLoading", false);
         self.disapproval.error = self.extractError(error);
         self.close();
         this.message = "";

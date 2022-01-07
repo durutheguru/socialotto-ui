@@ -125,17 +125,29 @@ export default class LotteryRowMenu extends BaseVue {
     this.show = !this.show;
   }
 
+  private rerenderTable() {
+    store.commit("setTbodyKey", 1);
+    Log.info(String(store.state.tbodyKey));
+  }
+
   private approveLottery(lotteryId: string) {
     let self = this;
     self.approvalJson.lotteryId = lotteryId;
     self.approvalJson.approvalAction = "APPROVED";
     self.approval.loading = true;
+    store.commit("setPendingApprovalLoading", true);
 
     LotteryService.approveOrDecline(
       self.approvalJson,
       (response: any) => {
         self.approval.loading = false;
+
+        store.commit("setPendingApprovalLoading", false);
+
+        this.rerenderTable();
+
         Log.info("ApprovalResponse: " + JSON.stringify(response));
+
         Util.handleGlobalAlert(
           true,
           "success",
@@ -144,6 +156,7 @@ export default class LotteryRowMenu extends BaseVue {
       },
       (error) => {
         self.approval.loading = false;
+        store.commit("setPendingApprovalLoading", false);
         self.approval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.approval.error);
       }
@@ -162,7 +175,13 @@ export default class LotteryRowMenu extends BaseVue {
   }
 
   private goToLotteryDetails(lotteryId: string) {
-    this.$router.push(`/lottery/${lotteryId}`);
+    // this.$router.push(`/lottery/${lotteryId}`);
+    let routeData = this.$router.resolve({
+      name: "LotteryDetails",
+      // path: "/lottery",
+      params: { id: lotteryId },
+    });
+    window.open(routeData.href, "_blank");
   }
 
   private raiseExpense(lotteryId: string) {
