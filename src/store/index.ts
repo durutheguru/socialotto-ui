@@ -23,6 +23,7 @@ export default new Vuex.Store({
     currentCampaignId: "",
     currentLotteryId: "",
     pendingApprovalLoading: false,
+    pendingDisapprovalLoading: false,
     isLotteryDisapproval: { show: false, lotteryId: "" },
     tbodyKey: 0,
   },
@@ -87,6 +88,10 @@ export default new Vuex.Store({
     },
     setPendingApprovalLoading(state, payload) {
       state.pendingApprovalLoading = payload;
+    },
+
+    setPendingDisapprovalLoading(state, payload) {
+      state.pendingDisapprovalLoading = payload;
     },
     setTbodyKey(state, payload) {
       state.tbodyKey += payload;

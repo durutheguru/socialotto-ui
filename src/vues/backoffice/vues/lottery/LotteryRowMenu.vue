@@ -156,6 +156,7 @@ export default class LotteryRowMenu extends BaseVue {
       },
       (error) => {
         self.approval.loading = false;
+        store.commit("setPendingApprovalLoading", false);
         self.approval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.approval.error);
       }

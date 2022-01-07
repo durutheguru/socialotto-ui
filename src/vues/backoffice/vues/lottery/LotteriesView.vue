@@ -19,7 +19,10 @@
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class=" overflow-hidden border-b border-gray-200 ">
+            <div
+              style="min-height: 700px"
+              class=" overflow-hidden border-b border-gray-200 bg-white"
+            >
               <div class="w-full bg-white rounded-t-md py-1 ">
                 <div class="h-20 px-6 flex items-center justify-between">
                   <div class="relative h-11 ">
@@ -71,6 +74,10 @@
                   <div v-if="isApprovalPending">
                     Approval Loading...
                   </div>
+
+                  <div v-if="isDisapprovalPending">
+                    Disapproval Loading...
+                  </div>
                 </div>
               </div>
 
@@ -82,7 +89,6 @@
               </div>
               <table
                 v-else
-                style="min-height: 600px"
                 class="min-w-full  overflow-y-scroll divide-y divide-gray-200 bg-white"
               >
                 <thead class="th-bg ">
@@ -368,6 +374,10 @@ export default class LotteriesView extends BaseVue {
     return store.state.pendingApprovalLoading;
   }
 
+  private get isDisapprovalPending(): boolean {
+    return store.state.pendingDisapprovalLoading;
+  }
+
   private get tbodyKey(): boolean {
     return store.state.tbodyKey;
   }
@@ -429,20 +439,6 @@ export default class LotteriesView extends BaseVue {
   // mounted(){
 
   // }
-
-  private people: any = [
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Active",
-      color: "statusActive",
-      endDate: "23/2/2022",
-    },
-
-    // More people...
-  ];
 }
 </script>
 
