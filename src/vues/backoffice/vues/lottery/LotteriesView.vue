@@ -7,21 +7,24 @@
     >
       Lotteries
     </h1>
-    <div
+    <!-- <div
       v-if="$apollo.queries.searchLotteries.loading"
       class="h-full relative rounded-md flex items-center justify-center"
     >
       <div class="roundLoader opacity-50"></div>
-    </div>
-    <div v-else>
+    </div> -->
+    <div>
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
-            <div class=" overflow-hidden border-b border-gray-200 ">
+            <div
+              style="min-height: 700px"
+              class=" overflow-hidden border-b border-gray-200 bg-white"
+            >
               <div class="w-full bg-white rounded-t-md py-1 ">
-                <div class="h-20 px-6 flex items-center">
+                <div class="h-20 px-6 flex items-center justify-between">
                   <div class="relative h-11 ">
                     <input
                       v-model="lotteryQuery.key"
@@ -68,12 +71,27 @@
                   </div>
 
                   <!-- ----cancel------- -->
+                  <div v-if="isApprovalPending">
+                    Approval Loading...
+                  </div>
+
+                  <div v-if="isDisapprovalPending">
+                    Disapproval Loading...
+                  </div>
                 </div>
               </div>
-              <table
-                class="min-w-full overflow-y-scroll divide-y divide-gray-200 bg-white"
+
+              <div
+                v-if="$apollo.queries.searchLotteries.loading"
+                class="h-full w-full mx-auto  absoluto rounded-md block"
               >
-                <thead class="th-bg">
+                <div class="roundLoader opacity-50 mx-auto"></div>
+              </div>
+              <table
+                v-else
+                class="min-w-full  overflow-y-scroll divide-y divide-gray-200 bg-white"
+              >
+                <thead class="th-bg ">
                   <tr>
                     <th
                       scope="col"
@@ -141,7 +159,7 @@
                     >
                       <div class="flex relative">
                         <span>End Date</span>
-                        <div class="absolute th-chevron">
+                        <!-- <div class="absolute th-chevron">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-5 w-5 "
@@ -154,7 +172,7 @@
                               clip-rule="evenodd"
                             />
                           </svg>
-                        </div>
+                        </div> -->
                       </div>
                     </th>
                     <th scope="col" class="relative px-6 py-3">
@@ -162,7 +180,12 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200 mb-12">
+                <!-- -------loader------- -->
+
+                <tbody
+                  class="bg-white divide-y divide-gray-200 mb-12"
+                  :key="tbodyKey"
+                >
                   <tr
                     class="border border-b"
                     v-for="lottery in lotteryQuery.data"
@@ -282,6 +305,7 @@ import BaseVue from "@/components/BaseVue";
 // import ChevronUp from "@/components/svg/ChevronUp.vue";
 import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
 import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
+import store from "@/store/index";
 
 @Component({
   name: "LotteriesView",
@@ -343,6 +367,19 @@ export default class LotteriesView extends BaseVue {
   private searchStatus(status: any) {
     // Log.info("status:" + status);
     this.lotteryQuery.status = status;
+    this.showStatuses = false;
+  }
+
+  private get isApprovalPending(): boolean {
+    return store.state.pendingApprovalLoading;
+  }
+
+  private get isDisapprovalPending(): boolean {
+    return store.state.pendingDisapprovalLoading;
+  }
+
+  private get tbodyKey(): boolean {
+    return store.state.tbodyKey;
   }
 
   private displayColor(status: any) {
@@ -360,13 +397,20 @@ export default class LotteriesView extends BaseVue {
     }
   }
 
+  private topFunction() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
   private next() {
     this.lotteryQuery.page++;
+
+    this.topFunction();
   }
 
   private prev() {
     if (this.lotteryQuery.page > 0) {
       this.lotteryQuery.page--;
+      this.topFunction();
     }
   }
 
@@ -395,20 +439,6 @@ export default class LotteriesView extends BaseVue {
   // mounted(){
 
   // }
-
-  private people: any = [
-    {
-      id: "2011201122",
-      lotteryOwner: "Jane Cooper",
-      title: "Chill with Wizkid",
-      amountRaised: 20,
-      status: "Active",
-      color: "statusActive",
-      endDate: "23/2/2022",
-    },
-
-    // More people...
-  ];
 }
 </script>
 
