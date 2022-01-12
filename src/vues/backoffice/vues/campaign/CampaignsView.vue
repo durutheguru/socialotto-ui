@@ -5,14 +5,8 @@
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
     >
-      Lotteries
+      Campaigns
     </h1>
-    <!-- <div
-      v-if="$apollo.queries.searchLotteries.loading"
-      class="h-full relative rounded-md flex items-center justify-center"
-    >
-      <div class="roundLoader opacity-50"></div>
-    </div> -->
     <div>
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -27,14 +21,14 @@
                 <div class="h-20 px-6 flex items-center justify-between">
                   <div class="relative h-11 ">
                     <input
-                      v-model="lotteryQuery.key"
+                      v-model="campaignQuery.key"
                       class="h-full rounded-lg pl-5 w-27rem border border-gray-200"
                       type="text"
                       placeholder="Search"
                     />
 
                     <div
-                      @click="lotteryQuery.key = ''"
+                      @click="campaignQuery.key = ''"
                       class="absolute right-0 top-0 h-full w-8 flex justify-center items-center"
                     >
                       <svg
@@ -71,24 +65,23 @@
                   </div>
 
                   <!-- ----cancel------- -->
-                  <div v-if="isApprovalPending">
+                  <!-- <div v-if="isApprovalPending">
                     Approval Loading...
                   </div>
 
                   <div v-if="isDisapprovalPending">
                     Disapproval Loading...
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
-              <div
-                v-if="$apollo.queries.searchLotteries.loading"
+              <!-- <div
+                v-if="$apollo.queries.searchCampaigns.loading"
                 class="h-full w-full mx-auto  absoluto rounded-md block"
               >
                 <div class="roundLoader opacity-50 mx-auto"></div>
-              </div>
+              </div> -->
               <table
-                v-else
                 class="min-w-full  overflow-y-scroll divide-y divide-gray-200 bg-white"
               >
                 <thead class="th-bg ">
@@ -109,7 +102,7 @@
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Lottery Owner
+                      Campaign Owner
                     </th>
                     <th
                       scope="col"
@@ -143,7 +136,7 @@
                             ALL
                           </li>
                           <li
-                            v-for="item in Object.keys(lotteryStatuses)"
+                            v-for="item in Object.keys(campaignStatuses)"
                             :key="item"
                             @click="searchStatus(item)"
                             class="cursor-pointer px-3  py-3 hover:bg-gray-200"
@@ -182,60 +175,53 @@
                 </thead>
                 <!-- -------loader------- -->
 
-                <tbody
-                  class="bg-white divide-y divide-gray-200 mb-12"
-                  :key="tbodyKey"
-                >
+                <tbody class="bg-white divide-y divide-gray-200 mb-12">
                   <tr
                     class="border border-b"
-                    v-for="lottery in lotteryQuery.data"
-                    :key="lottery.id"
+                    v-for="campaign in campaignQuery.data"
+                    :key="campaign.id"
                   >
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
                     >
-                      {{ lottery.id }}
+                      {{ campaign.id }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.name }}
+                      {{ campaign.name }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.owner.username }}
+                      {{ campaign.owner.username }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.totalFundsRaised }}
+                      {{ campaign.totalFundsRaised }}
                     </td>
 
                     <td
-                      :class="
-                        displayColor(
-                          lotteryStatuses[`${lottery.lotteryStatus}`]
-                        )
-                      "
+                      :class="displayColor(campaignStatuses[campaign.status])"
                       class="fw-600 px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lotteryStatuses[`${lottery.lotteryStatus}`] }}
+                      {{ campaignStatuses[campaign.status] }}
                     </td>
 
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.endDate }}
+                      {{ campaign.endDate }}
                     </td>
 
                     <td
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <LotteryRowMenu
-                          :lotteryId="lottery.id"
-                          :status="lotteryStatuses[`${lottery.lotteryStatus}`]"
+                        <CampaignRowMenu
+                          :campaignId="campaign.id"
+                          :status="campaignStatuses[campaign.status]"
                         />
                       </div>
                     </td>
@@ -265,7 +251,7 @@
                       />
                     </svg>
                   </div>
-                  <span class="mx-3.5"> Page {{ lotteryQuery.page }}</span>
+                  <span class="mx-3.5"> Page {{ campaignQuery.page }}</span>
                   <div @click="next" class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -297,51 +283,50 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import LotteryRowMenu from "./LotteryRowMenu.vue";
+import { Log, Util } from "@/components/util";
 import { ApolloError } from "apollo-client";
-import { Log, Constants, Util } from "@/components/util";
-import { searchLotteries } from "@/services/lottery/lottery.query";
+import CampaignRowMenu from "./CampaignRowMenu.vue";
+
 import BaseVue from "@/components/BaseVue";
-// import ChevronUp from "@/components/svg/ChevronUp.vue";
 import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
 import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
-import store from "@/store/index";
-
+import { searchCampaigns } from "@/services/campaign/campaign.query";
 @Component({
-  name: "LotteriesView",
+  name: "CampaignsView",
   apollo: {
     $client: "anonymousClient",
-    searchLotteries: {
-      query: searchLotteries,
+    searchCampaigns: {
+      query: searchCampaigns,
       variables() {
         return {
-          searchKey: this.lotteryQuery.key,
-          status: this.lotteryQuery.status,
-          page: this.lotteryQuery.page,
-          size: this.lotteryQuery.size,
+          searchKey: this.campaignQuery.key,
+          status: this.campaignQuery.status,
+          page: this.campaignQuery.page,
+          size: this.campaignQuery.size,
         };
       },
       result({ data }) {
-        Log.info("Search Lotteries Query: " + JSON.stringify(data));
+        Log.info("Search Campaigns Query: " + JSON.stringify(data));
 
-        this.lotteryQuery.data = data.searchLotteries;
+        this.campaignQuery.data = data.searchCampaigns;
+        Log.info("campaigns Query: " + String(this.campaignQuery.data));
       },
       error(error: ApolloError) {
-        this.lotteryQuery.error = Util.extractGqlError(error);
-        if (Util.isValidString(this.lotteryQuery.error)) {
-          this.$apollo.queries.searchLotteries.refetch();
+        this.campaignQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.campaignQuery.error)) {
+          this.$apollo.queries.searchCampaigns.refetch();
         }
       },
     },
   },
   components: {
-    LotteryRowMenu,
+    CampaignRowMenu,
     SmallChevronUp,
     SmallChevronDown,
   },
 })
-export default class LotteriesView extends BaseVue {
-  private lotteryQuery: any = {
+export default class CampaignsView extends BaseVue {
+  private campaignQuery: any = {
     key: "",
     page: 0,
     size: 10,
@@ -352,34 +337,34 @@ export default class LotteriesView extends BaseVue {
 
   private showStatuses: boolean = false;
 
-  private lotteryStatuses: any = {
-    PENDING_APPROVAL: "Pending",
-    ACTIVE: "Active",
+  private campaignStatuses: any = {
+    AWAITING_APPROVAL: "Pending",
+    APPROVED: "Active",
     DISAPPROVED: "Declined",
-    EVALUATING: "Active",
+    ACTIVE: "Active",
     CANCELLED: "Cancelled",
-    AWAITING_CLEARING: "Unsettled",
-    CLEARING_IN_PROGRESS: "Unsettled",
-    REVERSED_TO_PARTICIPANTS: "Settled",
-    CREDITED_TO_BENEFICIARIES: "Settled",
+    COMPLETED: "Completed",
+    EXPIRED: "Expired",
   };
 
   private searchStatus(status: any) {
     // Log.info("status:" + status);
-    this.lotteryQuery.status = status;
+    this.campaignQuery.status = status;
     this.showStatuses = false;
   }
 
-  private get isApprovalPending(): boolean {
-    return store.state.pendingApprovalLoading;
+  private next() {
+    this.campaignQuery.page++;
   }
 
-  private get isDisapprovalPending(): boolean {
-    return store.state.pendingDisapprovalLoading;
+  private prev() {
+    if (this.campaignQuery.page > 0) {
+      this.campaignQuery.page--;
+    }
   }
 
-  private get tbodyKey(): boolean {
-    return store.state.tbodyKey;
+  private toggleStatusMenu() {
+    this.showStatuses = !this.showStatuses;
   }
 
   private displayColor(status: any) {
@@ -396,49 +381,6 @@ export default class LotteriesView extends BaseVue {
       return "statusSettled";
     }
   }
-
-  private topFunction() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  private next() {
-    this.lotteryQuery.page++;
-
-    this.topFunction();
-  }
-
-  private prev() {
-    if (this.lotteryQuery.page > 0) {
-      this.lotteryQuery.page--;
-      this.topFunction();
-    }
-  }
-
-  private toggleStatusMenu() {
-    this.showStatuses = !this.showStatuses;
-  }
-
-  //   private displayColor(status: any) {
-  //   Log.info("Status: " + status);
-  //   let klass = "";
-  //   if (status === "Declined" || "Cancelled") {
-  //     klass = "statusDeclined";
-  //   } else if (status === "Active") {
-  //     klass = "statusActive";
-  //   } else if (status === "Pending") {
-  //     klass = "statusPending";
-  //   } else if (status === "Unsettled") {
-  //     klass = "statusUnsettled";
-  //   } else if (status === "Settled") {
-  //     klass = "statusSettled";
-  //   }
-
-  //   return { [klass]: true };
-  // }
-
-  // mounted(){
-
-  // }
 }
 </script>
 
