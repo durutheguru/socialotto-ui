@@ -2,6 +2,7 @@
   <transition name="slideDown">
     <div
       v-if="message.show"
+      id="closeAlert"
       class="main fixed z-50 top-5 right-0 mr-6 min-w-min-content flex sm:max-w-md m-auto over rounded-md p-3"
       :class="message.type === 'success' ? 'bg-green-100' : 'bg-red-50'"
       @click="close"
@@ -67,6 +68,15 @@ export default class Alert extends Vue {
   private close() {
     Util.handleGlobalAlert(false, "", "");
   }
+
+  // @Watch("message")
+  // private closeAlert(newValue: any, oldValue: any) {
+  //   if (newValue.show === true) {
+  //     newValue.show = false;
+  //     const button = document.getElementById("closeAlert") as HTMLElement;
+  //     setTimeout(() => button.click(), 5000);
+  //   }
+  // }
 }
 </script>
 

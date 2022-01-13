@@ -15,6 +15,7 @@ import Campaign from "@/vues/campaign/Campaign.vue";
 import CreateLottery from "@/vues/backoffice/vues/lottery/CreateLottery.vue";
 import RaiseLotteryExpense from "@/vues/backoffice/vues/lottery/RaiseLotteryExpense.vue";
 import LotteriesView from "@/vues/backoffice/vues/lottery/LotteriesView.vue";
+import CampaignsView from "@/vues/backoffice/vues/campaign/CampaignsView.vue";
 import guard from "./util/guard";
 import afterRouteScriptLoader from "./util/afterRouteScriptLoader";
 
@@ -129,6 +130,11 @@ const routes = [
         path: "/back-office/lotteries",
         name: "LotteriesView",
         component: LotteriesView,
+      },
+      {
+        path: "/back-office/campaigns",
+        name: "CampaignssView",
+        component: CampaignsView,
       },
       {
         path: "/back-office/raise_lottery_expense/:id",
