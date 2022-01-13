@@ -24,6 +24,8 @@ export default new Vuex.Store({
     currentLotteryId: "",
     pendingApprovalLoading: false,
     pendingDisapprovalLoading: false,
+    campaignPendingApprovalLoading: false,
+    campaignPendingDisapprovalLoading: false,
     isLotteryDisapproval: { show: false, lotteryId: "" },
     tbodyKey: 0,
   },
@@ -50,10 +52,14 @@ export default new Vuex.Store({
 
       // set new timer
 
-      timer = setTimeout(
-        () => (state.globalAlert = { show: false, text: "", type: "" }),
-        5000
-      );
+      timer = () => {
+        setTimeout(
+          () => (state.globalAlert = { show: false, text: "", type: "" }),
+          5000
+        );
+      };
+
+      timer();
     },
 
     setDropMenu(state, payload) {
@@ -95,6 +101,12 @@ export default new Vuex.Store({
     },
     setTbodyKey(state, payload) {
       state.tbodyKey += payload;
+    },
+    setCampaignPendingApprovalLoading(state, payload) {
+      state.campaignPendingApprovalLoading = payload;
+    },
+    setCampaignPendingDisapprovalLoading(state, payload) {
+      state.campaignPendingDisapprovalLoading = payload;
     },
   },
 
