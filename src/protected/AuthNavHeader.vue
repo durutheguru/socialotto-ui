@@ -40,7 +40,6 @@
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
-                id="noticeToggle"
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 m-1 cursor-pointer"
                 fill="none"
@@ -54,7 +53,7 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                 />
               </svg>
-              <transition name="fade">
+              <transition name="fade" id="noticeMenu">
                 <Notificatons v-if="noticeMenu" />
               </transition>
             </div>
@@ -64,26 +63,24 @@
               @click="ToggleRecentActivities"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
-              <div>
-                <svg
-                  id="recentsToggle"
-                  class="m-1.5 cursor-pointer"
-                  width="22"
-                  height="20"
-                  viewBox="0 0 22 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M21 10H17L14 19L8 1L5 10H1"
-                    stroke="#767676"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <transition name="fade">
+              <svg
+                class="m-1.5 cursor-pointer"
+                width="22"
+                height="20"
+                viewBox="0 0 22 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 10H17L14 19L8 1L5 10H1"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <transition name="fade" id="recentsMenu">
                 <RecentActivities v-if="recentsMenu" />
               </transition>
             </div>
@@ -91,12 +88,10 @@
             <!-- -----Avatar menu----- -->
             <div
               @click="dropUserMenu"
-              data-dropdown
               class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
               <button class="menuAnchor h-full" data-dropdown-button>
                 <img
-                  id="dropdown"
                   class="inline-block h-8 w-8 rounded-full"
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt=""
@@ -157,11 +152,6 @@ import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
-// import ClickOutside from 'vue-click-outside';
-// import SignupService from "./service/SignupService";
-// import LoginService from "../login/service/LoginService";
-// import store from "@/store";
-// import UserAuthContext from "@/components/auth/UserAuthContext";
 
 @Component({
   name: "AuthNavHeader",
@@ -182,10 +172,6 @@ export default class AuthNavHeader extends BaseVue {
     store.commit("setIsRecentsMenu", false);
   }
 
-  // private notifications: boolean = false;
-
-  // private recentActivities: boolean = false;
-
   private get userMenu(): boolean {
     return store.state.userMenu;
   }
@@ -193,6 +179,10 @@ export default class AuthNavHeader extends BaseVue {
   private get noticeMenu(): boolean {
     return store.state.isNoticeMenu;
   }
+
+  // private hide () {
+  //   store.commit("setIsNoticeMenu", false);
+  // }
 
   private get recentsMenu(): boolean {
     return store.state.isRecentsMenu;

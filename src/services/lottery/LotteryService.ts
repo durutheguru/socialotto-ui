@@ -20,6 +20,17 @@ export default class LotteryService {
         );
     }
 
+    public static getLotteryOwner(
+        name: string,
+        successHandler: APISuccessCallback,
+        errorHandler: APIErrorCallback,
+    ) {
+        Web.get(
+            '/api/v1/platform_user/search/findByNameContaining?name=' + name,
+            successHandler, errorHandler,
+        );
+    }
+
 
     public static getLotteries(
         pageRequest: PageRequest,
