@@ -50,6 +50,52 @@ body {
   color: $app_blue;
 }
 
+.w-27rem {
+  width: 27.5rem;
+}
+
+.statusActive {
+  color: #0000ff;
+}
+
+.statusDeclined {
+  color: #ff0000;
+}
+
+.statusPending {
+  color: #fffb04;
+}
+
+.statusUnsettled {
+  color: #09aa09;
+}
+
+.statusSettled {
+  color: #bcbcbc;
+}
+
+.th-bg {
+  background-color: #e5f2f5;
+}
+
+.th-chevron {
+  // right: 2.2rem;
+  bottom: 0.2px;
+}
+
+.td-elipsis {
+  // bottom: 1.1rem;
+  top: 5px;
+}
+
+.td-elipsis-menu {
+  background-color: white;
+}
+
+.td-elipsis-menu:hover {
+  background-color: black;
+}
+
 .background-gradient-blue {
   background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important;
 }

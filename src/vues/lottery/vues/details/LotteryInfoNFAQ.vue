@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white pb-60">
     <div class="max-w-screen-xl mx-auto pt-5 md:pt-20 sm:w-11/12 px-6 md:px-0">
       <div class="pb-14">
         <div v-if="loading" class="mx-auto grid grid-cols-6 md:grid-cols-5">

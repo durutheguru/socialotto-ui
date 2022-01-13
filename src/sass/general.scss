@@ -1,3 +1,63 @@
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-32 {
+  font-size: 32px;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-800 {
+  font-weight: 800;
+}
+
+.fw-900 {
+  font-weight: 900;
+}
+
+.h-50px {
+  height: 3.125rem;
+}
+
+.h-26 {
+  height: 6.25rem;
+}
+
+.line-h-100 {
+  line-height: 100%;
+}
+
+.max-w-70 {
+  max-width: 70rem;
+}
+
 .bg-blue-50 {
   background-color: #f1f7f9;
 }
@@ -63,6 +123,14 @@
   background-color: #343434;
 }
 
+.lotteryTableMenuListGreen {
+  color: #09aa09;
+}
+
+.lotteryTableMenuRed {
+  color: #ff0000;
+}
+
 .dark-blue-text {
   color: #2c5662;
 }
@@ -87,6 +155,11 @@
   // overflow-y: scroll;
   height: calc(100% - 84px);
   margin-top: 84px;
+}
+
+.tableHeaderInnerDiv {
+  max-width: 75px;
+  min-width: 75px;
 }
 
 .overflow-y {
@@ -161,6 +234,10 @@
 }
 
 .backOfficeSidebar {
+  background-color: #1d414b;
+}
+
+.bo-bg-dark-blue {
   background-color: #1d414b;
 }
 

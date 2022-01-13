@@ -3,7 +3,7 @@
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
     >
-      Create your campaign
+      Create your lottery
     </h1>
     <validation-observer
       ref="vObserver"
@@ -36,7 +36,7 @@
                       required
                       type="text"
                       name="lottery title"
-                      id="campaign_title"
+                      id="lottery_title"
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
@@ -106,6 +106,11 @@
                       />
 
                       <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                      <span
+                        v-if="lotteryOwner.length > 0 && owners.length === 0"
+                        class="text-red-500 spartan"
+                        >owner not found</span
+                      >
                     </validation-provider>
                   </div>
                   <div
@@ -473,7 +478,7 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="spartan h-12 bg-transparent border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
                       placeholder="13/01/2022"
                     />
 
