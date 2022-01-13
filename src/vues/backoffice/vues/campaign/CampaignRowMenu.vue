@@ -139,14 +139,14 @@ export default class LotteryRowMenu extends BaseVue {
     self.approvalJson.campaignId = campaignId;
     self.approvalJson.approvalAction = "APPROVED";
     self.approval.loading = true;
-    // store.commit("setPendingApprovalLoading", true);
+    store.commit("setCampaignPendingApprovalLoading", true);
 
     CampaignService.approveOrDecline(
       self.approvalJson,
       (response: any) => {
         self.approval.loading = false;
 
-        // store.commit("setPendingApprovalLoading", false);
+        store.commit("setCampaignPendingApprovalLoading", false);
 
         // this.rerenderTable();
 
@@ -160,7 +160,7 @@ export default class LotteryRowMenu extends BaseVue {
       },
       (error) => {
         self.approval.loading = false;
-        // store.commit("setPendingApprovalLoading", false);
+        store.commit("setCampaignPendingApprovalLoading", false);
         self.approval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.approval.error);
       }
@@ -174,14 +174,14 @@ export default class LotteryRowMenu extends BaseVue {
     self.disApprovalJson.campaignId = campaignId;
     self.disApprovalJson.approvalAction = "DISAPPROVED";
     self.disApproval.loading = true;
-    // store.commit("setPendingApprovalLoading", true);
+    store.commit("setCampaignPendingDisapprovalLoading", true);
 
     CampaignService.approveOrDecline(
       self.disApprovalJson,
       (response: any) => {
         self.disApproval.loading = false;
 
-        // store.commit("setPendingApprovalLoading", false);
+        store.commit("setCampaignPendingDisapprovalLoading", false);
 
         // this.rerenderTable();
 
@@ -195,7 +195,7 @@ export default class LotteryRowMenu extends BaseVue {
       },
       (error) => {
         self.disApproval.loading = false;
-        // store.commit("setPendingApprovalLoading", false);
+        store.commit("setCampaignPendingDisapprovalLoading", false);
         self.disApproval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.disApproval.error);
       }

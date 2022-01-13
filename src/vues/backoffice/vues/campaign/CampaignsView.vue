@@ -65,23 +65,24 @@
                   </div>
 
                   <!-- ----cancel------- -->
-                  <!-- <div v-if="isApprovalPending">
+                  <div v-if="isApprovalPending">
                     Approval Loading...
                   </div>
 
                   <div v-if="isDisapprovalPending">
                     Disapproval Loading...
-                  </div> -->
+                  </div>
                 </div>
               </div>
 
-              <!-- <div
+              <div
                 v-if="$apollo.queries.searchCampaigns.loading"
                 class="h-full w-full mx-auto  absoluto rounded-md block"
               >
                 <div class="roundLoader opacity-50 mx-auto"></div>
-              </div> -->
+              </div>
               <table
+                v-else
                 class="min-w-full  overflow-y-scroll divide-y divide-gray-200 bg-white"
               >
                 <thead class="th-bg ">
@@ -286,7 +287,7 @@ import { Component, Vue } from "vue-property-decorator";
 import { Log, Util } from "@/components/util";
 import { ApolloError } from "apollo-client";
 import CampaignRowMenu from "./CampaignRowMenu.vue";
-
+import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
 import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
 import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
@@ -346,6 +347,14 @@ export default class CampaignsView extends BaseVue {
     COMPLETED: "Completed",
     EXPIRED: "Expired",
   };
+
+  private get isApprovalPending(): boolean {
+    return store.state.campaignPendingApprovalLoading;
+  }
+
+  private get isDisapprovalPending(): boolean {
+    return store.state.campaignPendingDisapprovalLoading;
+  }
 
   private searchStatus(status: any) {
     // Log.info("status:" + status);
