@@ -33,63 +33,33 @@
             </div>
           </div>
         </div>
-        <div class="grid grid-cols-3">
-          <div class="col-span-2">
-            <label
-              for="Expense Details"
-              class="spartan font-medium text-dark block text-sm text-gray-700"
-              >Expense Details</label
-            >
-            <div class="mt-1">
-              <input
-                required
-                type="text"
-                name="Expense Details"
-                id="Expense Details"
-                class="w-11/12 spartan h-12 bg-transparent border-gray-300 border-2  px-2  focus:border-blue-500 block sm:text-sm rounded-md"
-                placeholder="Help a father of 3 with money for his "
-                autocomplete="off"
-              />
-            </div>
-          </div>
-          <div class="col-span-1">
-            <label
-              for="Cost"
-              class="spartan font-medium text-dark block text-sm text-gray-700"
-              >Cost</label
-            >
-            <div class="mt-1 flex justify-between">
-              <input
-                required
-                type="number"
-                name="Cost"
-                id="cost"
-                class=" spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
-                placeholder="N200"
-                autocomplete="off"
-              />
-              <div class="flex items-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
+        <div class="flex flex-col">
           <div
-            class="bg-blue-200 col-span-3 h-14 rounded-md mt-12 flex items-center justify-center"
+            class="mb-10 flex justify-between"
+            v-for="number in inputsArray"
+            :key="number"
           >
-            <span class="text-white spartan fs-16 fw-600">Evaluate</span>
+            <RaiseExpenseInput />
+            <div class="flex items-center cursor-pointer h-12">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
           </div>
+        </div>
+        <div
+          class="bg-blue-200 col-span-3 h-14 rounded-md mt-2 flex items-center justify-center"
+        >
+          <span class="text-white spartan fs-16 fw-600">Evaluate</span>
         </div>
       </div>
       <!-- ---------- -->
@@ -104,20 +74,31 @@
 
 <script lang="ts">
 import { Log } from "@/components/util";
+import RaiseExpenseInput from "./raiseExpenseInputs.vue";
 import { Component, Vue } from "vue-property-decorator";
 import SmallPlus from "@/components/svg/SmallPlus.vue";
-import RaiseExpenseAmountPlate from "./RaiseExpenseAmountPlate.vue";
+import RaiseExpenseAmountPlate from "./expenseAmountPlates.vue";
 @Component({
   name: "RaiseLotteryExpense",
   components: {
     SmallPlus,
     RaiseExpenseAmountPlate,
+    RaiseExpenseInput,
   },
 })
 export default class RaiseLotteryExpense extends Vue {
   // private
+  private counter = 0;
+  // private get currentCount() {
+  //   return this.counter;
+  // }
+  // private inputModel = "vmodel" + this.currentCount;
+
+  private inputsArray = [this.counter];
+
   private addInput() {
-    return Log.info("input added");
+    this.counter++;
+    this.inputsArray.unshift(this.counter);
   }
 }
 </script>
