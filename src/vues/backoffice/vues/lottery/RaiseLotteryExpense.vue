@@ -36,11 +36,56 @@
         <div class="flex flex-col">
           <div
             class="mb-10 flex justify-between"
-            v-for="number in inputsArray"
-            :key="number"
+            v-for="(input, index) in inputArray"
+            :key="index"
           >
-            <RaiseExpenseInput />
-            <div class="flex items-center cursor-pointer h-12">
+            <!-- <RaiseExpenseInput /> -->
+            <div class="grid grid-cols-3 w-full">
+              <div class="col-span-2">
+                <label
+                  for="Expense Details"
+                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  >Expense Details</label
+                >
+                <div class="mt-1">
+                  <input
+                    required
+                    type="text"
+                    v-model="input.description"
+                    name="Expense Details"
+                    id="Expense Details"
+                    class="w-11/12 spartan h-12 bg-transparent border-gray-300 border-2  px-2  focus:border-blue-500 block sm:text-sm rounded-md"
+                    placeholder="Help a father of 3 with money for his "
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="col-span-1">
+                <label
+                  for="Cost"
+                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  >Cost</label
+                >
+                <div class="mt-1 flex justify-between">
+                  <input
+                    required
+                    type="number"
+                    v-model="input.cost"
+                    name="Cost"
+                    id="cost"
+                    class=" spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
+                    placeholder="N200"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- ---------------- -->
+            <div
+              @click="removeInput(index)"
+              class="flex items-center cursor-pointer h-12 mt-auto"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-5 w-5"
@@ -57,6 +102,7 @@
           </div>
         </div>
         <div
+          @click="evaluate"
           class="bg-blue-200 col-span-3 h-14 rounded-md mt-2 flex items-center justify-center"
         >
           <span class="text-white spartan fs-16 fw-600">Evaluate</span>
@@ -64,7 +110,8 @@
       </div>
       <!-- ---------- -->
       <div class="col-span-3 ">
-        <RaiseExpenseAmountPlate />
+        <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
+        <RaiseExpenseAmountPlate :settlement="this.evaluateQuery.data" />
       </div>
     </div>
 
@@ -73,33 +120,113 @@
 </template>
 
 <script lang="ts">
-import { Log } from "@/components/util";
+import { Log, Constants, Util } from "@/components/util";
 import RaiseExpenseInput from "./raiseExpenseInputs.vue";
 import { Component, Vue } from "vue-property-decorator";
 import SmallPlus from "@/components/svg/SmallPlus.vue";
 import RaiseExpenseAmountPlate from "./expenseAmountPlates.vue";
+import { ApolloError } from "apollo-client";
+
+import EvaluationPlate from "./ExpenseEvaluationPlate.vue";
+import { evaluateSettlement } from "@/services/lottery/lottery.query";
+
 @Component({
   name: "RaiseLotteryExpense",
+  apollo: {
+    evaluateSettlement: {
+      query: evaluateSettlement,
+      variables() {
+        return {
+          lotteryId: this.evaluateQuery.id,
+          expense: this.evaluateQuery.expense,
+        };
+      },
+      skip() {
+        return this.evaluateQuery.skip;
+      },
+      result({ data }) {
+        Log.info("expense Query: " + JSON.stringify(data));
+
+        this.evaluateQuery.data = data.evaluateSettlement;
+      },
+      error(error: ApolloError) {
+        this.evaluateQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.evaluateQuery.error)) {
+          this.$apollo.queries.evaluateSettlement.refetch();
+        }
+      },
+    },
+  },
   components: {
     SmallPlus,
     RaiseExpenseAmountPlate,
     RaiseExpenseInput,
+    EvaluationPlate,
   },
 })
 export default class RaiseLotteryExpense extends Vue {
   // private
-  private counter = 0;
+  // private expensesArray: any = [];
+
   // private get currentCount() {
   //   return this.counter;
   // }
   // private inputModel = "vmodel" + this.currentCount;
+  private evaluateQuery = {
+    id: "",
+    expense: 0,
+    data: [],
+    error: "",
+    skip: true,
+  };
+  private lotteryId: any = "";
+  private inputArray = [
+    {
+      description: "",
+      cost: "",
+    },
+  ];
 
-  private inputsArray = [this.counter];
+  private total: number = 0;
+
+  private removeInput(index: any) {
+    if (this.inputArray.length > 1) {
+      this.inputArray.splice(index, 1);
+    }
+  }
+
+  private show = false;
 
   private addInput() {
-    this.counter++;
-    this.inputsArray.unshift(this.counter);
+    const obj = {
+      description: "",
+      cost: "",
+    };
+
+    if (this.inputArray.length < 10) {
+      this.inputArray.unshift(obj);
+    }
   }
+
+  private evaluate() {
+    // this.expensesArray = this.inputArray;
+
+    const array = this.inputArray.map((obj) => Number(obj.cost));
+    this.total = Number(array.reduce((a, b) => a + b));
+    this.evaluateQuery.expense = this.total;
+    this.evaluateQuery.id = this.$route.params.id;
+
+    Log.info("expense id:" + this.evaluateQuery.id);
+    Log.info("expenseTotal:" + String(this.evaluateQuery.expense));
+
+    this.show = true;
+    this.$apollo.queries.evaluateSettlement.skip = false;
+    this.$apollo.queries.evaluateSettlement.refetch();
+  }
+
+  // private get expenses(): any {
+  //   return this.expensesArray;
+  // }
 }
 </script>
 

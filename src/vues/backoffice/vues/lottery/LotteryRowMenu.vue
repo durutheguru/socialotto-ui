@@ -185,7 +185,7 @@ export default class LotteryRowMenu extends BaseVue {
   }
 
   private raiseExpense(lotteryId: string) {
-    this.$router.push(`/back-office/raise_lottery_expense/${lotteryId}"`);
+    this.$router.push(`/back-office/raise_lottery_expense/${lotteryId}`);
   }
 }
 </script>
