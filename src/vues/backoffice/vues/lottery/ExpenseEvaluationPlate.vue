@@ -27,7 +27,7 @@
             class="grid col-span-3 grid-cols-3 mb-3"
           >
             <div
-              v-if="expense.description.length > 0 && expense.cost.length > 0"
+              v-if="expense.description.length > 0 && expense.amount.length > 0"
               class="col-span-2 "
             >
               <span class="fw-400 fs-12 break-words " style="color: #B9B9B9;">{{
@@ -35,11 +35,11 @@
               }}</span>
             </div>
             <div
-              v-if="expense.description.length > 0 && expense.cost.length > 0"
+              v-if="expense.description.length > 0 && expense.amount.length > 0"
               class="col-span-1 flex justify-end items-center"
             >
               <span style="color: #4691A6;" class="fw-500 fs-12 ">{{
-                expense.cost
+                expense.amount
               }}</span>
             </div>
           </div>

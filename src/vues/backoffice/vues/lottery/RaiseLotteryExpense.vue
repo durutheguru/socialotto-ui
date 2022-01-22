@@ -70,8 +70,8 @@
                   <input
                     required
                     type="number"
-                    v-model="input.cost"
-                    name="Cost"
+                    v-model="input.amount"
+                    name="amount"
                     id="cost"
                     class=" spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
                     placeholder="N200"
@@ -111,7 +111,10 @@
       <!-- ---------- -->
       <div class="col-span-3 ">
         <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
-        <RaiseExpenseAmountPlate :settlement="this.evaluateQuery.data" />
+        <RaiseExpenseAmountPlate
+          @newExpense="newExpenseMutation"
+          :transfers="this.evaluateQuery.treansfers"
+        />
       </div>
     </div>
 
@@ -129,7 +132,7 @@ import { ApolloError } from "apollo-client";
 
 import EvaluationPlate from "./ExpenseEvaluationPlate.vue";
 import { evaluateSettlement } from "@/services/lottery/lottery.query";
-
+import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
 @Component({
   name: "RaiseLotteryExpense",
   apollo: {
@@ -145,9 +148,11 @@ import { evaluateSettlement } from "@/services/lottery/lottery.query";
         return this.evaluateQuery.skip;
       },
       result({ data }) {
-        Log.info("expense Query: " + JSON.stringify(data));
+        Log.info(
+          "expense Query: " + JSON.stringify(data.evaluateSettlement.transfers)
+        );
 
-        this.evaluateQuery.data = data.evaluateSettlement;
+        this.evaluateQuery.treansfers = data.evaluateSettlement.transfers;
       },
       error(error: ApolloError) {
         this.evaluateQuery.error = Util.extractGqlError(error);
@@ -175,15 +180,15 @@ export default class RaiseLotteryExpense extends Vue {
   private evaluateQuery = {
     id: "",
     expense: 0,
-    data: [],
+    treansfers: [],
     error: "",
     skip: true,
   };
-  private lotteryId: any = "";
+  private lotteryId: any = this.$route.params.id;
   private inputArray = [
     {
       description: "",
-      cost: "",
+      amount: "",
     },
   ];
 
@@ -195,12 +200,39 @@ export default class RaiseLotteryExpense extends Vue {
     }
   }
 
+  private newExpenseMutation() {
+    this.$apollo
+      .mutate({
+        mutation: newLotteryExpense,
+        variables: {
+          input: {
+            lotteryId: this.lotteryId,
+            breakdowns: this.inputArray,
+          },
+        },
+      })
+      .then((data: any) => {
+        Log.info("data: " + String(data));
+        Util.handleGlobalAlert(
+          true,
+          "success",
+          "Successfully raised lottery expense"
+        );
+        this.$router.push(`/back-office/lotteries`);
+      })
+      .catch((error) => {
+        Log.error(error);
+        // const resError = error.errors[0].message;
+        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+      });
+  }
+
   private show = false;
 
   private addInput() {
     const obj = {
       description: "",
-      cost: "",
+      amount: "",
     };
 
     if (this.inputArray.length < 10) {
@@ -211,10 +243,10 @@ export default class RaiseLotteryExpense extends Vue {
   private evaluate() {
     // this.expensesArray = this.inputArray;
 
-    const array = this.inputArray.map((obj) => Number(obj.cost));
+    const array = this.inputArray.map((obj) => Number(obj.amount));
     this.total = Number(array.reduce((a, b) => a + b));
     this.evaluateQuery.expense = this.total;
-    this.evaluateQuery.id = this.$route.params.id;
+    this.evaluateQuery.id = this.lotteryId;
 
     Log.info("expense id:" + this.evaluateQuery.id);
     Log.info("expenseTotal:" + String(this.evaluateQuery.expense));
