@@ -112,11 +112,11 @@ export default class BackofficeSidebar extends Vue {
     },
     { name: "Lotteries", href: "lotteries", current: false },
     { name: "Campaigns", href: "campaigns", current: false },
-    {
-      name: "Raise Lottery Expense",
-      href: "raise_lottery_expense",
-      current: false,
-    },
+    // {
+    //   name: "Raise Lottery Expense",
+    //   href: "raise_lottery_expense",
+    //   current: false,
+    // },
     { name: "Manage Users", href: "#", current: false },
     { name: "Approval Requests", href: "#", current: false },
   ];
