@@ -266,7 +266,7 @@
 
               <div class="w-full mb-6 mt-6">
                 <label
-                  for="email"
+                  for="Lottery File Uploads"
                   class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
                   >Lottery file uploads</label
                 >

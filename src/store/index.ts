@@ -52,14 +52,10 @@ export default new Vuex.Store({
 
       // set new timer
 
-      timer = () => {
-        setTimeout(
-          () => (state.globalAlert = { show: false, text: "", type: "" }),
-          5000
-        );
-      };
-
-      timer();
+      timer = setTimeout(
+        () => (state.globalAlert = { show: false, text: "", type: "" }),
+        5000
+      );
     },
 
     setDropMenu(state, payload) {
