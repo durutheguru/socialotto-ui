@@ -28,20 +28,20 @@
       <div>
         <ul class=" w-40 flex flex-col bg-white mb-0">
           <li
-            @click="goToCampaignDetails(campaignId)"
+            @click="goToExpenseDetails(Id)"
             class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
           >
             View Details
           </li>
           <li
-            @mousedown="approveCampaign(campaignId)"
+            @mousedown="approveCampaign(Id)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
           >
             Approve
           </li>
           <li
-            @mousedown="disApproveCampaign(campaignId)"
+            @mousedown="disApproveCampaign(Id)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
           >
@@ -103,13 +103,13 @@ import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
 
 @Component({
-  name: "CampaignRowMenu",
+  name: "ExpenseRowMenu",
   props: {
     status: String,
-    campaignId: String,
+    Id: String,
   },
 })
-export default class CampaignRowMenu extends BaseVue {
+export default class ExpenseRowMenu extends BaseVue {
   private show: boolean = false;
 
   private approval: ApiResource = ApiResource.create();
@@ -213,12 +213,12 @@ export default class CampaignRowMenu extends BaseVue {
   //   Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
   // }
 
-  private goToCampaignDetails(campaignId: string) {
+  private goToExpenseDetails(Id: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
     let routeData = this.$router.resolve({
-      name: "CampaignDetails",
+      name: "ExpenseRequests",
 
-      params: { id: campaignId },
+      params: { id: Id },
     });
     window.open(routeData.href, "_blank");
   }

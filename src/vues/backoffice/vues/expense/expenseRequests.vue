@@ -5,7 +5,7 @@
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
     >
-      Lotteries
+      Expense Requests
     </h1>
     <!-- <div
       v-if="$apollo.queries.searchLotteries.loading"
@@ -15,7 +15,7 @@
     </div> -->
     <div>
       <div class="flex flex-col">
-        <div class="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
             class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8"
           >
@@ -27,14 +27,12 @@
                 <div class="h-20 px-6 flex items-center justify-between">
                   <div class="relative h-11 ">
                     <input
-                      v-model="lotteryQuery.key"
                       class="h-full rounded-lg pl-5 w-27rem border border-gray-200"
                       type="text"
                       placeholder="Search"
                     />
 
                     <div
-                      @click="lotteryQuery.key = ''"
                       class="absolute right-0 top-0 h-full w-8 flex justify-center items-center"
                     >
                       <svg
@@ -71,24 +69,23 @@
                   </div>
 
                   <!-- ----cancel------- -->
-                  <div v-if="isApprovalPending">
+                  <!-- <div v-if="isApprovalPending">
                     Approval Loading...
                   </div>
 
                   <div v-if="isDisapprovalPending">
                     Disapproval Loading...
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
-              <div
+              <!-- <div
                 v-if="$apollo.queries.searchLotteries.loading"
                 class="h-full w-full mx-auto  absoluto rounded-md block"
               >
                 <div class="roundLoader opacity-50 mx-auto"></div>
-              </div>
+              </div> -->
               <table
-                v-else
                 class="min-w-full  overflow-y-scroll divide-y divide-gray-200 bg-white"
               >
                 <thead class="th-bg ">
@@ -109,33 +106,31 @@
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Lottery Owner
+                      Owner
                     </th>
                     <th
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Amount raised
+                      Amount
                     </th>
                     <th
                       scope="col"
                       class="relative text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 "
                     >
                       <div
-                        @click="toggleStatusMenu"
                         class="tableHeaderInnerDiv flex cursor-pointer justify-between relative h-full"
                       >
                         <div>
-                          <span>Status</span>
+                          <span>Type</span>
                         </div>
-                        <SmallChevronUp v-if="showStatuses" />
-                        <SmallChevronDown v-else />
+                        <!-- <SmallChevronUp v-if="showStatuses" />
+                        <SmallChevronDown v-else /> -->
                       </div>
                       <div
-                        v-if="showStatuses"
                         class="absolute bg-white shadow-md rounded-md right-0"
                       >
-                        <ul class=" pt-3 rounded-md">
+                        <!-- <ul class=" pt-3 rounded-md">
                           <li
                             class="cursor-pointer px-3 py-3 hover:bg-gray-200"
                             @click="searchStatus(null)"
@@ -150,7 +145,7 @@
                           >
                             {{ item }}
                           </li>
-                        </ul>
+                        </ul> -->
                       </div>
                     </th>
                     <th
@@ -158,7 +153,7 @@
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
                       <div class="flex relative">
-                        <span>End Date</span>
+                        <span>Date Created</span>
                         <!-- <div class="absolute th-chevron">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -182,61 +177,46 @@
                 </thead>
                 <!-- -------loader------- -->
 
-                <tbody
-                  class="bg-white divide-y divide-gray-200 mb-12"
-                  :key="tbodyKey"
-                >
-                  <tr
-                    class="border border-b"
-                    v-for="lottery in lotteryQuery.data"
-                    :key="lottery.id"
-                  >
+                <tbody class="bg-white divide-y divide-gray-200 mb-12">
+                  <tr class="border border-b">
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
                     >
-                      {{ lottery.id }}
+                      id
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.name }}
+                      Title
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.owner.username }}
+                      Owner
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.totalFundsRaised }}
+                      Amount
                     </td>
 
                     <td
-                      :class="
-                        displayColor(
-                          lotteryStatuses[`${lottery.lotteryStatus}`]
-                        )
-                      "
                       class="fw-600 px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lotteryStatuses[`${lottery.lotteryStatus}`] }}
+                      Type
                     </td>
 
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.endDate }}
+                      Date created
                     </td>
 
                     <td
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <LotteryRowMenu
-                          :lotteryId="lottery.id"
-                          :status="lotteryStatuses[`${lottery.lotteryStatus}`]"
-                        />
+                        <ExpenseRowMenu :lotteryId="1" :status="'Active'" />
                       </div>
                     </td>
                   </tr>
@@ -251,7 +231,7 @@
                 </div>
 
                 <div class="flex">
-                  <div @click="prev" class="cursor-pointer">
+                  <div class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 "
@@ -265,8 +245,8 @@
                       />
                     </svg>
                   </div>
-                  <span class="mx-3.5"> Page {{ lotteryQuery.page }}</span>
-                  <div @click="next" class="cursor-pointer">
+                  <span class="mx-3.5"> Page 0</span>
+                  <div class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5"
@@ -296,128 +276,115 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import LotteryRowMenu from "./LotteryRowMenu.vue";
-import { ApolloError } from "apollo-client";
-import { Log, Constants, Util } from "@/components/util";
-import { searchLotteries } from "@/services/lottery/lottery.query";
+import { Component } from "vue-property-decorator";
+import ExpenseRowMenu from "./ExpenseRowMenu.vue";
+// import { ApolloError } from "apollo-client";
+// import { Log, Constants, Util } from "@/components/util";
+// import { searchLotteries } from "@/services/lottery/lottery.query";
 import BaseVue from "@/components/BaseVue";
 // import ChevronUp from "@/components/svg/ChevronUp.vue";
 import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
 import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
-import store from "@/store/index";
+// import store from "@/store/index";
 
 @Component({
-  name: "LotteriesView",
-  apollo: {
-    $client: "anonymousClient",
-    searchLotteries: {
-      query: searchLotteries,
-      variables() {
-        return {
-          searchKey: this.lotteryQuery.key,
-          status: this.lotteryQuery.status,
-          page: this.lotteryQuery.page,
-          size: this.lotteryQuery.size,
-        };
-      },
-      result({ data }) {
-        Log.info("Search Lotteries Query: " + JSON.stringify(data));
+  name: "ExpenseRequests",
+  //   apollo: {
+  //     $client: "anonymousClient",
+  //     searchLotteries: {
+  //       query: searchLotteries,
+  //       variables() {
+  //         return {
+  //           searchKey: this.lotteryQuery.key,
+  //           status: this.lotteryQuery.status,
+  //           page: this.lotteryQuery.page,
+  //           size: this.lotteryQuery.size,
+  //         };
+  //       },
+  //       result({ data }) {
+  //         Log.info("Search Lotteries Query: " + JSON.stringify(data));
 
-        this.lotteryQuery.data = data.searchLotteries;
-      },
-      error(error: ApolloError) {
-        this.lotteryQuery.error = Util.extractGqlError(error);
-        if (Util.isValidString(this.lotteryQuery.error)) {
-          this.$apollo.queries.searchLotteries.refetch();
-        }
-      },
-    },
-  },
+  //         this.lotteryQuery.data = data.searchLotteries;
+  //       },
+  //       error(error: ApolloError) {
+  //         this.lotteryQuery.error = Util.extractGqlError(error);
+  //         if (Util.isValidString(this.lotteryQuery.error)) {
+  //           this.$apollo.queries.searchLotteries.refetch();
+  //         }
+  //       },
+  //     },
+  //   },
   components: {
-    LotteryRowMenu,
+    ExpenseRowMenu,
     SmallChevronUp,
     SmallChevronDown,
   },
 })
-export default class LotteriesView extends BaseVue {
-  private lotteryQuery: any = {
-    key: "",
-    page: 0,
-    size: 10,
-    data: [],
-    error: "",
-    status: null,
-  };
-
-  private showStatuses: boolean = false;
-
-  private lotteryStatuses: any = {
-    PENDING_APPROVAL: "Pending",
-    ACTIVE: "Active",
-    DISAPPROVED: "Declined",
-    EVALUATING: "Active",
-    CANCELLED: "Cancelled",
-    AWAITING_CLEARING: "Unsettled",
-    CLEARING_IN_PROGRESS: "Unsettled",
-    REVERSED_TO_PARTICIPANTS: "Settled",
-    CREDITED_TO_BENEFICIARIES: "Settled",
-  };
-
-  private searchStatus(status: any) {
-    // Log.info("status:" + status);
-    this.lotteryQuery.status = status;
-    this.showStatuses = false;
-  }
-
-  private get isApprovalPending(): boolean {
-    return store.state.pendingApprovalLoading;
-  }
-
-  private get isDisapprovalPending(): boolean {
-    return store.state.pendingDisapprovalLoading;
-  }
-
-  private get tbodyKey(): boolean {
-    return store.state.tbodyKey;
-  }
-
-  private displayColor(status: any) {
-    Log.info("Status: " + status);
-    if (status === "Declined" || status === "Cancelled") {
-      return "statusDeclined";
-    } else if (status === "Active") {
-      return "statusActive";
-    } else if (status === "Pending") {
-      return "statusPending";
-    } else if (status === "Unsettled") {
-      return "statusUnsettled";
-    } else if (status === "Settled") {
-      return "statusSettled";
-    }
-  }
-
-  private topFunction() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  private next() {
-    this.lotteryQuery.page++;
-
-    this.topFunction();
-  }
-
-  private prev() {
-    if (this.lotteryQuery.page > 0) {
-      this.lotteryQuery.page--;
-      this.topFunction();
-    }
-  }
-
-  private toggleStatusMenu() {
-    this.showStatuses = !this.showStatuses;
-  }
-
+export default class ExpenseRequests extends BaseVue {
+  //   private lotteryQuery: any = {
+  //     key: "",
+  //     page: 0,
+  //     size: 10,
+  //     data: [],
+  //     error: "",
+  //     status: null,
+  //   };
+  //   private showStatuses: boolean = false;
+  //   private lotteryStatuses: any = {
+  //     PENDING_APPROVAL: "Pending",
+  //     ACTIVE: "Active",
+  //     DISAPPROVED: "Declined",
+  //     EVALUATING: "Active",
+  //     CANCELLED: "Cancelled",
+  //     AWAITING_CLEARING: "Unsettled",
+  //     CLEARING_IN_PROGRESS: "Unsettled",
+  //     REVERSED_TO_PARTICIPANTS: "Settled",
+  //     CREDITED_TO_BENEFICIARIES: "Settled",
+  //   };
+  //   private searchStatus(status: any) {
+  //     // Log.info("status:" + status);
+  //     this.lotteryQuery.status = status;
+  //     this.showStatuses = false;
+  //   }
+  //   private get isApprovalPending(): boolean {
+  //     return store.state.pendingApprovalLoading;
+  //   }
+  //   private get isDisapprovalPending(): boolean {
+  //     return store.state.pendingDisapprovalLoading;
+  //   }
+  //   private get tbodyKey(): boolean {
+  //     return store.state.tbodyKey;
+  //   }
+  //   private displayColor(status: any) {
+  //     Log.info("Status: " + status);
+  //     if (status === "Declined" || status === "Cancelled") {
+  //       return "statusDeclined";
+  //     } else if (status === "Active") {
+  //       return "statusActive";
+  //     } else if (status === "Pending") {
+  //       return "statusPending";
+  //     } else if (status === "Unsettled") {
+  //       return "statusUnsettled";
+  //     } else if (status === "Settled") {
+  //       return "statusSettled";
+  //     }
+  //   }
+  //   private topFunction() {
+  //     window.scrollTo({ top: 0, behavior: "smooth" });
+  //   }
+  //   private next() {
+  //     this.lotteryQuery.page++;
+  //     this.topFunction();
+  //   }
+  //   private prev() {
+  //     if (this.lotteryQuery.page > 0) {
+  //       this.lotteryQuery.page--;
+  //       this.topFunction();
+  //     }
+  //   }
+  //   private toggleStatusMenu() {
+  //     this.showStatuses = !this.showStatuses;
+  //   }
   //   private displayColor(status: any) {
   //   Log.info("Status: " + status);
   //   let klass = "";
@@ -432,12 +399,9 @@ export default class LotteriesView extends BaseVue {
   //   } else if (status === "Settled") {
   //     klass = "statusSettled";
   //   }
-
   //   return { [klass]: true };
   // }
-
   // mounted(){
-
   // }
 }
 </script>
