@@ -24,8 +24,8 @@
               class=" overflow-hidden border-b border-gray-200 bg-white rounded-md"
             >
               <div class="w-full bg-white rounded-t-md py-1 ">
-                <div class="h-20 px-6 flex items-center justify-between">
-                  <div class="relative h-11 ">
+                <div class="h-12 px-6 flex items-center justify-between">
+                  <!-- <div class="relative h-11 ">
                     <input
                       class="h-full rounded-lg pl-5 w-27rem border border-gray-200"
                       type="text"
@@ -48,10 +48,10 @@
                         />
                       </svg>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- ------SearchIcon----- -->
-                  <div class="absolute ml-3">
+                  <!-- <div class="absolute ml-3">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-6 w-6"
@@ -66,7 +66,7 @@
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                       />
                     </svg>
-                  </div>
+                  </div> -->
 
                   <!-- ----cancel------- -->
                   <!-- <div v-if="isApprovalPending">
@@ -94,43 +94,45 @@
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      ID
+                      Lottery ID
                     </th>
                     <th
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Title
+                      Lottery Title
                     </th>
                     <th
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Owner
+                      Total Lottery Funds
                     </th>
                     <th
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
-                      Amount
+                      Total Expense Amount
                     </th>
                     <th
                       scope="col"
                       class="relative text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 "
                     >
                       <div
+                        @click="toggleStatusMenu"
                         class="tableHeaderInnerDiv flex cursor-pointer justify-between relative h-full"
                       >
                         <div>
-                          <span>Type</span>
+                          <span> Approval Status</span>
                         </div>
-                        <!-- <SmallChevronUp v-if="showStatuses" />
-                        <SmallChevronDown v-else /> -->
+                        <SmallChevronUp v-if="showStatuses" />
+                        <SmallChevronDown v-else />
                       </div>
                       <div
+                        v-if="showStatuses"
                         class="absolute bg-white shadow-md rounded-md right-0"
                       >
-                        <!-- <ul class=" pt-3 rounded-md">
+                        <ul class=" pt-3 rounded-md">
                           <li
                             class="cursor-pointer px-3 py-3 hover:bg-gray-200"
                             @click="searchStatus(null)"
@@ -145,7 +147,7 @@
                           >
                             {{ item }}
                           </li>
-                        </ul> -->
+                        </ul>
                       </div>
                     </th>
                     <th
@@ -329,23 +331,23 @@ export default class ExpenseRequests extends BaseVue {
   //     error: "",
   //     status: null,
   //   };
-  //   private showStatuses: boolean = false;
-  //   private lotteryStatuses: any = {
-  //     PENDING_APPROVAL: "Pending",
-  //     ACTIVE: "Active",
-  //     DISAPPROVED: "Declined",
-  //     EVALUATING: "Active",
-  //     CANCELLED: "Cancelled",
-  //     AWAITING_CLEARING: "Unsettled",
-  //     CLEARING_IN_PROGRESS: "Unsettled",
-  //     REVERSED_TO_PARTICIPANTS: "Settled",
-  //     CREDITED_TO_BENEFICIARIES: "Settled",
-  //   };
-  //   private searchStatus(status: any) {
-  //     // Log.info("status:" + status);
-  //     this.lotteryQuery.status = status;
-  //     this.showStatuses = false;
-  //   }
+  private showStatuses: boolean = false;
+
+  private lotteryStatuses: any = {
+    PENDING: "Pending",
+    APPROVED: "Approved",
+    DECLINED: "Declined",
+  };
+
+  private toggleStatusMenu() {
+    this.showStatuses = !this.showStatuses;
+  }
+
+  private searchStatus(status: any) {
+    // Log.info("status:" + status);
+    // this.lotteryQuery.status = status;
+    this.showStatuses = false;
+  }
   //   private get isApprovalPending(): boolean {
   //     return store.state.pendingApprovalLoading;
   //   }
@@ -382,9 +384,7 @@ export default class ExpenseRequests extends BaseVue {
   //       this.topFunction();
   //     }
   //   }
-  //   private toggleStatusMenu() {
-  //     this.showStatuses = !this.showStatuses;
-  //   }
+
   //   private displayColor(status: any) {
   //   Log.info("Status: " + status);
   //   let klass = "";
