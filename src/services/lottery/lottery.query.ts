@@ -54,4 +54,26 @@ const evaluateSettlement = gql`
   }
 `;
 
-export { searchLotteries, evaluateSettlement };
+const fetchLotteryExpenseRequests = gql`
+  query fetchLotteryExpenseRequests(
+    $approvalStatus: ApprovalStatus
+    $page: Int
+    $size: Int
+  ) {
+    fetchLotteryExpenseRequests(
+      approvalStatus: $approvalStatus
+      page: $page
+      size: $size
+    ) {
+      id
+      lotteryId
+      lotteryTotalFunds
+      lotteryTitle
+      amount
+      approvalStatus
+      statusMessage
+    }
+  }
+`;
+
+export { searchLotteries, evaluateSettlement, fetchLotteryExpenseRequests };

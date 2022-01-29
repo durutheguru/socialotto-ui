@@ -7,13 +7,13 @@
     >
       Expense Requests
     </h1>
-    <!-- <div
-      v-if="$apollo.queries.searchLotteries.loading"
+    <div
+      v-if="$apollo.queries.fetchLotteryExpenseRequests.loading"
       class="h-full relative rounded-md flex items-center justify-center"
     >
       <div class="roundLoader opacity-50"></div>
-    </div> -->
-    <div>
+    </div>
+    <div v-else>
       <div class="flex flex-col">
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div
@@ -140,7 +140,7 @@
                             ALL
                           </li>
                           <li
-                            v-for="item in Object.keys(lotteryStatuses)"
+                            v-for="item in Object.keys(approvalStatuses)"
                             :key="item"
                             @click="searchStatus(item)"
                             class="cursor-pointer px-3  py-3 hover:bg-gray-200"
@@ -150,13 +150,13 @@
                         </ul>
                       </div>
                     </th>
-                    <th
+                    <!-- <th
                       scope="col"
                       class="text-dark fw-700 px-6 py-3 text-left font-medium text-gray-500 fs-14 tracking-wider"
                     >
                       <div class="flex relative">
                         <span>Date Created</span>
-                        <!-- <div class="absolute th-chevron">
+                        <div class="absolute th-chevron">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             class="h-5 w-5 "
@@ -169,9 +169,9 @@
                               clip-rule="evenodd"
                             />
                           </svg>
-                        </div> -->
+                        </div>
                       </div>
-                    </th>
+                    </th> -->
                     <th scope="col" class="relative px-6 py-3">
                       <span class="sr-only">Menu</span>
                     </th>
@@ -179,40 +179,49 @@
                 </thead>
                 <!-- -------loader------- -->
 
+                <!-- "id":"1", "lotteryId":"106", "lotteryTotalFunds":2000,
+                "lotteryTitle":"Monkey Banana Lottery", "amount":100,
+                "approvalStatus":"APPROVED", "statusMessage":null,
+                "__typename":"LotteryExpense" -->
+
                 <tbody class="bg-white divide-y divide-gray-200 mb-12">
-                  <tr class="border border-b">
+                  <tr
+                    v-for="request in approvalQuery.data"
+                    :key="request.id"
+                    class="border border-b"
+                  >
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900"
                     >
-                      id
+                      {{ request.lotteryId }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      Title
+                      {{ request.lotteryTitle }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      Owner
+                      {{ format(request.lotteryTotalFunds) }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      Amount
+                      {{ format(request.amount) }}
                     </td>
 
                     <td
                       class="fw-600 px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      Type
+                      {{ request.approvalStatus }}
                     </td>
 
-                    <td
+                    <!-- <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
                       Date created
-                    </td>
+                    </td> -->
 
                     <td
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
@@ -233,7 +242,7 @@
                 </div>
 
                 <div class="flex">
-                  <div class="cursor-pointer">
+                  <div @click="prev" class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5 "
@@ -247,8 +256,8 @@
                       />
                     </svg>
                   </div>
-                  <span class="mx-3.5"> Page 0</span>
-                  <div class="cursor-pointer">
+                  <span class="mx-3.5"> Page {{ approvalQuery.page }}</span>
+                  <div @click="next" class="cursor-pointer">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       class="h-5 w-5"
@@ -280,9 +289,9 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 import ExpenseRowMenu from "./ExpenseRowMenu.vue";
-// import { ApolloError } from "apollo-client";
-// import { Log, Constants, Util } from "@/components/util";
-// import { searchLotteries } from "@/services/lottery/lottery.query";
+import { ApolloError } from "apollo-client";
+import { Log, Constants, Util } from "@/components/util";
+import { fetchLotteryExpenseRequests } from "@/services/lottery/lottery.query";
 import BaseVue from "@/components/BaseVue";
 // import ChevronUp from "@/components/svg/ChevronUp.vue";
 import SmallChevronUp from "@/components/svg/SmallChevronUp.vue";
@@ -291,31 +300,30 @@ import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
 
 @Component({
   name: "ExpenseRequests",
-  //   apollo: {
-  //     $client: "anonymousClient",
-  //     searchLotteries: {
-  //       query: searchLotteries,
-  //       variables() {
-  //         return {
-  //           searchKey: this.lotteryQuery.key,
-  //           status: this.lotteryQuery.status,
-  //           page: this.lotteryQuery.page,
-  //           size: this.lotteryQuery.size,
-  //         };
-  //       },
-  //       result({ data }) {
-  //         Log.info("Search Lotteries Query: " + JSON.stringify(data));
+  apollo: {
+    // $client: "anonymousClient",
+    fetchLotteryExpenseRequests: {
+      query: fetchLotteryExpenseRequests,
+      variables() {
+        return {
+          approvalStatus: this.approvalQuery.approvalStatus,
+          page: this.approvalQuery.page,
+          size: this.approvalQuery.size,
+        };
+      },
+      result({ data }) {
+        Log.info("expense requests Query: " + JSON.stringify(data));
 
-  //         this.lotteryQuery.data = data.searchLotteries;
-  //       },
-  //       error(error: ApolloError) {
-  //         this.lotteryQuery.error = Util.extractGqlError(error);
-  //         if (Util.isValidString(this.lotteryQuery.error)) {
-  //           this.$apollo.queries.searchLotteries.refetch();
-  //         }
-  //       },
-  //     },
-  //   },
+        this.approvalQuery.data = data.fetchLotteryExpenseRequests;
+      },
+      error(error: ApolloError) {
+        this.approvalQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.approvalQuery.error)) {
+          this.$apollo.queries.fetchLotteryExpenseRequests.refetch();
+        }
+      },
+    },
+  },
   components: {
     ExpenseRowMenu,
     SmallChevronUp,
@@ -323,17 +331,17 @@ import SmallChevronDown from "@/components/svg/SmallChevronDown.vue";
   },
 })
 export default class ExpenseRequests extends BaseVue {
-  //   private lotteryQuery: any = {
-  //     key: "",
-  //     page: 0,
-  //     size: 10,
-  //     data: [],
-  //     error: "",
-  //     status: null,
-  //   };
+  private approvalQuery: any = {
+    // key: "",
+    page: 0,
+    size: 10,
+    data: [],
+    error: "",
+    approvalStatus: null,
+  };
   private showStatuses: boolean = false;
 
-  private lotteryStatuses: any = {
+  private approvalStatuses: any = {
     PENDING: "Pending",
     APPROVED: "Approved",
     DECLINED: "Declined",
@@ -344,9 +352,12 @@ export default class ExpenseRequests extends BaseVue {
   }
 
   private searchStatus(status: any) {
-    // Log.info("status:" + status);
-    // this.lotteryQuery.status = status;
+    Log.info("status:" + status);
+    this.approvalQuery.approvalStatus = status;
     this.showStatuses = false;
+  }
+  private format(number: number) {
+    return Util.currencyFormatter(number, "0,0");
   }
   //   private get isApprovalPending(): boolean {
   //     return store.state.pendingApprovalLoading;
@@ -374,16 +385,16 @@ export default class ExpenseRequests extends BaseVue {
   //   private topFunction() {
   //     window.scrollTo({ top: 0, behavior: "smooth" });
   //   }
-  //   private next() {
-  //     this.lotteryQuery.page++;
-  //     this.topFunction();
-  //   }
-  //   private prev() {
-  //     if (this.lotteryQuery.page > 0) {
-  //       this.lotteryQuery.page--;
-  //       this.topFunction();
-  //     }
-  //   }
+  private next() {
+    this.approvalQuery.page++;
+    // this.topFunction();
+  }
+  private prev() {
+    if (this.approvalQuery.page > 0) {
+      this.approvalQuery.page--;
+      // this.topFunction();
+    }
+  }
 
   //   private displayColor(status: any) {
   //   Log.info("Status: " + status);

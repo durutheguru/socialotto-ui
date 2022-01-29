@@ -11,6 +11,7 @@ import { Constants } from ".";
 import store from "../../store/index";
 import { v4 as uuidv4 } from "uuid";
 import { v5 as uuidv5 } from "uuid";
+var numeral = require("numeral");
 
 // . Lottery ID
 // . Lottery Title
@@ -336,5 +337,11 @@ export default class Util {
 
   public static uuidv5(input?: string, pad?: boolean): string {
     return uuidv5(input || "", Util.uuid()) + (pad ? Util.uuid() : "");
+  }
+
+  public static currencyFormatter(number: number, format: string) {
+    const formatted = numeral(number).format(format);
+
+    return formatted;
   }
 }
