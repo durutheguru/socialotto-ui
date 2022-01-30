@@ -339,8 +339,8 @@ export default class Util {
     return uuidv5(input || "", Util.uuid()) + (pad ? Util.uuid() : "");
   }
 
-  public static currencyFormatter(number: number, format: string) {
-    const formatted = numeral(number).format(format);
+  public static currencyFormatter(num: number, format: string) {
+    const formatted = numeral(num).format(format);
 
     return formatted;
   }

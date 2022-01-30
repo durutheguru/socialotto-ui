@@ -356,8 +356,8 @@ export default class ExpenseRequests extends BaseVue {
     this.approvalQuery.approvalStatus = status;
     this.showStatuses = false;
   }
-  private format(number: number) {
-    return Util.currencyFormatter(number, "0,0");
+  private format(num: number) {
+    return Util.currencyFormatter(num, "0,0");
   }
   //   private get isApprovalPending(): boolean {
   //     return store.state.pendingApprovalLoading;

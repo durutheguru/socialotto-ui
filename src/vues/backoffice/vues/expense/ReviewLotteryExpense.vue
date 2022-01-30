@@ -173,6 +173,7 @@
                 <div class="grid grid-cols-2 col-span-3">
                   <div class="w-11/12">
                     <div
+                      @click="newExpenseMutation('APPROVED')"
                       class="bg-blue-200 col-span-1 w-full h-12 rounded-md mt-12 flex items-center justify-center"
                     >
                       <span class="text-white spartan fs-16 fw-600"
@@ -182,6 +183,7 @@
                   </div>
                   <div class="w-11/12 ml-auto">
                     <div
+                      @click="newExpenseMutation('DISAPPROVED')"
                       style="border: 1px solid #FF0000; border-radius: 8px;"
                       class="bg-transparent col-span-1 w-full h-12 mt-12 flex items-center justify-center"
                     >
@@ -208,11 +210,10 @@ import { getLotteryExpenseProposal } from "@/services/lottery/lottery.query";
 import { ApolloError } from "apollo-client";
 import { Log, Constants, Util } from "@/components/util";
 import { evaluateSettlement } from "@/services/lottery/lottery.query";
-
+import { LotteryExpenseAction } from "@/services/lottery/lottery.mutation";
 @Component({
   name: "ReviewLotteryExpense",
   apollo: {
-    // $client: "anonymousClient",
     getLotteryExpenseProposal: {
       query: getLotteryExpenseProposal,
       variables() {
@@ -224,8 +225,8 @@ import { evaluateSettlement } from "@/services/lottery/lottery.query";
         Log.info("expense proposal: " + JSON.stringify(data));
 
         this.expenseProposal.data = data.getLotteryExpenseProposal;
-
-        this.evaluateQuery.id = this.expenseProposal.data.expense.lotteryId;
+        this.evaluateQuery.id = this.expenseProposal.data.expense.id;
+        this.evaluateQuery.lotteryId = this.expenseProposal.data.expense.lotteryId;
         this.evaluateQuery.amount = this.expenseProposal.data.expense.amount;
 
         this.$apollo.queries.evaluateSettlement.skip = false;
@@ -242,7 +243,7 @@ import { evaluateSettlement } from "@/services/lottery/lottery.query";
       query: evaluateSettlement,
       variables() {
         return {
-          lotteryId: this.evaluateQuery.id,
+          lotteryId: this.evaluateQuery.lotteryId,
           expense: this.evaluateQuery.amount,
         };
       },
@@ -277,11 +278,35 @@ export default class ReviewLotteryExpense extends Vue {
 
   private evaluateQuery = {
     id: "",
+    lotteryId: "",
     amount: 0,
     transfers: [],
     error: "",
     skip: true,
   };
+
+  private newExpenseMutation(actn: string) {
+    this.$apollo
+      .mutate({
+        mutation: LotteryExpenseAction,
+        variables: {
+          input: {
+            lotteryExpenseId: this.evaluateQuery.id,
+            action: actn,
+          },
+        },
+      })
+      .then((data: any) => {
+        Log.info("data: " + String(data));
+        Util.handleGlobalAlert(true, "success", `Successfully ${actn}`);
+        this.$router.push(`/back-office/expense_requests`);
+      })
+      .catch((error) => {
+        Log.error(error);
+        // const resError = error.errors[0].message;
+        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+      });
+  }
 }
 </script>
 
