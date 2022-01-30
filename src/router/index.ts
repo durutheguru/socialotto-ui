@@ -148,7 +148,7 @@ const routes = [
         component: ExpenseRequests,
       },
       {
-        path: "/back-office/review_lottery_expense",
+        path: "/back-office/review_lottery_expense/:id",
         name: "ReviewLotteryExpense",
         component: ReviewLotteryExpense,
       },

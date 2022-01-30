@@ -227,7 +227,7 @@
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <ExpenseRowMenu :lotteryId="1" :status="'Active'" />
+                        <ExpenseRowMenu :Id="request.id" />
                       </div>
                     </td>
                   </tr>

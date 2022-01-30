@@ -33,7 +33,7 @@
           >
             View Details
           </li>
-          <li
+          <!-- <li
             @mousedown="approveCampaign(Id)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
@@ -64,7 +64,7 @@
             class="lotteryTableMenuListGreen py-3  hover:bg-gray-200 grid justify-center items-center"
           >
             Raise Expense
-          </li>
+          </li> -->
         </ul>
       </div>
 
@@ -96,9 +96,7 @@
 
 <script lang="ts">
 import { Component } from "vue-property-decorator";
-import ApiResource from "@/components/core/ApiResource";
-import { Log, Util } from "@/components/util";
-import CampaignService from "@/services/campaign/CampaignService";
+
 import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
 
@@ -112,19 +110,6 @@ import BaseVue from "@/components/BaseVue";
 export default class ExpenseRowMenu extends BaseVue {
   private show: boolean = false;
 
-  private approval: ApiResource = ApiResource.create();
-  private disApproval: ApiResource = ApiResource.create();
-
-  private approvalJson: any = {
-    campaignId: "",
-    approvalAction: "",
-  };
-
-  private disApprovalJson: any = {
-    campaignId: "",
-    approvalAction: "",
-  };
-
   private toggleMenu() {
     this.show = !this.show;
   }
@@ -134,89 +119,10 @@ export default class ExpenseRowMenu extends BaseVue {
   //   Log.info(String(store.state.tbodyKey));
   // }
 
-  private approveCampaign(campaignId: string) {
-    let self = this;
-    self.approvalJson.campaignId = campaignId;
-    self.approvalJson.approvalAction = "APPROVED";
-    self.approval.loading = true;
-    store.commit("setCampaignPendingApprovalLoading", true);
-
-    CampaignService.approveOrDecline(
-      self.approvalJson,
-      (response: any) => {
-        self.approval.loading = false;
-
-        store.commit("setCampaignPendingApprovalLoading", false);
-
-        // this.rerenderTable();
-
-        Log.info("ApprovalResponse: " + JSON.stringify(response));
-
-        Util.handleGlobalAlert(
-          true,
-          "success",
-          "Campaign approval was successful"
-        );
-      },
-      (error) => {
-        self.approval.loading = false;
-        store.commit("setCampaignPendingApprovalLoading", false);
-        self.approval.error = self.extractError(error);
-        Util.handleGlobalAlert(true, "failed", self.approval.error);
-      }
-    );
-
-    Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));
-  }
-
-  private disApproveCampaign(campaignId: string) {
-    let self = this;
-    self.disApprovalJson.campaignId = campaignId;
-    self.disApprovalJson.approvalAction = "DISAPPROVED";
-    self.disApproval.loading = true;
-    store.commit("setCampaignPendingDisapprovalLoading", true);
-
-    CampaignService.approveOrDecline(
-      self.disApprovalJson,
-      (response: any) => {
-        self.disApproval.loading = false;
-
-        store.commit("setCampaignPendingDisapprovalLoading", false);
-
-        // this.rerenderTable();
-
-        Log.info("disApprovalResponse: " + JSON.stringify(response));
-
-        Util.handleGlobalAlert(
-          true,
-          "success",
-          "Campaign disapproval was successful"
-        );
-      },
-      (error) => {
-        self.disApproval.loading = false;
-        store.commit("setCampaignPendingDisapprovalLoading", false);
-        self.disApproval.error = self.extractError(error);
-        Util.handleGlobalAlert(true, "failed", self.disApproval.error);
-      }
-    );
-
-    Log.info("disApprovalJson: " + JSON.stringify(self.disApprovalJson));
-  }
-
-  // private openDisapprovalModal(lotteryId: string) {
-  //   store.commit("setIsLotteryDisapproval", {
-  //     show: true,
-  //     lotteryId,
-  //   });
-
-  //   Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
-  // }
-
   private goToExpenseDetails(Id: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
     let routeData = this.$router.resolve({
-      name: "ExpenseRequests",
+      name: "ReviewLotteryExpense",
 
       params: { id: Id },
     });

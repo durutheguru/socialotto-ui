@@ -76,4 +76,30 @@ const fetchLotteryExpenseRequests = gql`
   }
 `;
 
-export { searchLotteries, evaluateSettlement, fetchLotteryExpenseRequests };
+const getLotteryExpenseProposal = gql`
+  query getLotteryExpenseProposal($expenseId: ID!) {
+    getLotteryExpenseProposal(expenseId: $expenseId) {
+      expense {
+        id
+        lotteryId
+        lotteryTotalFunds
+        amount
+        lotteryTitle
+        approvalStatus
+        statusMessage
+      }
+
+      expenseBreakdowns {
+        description
+        amount
+      }
+    }
+  }
+`;
+
+export {
+  searchLotteries,
+  evaluateSettlement,
+  fetchLotteryExpenseRequests,
+  getLotteryExpenseProposal,
+};

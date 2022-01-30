@@ -2,23 +2,30 @@
   <div
     class="spartan relative right-0 col-span-5 pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
   >
-    <div class="grid grid-cols-7">
+    <div
+      v-if="$apollo.queries.getLotteryExpenseProposal.loading"
+      class="h-full relative rounded-md flex items-center justify-center"
+    >
+      <div class="roundLoader opacity-50"></div>
+    </div>
+
+    <div v-else class="grid grid-cols-7">
       <div class="flex flex-col col-span-3">
         <h1 class="mb-6 spartan fw-600 fs-32 text-black">
           Raise Lottery Expense
         </h1>
         <h2 style="color: #454545;" class="mb-6 spartan fs-20 fw-700 ">
           <span class="fs-20 fw-400">Lottery Title:</span>
-          25 tickets to Wizkid’s concert
+          {{ expenseProposal.data.expense.lotteryTitle }}
         </h2>
         <div class="mb-9 flex justify-between items-center">
           <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
             <span class="fs-20 fw-400">Lottery Id:</span>
-            20211201
+            {{ expenseProposal.data.expense.lotteryId }}
           </h2>
           <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
             <span class="fs-20 fw-400">Amount raised:</span>
-            2,102,200
+            {{ expenseProposal.data.expense.lotteryTotalFunds }}
           </h2>
         </div>
       </div>
@@ -53,19 +60,30 @@
                 <!-- ------------------------- -->
 
                 <!-- -------------------- -->
-                <div class="col-span-3">
-                  <div class="grid col-span-3 grid-cols-3 mb-3">
+                <div
+                  v-if="
+                    expenseProposal.data.expenseBreakdowns &&
+                      expenseProposal.data.expenseBreakdowns.length
+                  "
+                  class="col-span-3"
+                >
+                  <div
+                    v-for="(breakdown, index) in expenseProposal.data
+                      .expenseBreakdowns"
+                    :key="index"
+                    class="grid col-span-3 grid-cols-3 mb-3"
+                  >
                     <div class="col-span-2 ">
                       <span
                         class="fw-400 fs-12 break-words "
                         style="color: #B9B9B9;"
                       >
-                        description
+                        {{ breakdown.description }}
                       </span>
                     </div>
                     <div class="col-span-1 flex justify-end items-center">
                       <span style="color: #4691A6;" class="fw-500 fs-12 ">
-                        240
+                        {{ breakdown.amount }}
                       </span>
                     </div>
                   </div>
@@ -77,7 +95,7 @@
                     </div>
                     <div class="col-span-1 flex justify-end items-center">
                       <span style="color: #4691A6;" class="fw-500 fs-12 ">
-                        240
+                        {{ expenseProposal.data.expense.amount }}
                       </span>
                     </div>
                   </div>
@@ -120,29 +138,33 @@
                     </h5>
                   </div>
                 </div>
-                <div class="col-span-3">
+                <div
+                  v-for="(transfer, index) in evaluateQuery.transfers"
+                  :key="index"
+                  class="col-span-3"
+                >
                   <div class="col-span-3 grid grid-cols-3 mb-3">
                     <div class="h-14 flex items-center">
                       <h2 style="color: #4691A6;" class="fw-500 fs-12">
-                        240
+                        {{ transfer.amount }}
                       </h2>
                     </div>
                     <div
                       class="h-14 flex flex-col justify-between items-center"
                     >
                       <span style="color: #B9B9B9;" class="fs-12 fw-500">
-                        Lottery wallet
+                        {{ transfer.sourceWalletName }}
                       </span>
                       <h2 style="color: #4691A6;" class="fw-500 fs-12">
-                        0987654321
+                        {{ transfer.sourceWalletId }}
                       </h2>
                     </div>
                     <div class="h-14 flex flex-col justify-between items-end">
                       <span style="color: #B9B9B9;" class="fs-12 fw-500">
-                        Lottery wallet
+                        {{ transfer.destinationWalletName }}
                       </span>
                       <h2 style="color: #4691A6;" class="fw-500 fs-12">
-                        0123456789
+                        {{ transfer.destinationWalletId }}
                       </h2>
                     </div>
                   </div>
@@ -182,11 +204,85 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { getLotteryExpenseProposal } from "@/services/lottery/lottery.query";
+import { ApolloError } from "apollo-client";
+import { Log, Constants, Util } from "@/components/util";
+import { evaluateSettlement } from "@/services/lottery/lottery.query";
 
 @Component({
   name: "ReviewLotteryExpense",
+  apollo: {
+    // $client: "anonymousClient",
+    getLotteryExpenseProposal: {
+      query: getLotteryExpenseProposal,
+      variables() {
+        return {
+          expenseId: this.expenseProposal.expenseId,
+        };
+      },
+      result({ data }) {
+        Log.info("expense proposal: " + JSON.stringify(data));
+
+        this.expenseProposal.data = data.getLotteryExpenseProposal;
+
+        this.evaluateQuery.id = this.expenseProposal.data.expense.lotteryId;
+        this.evaluateQuery.amount = this.expenseProposal.data.expense.amount;
+
+        this.$apollo.queries.evaluateSettlement.skip = false;
+        this.$apollo.queries.evaluateSettlement.refetch();
+      },
+      error(error: ApolloError) {
+        this.expenseProposal.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.expenseProposal.error)) {
+          this.$apollo.queries.getLotteryExpenseProposal.refetch();
+        }
+      },
+    },
+    evaluateSettlement: {
+      query: evaluateSettlement,
+      variables() {
+        return {
+          lotteryId: this.evaluateQuery.id,
+          expense: this.evaluateQuery.amount,
+        };
+      },
+      skip() {
+        return this.evaluateQuery.skip;
+      },
+      result({ data }) {
+        Log.info(
+          "evaluate settlement: " +
+            JSON.stringify(data.evaluateSettlement.transfers)
+        );
+
+        this.evaluateQuery.transfers = data.evaluateSettlement.transfers;
+      },
+      error(error: ApolloError) {
+        this.evaluateQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.evaluateQuery.error)) {
+          this.$apollo.queries.evaluateSettlement.refetch();
+        }
+      },
+    },
+  },
 })
-export default class ReviewLotteryExpense extends Vue {}
+export default class ReviewLotteryExpense extends Vue {
+  private expenseProposal: any = {
+    // key: "",
+    expenseId: this.$route.params.id,
+
+    data: [],
+    error: "",
+  };
+
+  private evaluateQuery = {
+    id: "",
+    amount: 0,
+    transfers: [],
+    error: "",
+    skip: true,
+  };
+}
 </script>
 
 <style scoped></style>
