@@ -28,20 +28,20 @@
       <div>
         <ul class=" w-40 flex flex-col bg-white mb-0">
           <li
-            @click="goToCampaignDetails(campaignId)"
+            @click="goToExpenseDetails(Id)"
             class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
           >
             View Details
           </li>
-          <li
-            @mousedown="approveCampaign(campaignId)"
+          <!-- <li
+            @mousedown="approveCampaign(Id)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
           >
             Approve
           </li>
           <li
-            @mousedown="disApproveCampaign(campaignId)"
+            @mousedown="disApproveCampaign(Id)"
             v-if="status === 'Pending'"
             class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
           >
@@ -64,7 +64,7 @@
             class="lotteryTableMenuListGreen py-3  hover:bg-gray-200 grid justify-center items-center"
           >
             Raise Expense
-          </li>
+          </li> -->
         </ul>
       </div>
 
@@ -96,34 +96,19 @@
 
 <script lang="ts">
 import { Component } from "vue-property-decorator";
-import ApiResource from "@/components/core/ApiResource";
-import { Log, Util } from "@/components/util";
-import CampaignService from "@/services/campaign/CampaignService";
+
 import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
 
 @Component({
-  name: "CampaignRowMenu",
+  name: "ExpenseRowMenu",
   props: {
     status: String,
-    campaignId: String,
+    Id: String,
   },
 })
-export default class CampaignRowMenu extends BaseVue {
+export default class ExpenseRowMenu extends BaseVue {
   private show: boolean = false;
-
-  private approval: ApiResource = ApiResource.create();
-  private disApproval: ApiResource = ApiResource.create();
-
-  private approvalJson: any = {
-    campaignId: "",
-    approvalAction: "",
-  };
-
-  private disApprovalJson: any = {
-    campaignId: "",
-    approvalAction: "",
-  };
 
   private toggleMenu() {
     this.show = !this.show;
@@ -134,91 +119,12 @@ export default class CampaignRowMenu extends BaseVue {
   //   Log.info(String(store.state.tbodyKey));
   // }
 
-  private approveCampaign(campaignId: string) {
-    let self = this;
-    self.approvalJson.campaignId = campaignId;
-    self.approvalJson.approvalAction = "APPROVED";
-    self.approval.loading = true;
-    store.commit("setCampaignPendingApprovalLoading", true);
-
-    CampaignService.approveOrDecline(
-      self.approvalJson,
-      (response: any) => {
-        self.approval.loading = false;
-
-        store.commit("setCampaignPendingApprovalLoading", false);
-
-        // this.rerenderTable();
-
-        Log.info("ApprovalResponse: " + JSON.stringify(response));
-
-        Util.handleGlobalAlert(
-          true,
-          "success",
-          "Campaign approval was successful"
-        );
-      },
-      (error) => {
-        self.approval.loading = false;
-        store.commit("setCampaignPendingApprovalLoading", false);
-        self.approval.error = self.extractError(error);
-        Util.handleGlobalAlert(true, "failed", self.approval.error);
-      }
-    );
-
-    Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));
-  }
-
-  private disApproveCampaign(campaignId: string) {
-    let self = this;
-    self.disApprovalJson.campaignId = campaignId;
-    self.disApprovalJson.approvalAction = "DISAPPROVED";
-    self.disApproval.loading = true;
-    store.commit("setCampaignPendingDisapprovalLoading", true);
-
-    CampaignService.approveOrDecline(
-      self.disApprovalJson,
-      (response: any) => {
-        self.disApproval.loading = false;
-
-        store.commit("setCampaignPendingDisapprovalLoading", false);
-
-        // this.rerenderTable();
-
-        Log.info("disApprovalResponse: " + JSON.stringify(response));
-
-        Util.handleGlobalAlert(
-          true,
-          "success",
-          "Campaign disapproval was successful"
-        );
-      },
-      (error) => {
-        self.disApproval.loading = false;
-        store.commit("setCampaignPendingDisapprovalLoading", false);
-        self.disApproval.error = self.extractError(error);
-        Util.handleGlobalAlert(true, "failed", self.disApproval.error);
-      }
-    );
-
-    Log.info("disApprovalJson: " + JSON.stringify(self.disApprovalJson));
-  }
-
-  // private openDisapprovalModal(lotteryId: string) {
-  //   store.commit("setIsLotteryDisapproval", {
-  //     show: true,
-  //     lotteryId,
-  //   });
-
-  //   Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
-  // }
-
-  private goToCampaignDetails(campaignId: string) {
+  private goToExpenseDetails(Id: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
     let routeData = this.$router.resolve({
-      name: "CampaignDetails",
+      name: "ReviewLotteryExpense",
 
-      params: { id: campaignId },
+      params: { id: Id },
     });
     window.open(routeData.href, "_blank");
   }

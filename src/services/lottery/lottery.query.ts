@@ -54,4 +54,52 @@ const evaluateSettlement = gql`
   }
 `;
 
-export { searchLotteries, evaluateSettlement };
+const fetchLotteryExpenseRequests = gql`
+  query fetchLotteryExpenseRequests(
+    $approvalStatus: ApprovalStatus
+    $page: Int
+    $size: Int
+  ) {
+    fetchLotteryExpenseRequests(
+      approvalStatus: $approvalStatus
+      page: $page
+      size: $size
+    ) {
+      id
+      lotteryId
+      lotteryTotalFunds
+      lotteryTitle
+      amount
+      approvalStatus
+      statusMessage
+    }
+  }
+`;
+
+const getLotteryExpenseProposal = gql`
+  query getLotteryExpenseProposal($expenseId: ID!) {
+    getLotteryExpenseProposal(expenseId: $expenseId) {
+      expense {
+        id
+        lotteryId
+        lotteryTotalFunds
+        amount
+        lotteryTitle
+        approvalStatus
+        statusMessage
+      }
+
+      expenseBreakdowns {
+        description
+        amount
+      }
+    }
+  }
+`;
+
+export {
+  searchLotteries,
+  evaluateSettlement,
+  fetchLotteryExpenseRequests,
+  getLotteryExpenseProposal,
+};

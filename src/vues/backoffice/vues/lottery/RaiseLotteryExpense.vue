@@ -113,7 +113,7 @@
         <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
         <RaiseExpenseAmountPlate
           @newExpense="newExpenseMutation"
-          :transfers="this.evaluateQuery.treansfers"
+          :transfers="this.evaluateQuery.transfers"
         />
       </div>
     </div>
@@ -152,7 +152,7 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
           "expense Query: " + JSON.stringify(data.evaluateSettlement.transfers)
         );
 
-        this.evaluateQuery.treansfers = data.evaluateSettlement.transfers;
+        this.evaluateQuery.transfers = data.evaluateSettlement.transfers;
       },
       error(error: ApolloError) {
         this.evaluateQuery.error = Util.extractGqlError(error);
@@ -180,7 +180,7 @@ export default class RaiseLotteryExpense extends Vue {
   private evaluateQuery = {
     id: "",
     expense: 0,
-    treansfers: [],
+    transfers: [],
     error: "",
     skip: true,
   };
