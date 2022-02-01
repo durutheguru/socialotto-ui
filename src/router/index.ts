@@ -7,7 +7,7 @@ import ExpenseRequests from "../vues/backoffice/vues/expense/expenseRequests.vue
 import ReviewLotteryExpense from "../vues/backoffice/vues/expense/ReviewLotteryExpense.vue";
 import Login from "../vues/login/Login.vue";
 // import Signup from '../vues/signup/'
-
+import ManageUsers from "../vues/backoffice/vues/users/UsersList.vue";
 import Users from "@/vues/backoffice/vues/users/Users.vue";
 import BackOffice from "../vues/backoffice/BackOffice.vue";
 
@@ -151,6 +151,11 @@ const routes = [
         path: "/back-office/review_lottery_expense/:id",
         name: "ReviewLotteryExpense",
         component: ReviewLotteryExpense,
+      },
+      {
+        path: "/back-office/users",
+        name: "Manage Users",
+        component: ManageUsers,
       },
 
       // {
