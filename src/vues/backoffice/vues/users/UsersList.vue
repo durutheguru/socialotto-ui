@@ -242,7 +242,7 @@
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <UsersRowMenu :userId="user.id" />
+                        <UsersRowMenu :username="user.username" />
                       </div>
                     </td>
                   </tr>

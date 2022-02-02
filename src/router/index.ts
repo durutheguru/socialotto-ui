@@ -8,6 +8,9 @@ import ReviewLotteryExpense from "../vues/backoffice/vues/expense/ReviewLotteryE
 import Login from "../vues/login/Login.vue";
 // import Signup from '../vues/signup/'
 import ManageUsers from "../vues/backoffice/vues/users/UsersList.vue";
+import UserDetails from "../vues/backoffice/vues/users/UserDetails.vue";
+import UserAuthorities from "../vues/backoffice/vues/users/UserAuthorities.vue";
+import UserSettlement from "../vues/backoffice/vues/users/UserSettlement.vue";
 import Users from "@/vues/backoffice/vues/users/Users.vue";
 import BackOffice from "../vues/backoffice/BackOffice.vue";
 
@@ -156,6 +159,24 @@ const routes = [
         path: "/back-office/users",
         name: "Manage Users",
         component: ManageUsers,
+      },
+      {
+        path: "/back-office/users/:username",
+        redirect: "/back-office/users/authorities/:username",
+        name: "UserDetails",
+        component: UserDetails,
+        children: [
+          {
+            path: "/back-office/users/authorities/:username",
+            name: "User Authorities",
+            component: UserAuthorities,
+          },
+          {
+            path: "/back-office/users/settlement/:username",
+            name: "User Settlement",
+            component: UserSettlement,
+          },
+        ],
       },
 
       // {
