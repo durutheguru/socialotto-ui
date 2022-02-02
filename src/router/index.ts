@@ -3,10 +3,11 @@ import VueRouter from "vue-router";
 import NavHeader from "../views/unprotected/NavHeader.vue";
 import AuthNavHeader from "../protected/AuthNavHeader.vue";
 import LandingPage from "../vues/landingPage/LandingPage.vue";
-
+import ExpenseRequests from "../vues/backoffice/vues/expense/expenseRequests.vue";
+import ReviewLotteryExpense from "../vues/backoffice/vues/expense/ReviewLotteryExpense.vue";
 import Login from "../vues/login/Login.vue";
 // import Signup from '../vues/signup/'
-
+import ManageUsers from "../vues/backoffice/vues/users/UsersList.vue";
 import Users from "@/vues/backoffice/vues/users/Users.vue";
 import BackOffice from "../vues/backoffice/BackOffice.vue";
 
@@ -141,6 +142,22 @@ const routes = [
         name: "RaiseLotteryExpense",
         component: RaiseLotteryExpense,
       },
+      {
+        path: "/back-office/expense_requests",
+        name: "ExpenseRequests",
+        component: ExpenseRequests,
+      },
+      {
+        path: "/back-office/review_lottery_expense/:id",
+        name: "ReviewLotteryExpense",
+        component: ReviewLotteryExpense,
+      },
+      {
+        path: "/back-office/users",
+        name: "Manage Users",
+        component: ManageUsers,
+      },
+
       // {
       //   path: 'users',
       //   name: 'Users',
