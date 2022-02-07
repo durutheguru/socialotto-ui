@@ -162,21 +162,21 @@ const routes = [
       },
       {
         path: "/back-office/users/:userDetails",
-        redirect: "/back-office/users/authorities/:userDetails",
+        // redirect: "/back-office/users/authorities/:userDetails",
         name: "UserDetails",
         component: UserDetails,
-        children: [
-          {
-            path: "/back-office/users/authorities/:userDetails",
-            name: "User Authorities",
-            component: UserAuthorities,
-          },
-          {
-            path: "/back-office/users/settlement/:userDetails",
-            name: "User Settlement",
-            component: UserSettlement,
-          },
-        ],
+        // children: [
+        //   {
+        //     path: "/back-office/users/authorities/:userDetails",
+        //     name: "User Authorities",
+        //     component: UserAuthorities,
+        //   },
+        //   {
+        //     path: "/back-office/users/settlement/:userDetails",
+        //     name: "User Settlement",
+        //     component: UserSettlement,
+        //   },
+        // ],
       },
 
       // {

@@ -3,44 +3,48 @@
     <span style="color: #1D414B;" class="fw-700 fs-14 ">
       Permissions
     </span>
-    <div class="grid grid-cols-4 mt-2">
-      <div class="col-span-1 flex items-center justify-start py-3 ">
+    <div class="grid grid-cols-8 gap-4 mt-2">
+      <div class="col-span-2 flex items-center justify-start py-3 ">
         <span style="color: #454545" class="fs-14 fw-500"
-          >This user is authorised to {{ username }} {{ userType }}</span
-        >
+          >This user is authorised to
+        </span>
       </div>
       <div
+        v-for="(authority, index) in authorities"
+        :key="index"
         style="background-color: #EBEBEB; border-radius: 8px"
-        class="col-span-1 flex items-center justify-between px-3"
+        class="col-span-3 flex justify-center items-center"
       >
-        <span style="color: #696969">Create Lotteries</span>
-        <div>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19Z"
-              stroke="#696969"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M14 10L10 14"
-              stroke="#696969"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M10 10L14 14"
-              stroke="#696969"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
+        <div class=" flex items-center justify-between px-4 w-full ">
+          <span style="color: #696969">{{ authority.authorityId }}</span>
+          <div>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 19C15.866 19 19 15.866 19 12C19 8.13401 15.866 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19Z"
+                stroke="#696969"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M14 10L10 14"
+                stroke="#696969"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10 10L14 14"
+                stroke="#696969"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -91,11 +95,14 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component({
   name: "UserAuthorities",
+  props: {
+    authorities: Array,
+  },
 })
 export default class UserAuthorities extends Vue {
-  private userDetails = this.$route.params.userDetails.split(":");
-  private username = window.atob(this.userDetails[0]);
-  private userType = window.atob(this.userDetails[1]);
+  // private userDetails = this.$route.params.userDetails.split(":");
+  // private username = window.atob(this.userDetails[0]);
+  // private userType = window.atob(this.userDetails[1]);
 }
 </script>
 
