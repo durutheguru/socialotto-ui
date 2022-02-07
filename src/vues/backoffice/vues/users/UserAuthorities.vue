@@ -6,7 +6,7 @@
     <div class="grid grid-cols-4 mt-2">
       <div class="col-span-1 flex items-center justify-start py-3 ">
         <span style="color: #454545" class="fs-14 fw-500"
-          >This user is authorised to</span
+          >This user is authorised to {{ username }} {{ userType }}</span
         >
       </div>
       <div
@@ -93,7 +93,9 @@ import { Component, Vue } from "vue-property-decorator";
   name: "UserAuthorities",
 })
 export default class UserAuthorities extends Vue {
-  private username = window.atob(this.$route.params.username);
+  private userDetails = this.$route.params.userDetails.split(":");
+  private username = window.atob(this.userDetails[0]);
+  private userType = window.atob(this.userDetails[1]);
 }
 </script>
 

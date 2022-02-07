@@ -28,7 +28,7 @@
       <div>
         <ul class=" w-40 flex flex-col bg-white mb-0">
           <li
-            @click="goToUserDetails(username)"
+            @click="goToUserDetails(username, userType)"
             class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
           >
             View Details
@@ -73,6 +73,7 @@ import BaseVue from "@/components/BaseVue";
   name: "UsersRowMenu",
   props: {
     username: String,
+    userType: String,
   },
 })
 export default class UsersRowMenu extends BaseVue {
@@ -82,15 +83,17 @@ export default class UsersRowMenu extends BaseVue {
     this.show = !this.show;
   }
 
-  private goToUserDetails(username: string) {
+  private goToUserDetails(username: string, userType: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
     const base64Email = window.btoa(username);
+    const base64userType = window.btoa(userType);
+    const userDetails = base64Email + ":" + base64userType;
     const routeData = this.$router.resolve({
       name: "UserDetails",
-      params: { username: base64Email },
+      params: { userDetails: userDetails },
     });
     window.open(routeData.href, "_blank");
-    Log.info(base64Email);
+    Log.info(userDetails);
   }
 }
 </script>
