@@ -19,6 +19,7 @@
           <span style="color: #696969">{{ authority.authorityId }}</span>
           <div>
             <svg
+              @click="removeAuthority(authority.authorityId, username)"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -51,8 +52,9 @@
 
     <div class="grid grid-cols-4 mt-4 mb-6">
       <div
+        @click="openModal"
         style="background-color: #FFFFFF; border: 1px solid #4691A6; border-radius: 8px;"
-        class="col-span-1 p-3"
+        class="cursor-pointer col-span-1 p-3"
       >
         <span style="color: #4691A6" class="">Add new permissions</span>
       </div>
@@ -87,22 +89,57 @@
       </div>
     </div>
     <!-- -------------- -->
+    <add-authoritiesmodal @close="closeModal" :open="open" />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import UsersService from "@/services/users/usersService";
+import { Log, Util } from "@/components/util";
+import AddAuthoritiesmodal from "./AddAuthoritiesModal.vue";
 
 @Component({
   name: "UserAuthorities",
   props: {
     authorities: Array,
+    username: String,
+  },
+  components: {
+    AddAuthoritiesmodal,
   },
 })
 export default class UserAuthorities extends Vue {
   // private userDetails = this.$route.params.userDetails.split(":");
   // private username = window.atob(this.userDetails[0]);
   // private userType = window.atob(this.userDetails[1]);
+  private open = false;
+
+  private openModal() {
+    this.open = true;
+  }
+
+  private closeModal() {
+    this.open = false;
+  }
+
+  private removeAuthority(authId: string, username: string) {
+    const details = {
+      username: username,
+      authority: authId,
+    };
+
+    UsersService.removeAuthority(
+      details,
+      (response: any) => {
+        Log.info(response);
+        this.$emit("removeAuthority");
+      },
+      (error: any) => {
+        Log.error(error);
+      }
+    );
+  }
 }
 </script>
 

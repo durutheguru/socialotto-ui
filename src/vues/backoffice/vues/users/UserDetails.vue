@@ -34,7 +34,7 @@
           <!-- ------------------------- -->
           <div
             @click="changeTo('Authorities')"
-            class="h-16 flex flex-col justify-between "
+            class="cursor-pointer h-16 flex flex-col justify-between "
           >
             <div class="h-2"></div>
             <div class="fw-600 fs-14 text-gray-400 px-6">
@@ -57,7 +57,7 @@
           <!-- ------------------------- -->
           <div
             @click="changeTo('Settlement')"
-            class="h-16  flex flex-col justify-between "
+            class="cursor-pointer h-16  flex flex-col justify-between "
           >
             <div class="h-2"></div>
             <div class="fw-600 fs-14 text-gray-400 px-6">
@@ -79,10 +79,12 @@
         </div>
       </div>
       <UserAuthorities
+        @removeAuthority="refetch"
         v-if="currentPage === 'Authorities'"
-        :authorities="userQuery.data.userAuthorities"
+        :authorities="this.userQuery.data.userAuthorities"
+        :username="userQuery.data.username"
       />
-      <div v-else>Beans</div>
+      <UserSettlement v-else-if="currentPage === 'Settlement'" />
     </div>
   </div>
 </template>
@@ -92,6 +94,7 @@ import { Component, Vue } from "vue-property-decorator";
 // import UserProfileNav from "./UserProfileNav.vue";
 import UserAuthorities from "./UserAuthorities.vue";
 import { ApolloError } from "apollo-client";
+import UserSettlement from "./UserSettlement.vue";
 import { viewUserDetails } from "@/services/users/users.query";
 import { Log, Util } from "@/components/util";
 
@@ -124,6 +127,7 @@ import { Log, Util } from "@/components/util";
   components: {
     // UserProfileNav,
     UserAuthorities,
+    UserSettlement,
   },
 })
 export default class UserDetails extends Vue {
@@ -143,6 +147,16 @@ export default class UserDetails extends Vue {
   };
   private changeTo(str: string) {
     this.currentPage = str;
+  }
+
+  // public mounted() {
+  //   Log.info("authority" + JSON.stringify(this.authorities));
+  // }
+
+  // private authorities = this.userQuery.data.userAuthorities;
+
+  private refetch() {
+    this.$apollo.queries.viewUserDetails.refetch();
   }
 }
 </script>

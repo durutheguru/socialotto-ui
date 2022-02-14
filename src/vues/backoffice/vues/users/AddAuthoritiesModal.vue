@@ -1,0 +1,217 @@
+<template>
+  <!-- <div v-if="isModalOpen">
+    <h1>Donate Modal</h1>
+  </div> -->
+
+  <transition name="fadeIn">
+    <div v-if="open" class="fixed z-50 inset-0 overflow-hidden modal-blur">
+      <div
+        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+      >
+        <div class="fixed inset-0 transition-opacity">
+          <div
+            @click="close"
+            class="absolute inset-0 bg-gray-800 bg-opacity-75 modal-blur"
+          ></div>
+        </div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
+        >&#8203;
+        <section
+          class="main spartan  inline-block py-8 px-4 bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
+        >
+          <div class="w-full h-full flex justify-between items-center mb-16">
+            <span class="fw-600 fs-20 " style="color: #4691A6"
+              >Add Authorities</span
+            >
+            <div @click="close" class="cursor-pointer">
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M15.9998 29.3337C23.3636 29.3337 29.3332 23.3641 29.3332 16.0003C29.3332 8.63653 23.3636 2.66699 15.9998 2.66699C8.63604 2.66699 2.6665 8.63653 2.6665 16.0003C2.6665 23.3641 8.63604 29.3337 15.9998 29.3337Z"
+                  stroke="#898989"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M20 12L12 20"
+                  stroke="#898989"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M12 12L20 20"
+                  stroke="#898989"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="w-full flex flex-col">
+            add
+            <!-- --------------------- -->
+            <div class="w-full mb-6 mt-6">
+              <label
+                for="Upload Supporting Documents"
+                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                >Upload Supporting Documents</label
+              >
+              <div class="mt-1">
+                <div
+                  class="spartan h-12 flex bg-transparent border border-solid rounded-md"
+                >
+                  <input
+                    readonly
+                    type="text"
+                    name="Authority file uploads"
+                    id="Authority file uploads"
+                    class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                    placeholder="select files"
+                  />
+                  <div
+                    @click="chooseFiles"
+                    class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-40 h-9 my-auto mr-0.5"
+                  >
+                    <span class="spartan text-sm">Upload</span>
+
+                    <input
+                      required
+                      autocomplete="off"
+                      multiple
+                      type="file"
+                      id="supportDocuments"
+                      name="supportDocuments"
+                      accept="image/png, image/jpeg, .pdf, .doc"
+                      placeholder="upload file"
+                      class="hidden"
+                      v-on:change="fileChanged"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div v-if="fileUploader.uploads.length > 0">
+                <table
+                  role="presentation"
+                  class="table v-margin-medium table-striped"
+                >
+                  <tbody class="files">
+                    <tr
+                      v-for="fileUpload in fileUploader.uploads"
+                      :key="fileUpload.getFile().name"
+                    >
+                      <td class="col--4">
+                        <p>{{ fileUpload.getFile().name }}</p>
+                      </td>
+                      <td class="col--5">
+                        <br />
+                        <div
+                          v-if="fileUpload.getResource().loading"
+                          class="progress progress-striped active"
+                          role="progressbar"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          aria-valuenow="0"
+                        >
+                          <div
+                            class="progress-bar progress-bar-success"
+                            role="progressbar"
+                            aria-valuenow="45"
+                            aria-valuemin="0"
+                            aria-valuemax="100"
+                            style="width:100%"
+                          ></div>
+                        </div>
+                      </td>
+                      <td class="col--3">
+                        <button
+                          data-toggle="button"
+                          class="pull-right btn btn-danger"
+                          @click="fileUploader.removeFile(fileUpload.getFile())"
+                        >
+                          <i class="fa fa-trash slight-bigger-text"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- ------------------- -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script lang="ts">
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { Constants, Log, Util } from "@/components/util";
+import FileUploader from "@/components/file-uploader/FileUploader";
+
+@Component({
+  name: "AddAuthoritiesModal",
+  props: {
+    open: Boolean,
+  },
+})
+export default class AddAuthoritiesModal extends Vue {
+  @Prop()
+  private open!: boolean;
+
+  private fileUploader: FileUploader = new FileUploader(
+    "/upload",
+    5,
+    Constants.defaultFileUploadExtensions,
+    Constants.defaultMaxFileUploadSize
+  );
+
+  public fileChanged(event: any) {
+    this.fileUploader.fileChange(event);
+    // this.$forceUpdate();
+  }
+
+  private chooseFiles() {
+    const showFilesToSelect: any = document.getElementById("supportDocuments");
+    showFilesToSelect.click();
+  }
+
+  private close() {
+    this.$emit("close");
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+  .main {
+    transition: all 0.3s ease-in-out;
+  }
+}
+.fadeIn-leave-to,
+.fadeIn-enter-from {
+  .main {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+.flag-icon1 {
+  color: #010101;
+}
+
+.flag-icon1:hover {
+  color: #ff721f;
+}
+</style>
