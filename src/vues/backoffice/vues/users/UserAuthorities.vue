@@ -89,7 +89,12 @@
       </div>
     </div>
     <!-- -------------- -->
-    <add-authoritiesmodal @close="closeModal" :open="open" />
+    <add-authoritiesmodal
+      @close="closeModal"
+      @authAdded="authAdded"
+      :username="username"
+      :open="open"
+    />
   </div>
 </template>
 
@@ -123,6 +128,9 @@ export default class UserAuthorities extends Vue {
     this.open = false;
   }
 
+  private authAdded() {
+    this.$emit("authAdded");
+  }
   private removeAuthority(authId: string, username: string) {
     const details = {
       username: username,

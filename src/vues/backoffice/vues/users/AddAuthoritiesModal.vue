@@ -58,7 +58,62 @@
             </div>
           </div>
           <div class="w-full flex flex-col">
-            add
+            <div class="w-full mb-6 mt-6">
+              <label
+                for="Upload Supporting Documents"
+                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                >Add a permission</label
+              >
+              <div class="mt-1">
+                <div
+                  class="spartan h-12 relative flex bg-transparent border border-solid rounded-md"
+                >
+                  <input
+                    readonly
+                    v-model="authority.name"
+                    type="text"
+                    name="Authority"
+                    id="Authority"
+                    class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                    placeholder="select authority"
+                  />
+
+                  <div @click="toggle" class="inset-y-0 my-auto mr-3">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M6 9L12 15L18 9"
+                        stroke="black"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <div class="relative bg-white z-20" v-if="openMenu">
+                  <ul
+                    class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                  >
+                    <li
+                      class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
+                      @mousedown="selectAuthority(authority)"
+                      v-for="(authority, index) in authorities"
+                      :key="index"
+                    >
+                      {{ authority.name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- ------------------ -->
+
             <!-- --------------------- -->
             <div class="w-full mb-6 mt-6">
               <label
@@ -109,10 +164,10 @@
                       v-for="fileUpload in fileUploader.uploads"
                       :key="fileUpload.getFile().name"
                     >
-                      <td class="col--4">
-                        <p>{{ fileUpload.getFile().name }}</p>
+                      <td class="col--6 ">
+                        <p class="mb-0">{{ fileUpload.getFile().name }}</p>
                       </td>
-                      <td class="col--5">
+                      <td class="col--3">
                         <br />
                         <div
                           v-if="fileUpload.getResource().loading"
@@ -146,6 +201,23 @@
                 </table>
               </div>
             </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div
+                @click="close"
+                style="color: #4691A6; border: 1px solid #4691A6;"
+                class="flex w-full rounded-md py-2.5 cursor-pointer justify-center items-center"
+              >
+                Cancel
+              </div>
+              <div
+                @click="saveAuthority"
+                style="background-color: #4691A6;"
+                class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
+              >
+                Save
+              </div>
+            </div>
             <!-- ------------------- -->
           </div>
         </section>
@@ -157,16 +229,33 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
+import UsersService from "@/services/users/usersService";
 import FileUploader from "@/components/file-uploader/FileUploader";
+// import {
+//   Listbox,
+//   ListboxButton,
+//   ListboxLabel,
+//   ListboxOption,
+//   ListboxOptions,
+// } from "@headlessui/vue";
 
 @Component({
   name: "AddAuthoritiesModal",
   props: {
     open: Boolean,
+    username: Boolean,
+  },
+  components: {
+    // Listbox,
+    // ListboxButton,
+    // ListboxLabel,
+    // ListboxOption,
+    // ListboxOptions,
   },
 })
 export default class AddAuthoritiesModal extends Vue {
   @Prop()
+  private username!: string;
   private open!: boolean;
 
   private fileUploader: FileUploader = new FileUploader(
@@ -176,6 +265,28 @@ export default class AddAuthoritiesModal extends Vue {
     Constants.defaultMaxFileUploadSize
   );
 
+  private openMenu = false;
+
+  private toggle() {
+    this.openMenu = !this.openMenu;
+  }
+
+  private authority = {
+    name: "",
+    value: "",
+  };
+
+  private authorities = [
+    {
+      name: "can create lottery",
+      value: "CAN_CREATE_LOTTERY",
+    },
+    {
+      name: "can create campaign",
+      value: "CAN_CREATE_CAMPAIGN",
+    },
+  ];
+
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);
     // this.$forceUpdate();
@@ -184,6 +295,49 @@ export default class AddAuthoritiesModal extends Vue {
   private chooseFiles() {
     const showFilesToSelect: any = document.getElementById("supportDocuments");
     showFilesToSelect.click();
+  }
+
+  private selectAuthority(auth: any) {
+    this.authority = auth;
+    this.openMenu = false;
+
+    Log.info(this.authority.value);
+  }
+
+  private prepareDetails() {
+    const obj = {
+      username: this.username,
+      authority: this.authority.value,
+      fileReferences: this.fileUploader.uploads.map((val) =>
+        val.getReference()
+      ),
+    };
+
+    Log.info("obj" + JSON.stringify(obj));
+    return obj;
+  }
+
+  private saveAuthority() {
+    Log.info("authority" + JSON.stringify(this.authority));
+    Log.info(
+      "filerefs" +
+        JSON.stringify(
+          this.fileUploader.uploads.map((val) => val.getReference())
+        )
+    );
+
+    UsersService.addAuthority(
+      this.prepareDetails(),
+      (response: any) => {
+        Log.info(response);
+        this.$emit("authAdded");
+        this.close();
+        // this.$emit("removeAuthority");
+      },
+      (error: any) => {
+        Log.error(error);
+      }
+    );
   }
 
   private close() {

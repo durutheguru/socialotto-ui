@@ -80,6 +80,7 @@
       </div>
       <UserAuthorities
         @removeAuthority="refetch"
+        @authAdded="refetch"
         v-if="currentPage === 'Authorities'"
         :authorities="this.userQuery.data.userAuthorities"
         :username="userQuery.data.username"

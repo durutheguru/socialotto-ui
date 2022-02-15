@@ -14,7 +14,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.4.2",
+    "@headlessui/vue": "^1.4.3",
     "@js-joda/core": "^3.2.0",
     "@js-joda/locale": "^3.2.2",
     "@js-joda/locale_en": "^3.2.2",
