@@ -61,30 +61,36 @@
     </div>
 
     <!-- --------------- -->
-    <span style="color: #1D414B;" class="fw-700 fs-14 ">
-      Documents
-    </span>
-    <div class="grid grid-cols-4 mt-2">
-      <div
-        style="background-color: #EBEBEB; border-radius: 8px"
-        class="col-span-1 flex items-center justify-between px-3 py-3"
-      >
-        <span style="color: #696969">Documents.jpg</span>
-        <div class="ml-2">
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M26 9.17647H18.5714V0H7.42857V9.17647H0L13 19.8824L26 9.17647ZM0 22.9412V26H26V22.9412H0Z"
-              fill="#4691A6"
-            />
-          </svg>
+    <div v-if="refResponse.length > 0" class="flex flex-col">
+      <span style="color: #1D414B;" class="fw-700 fs-14 ">
+        Documents
+      </span>
+      <div class="grid grid-cols-4 gap-4 mt-2">
+        <div
+          v-for="file in refResponse"
+          :key="file.reference"
+          style="background-color: #EBEBEB; border-radius: 8px"
+          class="col-span-1 flex items-center justify-between px-3 py-3"
+        >
+          <span style="color: #696969">{{ file.originalFileName }}</span>
+          <div class="ml-2">
+            <a :href="`${file.publicUrl}`" target="_blank">
+              <svg
+                width="26"
+                height="26"
+                viewBox="0 0 26 26"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M26 9.17647H18.5714V0H7.42857V9.17647H0L13 19.8824L26 9.17647ZM0 22.9412V26H26V22.9412H0Z"
+                  fill="#4691A6"
+                />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -114,6 +120,7 @@ import RemoveAuthoritiesModal from "./RemoveAuthoritiesModal.vue";
   props: {
     authorities: Array,
     username: String,
+    refResponse: Array,
   },
   components: {
     AddAuthoritiesmodal,
@@ -128,6 +135,8 @@ export default class UserAuthorities extends Vue {
     username: "",
     authority: "",
   };
+
+  // private
 
   private open = false;
 

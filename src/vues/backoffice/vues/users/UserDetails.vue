@@ -84,6 +84,7 @@
         v-if="currentPage === 'Authorities'"
         :authorities="this.userQuery.data.userAuthorities"
         :username="userQuery.data.username"
+        :refResponse="refResponse"
       />
       <UserSettlement v-else-if="currentPage === 'Settlement'" />
     </div>
@@ -96,6 +97,7 @@ import { Component, Vue } from "vue-property-decorator";
 import UserAuthorities from "./UserAuthorities.vue";
 import { ApolloError } from "apollo-client";
 import UserSettlement from "./UserSettlement.vue";
+import UsersService from "@/services/users/usersService";
 import { viewUserDetails } from "@/services/users/users.query";
 import { Log, Util } from "@/components/util";
 
@@ -115,6 +117,13 @@ import { Log, Util } from "@/components/util";
         Log.info("Search User Query: " + JSON.stringify(data));
 
         this.userQuery.data = data?.viewUserDetails;
+
+        this.userQuery.data.userAuthorities.map((auth: any) =>
+          auth.fileReferences.forEach((ref: any) => this.fileRefs.push(ref))
+        );
+
+        this.getRefDetails(this.fileRefs);
+
         Log.info("User Query: " + JSON.stringify(this.userQuery.data));
       },
       error(error: ApolloError) {
@@ -136,6 +145,9 @@ export default class UserDetails extends Vue {
   private get username() {
     return window.atob(this.userDetails[0]);
   }
+
+  private fileRefs = [];
+  private refResponse = [];
   private get userType() {
     return window.atob(this.userDetails[1]);
   }
@@ -148,6 +160,20 @@ export default class UserDetails extends Vue {
   };
   private changeTo(str: string) {
     this.currentPage = str;
+  }
+
+  private getRefDetails(refs: any) {
+    const queryString = refs.join("&ref=");
+    UsersService.getFileRefs(
+      queryString,
+      (response) => {
+        Log.info(response.data);
+        this.refResponse = response.data;
+      },
+      (error) => {
+        Log.info(error);
+      }
+    );
   }
 
   // public mounted() {

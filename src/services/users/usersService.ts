@@ -29,6 +29,14 @@ export default class UsersService {
     );
   }
 
+  public static getFileRefs(
+    refs: string,
+    successHandler: APISuccessCallback,
+    errorHandler: APIErrorCallback
+  ) {
+    Web.get(`/_files?ref=${refs}`, successHandler, errorHandler);
+  }
+
   //   public static createLottery(
   //     lottery: any,
   //     successHandler: APISuccessCallback,
