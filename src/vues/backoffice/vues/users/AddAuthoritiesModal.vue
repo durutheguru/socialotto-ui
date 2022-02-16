@@ -210,13 +210,21 @@
               >
                 Cancel
               </div>
-              <div
+              <button
+                :disabled="
+                  fileUploader.uploads.length === 0 || authority.value === ''
+                "
+                :class="[
+                  fileUploader.uploads.length === 0 || authority.value === ''
+                    ? 'opacity-25'
+                    : 'opacity-100',
+                ]"
                 @click="saveAuthority"
                 style="background-color: #4691A6;"
                 class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
               >
                 Save
-              </div>
+              </button>
             </div>
             <!-- ------------------- -->
           </div>
@@ -341,6 +349,14 @@ export default class AddAuthoritiesModal extends Vue {
   }
 
   private close() {
+    if (this.fileUploader.uploads.length) {
+      this.fileUploader = new FileUploader(
+        "/upload",
+        5,
+        Constants.defaultFileUploadExtensions,
+        Constants.defaultMaxFileUploadSize
+      );
+    }
     this.$emit("close");
   }
 }
