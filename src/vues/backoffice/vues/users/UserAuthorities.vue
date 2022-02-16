@@ -12,14 +12,14 @@
       <div
         v-for="(authority, index) in authorities"
         :key="index"
+        @click="openRemovalModal(authority.authorityId, username)"
         style="background-color: #EBEBEB; border-radius: 8px"
-        class="col-span-3 flex justify-center items-center"
+        class="cursor-pointer col-span-3 flex justify-center items-center"
       >
         <div class=" flex items-center justify-between px-4 w-full ">
           <span style="color: #696969">{{ authority.authorityId }}</span>
           <div>
             <svg
-              @click="removeAuthority(authority.authorityId, username)"
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -95,6 +95,11 @@
       :username="username"
       :open="open"
     />
+    <remove-authorities-modal
+      @remove="removeAuthority"
+      :open="openRemoval"
+      @close="closeRemovalModal"
+    />
   </div>
 </template>
 
@@ -103,7 +108,7 @@ import { Component, Vue } from "vue-property-decorator";
 import UsersService from "@/services/users/usersService";
 import { Log, Util } from "@/components/util";
 import AddAuthoritiesmodal from "./AddAuthoritiesModal.vue";
-
+import RemoveAuthoritiesModal from "./RemoveAuthoritiesModal.vue";
 @Component({
   name: "UserAuthorities",
   props: {
@@ -112,12 +117,18 @@ import AddAuthoritiesmodal from "./AddAuthoritiesModal.vue";
   },
   components: {
     AddAuthoritiesmodal,
+    RemoveAuthoritiesModal,
   },
 })
 export default class UserAuthorities extends Vue {
   // private userDetails = this.$route.params.userDetails.split(":");
   // private username = window.atob(this.userDetails[0]);
   // private userType = window.atob(this.userDetails[1]);
+  private details = {
+    username: "",
+    authority: "",
+  };
+
   private open = false;
 
   private openModal() {
@@ -128,17 +139,27 @@ export default class UserAuthorities extends Vue {
     this.open = false;
   }
 
-  private authAdded() {
-    this.$emit("authAdded");
-  }
-  private removeAuthority(authId: string, username: string) {
-    const details = {
+  private openRemoval = false;
+
+  private openRemovalModal(authId: string, username: string) {
+    this.details = {
       username: username,
       authority: authId,
     };
+    this.openRemoval = true;
+  }
 
+  private closeRemovalModal() {
+    this.openRemoval = false;
+  }
+
+  private authAdded() {
+    this.$emit("authAdded");
+  }
+
+  private removeAuthority() {
     UsersService.removeAuthority(
-      details,
+      this.details,
       (response: any) => {
         Log.info(response);
         this.$emit("removeAuthority");
