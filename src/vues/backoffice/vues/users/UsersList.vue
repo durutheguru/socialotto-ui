@@ -228,10 +228,16 @@
                     </td>
 
                     <td
-                      class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
+                      class="px-6 py-3 truncate  whitespace-nowrap text-sm text-gray-500"
                     >
                       <div v-if="user.userAuthorities.length > 0">
-                        {{ user.userAuthorities }}
+                        {{
+                          truncate(
+                            user.userAuthorities
+                              .map((item) => item.authorityId)
+                              .join(", ")
+                          )
+                        }}
                       </div>
                       <div v-else>
                         <!-- NONE -->
@@ -242,7 +248,10 @@
                       class="relative px-6 py-3 whitespace-nowrap text-right text-sm font-medium "
                     >
                       <div class="td-elipsis relative">
-                        <UsersRowMenu :userId="user.id" />
+                        <UsersRowMenu
+                          :username="user.username"
+                          :userType="user.userType"
+                        />
                       </div>
                     </td>
                   </tr>
@@ -364,6 +373,10 @@ export default class ManageUsers extends Vue {
     REGULATORY_USER: "Regulatory",
     BACK_OFFICE_USER: "Backoffice",
   };
+
+  private truncate(str: string) {
+    return Util.managedString(str, 30);
+  }
 
   private userAuthorities: any = {
     CAN_CREATE_LOTTERY: "Lottery Creator",

@@ -6,12 +6,20 @@
   font-size: 14px;
 }
 
+.fs-16 {
+  font-size: 16px;
+}
+
 .fs-18 {
   font-size: 18px;
 }
 
 .fs-20 {
   font-size: 20px;
+}
+
+.fs-24 {
+  font-size: 24px;
 }
 
 .fs-32 {
@@ -105,6 +113,14 @@
 
 .focus-border-blue-200:focus {
   border-color: #4691a6;
+}
+
+.nav-link-color {
+  color: #2b7ee4;
+}
+
+.nav-link-bg {
+  background-color: #4691a6;
 }
 
 .text-grey-dark {

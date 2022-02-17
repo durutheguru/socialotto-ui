@@ -11,7 +11,7 @@ import { Constants } from ".";
 import store from "../../store/index";
 import { v4 as uuidv4 } from "uuid";
 import { v5 as uuidv5 } from "uuid";
-var numeral = require("numeral");
+const numeral = require("numeral");
 
 // . Lottery ID
 // . Lottery Title
