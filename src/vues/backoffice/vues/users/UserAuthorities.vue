@@ -150,9 +150,9 @@ export default class UserAuthorities extends Vue {
 
   private openRemoval = false;
 
-  private openRemovalModal(authId: string, username: string) {
+  private openRemovalModal(authId: string, userName: string) {
     this.details = {
-      username: username,
+      username: userName,
       authority: authId,
     };
     this.openRemoval = true;

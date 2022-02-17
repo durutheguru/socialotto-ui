@@ -90,7 +90,7 @@ export default class UsersRowMenu extends BaseVue {
     const userDetails = base64Email + ":" + base64userType;
     const routeData = this.$router.resolve({
       name: "UserDetails",
-      params: { userDetails: userDetails },
+      params: { userDetails },
     });
     window.open(routeData.href, "_blank");
     Log.info(userDetails);
