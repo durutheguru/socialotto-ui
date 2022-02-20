@@ -86,7 +86,10 @@
         :username="userQuery.data.username"
         :refResponse="refResponse"
       />
-      <UserSettlement v-else-if="currentPage === 'Settlement'" />
+      <UserSettlement
+        v-else-if="currentPage === 'Settlement'"
+        :username="userQuery.data.username"
+      />
     </div>
   </div>
 </template>
