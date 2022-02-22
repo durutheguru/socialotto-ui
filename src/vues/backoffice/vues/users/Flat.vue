@@ -30,7 +30,7 @@
               type="number"
               placeholder="value"
               autocomplete=""
-              v-model="rate.value"
+              v-model="flat.value"
               required
               :class="{
                 'border-red-400': errors.length > 0,
@@ -63,7 +63,7 @@
               type="number"
               placeholder="amountLimit"
               autocomplete=""
-              v-model="rate.amountLimit"
+              v-model="flat.amountLimit"
               :class="{
                 'border-red-400': errors.length > 0,
               }"
@@ -106,7 +106,7 @@
               class="cursor-pointer spartan bg-transparent appearance-none block w-full px-3 py-2placeholder-gray-400 focus:outline-none sm:text-sm"
             />
 
-            <div class="cursor-pointer inset-y-0 my-auto mr-3">
+            <div @click="toggle" class="cursor-pointer inset-y-0 my-auto mr-3">
               <svg
                 width="24"
                 height="24"
@@ -163,7 +163,7 @@
               type="number"
               placeholder="accountNumber"
               autocomplete=""
-              v-model="rate.accountNumber"
+              v-model="flat.accountNumber"
               :class="{
                 'border-red-400': errors.length > 0,
               }"
@@ -203,16 +203,16 @@ import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
 
 @Component({
-  name: "Rate",
+  name: "Flat",
   props: {
     username: String,
   },
 })
-export default class Rate extends Vue {
+export default class Fiat extends Vue {
   @Prop()
   private username!: string;
   private loading = false;
-  private rate = {
+  private flat = {
     value: "",
     amountLimit: null,
     bankName: "",
@@ -240,15 +240,15 @@ export default class Rate extends Vue {
   private prepareDetails() {
     const info = {
       input: {
-        username: this.rate.username,
-        chargeType: "PERCENTAGE",
-        value: this.rate.value,
-        cap: this.rate.amountLimit,
+        username: this.flat.username,
+        chargeType: "FLAT",
+        value: this.flat.value,
+        cap: this.flat.amountLimit,
       },
 
       walletData: {
         bankCode: this.bankInfo.bankCode,
-        accountNumber: this.rate.accountNumber,
+        accountNumber: this.flat.accountNumber,
       },
     };
 
@@ -267,7 +267,7 @@ export default class Rate extends Vue {
       .then((data: any) => {
         this.loading = false;
         Log.info("data: " + String(data));
-        Util.handleGlobalAlert(true, "success", "Successfully saved rate");
+        Util.handleGlobalAlert(true, "success", "Successfully saved flat");
         // this.$router.push(`/back-office/lotteries`);
       })
       .catch((error) => {
