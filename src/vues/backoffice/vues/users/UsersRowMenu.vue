@@ -28,7 +28,7 @@
       <div>
         <ul class=" w-40 flex flex-col bg-white mb-0">
           <li
-            @click="goToUserDetails(UserId)"
+            @click="goToUserDetails(username, userType)"
             class="py-3 grid-rows-1 hover:bg-gray-200 grid justify-center items-center "
           >
             View Details
@@ -65,14 +65,15 @@
 <script lang="ts">
 import { Component } from "vue-property-decorator";
 // import ApiResource from "@/components/core/ApiResource";
-// import { Log, Util } from "@/components/util";
+import { Log, Util } from "@/components/util";
 // import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "UsersRowMenu",
   props: {
-    userId: String,
+    username: String,
+    userType: String,
   },
 })
 export default class UsersRowMenu extends BaseVue {
@@ -82,14 +83,17 @@ export default class UsersRowMenu extends BaseVue {
     this.show = !this.show;
   }
 
-  private goToUserDetails(userId: string) {
+  private goToUserDetails(username: string, userType: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
-    let routeData = this.$router.resolve({
+    const base64Email = window.btoa(username);
+    const base64userType = window.btoa(userType);
+    const userDetails = base64Email + ":" + base64userType;
+    const routeData = this.$router.resolve({
       name: "UserDetails",
-      // path: "/lottery",
-      params: { id: userId },
+      params: { userDetails },
     });
     window.open(routeData.href, "_blank");
+    Log.info(userDetails);
   }
 }
 </script>

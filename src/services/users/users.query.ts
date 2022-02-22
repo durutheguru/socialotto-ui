@@ -19,9 +19,27 @@ const viewAllUsers = gql`
       name
       username
       userType
-      userAuthorities
+      userAuthorities {
+        authorityId
+        fileReferences
+      }
     }
   }
 `;
 
-export { viewAllUsers };
+const viewUserDetails = gql`
+  query viewUserDetails($userType: String, $username: String) {
+    viewUserDetails(userType: $userType, username: $username) {
+      id
+      name
+      username
+      userType
+      userAuthorities {
+        authorityId
+        fileReferences
+      }
+    }
+  }
+`;
+
+export { viewAllUsers, viewUserDetails };
