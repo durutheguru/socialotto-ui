@@ -129,7 +129,6 @@ import { Component, Vue } from "vue-property-decorator";
 import SmallPlus from "@/components/svg/SmallPlus.vue";
 import RaiseExpenseAmountPlate from "./expenseAmountPlates.vue";
 import { ApolloError } from "apollo-client";
-
 import EvaluationPlate from "./ExpenseEvaluationPlate.vue";
 import { evaluateSettlement } from "@/services/lottery/lottery.query";
 import { newLotteryExpense } from "@/services/campaign/campaign.mutation";

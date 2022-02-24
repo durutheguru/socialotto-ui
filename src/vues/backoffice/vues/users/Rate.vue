@@ -201,16 +201,69 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
+import { ApolloError } from "apollo-client";
+import gql from "graphql-tag";
+
+// import { getUserCashoutInfo } from "@/services/users/users.query";
 
 @Component({
   name: "Rate",
   props: {
     username: String,
+    name: String,
+  },
+  apollo: {
+    getUserCashoutInfo: {
+      query: gql`
+        query getUserCashoutInfo($username: String, $email: String) {
+          fetchUserWalletInfo(username: $username) {
+            bankCode
+            accountNumber
+          }
+
+          fetchBanks {
+            bankCode
+            bankName
+          }
+
+          fetchContract(username: $email) {
+            username
+            chargeType
+            value
+            cap
+          }
+        }
+      `,
+      variables() {
+        return {
+          username: this.name,
+          email: this.username,
+        };
+      },
+      update(data) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+
+        return data;
+      },
+      result({ data, loading, networkStatus }) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+        // this.bankInfoArray = data.fetchBanks;
+      },
+      error(error) {
+        this.rate.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.rate.error)) {
+          // this.$apollo.queries.getUserCashoutInfo.refetch();
+        }
+      },
+    },
   },
 })
 export default class Rate extends Vue {
   @Prop()
   private username!: string;
+  @Prop()
+  private name!: string;
+
   private loading = false;
   private rate = {
     value: "",
@@ -218,6 +271,7 @@ export default class Rate extends Vue {
     bankName: "",
     accountNumber: "",
     username: this.username,
+    error: "",
   };
   private openMenu = false;
 
@@ -226,10 +280,7 @@ export default class Rate extends Vue {
   }
 
   private bankInfo = { bankName: "", bankCode: "" };
-  private bankInfoArray = [
-    { bankName: "First Bank", bankCode: "011" },
-    { bankName: "Access Bank", bankCode: "044" },
-  ];
+  private bankInfoArray = [];
   private selectBankInfo(info: any) {
     this.bankInfo = info;
     this.openMenu = false;
