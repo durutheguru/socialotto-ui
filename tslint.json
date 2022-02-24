@@ -28,6 +28,7 @@
     "no-bitwise": false,
     "prefer-const": false,
     "member-ordering": [false],
-    "no-string-literal": false
+    "no-string-literal": false,
+    "no-var-requires": false
   }
 }

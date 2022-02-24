@@ -215,7 +215,7 @@ import gql from "graphql-tag";
   apollo: {
     getUserCashoutInfo: {
       query: gql`
-        query getUserCashoutInfo($username: String, $email: String) {
+        query getUserCashoutInfo($username: String) {
           fetchUserWalletInfo(username: $username) {
             bankCode
             accountNumber
@@ -226,7 +226,7 @@ import gql from "graphql-tag";
             bankName
           }
 
-          fetchContract(username: $email) {
+          fetchContract(username: $username) {
             username
             chargeType
             value
@@ -236,8 +236,8 @@ import gql from "graphql-tag";
       `,
       variables() {
         return {
-          username: this.name,
-          email: this.username,
+          username: this.username,
+          email: this.email,
         };
       },
       update(data) {
