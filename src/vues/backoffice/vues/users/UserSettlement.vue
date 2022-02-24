@@ -14,8 +14,8 @@
         >
       </div>
     </div>
-    <Rate v-if="settlement === 'rate'" :username="username" />
-    <Flat v-if="settlement === 'flat'" :username="username" />
+    <Rate v-if="settlement === 'rate'" :username="username" :name="name" />
+    <Flat v-if="settlement === 'flat'" :username="username" :name="name" />
   </div>
 </template>
 
@@ -27,6 +27,7 @@ import Flat from "./Flat.vue";
   name: "UserSettlement",
   props: {
     username: String,
+    name: String,
   },
   components: {
     Rate,

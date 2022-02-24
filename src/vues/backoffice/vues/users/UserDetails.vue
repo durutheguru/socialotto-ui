@@ -89,6 +89,7 @@
       <UserSettlement
         v-else-if="currentPage === 'Settlement'"
         :username="userQuery.data.username"
+        :name="userQuery.data.name"
       />
     </div>
   </div>
