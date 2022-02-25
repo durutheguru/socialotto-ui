@@ -201,11 +201,74 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
+import gql from "graphql-tag";
 
 @Component({
   name: "Flat",
   props: {
     username: String,
+  },
+  apollo: {
+    getUserCashoutInfo: {
+      query: gql`
+        query getUserCashoutInfo($username: String) {
+          fetchUserWalletInfo(username: $username) {
+            bankCode
+            accountNumber
+          }
+
+          fetchBanks {
+            bankCode
+            bankName
+          }
+
+          fetchContract(username: $username) {
+            username
+            chargeType
+            value
+            cap
+          }
+        }
+      `,
+      variables() {
+        return {
+          username: this.username,
+          email: this.email,
+        };
+      },
+      update(data) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+
+        return data;
+      },
+      result({ data, loading, networkStatus }) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+        this.bankInfoArray = data.fetchBanks;
+        const savedBankInfo = data.fetchBanks.find(
+          (info: any) => info.bankCode === data.fetchUserWalletInfo.bankCode
+        );
+        Log.info("selected: " + JSON.stringify(savedBankInfo));
+
+        this.bankInfo =
+          savedBankInfo === undefined ? this.bankInfo : savedBankInfo;
+
+        Log.info("bankInfo: " + JSON.stringify(this.bankInfo));
+
+        Log.info("flat: " + JSON.stringify(this.flat));
+
+        this.flat.value = data.fetchContract.value;
+        this.flat.amountLimit = data.fetchContract.cap;
+        this.flat.accountNumber = data.fetchUserWalletInfo.accountNumber
+          ? data.fetchUserWalletInfo.accountNumber
+          : "";
+      },
+      error(error) {
+        this.flat.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.flat.error)) {
+          this.$apollo.queries.getUserCashoutInfo.refetch();
+        }
+      },
+    },
   },
 })
 export default class Fiat extends Vue {

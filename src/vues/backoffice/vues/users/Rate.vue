@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col mt-6">
+    <emptyUserSettlement v-if="$apollo.queries.getUserCashoutInfo.loading" />
     <validation-observer
+      v-else
       ref="observer"
       tag="form"
       role="form"
@@ -203,6 +205,7 @@ import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
 import { ApolloError } from "apollo-client";
 import gql from "graphql-tag";
+import emptyUserSettlement from "./emptyUserSettlement.vue";
 
 // import { getUserCashoutInfo } from "@/services/users/users.query";
 
@@ -211,6 +214,9 @@ import gql from "graphql-tag";
   props: {
     username: String,
     name: String,
+  },
+  components: {
+    emptyUserSettlement,
   },
   apollo: {
     getUserCashoutInfo: {
@@ -247,12 +253,29 @@ import gql from "graphql-tag";
       },
       result({ data, loading, networkStatus }) {
         Log.info("cash info Query: " + JSON.stringify(data));
-        // this.bankInfoArray = data.fetchBanks;
+        this.bankInfoArray = data.fetchBanks;
+        const savedBankInfo = data.fetchBanks.find(
+          (info: any) => info.bankCode === data.fetchUserWalletInfo.bankCode
+        );
+        Log.info("selected: " + JSON.stringify(savedBankInfo));
+
+        this.bankInfo =
+          savedBankInfo === undefined ? this.bankInfo : savedBankInfo;
+
+        Log.info("bankInfo: " + JSON.stringify(this.bankInfo));
+
+        Log.info("rate: " + JSON.stringify(this.rate));
+
+        this.rate.value = data.fetchContract.value;
+        this.rate.amountLimit = data.fetchContract.cap;
+        this.rate.accountNumber = data.fetchUserWalletInfo.accountNumber
+          ? data.fetchUserWalletInfo.accountNumber
+          : "";
       },
       error(error) {
         this.rate.error = Util.extractGqlError(error);
         if (Util.isValidString(this.rate.error)) {
-          // this.$apollo.queries.getUserCashoutInfo.refetch();
+          this.$apollo.queries.getUserCashoutInfo.refetch();
         }
       },
     },
