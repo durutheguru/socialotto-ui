@@ -106,7 +106,7 @@
               class="cursor-pointer spartan bg-transparent appearance-none block w-full px-3 py-2placeholder-gray-400 focus:outline-none sm:text-sm"
             />
 
-            <div @click="toggle" class="cursor-pointer inset-y-0 my-auto mr-3">
+            <div class="cursor-pointer inset-y-0 my-auto mr-3">
               <svg
                 width="24"
                 height="24"
@@ -254,7 +254,7 @@ import gql from "graphql-tag";
 
         Log.info("bankInfo: " + JSON.stringify(this.bankInfo));
 
-        Log.info("flat: " + JSON.stringify(this.flat));
+        Log.info("bankInfoArray: " + JSON.stringify(this.bankInfoArray));
 
         this.flat.value = data.fetchContract.value;
         this.flat.amountLimit = data.fetchContract.cap;
@@ -289,10 +289,7 @@ export default class Fiat extends Vue {
   }
 
   private bankInfo = { bankName: "", bankCode: "" };
-  private bankInfoArray = [
-    { bankName: "First Bank", bankCode: "011" },
-    { bankName: "Access Bank", bankCode: "044" },
-  ];
+  private bankInfoArray = [];
   private selectBankInfo(info: any) {
     this.bankInfo = info;
     this.openMenu = false;

@@ -19,7 +19,6 @@
           type="number"
           placeholder="value"
           autocomplete=""
-          v-model="rate.value"
           required
           readonly
           class="animate-pulse spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
