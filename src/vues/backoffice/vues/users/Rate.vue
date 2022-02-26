@@ -189,10 +189,7 @@
           class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Save
-          <!-- <i
-                class="ml-px fa fa-spinner fa-spin"
-                v-if="userLogin.loading"
-              ></i> -->
+          <i class="ml-px fa fa-spinner fa-spin" v-if="loading"></i>
         </button>
       </div>
     </validation-observer>
@@ -252,7 +249,7 @@ import emptyUserSettlement from "./emptyUserSettlement.vue";
         return data;
       },
       result({ data, loading, networkStatus }) {
-        Log.info("cash info Query: " + JSON.stringify(data));
+        Log.info("rate info Query: " + JSON.stringify(data));
         this.bankInfoArray = data.fetchBanks;
         const savedBankInfo = data.fetchBanks.find(
           (info: any) => info.bankCode === data.fetchUserWalletInfo.bankCode

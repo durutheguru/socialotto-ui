@@ -44,39 +44,6 @@
 
       <div class="mb-6">
         <label
-          for="Amount Limit"
-          style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-          class="block text-sm font-medium "
-        >
-          Amount Limit
-        </label>
-        <div class="mt-1">
-          <validation-provider rules="required|numeric" v-slot="{ errors }">
-            <input
-              id="amountLimit"
-              name="amountLimit"
-              type="number"
-              placeholder="amountLimit"
-              autocomplete=""
-              v-model="flat.amountLimit"
-              :class="{
-                'border-red-400': errors.length > 0,
-              }"
-              required
-              class="spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
-            />
-            <span class="text-red-500 spartan">{{ errors[0] }}</span>
-          </validation-provider>
-        </div>
-      </div>
-
-      <div class="mb-6">
-        <label
           for="Bank Name"
           style="font-family: 'Spartan', sans-serif;
                     font-style: normal;
@@ -187,10 +154,7 @@
           class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Save
-          <!-- <i
-                class="ml-px fa fa-spinner fa-spin"
-                v-if="userLogin.loading"
-              ></i> -->
+          <i class="ml-px fa fa-spinner fa-spin" v-if="loading"></i>
         </button>
       </div>
     </validation-observer>
@@ -226,7 +190,6 @@ import gql from "graphql-tag";
             username
             chargeType
             value
-            cap
           }
         }
       `,
@@ -277,7 +240,7 @@ export default class Fiat extends Vue {
   private loading = false;
   private flat = {
     value: "",
-    amountLimit: null,
+
     bankName: "",
     accountNumber: "",
     username: this.username,
@@ -303,7 +266,6 @@ export default class Fiat extends Vue {
         username: this.flat.username,
         chargeType: "FLAT",
         value: this.flat.value,
-        cap: this.flat.amountLimit,
       },
 
       walletData: {
