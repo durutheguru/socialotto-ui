@@ -1,6 +1,8 @@
 <template>
   <div class="flex flex-col mt-6">
+    <emptyUserSettlement v-if="$apollo.queries.getUserCashoutInfo.loading" />
     <validation-observer
+      v-else
       ref="observer"
       tag="form"
       role="form"
@@ -187,10 +189,7 @@
           class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Save
-          <!-- <i
-                class="ml-px fa fa-spinner fa-spin"
-                v-if="userLogin.loading"
-              ></i> -->
+          <i class="ml-px fa fa-spinner fa-spin" v-if="loading"></i>
         </button>
       </div>
     </validation-observer>
@@ -201,16 +200,90 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
+import { ApolloError } from "apollo-client";
+import gql from "graphql-tag";
+import emptyUserSettlement from "./emptyUserSettlement.vue";
+
+// import { getUserCashoutInfo } from "@/services/users/users.query";
 
 @Component({
   name: "Rate",
   props: {
     username: String,
+    name: String,
+  },
+  components: {
+    emptyUserSettlement,
+  },
+  apollo: {
+    getUserCashoutInfo: {
+      query: gql`
+        query getUserCashoutInfo($username: String) {
+          fetchUserWalletInfo(username: $username) {
+            bankCode
+            accountNumber
+          }
+
+          fetchBanks {
+            bankCode
+            bankName
+          }
+
+          fetchContract(username: $username) {
+            username
+            chargeType
+            value
+            cap
+          }
+        }
+      `,
+      variables() {
+        return {
+          username: this.username,
+          email: this.email,
+        };
+      },
+      update(data) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+
+        return data;
+      },
+      result({ data, loading, networkStatus }) {
+        Log.info("rate info Query: " + JSON.stringify(data));
+        this.bankInfoArray = data.fetchBanks;
+        const savedBankInfo = data.fetchBanks.find(
+          (info: any) => info.bankCode === data.fetchUserWalletInfo.bankCode
+        );
+        Log.info("selected: " + JSON.stringify(savedBankInfo));
+
+        this.bankInfo =
+          savedBankInfo === undefined ? this.bankInfo : savedBankInfo;
+
+        Log.info("bankInfo: " + JSON.stringify(this.bankInfo));
+
+        Log.info("rate: " + JSON.stringify(this.rate));
+
+        this.rate.value = data.fetchContract.value;
+        this.rate.amountLimit = data.fetchContract.cap;
+        this.rate.accountNumber = data.fetchUserWalletInfo.accountNumber
+          ? data.fetchUserWalletInfo.accountNumber
+          : "";
+      },
+      error(error) {
+        this.rate.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.rate.error)) {
+          this.$apollo.queries.getUserCashoutInfo.refetch();
+        }
+      },
+    },
   },
 })
 export default class Rate extends Vue {
   @Prop()
   private username!: string;
+  @Prop()
+  private name!: string;
+
   private loading = false;
   private rate = {
     value: "",
@@ -218,6 +291,7 @@ export default class Rate extends Vue {
     bankName: "",
     accountNumber: "",
     username: this.username,
+    error: "",
   };
   private openMenu = false;
 
@@ -226,10 +300,7 @@ export default class Rate extends Vue {
   }
 
   private bankInfo = { bankName: "", bankCode: "" };
-  private bankInfoArray = [
-    { bankName: "First Bank", bankCode: "011" },
-    { bankName: "Access Bank", bankCode: "044" },
-  ];
+  private bankInfoArray = [];
   private selectBankInfo(info: any) {
     this.bankInfo = info;
     this.openMenu = false;

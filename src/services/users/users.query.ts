@@ -42,4 +42,25 @@ const viewUserDetails = gql`
   }
 `;
 
-export { viewAllUsers, viewUserDetails };
+const getUserCashoutInfo = gql`
+  query getUserCashoutInfo($username: String, $email: String) {
+    fetchUserWalletInfo(username: $username) {
+      bankCode
+      accountNumber
+    }
+
+    fetchBanks {
+      bankCode
+      bankName
+    }
+
+    fetchContract(username: $email) {
+      username
+      chargeType
+      value
+      cap
+    }
+  }
+`;
+
+export { viewAllUsers, viewUserDetails, getUserCashoutInfo };
