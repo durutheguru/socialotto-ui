@@ -44,39 +44,6 @@
 
       <div class="mb-6">
         <label
-          for="Amount Limit"
-          style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-          class="block text-sm font-medium "
-        >
-          Amount Limit
-        </label>
-        <div class="mt-1">
-          <validation-provider rules="required|numeric" v-slot="{ errors }">
-            <input
-              id="amountLimit"
-              name="amountLimit"
-              type="number"
-              placeholder="amountLimit"
-              autocomplete=""
-              v-model="flat.amountLimit"
-              :class="{
-                'border-red-400': errors.length > 0,
-              }"
-              required
-              class="spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
-            />
-            <span class="text-red-500 spartan">{{ errors[0] }}</span>
-          </validation-provider>
-        </div>
-      </div>
-
-      <div class="mb-6">
-        <label
           for="Bank Name"
           style="font-family: 'Spartan', sans-serif;
                     font-style: normal;
@@ -106,7 +73,7 @@
               class="cursor-pointer spartan bg-transparent appearance-none block w-full px-3 py-2placeholder-gray-400 focus:outline-none sm:text-sm"
             />
 
-            <div @click="toggle" class="cursor-pointer inset-y-0 my-auto mr-3">
+            <div class="cursor-pointer inset-y-0 my-auto mr-3">
               <svg
                 width="24"
                 height="24"
@@ -187,10 +154,7 @@
           class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Save
-          <!-- <i
-                class="ml-px fa fa-spinner fa-spin"
-                v-if="userLogin.loading"
-              ></i> -->
+          <i class="ml-px fa fa-spinner fa-spin" v-if="loading"></i>
         </button>
       </div>
     </validation-observer>
@@ -201,11 +165,73 @@
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { saveContract } from "@/services/users/users.mutation";
 import { Log, Constants, Util } from "@/components/util";
+import gql from "graphql-tag";
 
 @Component({
   name: "Flat",
   props: {
     username: String,
+  },
+  apollo: {
+    getUserCashoutInfo: {
+      query: gql`
+        query getUserCashoutInfo($username: String) {
+          fetchUserWalletInfo(username: $username) {
+            bankCode
+            accountNumber
+          }
+
+          fetchBanks {
+            bankCode
+            bankName
+          }
+
+          fetchContract(username: $username) {
+            username
+            chargeType
+            value
+          }
+        }
+      `,
+      variables() {
+        return {
+          username: this.username,
+          email: this.email,
+        };
+      },
+      update(data) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+
+        return data;
+      },
+      result({ data, loading, networkStatus }) {
+        Log.info("cash info Query: " + JSON.stringify(data));
+        this.bankInfoArray = data.fetchBanks;
+        const savedBankInfo = data.fetchBanks.find(
+          (info: any) => info.bankCode === data.fetchUserWalletInfo.bankCode
+        );
+        Log.info("selected: " + JSON.stringify(savedBankInfo));
+
+        this.bankInfo =
+          savedBankInfo === undefined ? this.bankInfo : savedBankInfo;
+
+        Log.info("bankInfo: " + JSON.stringify(this.bankInfo));
+
+        Log.info("bankInfoArray: " + JSON.stringify(this.bankInfoArray));
+
+        this.flat.value = data.fetchContract.value;
+        this.flat.amountLimit = data.fetchContract.cap;
+        this.flat.accountNumber = data.fetchUserWalletInfo.accountNumber
+          ? data.fetchUserWalletInfo.accountNumber
+          : "";
+      },
+      error(error) {
+        this.flat.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.flat.error)) {
+          this.$apollo.queries.getUserCashoutInfo.refetch();
+        }
+      },
+    },
   },
 })
 export default class Fiat extends Vue {
@@ -214,7 +240,7 @@ export default class Fiat extends Vue {
   private loading = false;
   private flat = {
     value: "",
-    amountLimit: null,
+
     bankName: "",
     accountNumber: "",
     username: this.username,
@@ -226,10 +252,7 @@ export default class Fiat extends Vue {
   }
 
   private bankInfo = { bankName: "", bankCode: "" };
-  private bankInfoArray = [
-    { bankName: "First Bank", bankCode: "011" },
-    { bankName: "Access Bank", bankCode: "044" },
-  ];
+  private bankInfoArray = [];
   private selectBankInfo(info: any) {
     this.bankInfo = info;
     this.openMenu = false;
@@ -243,7 +266,6 @@ export default class Fiat extends Vue {
         username: this.flat.username,
         chargeType: "FLAT",
         value: this.flat.value,
-        cap: this.flat.amountLimit,
       },
 
       walletData: {
