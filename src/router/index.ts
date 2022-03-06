@@ -100,6 +100,24 @@ const routes = [
         component: () =>
           import("@/vues/campaign/vues/create/CreateCampaign.vue"),
       },
+      {
+        path: "/user",
+        redirect: "/profile",
+        name: "User",
+        component: () => import("@/vues/users/User.vue"),
+        children: [
+          {
+            path: "/profile",
+            name: "Profile",
+            component: () => import("@/vues/users/Profile.vue"),
+          },
+          {
+            path: "/wallet",
+            name: "Wallet",
+            component: () => import("@/vues/users/Wallet.vue"),
+          },
+        ],
+      },
 
       {
         path: "/campaign/:id",

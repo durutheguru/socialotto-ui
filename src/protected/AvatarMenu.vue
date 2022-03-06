@@ -7,8 +7,8 @@
     <div class=" dropDownMenu">
       <div class="overflow-hidden pt-2">
         <div class="z-20 relative grid gap-0 sm:gap-0 ">
-          <a
-            href="#"
+          <router-link
+            to="/user"
             class=" p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
           >
             <p
@@ -16,7 +16,7 @@
             >
               My Profile
             </p>
-          </a>
+          </router-link>
           <a
             href="#"
             class=" p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
@@ -44,7 +44,9 @@
           >
             <p
               class=" mb-0 spartan text-base leading-6 font-medium text-gray-900"
-            >Logout</p>
+            >
+              Logout
+            </p>
           </a>
         </div>
       </div>
@@ -55,7 +57,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { Log, Util } from "@/components/util";
-import LoginService from '@/vues/login/service/LoginService';
+import LoginService from "@/vues/login/service/LoginService";
 import store from "../store/index";
 
 @Component({
@@ -74,11 +76,9 @@ export default class AvatarMenu extends Vue {
     Util.clickOutside("avatarMenu", "dropdown", "setUserMenu");
   }
 
-
   public logout() {
     LoginService.doLogout();
   }
-
 }
 </script>
 
