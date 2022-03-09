@@ -1,13 +1,10 @@
 <template>
   <div class="flex spartan flex-col items-center justify-center mt-12 mb-20">
-    <!-- <WalletBalanceCardLoading
+    <WalletBalanceCardLoading
       v-if="$apollo.queries.viewWalletBalances.loading"
-    /> -->
+    />
     <div
-      v-if="
-        !userWalletQuery.walletBalance === null ||
-          !userWalletQuery.walletBalance === undefined
-      "
+      v-else
       style="
         background: linear-gradient(137.03deg, #4691A6 29.77%, #2C5662 87.65%);
         border-radius: 12px;
@@ -156,6 +153,35 @@ import WithdrawFunds from "./WithdrawFunds.vue";
         }
       },
     },
+    getAllWalletTransactions: {
+      query: getAllWalletTransactions,
+      variables() {
+        return {
+          userType: this.userWalletTransactionsQuery.userType,
+          username: this.userWalletTransactionsQuery.username,
+        };
+      },
+      result({ data }) {
+        Log.info(
+          "Search userWalletTransactionsQuery Query: " + JSON.stringify(data)
+        );
+
+        this.userWalletTransactionsQuery.walletBalance =
+          data?.getAllWalletTransactions;
+
+        Log.info(
+          "User Query wallet balance: " +
+            JSON.stringify(this.userWalletTransactionsQuery.walletBalance)
+        );
+      },
+      error(error: ApolloError) {
+        this.userWalletTransactionsQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.userWalletTransactionsQuery.error)) {
+          Log.info("WalletBalance Error" + JSON.stringify(error));
+          // this.$apollo.queries.getAllWalletTransactions.refetch();
+        }
+      },
+    },
   },
   components: {
     WalletBalanceCardLoading,
@@ -171,6 +197,14 @@ export default class Wallet extends Vue {
     username: this.username,
     userType: this.userType,
     walletBalance: null,
+    data: {},
+    error: "",
+  };
+
+  private userWalletTransactionsQuery: any = {
+    username: this.username,
+    userType: this.userType,
+
     data: {},
     error: "",
   };
