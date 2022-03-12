@@ -83,6 +83,16 @@ const getAllWalletTransactions = gql`
       amount
       reference
       narration
+      transactionDateTime
+    }
+  }
+`;
+
+const fetchBanks = gql`
+  query fetchBanks {
+    fetchBanks {
+      bankCode
+      bankName
     }
   }
 `;
@@ -93,4 +103,5 @@ export {
   getUserCashoutInfo,
   viewWalletBalances,
   getAllWalletTransactions,
+  fetchBanks,
 };

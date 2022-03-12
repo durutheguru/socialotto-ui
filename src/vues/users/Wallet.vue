@@ -1,8 +1,6 @@
 <template>
   <div class="flex spartan flex-col items-center justify-center mt-12 mb-20">
-    <WalletBalanceCardLoading
-      v-if="$apollo.queries.viewWalletBalances.loading"
-    />
+    <WalletBalanceCardLoading v-if="loading" />
     <div
       v-else
       style="
@@ -15,7 +13,7 @@
       <div class="flex flex-col justify-between  mr-4 w-60">
         <span class="text-white fw-400 fs-16 mb-2">Wallet Balance</span>
         <h1 class="fw-700 fs-32 text-white mb-0">
-          {{ userWalletQuery.walletBalance }}
+          {{ userWalletQuery.walletBalance[0].balance }}
         </h1>
       </div>
 
@@ -67,55 +65,75 @@
       <h1 style="color: #2D5763;" class="fw-600 fs-20 mt-6">
         Transaction History
       </h1>
-      <div class="mt-4 br-12 bg-white grid grid-cols-3 gap-2 p-4">
-        <div class="col-span-1 flex flex-col justify-between">
-          <span style="color: #4792A6" class="fs-12 fw-400 mb-1"
-            >Source Wallet</span
-          >
-          <span style="color: #4F4F4F" class="fs-16 fw-500 mb-1"
-            >Samuel Umoru</span
-          >
-          <span style="color: #333333" class="fs-20 fw-600">1989JDFHBVC</span>
-        </div>
+      <div v-if="$apollo.queries.getAllWalletTransactions.loading">
+        Loading...
+      </div>
+      <div v-else>
+        <div
+          v-for="transaction in userWalletTransactionsQuery.data"
+          :key="transaction.reference"
+          class="mt-4 br-12 bg-white grid grid-cols-3 gap-2 p-4"
+        >
+          <div class="col-span-1 flex flex-col justify-between">
+            <span style="color: #4792A6" class="fs-12 fw-400 mb-1"
+              >Source Wallet</span
+            >
+            <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
+              transaction.sourceWalletName
+            }}</span>
+            <span style="color: #333333" class="fs-28 fw-600">{{
+              transaction.sourceWalletId
+            }}</span>
+          </div>
 
-        <!-- ----------------- -->
-        <div class="col-span-1 flex flex-col justify-between">
-          <span style="color: #4792A6" class="fs-12 fw-400 mb-1"
-            >Destination</span
-          >
-          <span style="color: #4F4F4F" class="fs-16 fw-500 mb-1"
-            >Union Bank</span
-          >
-          <span style="color: #333333" class="fs-20 fw-600">0937263847</span>
+          <!-- ----------------- -->
+          <div class="col-span-1 flex flex-col justify-between ml-4">
+            <span style="color: #4792A6" class="fs-12 fw-400 mb-1"
+              >Destination</span
+            >
+            <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
+              transaction.destinationWalletName
+            }}</span>
+            <span style="color: #333333" class="fs-28 fw-600">{{
+              transaction.destinationWalletId
+            }}</span>
+          </div>
+          <!-- ------------------- -->
+          <div class="col-span-1 flex flex-col justify-between ml-4">
+            <span style="color: #4792A6" class="fs-12 fw-400 mb-1">{{
+              zoneDateTimeMoment(transaction.transactionDateTime)
+            }}</span>
+            <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">Amount</span>
+            <span style="color: #333333" class="fs-28 fw-600"
+              >N{{ transaction.amount }}</span
+            >
+          </div>
+          <!-- ------------------- -->
         </div>
-        <!-- ------------------- -->
-        <div class="col-span-1 flex flex-col justify-between">
-          <span style="color: #4792A6" class="fs-12 fw-400 mb-1"
-            >23 February 2022</span
-          >
-          <span style="color: #4F4F4F" class="fs-16 fw-500 mb-1">Amount</span>
-          <span style="color: #333333" class="fs-20 fw-600">N21,500, 000</span>
-        </div>
-        <!-- ------------------- -->
       </div>
     </div>
     <create-pin :isModalOpen="open" @close="closeModal" />
     <add-withdrawal-account
       :isModalOpen="openAddWithdrawal"
+      :banks="banksList"
       @close="closeAddWithdrawalModal"
     />
 
     <withdraw-funds
       :isModalOpen="openWithdrawFunds"
+      :banks="banksList"
       @close="closeWithdrawFundsModal"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { ApolloError } from "apollo-client";
-import { viewWalletBalances } from "@/services/users/users.query";
+import { fetchBanks } from "@/services/users/users.query";
+import BaseVue from "@/components/BaseVue";
+
+// import { viewWalletBalances } from "@/services/users/users.query";
 import { getAllWalletTransactions } from "@/services/users/users.query";
 import { Log, Util } from "@/components/util";
 import store from "@/store/index";
@@ -125,60 +143,54 @@ import AddWithdrawalAccount from "./AddWithdrawalAccount.vue";
 import WithdrawFunds from "./WithdrawFunds.vue";
 @Component({
   name: "Wallet",
+  props: {
+    userWalletQuery: Object,
+    loading: String,
+  },
   apollo: {
-    // $client: "anonymousClient",
-    viewWalletBalances: {
-      query: viewWalletBalances,
-      variables() {
-        return {
-          userType: this.userWalletQuery.userType,
-          username: this.userWalletQuery.username,
-        };
-      },
-      result({ data }) {
-        Log.info("Search User Wallet Query: " + JSON.stringify(data));
-
-        this.userWalletQuery.walletBalance = data?.viewWalletBalances;
-
-        Log.info(
-          "User Query wallet balance: " +
-            JSON.stringify(this.userWalletQuery.walletBalance)
-        );
-      },
-      error(error: ApolloError) {
-        this.userWalletQuery.error = Util.extractGqlError(error);
-        if (Util.isValidString(this.userWalletQuery.error)) {
-          Log.info("WalletBalance Error" + JSON.stringify(error));
-          // this.$apollo.queries.viewWalletBalances.refetch();
-        }
-      },
-    },
     getAllWalletTransactions: {
       query: getAllWalletTransactions,
       variables() {
         return {
-          userType: this.userWalletTransactionsQuery.userType,
           username: this.userWalletTransactionsQuery.username,
+          walletId: this.userWalletQuery.walletBalance[0].walletId,
         };
+      },
+      skip() {
+        return this.userWalletTransactionsQuery.skip;
       },
       result({ data }) {
         Log.info(
           "Search userWalletTransactionsQuery Query: " + JSON.stringify(data)
         );
 
-        this.userWalletTransactionsQuery.walletBalance =
-          data?.getAllWalletTransactions;
+        this.userWalletTransactionsQuery.data = data?.getAllWalletTransactions;
 
         Log.info(
-          "User Query wallet balance: " +
-            JSON.stringify(this.userWalletTransactionsQuery.walletBalance)
+          "userWalletTransactionsQuery: " +
+            JSON.stringify(this.userWalletTransactionsQuery.data)
         );
       },
       error(error: ApolloError) {
         this.userWalletTransactionsQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.userWalletTransactionsQuery.error)) {
           Log.info("WalletBalance Error" + JSON.stringify(error));
-          // this.$apollo.queries.getAllWalletTransactions.refetch();
+          this.$apollo.queries.getAllWalletTransactions.refetch();
+        }
+      },
+    },
+    fetchBanks: {
+      query: fetchBanks,
+
+      result({ data }) {
+        Log.info("FetchBanks Query: " + JSON.stringify(data));
+        this.banks.data = data?.fetchBanks;
+      },
+      error(error: ApolloError) {
+        this.userWalletTransactionsQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.userWalletTransactionsQuery.error)) {
+          Log.info("WalletBalance Error" + JSON.stringify(error));
+          // this.$apollo.queries.fetchBanks.refetch();
         }
       },
     },
@@ -190,24 +202,55 @@ import WithdrawFunds from "./WithdrawFunds.vue";
     WithdrawFunds,
   },
 })
-export default class Wallet extends Vue {
+export default class Wallet extends BaseVue {
+  @Prop()
+  private loading!: boolean;
+
+  @Prop()
+  private userWalletQuery!: any;
+
+  private mounted() {
+    Log.info(
+      "should Skip?:" +
+        JSON.stringify(
+          Util.isValidString(this.userWalletQuery.walletBalance[0].walletId)
+        )
+    );
+    Log.info("userWalletQuery" + JSON.stringify(this.userWalletQuery));
+  }
+
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
-  private userWalletQuery: any = {
-    username: this.username,
-    userType: this.userType,
-    walletBalance: null,
-    data: {},
-    error: "",
-  };
+  // private userWalletQuery: any = {
+  //   username: this.username,
+  //   userType: this.userType,
+  //   walletBalance: null,
+  //   data: {},
+  //   error: "",
+  // };
 
   private userWalletTransactionsQuery: any = {
     username: this.username,
     userType: this.userType,
+    page: 0,
+    size: 10,
+    skip: !Util.isValidString(this.userWalletQuery.walletBalance[0].walletId),
+    data: [],
+    error: "",
+  };
 
+  // private formatDate(){
+
+  // }
+
+  private banks: any = {
     data: {},
     error: "",
   };
+
+  private get banksList() {
+    return this.banks.data;
+  }
 
   private open = false;
   private openModal() {
@@ -232,6 +275,17 @@ export default class Wallet extends Vue {
   private closeAddWithdrawalModal() {
     this.openAddWithdrawal = false;
   }
+
+  //   {
+  // "sourceWalletId":"000000000000004",
+  // "sourceWalletName":"Lottery Wallet 106",
+  // "destinationWalletId":"00000000000111",
+  // "destinationWalletName":"111 Wallet ID",
+  // "amount":"450.00",
+  // "reference":"1631142684501-2259576",
+  // "narration":null,
+  // "__typename":"WalletFundsTransferDTO"
+  // }
 }
 </script>
 

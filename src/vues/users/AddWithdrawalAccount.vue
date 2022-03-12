@@ -76,54 +76,147 @@
                   novalidate
                 >
                   <!-- --------------------------Replace all secrets on netlify------------------------------- -->
-                  <div
-                    class="relative h-12 mb-6 flex block w-full text-left text-md font-medium  focus:outline-none"
-                  >
-                    <div class=" h-full ">
+                  <div class="mb-6">
+                    <label
+                      for="Bank Name"
+                      style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+                      class="block text-sm font-medium "
+                    >
+                      Bank Name
+                    </label>
+
+                    <!-- --------- -->
+                    <div class="mt-1">
+                      <div
+                        @click="toggleBanks"
+                        class="cursor-pointer relative flex border-gray-300 border-2 border-blue-dark  rounded-md h-12"
+                      >
+                        <input
+                          readonly
+                          v-model="bankInfo.bankName"
+                          id="bankName"
+                          name="bankName"
+                          type="text"
+                          placeholder="bankName"
+                          autocomplete=""
+                          class="cursor-pointer spartan bg-transparent appearance-none block w-full px-3 py-2placeholder-gray-400 focus:outline-none sm:text-sm"
+                        />
+
+                        <div class="cursor-pointer inset-y-0 my-auto mr-3">
+                          <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M6 9L12 15L18 9"
+                              stroke="black"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="relative bg-white z-20" v-if="openMenu">
+                        <ul
+                          style="max-height: 10rem; overflow-y: auto"
+                          class="py-2 pb-4 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                        >
+                          <li
+                            class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
+                            @mousedown="selectBankInfo(bankInfo)"
+                            v-for="(bankInfo, index) in bankInfoArray"
+                            :key="index"
+                          >
+                            {{ bankInfo.bankName }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- -------------- -->
+                  </div>
+                  <div class="mb-3">
+                    <label
+                      for="value"
+                      style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+                      class="block text-sm font-medium "
+                    >
+                      Account Number
+                    </label>
+                    <div class="mt-1">
                       <validation-provider
                         rules="required|numeric"
                         v-slot="{ errors }"
                       >
                         <input
-                          id="pin"
-                          name="pin"
-                          placeholder="Pin"
-                          type="number"
+                          id="Account Number"
+                          name="value"
+                          type="text"
+                          placeholder="Account Number"
+                          autocomplete=""
+                          required
                           :class="{
                             'border-red-400': errors.length > 0,
                           }"
-                          class="h-full rounded-md spartan bg-white border-gray-300 border-2 focus-border-blue-200 spartan text-base appearance-none block w-full px-3 py-2 placeholder-gray-400 focus:outline-none sm:text-sm"
-                          v-model="pin"
+                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                         />
-
-                        <span class="text-red-500 spartan mb-4">{{
+                        <span class="text-red-500 spartan">{{
                           errors[0]
                         }}</span>
                       </validation-provider>
                     </div>
                   </div>
 
-                  <div
-                    class="relative h-12 mb-6 flex block w-full text-left text-md font-medium  focus:outline-none"
-                  >
-                    <div class=" h-full ">
+                  <div class="mb-6">
+                    <span style="#4691A6" class="fw-600 fs-16"
+                      >Account name: Bismark Charity</span
+                    >
+                  </div>
+
+                  <div class="mb-6">
+                    <label
+                      for="Enter Pin"
+                      style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+                      class="block text-sm font-medium "
+                    >
+                      Enter Pin
+                    </label>
+                    <div class="mt-1">
                       <validation-provider
                         rules="required|numeric"
                         v-slot="{ errors }"
                       >
                         <input
-                          id="confirmPin"
-                          name="confirmPin"
-                          placeholder="Confirm Pin"
-                          type="number"
+                          id="Enter Pin"
+                          name="value"
+                          type="password"
+                          placeholder="Pin"
+                          autocomplete=""
+                          required
                           :class="{
                             'border-red-400': errors.length > 0,
                           }"
-                          class="h-full rounded-md spartan bg-white border-gray-300 border-2 focus-border-blue-200 spartan text-base appearance-none block w-full px-3 py-2 placeholder-gray-400 focus:outline-none sm:text-sm"
-                          v-model="confirmPin"
+                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
                         />
-
-                        <span class="text-red-500 spartan mb-4">{{
+                        <span class="text-red-500 spartan">{{
                           errors[0]
                         }}</span>
                       </validation-provider>
@@ -142,7 +235,7 @@
                     >
                       <span
                         class="text-white text-base font-semi-bold cursor-pointer"
-                        >Save</span
+                        >Add Funds</span
                       >
                     </div>
                   </div>
@@ -170,9 +263,34 @@ export default class AddWithdrawalAccount extends Vue {
 
   @Prop()
   private isModalOpen!: boolean;
+
+  @Prop()
+  private banks!: [];
+
   private close() {
     // this.isModalOpen = false;
     this.$emit("close");
+  }
+
+  // private get bankList() {
+  //   return this.banks;
+  // }
+
+  private openMenu = false;
+
+  private toggleBanks() {
+    this.openMenu = !this.openMenu;
+  }
+
+  private bankInfo = { bankName: "", bankCode: "" };
+  private get bankInfoArray() {
+    return this.banks;
+  }
+  private selectBankInfo(info: any) {
+    this.bankInfo = info;
+    this.openMenu = false;
+
+    Log.info(this.bankInfo.bankCode);
   }
 
   private pin = "";

@@ -43,7 +43,7 @@
           >
             <!-- ------------------------- -->
             <div
-              @click="changeTo('/profile')"
+              @click="changeTo('Profile')"
               class="cursor-pointer h-10 flex flex-col justify-between "
             >
               <div class="h-2"></div>
@@ -68,7 +68,8 @@
             </div>
             <!-- ------------------------- -->
             <div
-              @click="changeTo('/wallet')"
+              v-if="hasWalletId"
+              @click="changeTo('Wallet')"
               class="cursor-pointer h-10 flex flex-col justify-between "
             >
               <div class="h-2"></div>
@@ -93,7 +94,14 @@
             </div>
             <!-- ------------------------- -->
           </div>
-          <router-view></router-view>
+          <!-- <router-view></router-view> -->
+          <Profile v-if="currentPage === 'Profile'" />
+
+          <Wallet
+            v-if="currentPage === 'Wallet' && hasWalletId"
+            :userWalletQuery="userWalletQuery"
+            :loading="$apollo.queries.viewWalletBalances.loading"
+          />
         </div>
       </div>
     </div>
@@ -102,13 +110,21 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import Wallet from "./Wallet.vue";
+import Profile from "./Profile.vue";
+
 import { Constants, Log, Util } from "@/components/util";
 import store from "@/store/index";
 import { viewUserDetails } from "@/services/users/users.query";
 import { ApolloError } from "apollo-client";
+import { viewWalletBalances } from "@/services/users/users.query";
 
 @Component({
   name: "User",
+  components: {
+    Wallet,
+    Profile,
+  },
   apollo: {
     // $client: "anonymousClient",
     viewUserDetails: {
@@ -116,6 +132,7 @@ import { ApolloError } from "apollo-client";
       variables() {
         return {
           userType: this.userQuery.userType,
+
           username: this.userQuery.username,
         };
       },
@@ -133,6 +150,33 @@ import { ApolloError } from "apollo-client";
         }
       },
     },
+    viewWalletBalances: {
+      query: viewWalletBalances,
+      variables() {
+        return {
+          userType: this.userWalletQuery.userType,
+          username: this.userWalletQuery.username,
+        };
+      },
+      result({ data }) {
+        Log.info("Search User Wallet's Query: " + JSON.stringify(data));
+
+        this.userWalletQuery.walletBalance = data?.viewWalletBalances;
+        this.userWalletQuery.walletId = data.viewWalletBalances[0].walletId;
+
+        Log.info(
+          "User Query wallet balance: " +
+            JSON.stringify(this.userWalletQuery.walletBalance)
+        );
+      },
+      error(error: ApolloError) {
+        this.userWalletQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.userWalletQuery.error)) {
+          Log.info("WalletBalance Error" + JSON.stringify(error));
+          this.$apollo.queries.viewWalletBalances.refetch();
+        }
+      },
+    },
   },
 })
 export default class User extends Vue {
@@ -141,9 +185,7 @@ export default class User extends Vue {
     Log.info("userType: " + this.userType);
   }
 
-  private get currentPage() {
-    return this.$route.name;
-  }
+  private currentPage = "Profile";
 
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
@@ -154,8 +196,21 @@ export default class User extends Vue {
     error: "",
   };
 
+  private userWalletQuery: any = {
+    username: this.username,
+    userType: this.userType,
+    walletBalance: null,
+    walletId: null,
+    data: {},
+    error: "",
+  };
+
   private changeTo(path: string) {
-    this.$router.push(path);
+    this.currentPage = path;
+  }
+
+  private get hasWalletId(): boolean {
+    return Util.isValidString(this.userWalletQuery.walletId);
   }
 }
 </script>
