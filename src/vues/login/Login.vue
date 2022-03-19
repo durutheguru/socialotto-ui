@@ -193,6 +193,14 @@ export default class Login extends BaseVue {
      *
      */
 
+    // if (this.isLoginFailureURLParamsSet()) {
+    //   this.handleLoginFailureURLParams();
+    // } else if (this.isLoginSuccessURLParamsSet()) {
+    //   this.handleLoginSuccessURLParams();
+    // } else {
+    //   Log.info("URL params not set");
+    // }
+
     if (this.isLoginFailureURLParamsSet()) {
       this.handleLoginFailureURLParams();
     } else if (this.isLoginSuccessURLParamsSet()) {
