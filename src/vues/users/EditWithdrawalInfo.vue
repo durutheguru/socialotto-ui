@@ -374,7 +374,7 @@
                   <!-- -------------------------------Merge secrets------------------------------- -->
                   <div class="flexmt-4 margin-top-m">
                     <div
-                      :disabled="invalid || !isValidUpdate"
+                      :disabled="invalid || !isValidUpdate || loading"
                       :class="[invalid ? 'opacity-25' : 'opacity-100']"
                       class="
                         bg-blue-200
@@ -394,8 +394,9 @@
                           text-white text-base
                           font-semi-bold
                           cursor-pointer
-                        "
-                        >Save</span
+                        ">
+                        Save <i class="fa fa-spinner fa-spin" v-if="loading" />
+                        </span
                       >
                     </div>
                   </div>
@@ -416,10 +417,11 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
 import { WalletWithdrawalUpdateAction } from "@/services/wallet/wallet.gql";
 import BaseVue from "@/components/BaseVue";
+import { FetchUserWalletInfo } from '@/services/wallet/wallet.gql';
+import { ApolloError } from "apollo-client";
+import { EventBus } from "@/components/core/Event";
 
-@Component({
-  apollo: {}
-})
+@Component
 export default class EditWithdrawalInfo extends BaseVue {
   private pin: string = "";
 
@@ -442,11 +444,34 @@ export default class EditWithdrawalInfo extends BaseVue {
   private banks!: [];
 
   @Prop()
-  private walletId: string = '';
+  private walletId!: string;
+
+
+  @Prop()
+  private username!: string;
+
+
+  private fetchUserWalletInfo: any = {};
+
+
+  private userWalletId: string = '';
+
+  private loading: boolean = false;
 
 
   private mounted() {
+    let self = this;
     Log.info("isModalOpen: " + JSON.stringify(this.isModalOpen));
+    self.userWalletId = this.walletId;
+    self.fetchWalletDetails();
+    EventBus.$on("wallet-update-banks-fetched-event", (data: any) => {
+      Log.info("Banks Fetched Update received: " + JSON.stringify(data));
+      data.filter((value: any) => {
+        if (value.bankCode === self.fetchUserWalletInfo.bankCode) {
+          self.selectBankInfo(value);
+        }
+      });
+    });
   }
 
 
@@ -480,6 +505,32 @@ export default class EditWithdrawalInfo extends BaseVue {
     );
   }
 
+  private fetchWalletDetails() {
+    let self = this;
+    self.$apollo
+      .query({
+        query: FetchUserWalletInfo,
+        variables: {
+          username: this.username,
+        },
+      })
+      .then(({ data }) => {
+        Log.info("User Wallet Info: " + JSON.stringify(data));
+        self.fetchUserWalletInfo = data.fetchUserWalletInfo;
+        self.bankInfo.bankCode = self.fetchUserWalletInfo.bankCode;
+        self.accountNumber = self.fetchUserWalletInfo.accountNumber;
+        
+        // this.accountNumber = data?.viewUserDetails;
+        // Log.info("User Query: " + JSON.stringify(this.userQuery.data));
+      })
+      .catch(
+        (error: ApolloError) => {
+          Log.error("User Wallet Info Error: " + error);
+        }
+      );
+  }
+
+
   private saveUpdates() {
     if (!this.isValidUpdate()) {
       Log.info("Invalid Wallet Update was triggered..");
@@ -487,8 +538,9 @@ export default class EditWithdrawalInfo extends BaseVue {
     }
 
     let self = this;
+    self.loading = true;
     let update = {
-      walletId: self.walletId,
+      walletId: self.userWalletId,
       walletPin: self.pin,
       withdrawalAccountNumber: self.accountNumber,
       withdrawalBankCode: self.bankInfo.bankCode,
@@ -509,10 +561,12 @@ export default class EditWithdrawalInfo extends BaseVue {
           "success",
           "Successfully initiated update. Please check your email"
         );
+        self.loading = false;
         self.close();
       })
       .catch((error) => {
         Log.error(error);
+        self.loading = false;
         self.errorMsg = Util.extractGqlError(error);
       });
   }

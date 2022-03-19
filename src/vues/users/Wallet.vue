@@ -56,7 +56,7 @@
             <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
               transaction.sourceWalletName
             }}</span>
-            <span style="color: #333333" class="fs-28 fw-600">{{
+            <span style="color: #333333" class="wine fs-28 fw-600">{{
               transaction.sourceWalletId
             }}</span>
           </div>
@@ -69,7 +69,7 @@
             <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
               transaction.destinationWalletName
             }}</span>
-            <span style="color: #333333" class="fs-28 fw-600">{{
+            <span style="color: #333333" class="blue fs-28 fw-600">{{
               transaction.destinationWalletId
             }}</span>
           </div>
@@ -88,10 +88,12 @@
       </div>
     </div>
     <create-pin :isModalOpen="open" @close="closeModal" />
+
     <edit-withdrawal-info
       :isModalOpen="openEditWithdrawal"
-      :walletId="userWalletQuery.walletBalance[0].walletId"
+      :walletId="userWalletId"
       :banks="banksList"
+      :username="username"
       @close="closeEditWithdrawalModal"
     />
 
@@ -100,6 +102,9 @@
       :banks="banksList"
       @close="closeWithdrawFundsModal"
     />
+
+    <wallet-update-approval />
+
   </div>
 </template>
 
@@ -117,6 +122,8 @@ import WalletBalanceCardLoading from "./WalletBalanceCardLoading.vue";
 import CreatePin from "./CreatePin.vue";
 import EditWithdrawalInfo from "./EditWithdrawalInfo.vue";
 import WithdrawFunds from "./WithdrawFunds.vue";
+import WalletUpdateApproval from "./WalletUpdateApproval.vue";
+import { EventTrigger } from "@/components/core/Event";
 
 
 @Component({
@@ -163,7 +170,11 @@ import WithdrawFunds from "./WithdrawFunds.vue";
       result({ data }) {
         Log.info("FetchBanks Query: " + JSON.stringify(data));
         this.banks.data = data?.fetchBanks;
+        EventTrigger.trigger(
+          "wallet-update-banks-fetched-event", this.banks.data
+        );
       },
+
       error(error: ApolloError) {
         this.userWalletTransactionsQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.userWalletTransactionsQuery.error)) {
@@ -178,9 +189,11 @@ import WithdrawFunds from "./WithdrawFunds.vue";
     CreatePin,
     EditWithdrawalInfo,
     WithdrawFunds,
+    WalletUpdateApproval,
   },
 })
 export default class Wallet extends BaseVue {
+
   @Prop()
   private loading!: boolean;
 
@@ -230,6 +243,10 @@ export default class Wallet extends BaseVue {
     return this.banks.data;
   }
 
+  private get userWalletId() {
+    return this.userWalletQuery.walletBalance[0].walletId;
+  }
+
   private open = false;
   private openModal() {
     this.open = true;
@@ -254,16 +271,6 @@ export default class Wallet extends BaseVue {
     this.openEditWithdrawal = false;
   }
 
-  //   {
-  // "sourceWalletId":"000000000000004",
-  // "sourceWalletName":"Lottery Wallet 106",
-  // "destinationWalletId":"00000000000111",
-  // "destinationWalletName":"111 Wallet ID",
-  // "amount":"450.00",
-  // "reference":"1631142684501-2259576",
-  // "narration":null,
-  // "__typename":"WalletFundsTransferDTO"
-  // }
 }
 </script>
 
