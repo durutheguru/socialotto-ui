@@ -18,44 +18,19 @@
       </div>
 
       <div class="flex-col w-80">
-        <div
-          @click="openAddWithdrawalModal"
-          class="br-12 h-12 cursor-pointer flex items-center justify-center mb-4"
-          style="border: 1px solid #FFFFFF;"
-        >
-          <span class="text-white fw-500 fs-16">Set withdrawal account</span>
-        </div>
-
         <div class="flex justify-between">
           <div
             @click="openWithdrawFundsModal"
-            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center"
-          >
+            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center">
             <span class="fw-500 fs-16" style="color: #3C798A;">Withdraw</span>
           </div>
           <div
-            @click="openModal"
+            @click="openEditWithdrawalModal"
             style="background-color: #CDE4EA;"
-            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12"
-          >
-            <span class="fw-500 fs-16 mr-2" style="color: #3C798A;"
-              >Set PIN</span
-            >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.5 15L12.5 10L7.5 5"
-                stroke="#2D5763"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12">
+            <span class="fw-500 fs-16 mr-2" style="color: #3C798A;">
+              <i class="fa bigger-font fa-gear"></i>
+            </span>
           </div>
         </div>
       </div>
@@ -113,10 +88,11 @@
       </div>
     </div>
     <create-pin :isModalOpen="open" @close="closeModal" />
-    <add-withdrawal-account
-      :isModalOpen="openAddWithdrawal"
+    <edit-withdrawal-info
+      :isModalOpen="openEditWithdrawal"
+      :walletId="userWalletQuery.walletBalance[0].walletId"
       :banks="banksList"
-      @close="closeAddWithdrawalModal"
+      @close="closeEditWithdrawalModal"
     />
 
     <withdraw-funds
@@ -139,8 +115,10 @@ import { Log, Util } from "@/components/util";
 import store from "@/store/index";
 import WalletBalanceCardLoading from "./WalletBalanceCardLoading.vue";
 import CreatePin from "./CreatePin.vue";
-import AddWithdrawalAccount from "./AddWithdrawalAccount.vue";
+import EditWithdrawalInfo from "./EditWithdrawalInfo.vue";
 import WithdrawFunds from "./WithdrawFunds.vue";
+
+
 @Component({
   name: "Wallet",
   props: {
@@ -198,7 +176,7 @@ import WithdrawFunds from "./WithdrawFunds.vue";
   components: {
     WalletBalanceCardLoading,
     CreatePin,
-    AddWithdrawalAccount,
+    EditWithdrawalInfo,
     WithdrawFunds,
   },
 })
@@ -268,12 +246,12 @@ export default class Wallet extends BaseVue {
     this.openWithdrawFunds = false;
   }
 
-  private openAddWithdrawal = false;
-  private openAddWithdrawalModal() {
-    this.openAddWithdrawal = true;
+  private openEditWithdrawal = false;
+  private openEditWithdrawalModal() {
+    this.openEditWithdrawal = true;
   }
-  private closeAddWithdrawalModal() {
-    this.openAddWithdrawal = false;
+  private closeEditWithdrawalModal() {
+    this.openEditWithdrawal = false;
   }
 
   //   {
@@ -290,3 +268,5 @@ export default class Wallet extends BaseVue {
 </script>
 
 <style scoped></style>
+
+

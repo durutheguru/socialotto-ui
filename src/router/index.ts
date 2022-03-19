@@ -102,17 +102,17 @@ const routes = [
       },
       {
         path: "/user",
-        redirect: "/profile",
+        redirect: "/user/profile",
         name: "User",
         component: () => import("@/vues/users/User.vue"),
         children: [
           {
-            path: "/profile",
+            path: "profile",
             name: "Profile",
             component: () => import("@/vues/users/Profile.vue"),
           },
           {
-            path: "/wallet",
+            path: "wallet",
             name: "Wallet",
             component: () => import("@/vues/users/Wallet.vue"),
           },
