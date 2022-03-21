@@ -54,18 +54,6 @@
           </div>
 
           <div>
-            <label
-              for="password"
-              style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-              class="block text-sm font-medium "
-            >
-              Password
-            </label>
             <div class="mt-1">
               <validation-provider rules="required" v-slot="{ errors }">
                 <input
@@ -213,15 +201,17 @@ export default class Login extends BaseVue {
   private isLoginFailureURLParamsSet(): boolean {
     const query = this.$route.query;
 
-    const error = query.err as string;
+    const error = query.activation_err as string;
 
     return Util.isValidString(error);
   }
 
   private handleLoginFailureURLParams() {
     const query = this.$route.query;
-    const error = query.err as string;
-    this.userLogin.error = ErrorCode.map.get(error) || "";
+    const error = query.activation_err as string;
+    this.userLogin.error = window.atob(error);
+    Log.info("Login Failure: " + this.userLogin.error);
+    Util.handleGlobalAlert(true, "failed", this.userLogin.error);
   }
 
   private isLoginSuccessURLParamsSet(): boolean {
