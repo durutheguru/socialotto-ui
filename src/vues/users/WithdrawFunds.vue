@@ -26,10 +26,14 @@
               <div class="flex items-center  mb-2">
                 <div class="w-full justify-center items-center">
                   <h2
-                    class="text-lg text-center  leading-7 font-medium light-blue-text spartan mb-0"
+                    v-if="!isValidString(errorMsg)"
+                    class="text-lg leading-7 font-medium light-blue-text spartan mb-0"
                   >
                     Withdraw Funds
                   </h2>
+                  <h4 class="wine slight-smaller-font" v-else>
+                    {{ errorMsg }}
+                  </h4>
                 </div>
                 <div class="h-7 flex items-center  py-4 ">
                   <button
@@ -58,12 +62,6 @@
                 </div>
               </div>
 
-              <div class="flex justify-center mt-2 mb-4">
-                <span class="fw-400 fs-14 text-black "
-                  >Create a 4 digit PIN for transactions</span
-                >
-              </div>
-
               <div class=" flex flex-col justify-between h-full ">
                 <validation-observer
                   ref="observer"
@@ -75,43 +73,7 @@
                   @submit.prevent="savePin"
                   novalidate
                 >
-                  <!-- ------------- -->
-                  <div class="mb-6">
-                    <label
-                      for="Enter Withdrawal Amount"
-                      style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-                      class="block text-sm font-medium "
-                    >
-                      Enter Withdrawal Amount
-                    </label>
-                    <div class="mt-1">
-                      <validation-provider
-                        rules="required|numeric"
-                        v-slot="{ errors }"
-                      >
-                        <input
-                          id="Amount"
-                          name="value"
-                          type="number"
-                          placeholder="Amount"
-                          autocomplete=""
-                          required
-                          :class="{
-                            'border-red-400': errors.length > 0,
-                          }"
-                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
-                        />
-                        <span class="text-red-500 spartan">{{
-                          errors[0]
-                        }}</span>
-                      </validation-provider>
-                    </div>
-                  </div>
+                  
                   <!-- --------------------------Replace all secrets on netlify------------------------------- -->
                   <div class="mb-6">
                     <label
@@ -162,9 +124,10 @@
                           </svg>
                         </div>
                       </div>
-                      <div class="relative bg-white z-20 " v-if="openMenu">
+                      <!-- <div class="relative bg-white z-20 " v-if="openMenu">
                         <ul
                           style="max-height: 10rem; overflow-y: auto"
+                          aria-disabled="true"
                           class=" py-2 pb-4 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
                         >
                           <li
@@ -176,10 +139,11 @@
                             {{ bankInfo.bankName }}
                           </li>
                         </ul>
-                      </div>
+                      </div> -->
                     </div>
                     <!-- -------------- -->
                   </div>
+
                   <div class="mb-3">
                     <label
                       for="value"
@@ -203,7 +167,9 @@
                           name="value"
                           type="number"
                           placeholder="Account Number"
+                          v-model="accountNumber"
                           autocomplete=""
+                          disabled=true
                           required
                           :class="{
                             'border-red-400': errors.length > 0,
@@ -218,9 +184,41 @@
                   </div>
 
                   <div class="mb-6">
-                    <span style="#4691A6" class="fw-600 fs-16"
-                      >Account name: Bismark Charity</span
+                    <label
+                      for="Enter Withdrawal Amount"
+                      style="font-family: 'Spartan', sans-serif;
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 12px;
+                    line-height: 100%;
+                    color: #797979;"
+                      class="block text-sm font-medium "
                     >
+                      Enter Withdrawal Amount
+                    </label>
+                    <div class="mt-1">
+                      <validation-provider
+                        rules="required|numeric"
+                        v-slot="{ errors }"
+                      >
+                        <input
+                          id="Amount"
+                          name="value"
+                          type="number"
+                          placeholder="Amount"
+                          autocomplete=""
+                          v-model="amount"
+                          required
+                          :class="{
+                            'border-red-400': errors.length > 0,
+                          }"
+                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                        />
+                        <span class="text-red-500 spartan">{{
+                          errors[0]
+                        }}</span>
+                      </validation-provider>
+                    </div>
                   </div>
 
                   <div class="mb-6">
@@ -247,6 +245,7 @@
                           type="password"
                           placeholder="Pin"
                           autocomplete=""
+                          v-model="pin"
                           required
                           :class="{
                             'border-red-400': errors.length > 0,
@@ -262,10 +261,8 @@
 
                   <!-- -------------------------------Merge secrets------------------------------- -->
                   <div class="flexmt-4">
-                    <button class="hidden" id="reset2" type="reset">
-                      Reset
-                    </button>
                     <div
+                      @click="withdrawFunds()"
                       :disabled="invalid"
                       :class="[invalid ? 'opacity-25' : 'opacity-100']"
                       class="bg-blue-200 h-12  w-full rounded-md flex items-center spartan justify-center cursor-pointer"
@@ -291,37 +288,117 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
+import { FetchUserWalletInfo, InitializeWalletCashout } from "@/services/wallet/wallet.gql";
+import { EventBus, EventTrigger } from "@/components/core/Event";
+import { ApolloError } from "apollo-client";
+import BaseVue from "@/components/BaseVue";
 
 @Component
-export default class WithdrawFunds extends Vue {
-  private mounted() {
-    Log.info("isModalOpen: " + JSON.stringify(this.isModalOpen));
-  }
+export default class WithdrawFunds extends BaseVue {
+
 
   @Prop()
   private isModalOpen!: boolean;
 
+
+  private bankInfo = { bankName: "", bankCode: "" };
+
+
   @Prop()
   private banks!: [];
+
+
+  @Prop()
+  private walletId!: string;
+
+
+  @Prop()
+  private username!: string;
+
+
+  private accountNumber: string = "";
+
+
+  private fetchUserWalletInfo: any = {};
+
+
+  private openMenu = false;
+
+
+  private userWalletId: string = '';
+
+
+  private amount: number = 0.0;
+
+
+  private pin = "";
+
+
+  private loading: boolean = false;
+
+
+  private errorMsg: string = "";
+
+
+
+  private mounted() {
+    let self = this;
+    Log.info("isModalOpen: " + JSON.stringify(this.isModalOpen));
+    self.userWalletId = this.walletId;
+    self.fetchWalletDetails();
+    EventBus.$on("wallet-update-banks-fetched-event", (data: any) => {
+      Log.info("Banks Fetched Update received: " + JSON.stringify(data));
+      data.filter((value: any) => {
+        if (value.bankCode === self.fetchUserWalletInfo.bankCode) {
+          self.selectBankInfo(value);
+        }
+      });
+    });
+  }
+
+
+  private fetchWalletDetails() {
+    let self = this;
+    self.$apollo
+      .query({
+        query: FetchUserWalletInfo,
+        variables: {
+          username: this.username,
+        },
+      })
+      .then(({ data }) => {
+        Log.info("User Wallet Info: " + JSON.stringify(data));
+        self.fetchUserWalletInfo = data.fetchUserWalletInfo;
+        self.bankInfo.bankCode = self.fetchUserWalletInfo.bankCode;
+        self.accountNumber = self.fetchUserWalletInfo.accountNumber;
+        
+        // this.accountNumber = data?.viewUserDetails;
+        // Log.info("User Query: " + JSON.stringify(this.userQuery.data));
+      })
+      .catch(
+        (error: ApolloError) => {
+          Log.error("User Wallet Info Error: " + error);
+        }
+      );
+  }
+
+
   private close() {
     // this.isModalOpen = false;
     this.$emit("close");
   }
 
-  private openMenu = false;
 
   private toggleBanks() {
     this.openMenu = !this.openMenu;
   }
 
-  // private get bankList() {
-  //   return this.banks;
-  // }
 
-  private bankInfo = { bankName: "", bankCode: "" };
   private get bankInfoArray() {
     return this.banks;
   }
+
+
   private selectBankInfo(info: any) {
     this.bankInfo = info;
     this.openMenu = false;
@@ -329,12 +406,61 @@ export default class WithdrawFunds extends Vue {
     Log.info(this.bankInfo.bankCode);
   }
 
-  private pin = "";
-  private confirmPin = "";
-  private savePin() {
-    Log.info(this.pin);
-    this.close();
+
+  private isValidUpdate(): boolean {
+    return (
+      this.isValidString(this.bankInfo.bankCode) &&
+      this.isValidString(this.accountNumber) &&
+      this.isValidString(this.pin) && 
+      this.amount > 0
+    );
   }
+
+  
+  private withdrawFunds() {
+    if (!this.isValidUpdate()) {
+      Log.info("Invalid Cashout Withdrawal was triggered..");
+      return;
+    }
+
+    let self = this;
+    self.loading = true;
+
+    let cashout = {
+      walletId: self.userWalletId,
+      cashOutPin: self.pin,
+      amount: self.amount,
+      username: self.username,
+    };
+    Log.info("Posting Cashout :" + JSON.stringify(cashout));
+
+    this.$apollo
+      .mutate({
+        mutation: InitializeWalletCashout,
+        variables: {
+          input: cashout,
+        },
+      })
+      .then((data: any) => {
+        Log.info("Cashout Response Data: " + JSON.stringify(data));
+        Util.handleGlobalAlert(
+          true, "success",
+          "Please check your email for OTP."
+        );
+        self.loading = false;
+        EventTrigger.trigger(
+          "wallet-cashout-initiation", data.data.initializeCashoutFromWallet.reference
+        );
+        self.close();
+      })
+      .catch((error) => {
+        Log.error(error);
+        self.loading = false;
+        self.errorMsg = Util.extractGqlError(error);
+      });
+  }
+
+
 }
 </script>
 

@@ -58,8 +58,7 @@
                       light-blue-text
                       spartan
                       mb-0
-                    "
-                  >
+                    ">
                     Edit Withdrawal Info
                   </h2>
                   <h4 class="wine slight-smaller-font" v-else>
@@ -433,7 +432,6 @@ export default class EditWithdrawalInfo extends BaseVue {
 
   private accountNumber: string = "";
 
-  // private errorMsg: string = "";
 
   private errorMsg: string = "";
 
@@ -455,6 +453,7 @@ export default class EditWithdrawalInfo extends BaseVue {
 
 
   private userWalletId: string = '';
+
 
   private loading: boolean = false;
 

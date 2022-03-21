@@ -35,9 +35,36 @@ const FetchUserWalletInfo = gql`
 `;
 
 
+const InitializeWalletCashout = gql`
+    mutation WalletCashOutInitResponse($input: WalletCashOutInitRequest) {
+        initializeCashoutFromWallet(cashOutInitRequest: $input) {
+            amount
+            reference
+        }
+    }
+`;
+
+
+const CompleteCashoutRequest = gql`
+    mutation WalletCashOutResponse($input: WalletCashOutRequest) {
+        completeCashoutRequest(cashOutRequest: $input) {
+            responseMessage
+            responseCode
+            requestSuccessful
+            responseBody{
+                dateCreated reference status amount totalFee 
+            }
+        }
+    }
+`;
+
+
 export {
     WalletWithdrawalUpdateAction,
     ApproveWalletUpdateAction,
     FetchUserWalletInfo,
+    InitializeWalletCashout,
+    CompleteCashoutRequest,
 };
+
 

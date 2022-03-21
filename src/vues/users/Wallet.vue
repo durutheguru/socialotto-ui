@@ -87,7 +87,8 @@
         </div>
       </div>
     </div>
-    <create-pin :isModalOpen="open" @close="closeModal" />
+
+    <!-- <create-pin :isModalOpen="open" @close="closeModal" /> -->
 
     <edit-withdrawal-info
       :isModalOpen="openEditWithdrawal"
@@ -97,9 +98,16 @@
       @close="closeEditWithdrawalModal"
     />
 
+    <cashout-otp 
+      :isModalOpen="openCashoutOTP"
+      :reference="cashoutReference"
+      @close="closeCashoutOTPModal" />
+
     <withdraw-funds
       :isModalOpen="openWithdrawFunds"
       :banks="banksList"
+      :walletId="userWalletId"
+      :username="username"
       @close="closeWithdrawFundsModal"
     />
 
@@ -123,7 +131,8 @@ import CreatePin from "./CreatePin.vue";
 import EditWithdrawalInfo from "./EditWithdrawalInfo.vue";
 import WithdrawFunds from "./WithdrawFunds.vue";
 import WalletUpdateApproval from "./WalletUpdateApproval.vue";
-import { EventTrigger } from "@/components/core/Event";
+import { EventBus, EventTrigger } from "@/components/core/Event";
+import CashoutOtp from "./CashoutOtp.vue";
 
 
 @Component({
@@ -190,6 +199,7 @@ import { EventTrigger } from "@/components/core/Event";
     EditWithdrawalInfo,
     WithdrawFunds,
     WalletUpdateApproval,
+    CashoutOtp,
   },
 })
 export default class Wallet extends BaseVue {
@@ -200,7 +210,11 @@ export default class Wallet extends BaseVue {
   @Prop()
   private userWalletQuery!: any;
 
+
+  private cashoutReference: string = '';
+
   private mounted() {
+    let self = this;
     Log.info(
       "should Skip?:" +
         JSON.stringify(
@@ -208,6 +222,12 @@ export default class Wallet extends BaseVue {
         )
     );
     Log.info("userWalletQuery" + JSON.stringify(this.userWalletQuery));
+
+    EventBus.$on("wallet-cashout-initiation", (data: any) => {
+      self.cashoutReference = data;
+      Log.info("Cashout Reference: " + self.cashoutReference);
+      self.openCashoutOTPModal();
+    });
   }
 
   private username = store.getters["authToken/username"];
@@ -269,6 +289,14 @@ export default class Wallet extends BaseVue {
   }
   private closeEditWithdrawalModal() {
     this.openEditWithdrawal = false;
+  }
+
+  private openCashoutOTP = false;
+  private openCashoutOTPModal() {
+    this.openCashoutOTP = true;
+  }
+  private closeCashoutOTPModal() {
+    this.openCashoutOTP = false;
   }
 
 }
