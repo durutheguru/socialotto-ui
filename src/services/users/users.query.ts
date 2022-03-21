@@ -63,4 +63,45 @@ const getUserCashoutInfo = gql`
   }
 `;
 
-export { viewAllUsers, viewUserDetails, getUserCashoutInfo };
+const viewWalletBalances = gql`
+  query viewWalletBalances($userType: String, $username: String) {
+    viewWalletBalances(userType: $userType, username: $username) {
+      walletId
+      walletName
+      balance
+    }
+  }
+`;
+
+const getAllWalletTransactions = gql`
+  query getAllWalletTransactions($username: String, $walletId: String) {
+    getAllWalletTransactions(username: $username, walletId: $walletId) {
+      sourceWalletId
+      sourceWalletName
+      destinationWalletId
+      destinationWalletName
+      amount
+      reference
+      narration
+      transactionDateTime
+    }
+  }
+`;
+
+const fetchBanks = gql`
+  query fetchBanks {
+    fetchBanks {
+      bankCode
+      bankName
+    }
+  }
+`;
+
+export {
+  viewAllUsers,
+  viewUserDetails,
+  getUserCashoutInfo,
+  viewWalletBalances,
+  getAllWalletTransactions,
+  fetchBanks,
+};

@@ -54,18 +54,6 @@
           </div>
 
           <div>
-            <label
-              for="password"
-              style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-              class="block text-sm font-medium "
-            >
-              Password
-            </label>
             <div class="mt-1">
               <validation-provider rules="required" v-slot="{ errors }">
                 <input
