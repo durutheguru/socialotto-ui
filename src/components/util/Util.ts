@@ -73,6 +73,16 @@ export default class Util {
 
   public static handleGlobalAlert(show: boolean, type: string, text: string) {
     store.commit("setGlobalAlert", { show, type, text });
+    Util.throttle({
+      key: "reset-global-alert",
+      run: () => {
+        setTimeout(() => {
+          store.commit("setGlobalAlert", { show: false });
+        }, 4000);
+      },
+      time: 300
+    });
+    
   }
 
   public static throttle(t: any) {
