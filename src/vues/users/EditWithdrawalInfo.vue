@@ -5,7 +5,17 @@
       class="fixed z-50 inset-0 overflow-hidden modal-blur"
     >
       <div
-        class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+        class="
+          flex
+          items-end
+          justify-center
+          min-h-screen
+          pt-4
+          px-4
+          pb-20
+          text-center
+          sm:block sm:p-0
+        "
       >
         <div class="fixed inset-0 transition-opacity">
           <div
@@ -18,35 +28,61 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
         >&#8203;
         <section
-          class="main inline-block bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
+          class="
+            main
+            inline-block
+            bg-white
+            align-bottom
+            rounded-lg
+            shadow-xs
+            text-left
+            overflow-hidden
+            transform
+            transition-all
+            max-w-lg
+            mx-auto
+            sm:my-8 sm:align-middle sm:w-full
+          "
         >
           <div class="w-full h-full overflow-y-auto">
             <div class="flex flex-col h-full p-10">
               <!-- <div class="flex-1 h-full flex flex-col"> -->
-              <div class="flex items-center  mb-2">
+              <div class="flex items-center mb-2">
                 <div class="w-full justify-center items-center">
                   <h2
                     v-if="!isValidString(errorMsg)"
-                    class="text-lg leading-7 font-medium light-blue-text spartan mb-0"
-                  >
-                    Withdraw Funds
+                    class="
+                      text-lg
+                      leading-7
+                      font-medium
+                      light-blue-text
+                      spartan
+                      mb-0
+                    ">
+                    Edit Withdrawal Info
                   </h2>
                   <h4 class="wine slight-smaller-font" v-else>
                     {{ errorMsg }}
                   </h4>
                 </div>
-                <div class="h-7 flex items-center  py-4 ">
+                <div class="h-7 flex items-center py-4">
                   <button
                     @click="close"
                     aria-label="Close panel"
-                    class=" cursor-pointer transition ease-in-out duration-150 focus:outline-none"
+                    class="
+                      cursor-pointer
+                      transition
+                      ease-in-out
+                      duration-150
+                      focus:outline-none
+                    "
                   >
                     <!-- Heroicon name: x -->
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       height="32"
                       width="32"
-                      class="text-gray-300 hover:text-gray-400 "
+                      class="text-gray-300 hover:text-gray-400"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -61,8 +97,9 @@
                   </button>
                 </div>
               </div>
+              <br />
 
-              <div class=" flex flex-col justify-between h-full ">
+              <div class="flex flex-col justify-between h-full">
                 <validation-observer
                   ref="observer"
                   id="donate_form"
@@ -73,18 +110,19 @@
                   @submit.prevent="savePin"
                   novalidate
                 >
-                  
                   <!-- --------------------------Replace all secrets on netlify------------------------------- -->
                   <div class="mb-6">
                     <label
                       for="Bank Name"
-                      style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-                      class="block text-sm font-medium "
+                      style="
+                        font-family: 'Spartan', sans-serif;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 100%;
+                        color: #797979;
+                      "
+                      class="block text-sm font-medium"
                     >
                       Bank Name
                     </label>
@@ -93,7 +131,14 @@
                     <div class="mt-1">
                       <div
                         @click="toggleBanks"
-                        class="cursor-pointer relative flex border-gray-300 border-2 border-blue-dark  rounded-md h-12"
+                        class="
+                          cursor-pointer
+                          relative
+                          flex
+                          border-gray-300 border-2 border-blue-dark
+                          rounded-md
+                          h-12
+                        "
                       >
                         <input
                           readonly
@@ -103,7 +148,18 @@
                           type="text"
                           placeholder="bankName"
                           autocomplete=""
-                          class="cursor-pointer spartan bg-transparent appearance-none block w-full px-3 py-2placeholder-gray-400 focus:outline-none sm:text-sm"
+                          class="
+                            cursor-pointer
+                            spartan
+                            bg-transparent
+                            appearance-none
+                            block
+                            w-full
+                            px-3
+                            py-2placeholder-gray-400
+                            focus:outline-none
+                            sm:text-sm
+                          "
                         />
 
                         <div class="cursor-pointer inset-y-0 my-auto mr-3">
@@ -124,11 +180,20 @@
                           </svg>
                         </div>
                       </div>
-                      <!-- <div class="relative bg-white z-20 " v-if="openMenu">
+                      <div class="relative bg-white z-20" v-if="openMenu">
                         <ul
                           style="max-height: 10rem; overflow-y: auto"
-                          aria-disabled="true"
-                          class=" py-2 pb-4 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                          class="
+                            py-2
+                            pb-4
+                            absolute
+                            w-full
+                            rounded-md
+                            shadow-md
+                            bg-white
+                            spartan
+                            text-sm
+                          "
                         >
                           <li
                             class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
@@ -139,21 +204,22 @@
                             {{ bankInfo.bankName }}
                           </li>
                         </ul>
-                      </div> -->
+                      </div>
                     </div>
                     <!-- -------------- -->
                   </div>
-
                   <div class="mb-3">
                     <label
                       for="value"
-                      style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-                      class="block text-sm font-medium "
+                      style="
+                        font-family: 'Spartan', sans-serif;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 100%;
+                        color: #797979;
+                      "
+                      class="block text-sm font-medium"
                     >
                       Account Number
                     </label>
@@ -163,56 +229,31 @@
                         v-slot="{ errors }"
                       >
                         <input
-                          id="AccountNumber"
+                          id="Account Number"
                           name="value"
-                          type="number"
+                          type="text"
                           placeholder="Account Number"
+                          autocomplete=""
+                          required
                           v-model="accountNumber"
-                          autocomplete=""
-                          disabled=true
-                          required
                           :class="{
                             'border-red-400': errors.length > 0,
                           }"
-                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
-                        />
-                        <span class="text-red-500 spartan">{{
-                          errors[0]
-                        }}</span>
-                      </validation-provider>
-                    </div>
-                  </div>
-
-                  <div class="mb-6">
-                    <label
-                      for="Enter Withdrawal Amount"
-                      style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-                      class="block text-sm font-medium "
-                    >
-                      Enter Withdrawal Amount
-                    </label>
-                    <div class="mt-1">
-                      <validation-provider
-                        rules="required|numeric"
-                        v-slot="{ errors }"
-                      >
-                        <input
-                          id="Amount"
-                          name="value"
-                          type="number"
-                          placeholder="Amount"
-                          autocomplete=""
-                          v-model="amount"
-                          required
-                          :class="{
-                            'border-red-400': errors.length > 0,
-                          }"
-                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                          class="
+                            h-12
+                            spartan
+                            border-gray-300 border-2 border-blue-dark
+                            bg-transparent
+                            appearance-none
+                            block
+                            w-full
+                            px-3
+                            py-2
+                            rounded-md
+                            placeholder-gray-400
+                            focus:outline-none
+                            sm:text-sm
+                          "
                         />
                         <span class="text-red-500 spartan">{{
                           errors[0]
@@ -224,13 +265,15 @@
                   <div class="mb-6">
                     <label
                       for="Enter Pin"
-                      style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-                      class="block text-sm font-medium "
+                      style="
+                        font-family: 'Spartan', sans-serif;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 100%;
+                        color: #797979;
+                      "
+                      class="block text-sm font-medium"
                     >
                       Enter Pin
                     </label>
@@ -245,12 +288,80 @@
                           type="password"
                           placeholder="Pin"
                           autocomplete=""
-                          v-model="pin"
                           required
+                          v-model="pin"
                           :class="{
                             'border-red-400': errors.length > 0,
                           }"
-                          class="h-12 spartan border-gray-300 border-2 border-blue-dark bg-transparent appearance-none block w-full px-3 py-2 rounded-md placeholder-gray-400 focus:outline-none sm:text-sm"
+                          class="
+                            h-12
+                            spartan
+                            border-gray-300 border-2 border-blue-dark
+                            bg-transparent
+                            appearance-none
+                            block
+                            w-full
+                            px-3
+                            py-2
+                            rounded-md
+                            placeholder-gray-400
+                            focus:outline-none
+                            sm:text-sm
+                          "
+                        />
+                        <span class="text-red-500 spartan">{{
+                          errors[0]
+                        }}</span>
+                      </validation-provider>
+                    </div>
+                  </div>
+
+                  <div class="mb-6">
+                    <label
+                      for="confirm_pin"
+                      style="
+                        font-family: 'Spartan', sans-serif;
+                        font-style: normal;
+                        font-weight: normal;
+                        font-size: 12px;
+                        line-height: 100%;
+                        color: #797979;
+                      "
+                      class="block text-sm font-medium"
+                    >
+                      Confirm Pin
+                    </label>
+                    <div class="mt-1">
+                      <validation-provider
+                        rules="required|numeric"
+                        v-slot="{ errors }"
+                      >
+                        <input
+                          id="confirm_pin"
+                          name="value"
+                          type="password"
+                          placeholder="Confirm Pin"
+                          autocomplete=""
+                          required
+                          v-model="confirmPin"
+                          :class="{
+                            'border-red-400': errors.length > 0,
+                          }"
+                          class="
+                            h-12
+                            spartan
+                            border-gray-300 border-2 border-blue-dark
+                            bg-transparent
+                            appearance-none
+                            block
+                            w-full
+                            px-3
+                            py-2
+                            rounded-md
+                            placeholder-gray-400
+                            focus:outline-none
+                            sm:text-sm
+                          "
                         />
                         <span class="text-red-500 spartan">{{
                           errors[0]
@@ -260,16 +371,31 @@
                   </div>
 
                   <!-- -------------------------------Merge secrets------------------------------- -->
-                  <div class="flexmt-4">
+                  <div class="flexmt-4 margin-top-m">
                     <div
-                      @click="withdrawFunds()"
-                      :disabled="invalid"
+                      :disabled="invalid || !isValidUpdate || loading"
                       :class="[invalid ? 'opacity-25' : 'opacity-100']"
-                      class="bg-blue-200 h-12  w-full rounded-md flex items-center spartan justify-center cursor-pointer"
+                      class="
+                        bg-blue-200
+                        h-12
+                        w-full
+                        rounded-md
+                        flex
+                        items-center
+                        spartan
+                        justify-center
+                        cursor-pointer
+                      "
+                      @click="saveUpdates()"
                     >
                       <span
-                        class="text-white text-base font-semi-bold cursor-pointer"
-                        >Withdraw Funds</span
+                        class="
+                          text-white text-base
+                          font-semi-bold
+                          cursor-pointer
+                        ">
+                        Save <i class="fa fa-spinner fa-spin" v-if="loading" />
+                        </span
                       >
                     </div>
                   </div>
@@ -288,25 +414,32 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
-import { FetchUserWalletInfo, InitializeWalletCashout } from "@/services/wallet/wallet.gql";
-import { EventBus, EventTrigger } from "@/components/core/Event";
-import { ApolloError } from "apollo-client";
+import { WalletWithdrawalUpdateAction } from "@/services/wallet/wallet.gql";
 import BaseVue from "@/components/BaseVue";
+import { FetchUserWalletInfo } from '@/services/wallet/wallet.gql';
+import { ApolloError } from "apollo-client";
+import { EventBus } from "@/components/core/Event";
 
 @Component
-export default class WithdrawFunds extends BaseVue {
+export default class EditWithdrawalInfo extends BaseVue {
+  private pin: string = "";
 
+  private confirmPin: string = "";
+
+  private openMenu: boolean = false;
+
+  private bankInfo: any = { bankName: "", bankCode: "" };
+
+  private accountNumber: string = "";
+
+
+  private errorMsg: string = "";
 
   @Prop()
   private isModalOpen!: boolean;
 
-
-  private bankInfo = { bankName: "", bankCode: "" };
-
-
   @Prop()
   private banks!: [];
-
 
   @Prop()
   private walletId!: string;
@@ -316,29 +449,13 @@ export default class WithdrawFunds extends BaseVue {
   private username!: string;
 
 
-  private accountNumber: string = "";
-
-
   private fetchUserWalletInfo: any = {};
-
-
-  private openMenu = false;
 
 
   private userWalletId: string = '';
 
 
-  private amount: number = 0.0;
-
-
-  private pin = "";
-
-
   private loading: boolean = false;
-
-
-  private errorMsg: string = "";
-
 
 
   private mounted() {
@@ -356,6 +473,36 @@ export default class WithdrawFunds extends BaseVue {
     });
   }
 
+
+  private close() {
+    // this.isModalOpen = false;
+    this.$emit("close");
+  }
+
+  private toggleBanks() {
+    this.openMenu = !this.openMenu;
+  }
+
+  private get bankInfoArray() {
+    return this.banks;
+  }
+
+  private selectBankInfo(info: any) {
+    this.bankInfo = info;
+    this.openMenu = false;
+
+    Log.info("Selected Bank Info: " + this.bankInfo.bankCode);
+  }
+
+  private isValidUpdate(): boolean {
+    return (
+      this.isValidString(this.bankInfo.bankCode) &&
+      this.isValidString(this.accountNumber) &&
+      this.isValidString(this.pin) &&
+      this.isValidString(this.confirmPin) &&
+      this.pin === this.confirmPin
+    );
+  }
 
   private fetchWalletDetails() {
     let self = this;
@@ -383,74 +530,37 @@ export default class WithdrawFunds extends BaseVue {
   }
 
 
-  private close() {
-    // this.isModalOpen = false;
-    this.$emit("close");
-  }
-
-
-  private toggleBanks() {
-    this.openMenu = !this.openMenu;
-  }
-
-
-  private get bankInfoArray() {
-    return this.banks;
-  }
-
-
-  private selectBankInfo(info: any) {
-    this.bankInfo = info;
-    this.openMenu = false;
-
-    Log.info(this.bankInfo.bankCode);
-  }
-
-
-  private isValidUpdate(): boolean {
-    return (
-      this.isValidString(this.bankInfo.bankCode) &&
-      this.isValidString(this.accountNumber) &&
-      this.isValidString(this.pin) && 
-      this.amount > 0
-    );
-  }
-
-  
-  private withdrawFunds() {
+  private saveUpdates() {
     if (!this.isValidUpdate()) {
-      Log.info("Invalid Cashout Withdrawal was triggered..");
+      Log.info("Invalid Wallet Update was triggered..");
       return;
     }
 
     let self = this;
     self.loading = true;
-
-    let cashout = {
+    let update = {
       walletId: self.userWalletId,
-      cashOutPin: self.pin,
-      amount: self.amount,
-      username: self.username,
+      walletPin: self.pin,
+      withdrawalAccountNumber: self.accountNumber,
+      withdrawalBankCode: self.bankInfo.bankCode,
     };
-    Log.info("Posting Cashout :" + JSON.stringify(cashout));
+    Log.info("Posting Update :" + JSON.stringify(update));
 
     this.$apollo
       .mutate({
-        mutation: InitializeWalletCashout,
+        mutation: WalletWithdrawalUpdateAction,
         variables: {
-          input: cashout,
+          input: update,
         },
       })
       .then((data: any) => {
-        Log.info("Cashout Response Data: " + JSON.stringify(data));
+        Log.info("Data: " + String(data));
         Util.handleGlobalAlert(
-          true, "success",
-          "Please check your email for OTP."
+          true,
+          "success",
+          "Successfully initiated update. Please check your email"
         );
         self.loading = false;
-        EventTrigger.trigger(
-          "wallet-cashout-initiation", data.data.initializeCashoutFromWallet.reference
-        );
         self.close();
       })
       .catch((error) => {
@@ -459,9 +569,9 @@ export default class WithdrawFunds extends BaseVue {
         self.errorMsg = Util.extractGqlError(error);
       });
   }
-
-
 }
 </script>
 
+
 <style scoped></style>
+

@@ -18,44 +18,19 @@
       </div>
 
       <div class="flex-col w-80">
-        <div
-          @click="openAddWithdrawalModal"
-          class="br-12 h-12 cursor-pointer flex items-center justify-center mb-4"
-          style="border: 1px solid #FFFFFF;"
-        >
-          <span class="text-white fw-500 fs-16">Set withdrawal account</span>
-        </div>
-
         <div class="flex justify-between">
           <div
             @click="openWithdrawFundsModal"
-            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center"
-          >
+            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center">
             <span class="fw-500 fs-16" style="color: #3C798A;">Withdraw</span>
           </div>
           <div
-            @click="openModal"
+            @click="openEditWithdrawalModal"
             style="background-color: #CDE4EA;"
-            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12"
-          >
-            <span class="fw-500 fs-16 mr-2" style="color: #3C798A;"
-              >Set PIN</span
-            >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.5 15L12.5 10L7.5 5"
-                stroke="#2D5763"
-                stroke-width="1.6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12">
+            <span class="fw-500 fs-16 mr-2" style="color: #3C798A;">
+              <i class="fa bigger-font fa-gear"></i>
+            </span>
           </div>
         </div>
       </div>
@@ -81,7 +56,7 @@
             <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
               transaction.sourceWalletName
             }}</span>
-            <span style="color: #333333" class="fs-28 fw-600">{{
+            <span style="color: #333333" class="wine fs-28 fw-600">{{
               transaction.sourceWalletId
             }}</span>
           </div>
@@ -94,7 +69,7 @@
             <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">{{
               transaction.destinationWalletName
             }}</span>
-            <span style="color: #333333" class="fs-28 fw-600">{{
+            <span style="color: #333333" class="blue fs-28 fw-600">{{
               transaction.destinationWalletId
             }}</span>
           </div>
@@ -112,18 +87,32 @@
         </div>
       </div>
     </div>
-    <create-pin :isModalOpen="open" @close="closeModal" />
-    <add-withdrawal-account
-      :isModalOpen="openAddWithdrawal"
+
+    <!-- <create-pin :isModalOpen="open" @close="closeModal" /> -->
+
+    <edit-withdrawal-info
+      :isModalOpen="openEditWithdrawal"
+      :walletId="userWalletId"
       :banks="banksList"
-      @close="closeAddWithdrawalModal"
+      :username="username"
+      @close="closeEditWithdrawalModal"
     />
+
+    <cashout-otp 
+      :isModalOpen="openCashoutOTP"
+      :reference="cashoutReference"
+      @close="closeCashoutOTPModal" />
 
     <withdraw-funds
       :isModalOpen="openWithdrawFunds"
       :banks="banksList"
+      :walletId="userWalletId"
+      :username="username"
       @close="closeWithdrawFundsModal"
     />
+
+    <wallet-update-approval />
+
   </div>
 </template>
 
@@ -139,8 +128,13 @@ import { Log, Util } from "@/components/util";
 import store from "@/store/index";
 import WalletBalanceCardLoading from "./WalletBalanceCardLoading.vue";
 import CreatePin from "./CreatePin.vue";
-import AddWithdrawalAccount from "./AddWithdrawalAccount.vue";
+import EditWithdrawalInfo from "./EditWithdrawalInfo.vue";
 import WithdrawFunds from "./WithdrawFunds.vue";
+import WalletUpdateApproval from "./WalletUpdateApproval.vue";
+import { EventBus, EventTrigger } from "@/components/core/Event";
+import CashoutOtp from "./CashoutOtp.vue";
+
+
 @Component({
   name: "Wallet",
   props: {
@@ -185,7 +179,11 @@ import WithdrawFunds from "./WithdrawFunds.vue";
       result({ data }) {
         Log.info("FetchBanks Query: " + JSON.stringify(data));
         this.banks.data = data?.fetchBanks;
+        EventTrigger.trigger(
+          "wallet-update-banks-fetched-event", this.banks.data
+        );
       },
+
       error(error: ApolloError) {
         this.userWalletTransactionsQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.userWalletTransactionsQuery.error)) {
@@ -198,18 +196,25 @@ import WithdrawFunds from "./WithdrawFunds.vue";
   components: {
     WalletBalanceCardLoading,
     CreatePin,
-    AddWithdrawalAccount,
+    EditWithdrawalInfo,
     WithdrawFunds,
+    WalletUpdateApproval,
+    CashoutOtp,
   },
 })
 export default class Wallet extends BaseVue {
+
   @Prop()
   private loading!: boolean;
 
   @Prop()
   private userWalletQuery!: any;
 
+
+  private cashoutReference: string = '';
+
   private mounted() {
+    let self = this;
     Log.info(
       "should Skip?:" +
         JSON.stringify(
@@ -217,6 +222,12 @@ export default class Wallet extends BaseVue {
         )
     );
     Log.info("userWalletQuery" + JSON.stringify(this.userWalletQuery));
+
+    EventBus.$on("wallet-cashout-initiation", (data: any) => {
+      self.cashoutReference = data;
+      Log.info("Cashout Reference: " + self.cashoutReference);
+      self.openCashoutOTPModal();
+    });
   }
 
   private username = store.getters["authToken/username"];
@@ -252,6 +263,10 @@ export default class Wallet extends BaseVue {
     return this.banks.data;
   }
 
+  private get userWalletId() {
+    return this.userWalletQuery.walletBalance[0].walletId;
+  }
+
   private open = false;
   private openModal() {
     this.open = true;
@@ -268,25 +283,25 @@ export default class Wallet extends BaseVue {
     this.openWithdrawFunds = false;
   }
 
-  private openAddWithdrawal = false;
-  private openAddWithdrawalModal() {
-    this.openAddWithdrawal = true;
+  private openEditWithdrawal = false;
+  private openEditWithdrawalModal() {
+    this.openEditWithdrawal = true;
   }
-  private closeAddWithdrawalModal() {
-    this.openAddWithdrawal = false;
+  private closeEditWithdrawalModal() {
+    this.openEditWithdrawal = false;
   }
 
-  //   {
-  // "sourceWalletId":"000000000000004",
-  // "sourceWalletName":"Lottery Wallet 106",
-  // "destinationWalletId":"00000000000111",
-  // "destinationWalletName":"111 Wallet ID",
-  // "amount":"450.00",
-  // "reference":"1631142684501-2259576",
-  // "narration":null,
-  // "__typename":"WalletFundsTransferDTO"
-  // }
+  private openCashoutOTP = false;
+  private openCashoutOTPModal() {
+    this.openCashoutOTP = true;
+  }
+  private closeCashoutOTPModal() {
+    this.openCashoutOTP = false;
+  }
+
 }
 </script>
 
 <style scoped></style>
+
+

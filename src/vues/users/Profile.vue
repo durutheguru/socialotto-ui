@@ -10,10 +10,7 @@
                     font-size: 12px;
                     line-height: 100%;
                     color: #797979;"
-          class="block text-sm font-medium "
-        >
-          Name
-        </label>
+          class="block text-sm font-medium ">Name</label>
         <div class="mt-1">
           <input
             id="name"

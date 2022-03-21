@@ -180,15 +180,12 @@ import { viewWalletBalances } from "@/services/users/users.query";
   },
 })
 export default class User extends Vue {
-  private mounted() {
-    Log.info("username: " + this.username);
-    Log.info("userType: " + this.userType);
-  }
 
   private currentPage = "Profile";
 
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
+  
   private userQuery: any = {
     username: this.username,
     userType: this.userType,
@@ -205,13 +202,32 @@ export default class User extends Vue {
     error: "",
   };
 
+
+  private mounted() {
+    Log.info("username: " + this.username);
+    Log.info("userType: " + this.userType);
+
+    let location = window.location.pathname;
+    Log.info("PathName: " + location);
+
+    if (location.indexOf("user/profile") > 0) {
+      this.currentPage = "Profile";
+    } else if (location.indexOf("user/wallet") > 0) {
+      this.currentPage = "Wallet";
+    }
+  }
+
+
   private changeTo(path: string) {
     this.currentPage = path;
   }
 
+
   private get hasWalletId(): boolean {
     return Util.isValidString(this.userWalletQuery.walletId);
   }
+
+  
 }
 </script>
 
