@@ -54,18 +54,6 @@
           </div>
 
           <div>
-            <label
-              for="password"
-              style="font-family: 'Spartan', sans-serif;
-                    font-style: normal;
-                    font-weight: normal;
-                    font-size: 12px;
-                    line-height: 100%;
-                    color: #797979;"
-              class="block text-sm font-medium "
-            >
-              Password
-            </label>
             <div class="mt-1">
               <validation-provider rules="required" v-slot="{ errors }">
                 <input
@@ -192,6 +180,14 @@ export default class Login extends BaseVue {
      *          show login page
      *
      */
+
+    // if (this.isLoginFailureURLParamsSet()) {
+    //   this.handleLoginFailureURLParams();
+    // } else if (this.isLoginSuccessURLParamsSet()) {
+    //   this.handleLoginSuccessURLParams();
+    // } else {
+    //   Log.info("URL params not set");
+    // }
 
     if (this.isLoginFailureURLParamsSet()) {
       this.handleLoginFailureURLParams();
