@@ -101,7 +101,12 @@
               Password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required|min:6" v-slot="{ errors }">
+              <validation-provider
+                name="password"
+                mode="aggressive"
+                rules="required|min:6"
+                v-slot="{ errors }"
+              >
                 <input
                   id="password"
                   name="password"
@@ -135,7 +140,11 @@
               Confirm password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ errors }">
+              <validation-provider
+                mode="aggressive"
+                rules="required|password:@password"
+                v-slot="{ errors }"
+              >
                 <input
                   id="confirm-password"
                   name="confirm-password"
@@ -247,7 +256,7 @@
               style="background-color: #FF3D00; margin-bottom: 20px;"
               class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Google
+              <i class="large-font fa fa-google" style="position:relative;top:-10px"></i>oogle
             </button>
           </form>
         </div>
