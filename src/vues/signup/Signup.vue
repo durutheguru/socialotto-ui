@@ -102,7 +102,7 @@
             </label>
             <div class="mt-1">
               <validation-provider
-                name="confirm"
+                name="password"
                 mode="aggressive"
                 rules="required|min:6"
                 v-slot="{ errors }"
@@ -142,7 +142,7 @@
             <div class="mt-1">
               <validation-provider
                 mode="aggressive"
-                rules="required|password:@confirm"
+                rules="required|password:@password"
                 v-slot="{ errors }"
               >
                 <input
