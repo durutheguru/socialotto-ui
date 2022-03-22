@@ -101,7 +101,12 @@
               Password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required|min:6" v-slot="{ errors }">
+              <validation-provider
+                name="password"
+                mode="aggressive"
+                rules="required|min:6"
+                v-slot="{ errors }"
+              >
                 <input
                   id="password"
                   name="password"
@@ -135,7 +140,11 @@
               Confirm password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ errors }">
+              <validation-provider
+                mode="aggressive"
+                rules="required|password:@password"
+                v-slot="{ errors }"
+              >
                 <input
                   id="confirm-password"
                   name="confirm-password"
