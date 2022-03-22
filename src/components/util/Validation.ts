@@ -51,6 +51,14 @@ export default function() {
   //   message: 'Password confirmation does not match'
   // });
 
+  extend("password", {
+    params: ["target"],
+    validate(value, { target }) {
+      return value === target;
+    },
+    message: "Password confirmation does not match",
+  });
+
   extend("required", {
     validate(value: string): any {
       return {
