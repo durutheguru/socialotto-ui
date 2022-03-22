@@ -352,6 +352,7 @@ export default class Signup extends BaseVue {
       (error: any) => {
         self.userSignup.loading = false;
         self.userSignup.error = Util.extractError(error);
+        Util.handleGlobalAlert(true, "failed", self.userSignup.error);
       }
     );
   }

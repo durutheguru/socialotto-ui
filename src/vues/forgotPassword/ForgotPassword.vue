@@ -136,7 +136,7 @@ export default class ForgotPassword extends Vue {
       },
       (error: any) => {
         this.sendUserPassword.loading = false;
-        Util.handleGlobalAlert(true, "failed", "Password not sent to email");
+        Util.handleGlobalAlert(true, "failed", Util.extractError(error));
       }
     );
   }
