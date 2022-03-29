@@ -256,7 +256,7 @@
               style="background-color: #FF3D00; margin-bottom: 20px;"
               class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Google
+              <i class="large-font fa fa-google" style="position:relative;top:-10px"></i>oogle
             </button>
           </form>
         </div>
