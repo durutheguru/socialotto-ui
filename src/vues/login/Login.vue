@@ -191,10 +191,14 @@ export default class Login extends BaseVue {
 
     if (this.isLoginFailureURLParamsSet()) {
       this.handleLoginFailureURLParams();
-    } else if (this.isLoginSuccessURLParamsSet()) {
+    }
+    
+    if (this.isLoginSuccessURLParamsSet()) {
       this.handleLoginSuccessURLParams();
-    } else {
-      Log.info("URL params not set");
+    } 
+    
+    if (this.isSuccessMessageURLParamsSet()) {
+      this.handleSuccessMessageURLParams();
     }
   }
 
@@ -206,6 +210,7 @@ export default class Login extends BaseVue {
     return Util.isValidString(error);
   }
 
+
   private handleLoginFailureURLParams() {
     const query = this.$route.query;
     const error = query.activation_err as string;
@@ -213,6 +218,7 @@ export default class Login extends BaseVue {
     Log.info("Login Failure: " + this.userLogin.error);
     Util.handleGlobalAlert(true, "failed", this.userLogin.error);
   }
+  
 
   private isLoginSuccessURLParamsSet(): boolean {
     const query = this.$route.query;
@@ -238,6 +244,25 @@ export default class Login extends BaseVue {
     Log.info(`U: ${this.platformUser.email}, SS: ${this.platformUser.secret}`);
     this.doCredentialVerification();
   }
+
+
+  private isSuccessMessageURLParamsSet(): boolean {
+    const query = this.$route.query;
+    const msg = query.a_mg as string;
+
+    return Util.isValidString(msg);
+  }
+
+
+  private handleSuccessMessageURLParams() {
+    const query = this.$route.query;
+    let msg = query.a_mg as string;
+    msg = window.atob(msg);
+
+    Log.info("Login Message: " + msg);
+    Util.handleGlobalAlert(true, "success", msg);
+  }
+
 
   private getURLParams(): UserLoginToken {
     const query = this.$route.query;
