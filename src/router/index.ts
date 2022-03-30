@@ -100,6 +100,7 @@ const routes = [
         component: () =>
           import("@/vues/campaign/vues/create/CreateCampaign.vue"),
       },
+      
       {
         path: "/user",
         redirect: "/user/profile",
