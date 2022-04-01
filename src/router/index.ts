@@ -35,6 +35,9 @@ const routes = [
       {
         path: "/",
         name: "LandingPage",
+        meta: {
+          skipAuth: true,
+        },
         component: LandingPage,
       },
       {

@@ -21,8 +21,10 @@ export default class LoginService {
   }
 
   public static doLogout() {
-    localStorage.clear();
-    // Web.navigate("/");
+    // localStorage.clear();
+    store.commit("authToken/logout");
+
+    Web.navigate("/");
   }
 
   public static isUserLoggedIn() {

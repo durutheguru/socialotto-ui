@@ -93,13 +93,7 @@ export default class AvatarMenu extends Vue {
   }
 
   public logout() {
-    // store.commit("resetState");
-    store.commit("authToken/logout");
-    this.$router.push("/");
-    // LoginService.doLogout();
-    // Log.info(this.isLoggedIn);
-    // window.localStorage.clear();
-    // Log.info(this.isLoggedIn);
+    LoginService.doLogout();
   }
 }
 </script>
