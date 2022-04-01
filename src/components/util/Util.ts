@@ -46,7 +46,7 @@ export default class Util {
     storeMutation: string
   ) {
     let elem = document.getElementById(menu) as HTMLElement;
-    let rect = elem.getBoundingClientRect();
+    let rect = elem?.getBoundingClientRect();
     let rectx = Math.floor(rect.x);
     let recty = Math.floor(rect.y);
     let recth = Math.floor(rect.height);
@@ -80,12 +80,10 @@ export default class Util {
           store.commit("setGlobalAlert", { show: false });
         }, 4000);
       },
-      time: 300
+      time: 300,
     });
-    
   }
 
-  
   public static throttle(t: any) {
     if (Util.throttleObject[t.key]) {
       Util.throttleObject[t.key].exec = false;

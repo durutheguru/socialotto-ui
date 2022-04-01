@@ -6,11 +6,12 @@ import campaign from "./modules/campaign";
 import wallet from "./modules/wallet";
 import notification from "./modules/notification";
 import createPersistedState from "vuex-persistedstate";
+import { Log } from "@/components/util";
 
 Vue.use(Vuex);
 let timer: any;
-export default new Vuex.Store({
-  state: {
+function defaultState() {
+  return {
     entryUrl: null,
     globalAlert: { show: false, text: "", type: "" },
     dropMenu: false,
@@ -28,7 +29,10 @@ export default new Vuex.Store({
     campaignPendingDisapprovalLoading: false,
     isLotteryDisapproval: { show: false, lotteryId: "" },
     tbodyKey: 0,
-  },
+  };
+}
+export default new Vuex.Store({
+  state: defaultState(),
 
   getters: {
     entryUrl(context: any) {
@@ -37,6 +41,10 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    resetState(state) {
+      Log.info("called");
+      Object.assign(state, defaultState());
+    },
     entryUrl(context: any, url: string) {
       context.entryUrl = url;
     },
