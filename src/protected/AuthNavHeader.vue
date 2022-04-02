@@ -6,10 +6,7 @@
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <router-link
-          class="my-auto focus:outline-none no-underline"
-          :to="'/home'"
-        >
+        <router-link class="my-auto focus:outline-none no-underline" :to="'/'">
           <span class="signupLogo ">Socialotto</span>
         </router-link>
         <div class="menuIcon my-auto " @click="dropAuthMenu">
@@ -125,11 +122,12 @@
               </transition>
             </div>
           </div>
-          <div
+          <button
+            @click="$router.push('/home')"
             class=" customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             <span>Support a campaign</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>

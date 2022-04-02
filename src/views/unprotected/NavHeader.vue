@@ -10,7 +10,7 @@
       >
         <router-link
           class="signupLogo cursor-pointer my-auto no-underline"
-          :to="'/home'"
+          :to="'/'"
         >
           <span class="">Socialotto</span>
         </router-link>
@@ -54,11 +54,12 @@
               >Sign up</router-link
             >
           </div>
-          <div
-            class="spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+          <button
+            @click="$router.push('/home')"
+            class="cursor-pointer spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             Support a campaign
-          </div>
+          </button>
         </div>
       </div>
     </div>
