@@ -1,13 +1,16 @@
 <template>
   <div class="wrapper">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
-    <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
+    <div
+      v-if="!isLoggedIn"
+      class="signupHeader navheaderPadding z-10 bg-blue-50 "
+    >
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
         <router-link
           class="signupLogo cursor-pointer my-auto no-underline"
-          :to="'/home'"
+          :to="'/'"
         >
           <span class="">Socialotto</span>
         </router-link>
@@ -51,14 +54,16 @@
               >Sign up</router-link
             >
           </div>
-          <div
-            class="spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+          <button
+            @click="$router.push('/home')"
+            class="cursor-pointer spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             Support a campaign
-          </div>
+          </button>
         </div>
       </div>
     </div>
+    <AuthNavHeader v-else />
     <!-- </div> -->
     <hamburger-menu />
     <router-view></router-view>
@@ -70,6 +75,7 @@ import { Log, Util } from "@/components/util";
 // import { computed } from "vue";
 import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
+import AuthNavHeader from "@/protected/AuthNavHeader.vue";
 import ApiResource from "@/components/core/ApiResource";
 import store from "../../store/index";
 import HamburgerMenu from "./HamburgerMenu.vue";
@@ -82,11 +88,16 @@ import HamburgerMenu from "./HamburgerMenu.vue";
   name: "NavHeader",
   components: {
     HamburgerMenu,
+    AuthNavHeader,
   },
 })
 export default class NavHeader extends BaseVue {
   private get pageName(): string {
     return String(this.$route.name);
+  }
+
+  private get isLoggedIn(): boolean {
+    return store.getters["authToken/loggedIn"];
   }
 
   private mounted() {

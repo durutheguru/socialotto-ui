@@ -28,13 +28,16 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/login",
+
     name: "NavHeader",
     component: NavHeader,
     children: [
       {
         path: "/",
         name: "LandingPage",
+        meta: {
+          skipAuth: true,
+        },
         component: LandingPage,
       },
       {
@@ -77,21 +80,13 @@ const routes = [
           skipAuth: true,
         },
       },
-    ],
-  },
-  {
-    path: "/auth_home",
-    name: "AuthNavHeader",
-    component: AuthNavHeader,
-    meta: {
-      skipAuth: true,
-    },
-
-    children: [
       {
         path: "/home",
         name: "Home",
         component: () => import("@/vues/home/Home.vue"),
+        meta: {
+          skipAuth: true,
+        },
       },
 
       {
@@ -120,15 +115,17 @@ const routes = [
               {
                 path: "update",
                 name: "WalletUpdateApproval",
-                component: () => import("@/vues/users/WalletUpdateApproval.vue"),
+                component: () =>
+                  import("@/vues/users/WalletUpdateApproval.vue"),
               },
 
               {
                 path: "update/:updateId",
                 name: "WalletUpdateApproval",
-                component: () => import("@/vues/users/WalletUpdateApproval.vue"),
-              }
-            ]
+                component: () =>
+                  import("@/vues/users/WalletUpdateApproval.vue"),
+              },
+            ],
           },
         ],
       },
@@ -151,6 +148,18 @@ const routes = [
       },
     ],
   },
+  // {
+  //   path: "/auth_home",
+  //   name: "AuthNavHeader",
+  //   component: AuthNavHeader,
+  //   meta: {
+  //     skipAuth: true,
+  //   },
+
+  //   children: [
+
+  //   ],
+  // },
 
   {
     path: "/back-office",

@@ -62,14 +62,18 @@
                 style="height: 28rem;"
               >
                 <img
-                  class=" mx-auto absolute xl:top-0 xl:right-0 rounded-2xl z-20 my-auto"
-                  style=" width: 28rem; min-height: 28rem; min-width: 28rem;"
+                  class=" mx-auto absolute xl:top-0 xl:right-0 rounded-2xl  my-auto"
+                  style=" width: 28rem; min-height: 28rem; min-width: 28rem; z-index: 0"
                   src="https://socialotto.s3.ca-central-1.amazonaws.com/uploads/lotto-kids.png"
                   alt=""
                 />
-                <RectanglesSvg style="right: -2.1rem; top: -2.1rem;" />
+                <!-- <RectanglesSvg
+                  style="right: -2.1rem; top: -2.1rem; z-index: 0"
+                />
 
-                <RectanglesSvg style="right: -2.1rem; bottom: -2.1rem;" />
+                <RectanglesSvg
+                  style="right: -2.1rem; bottom: -2.1rem; z-index: 0"
+                /> -->
               </div>
             </div>
           </div>
