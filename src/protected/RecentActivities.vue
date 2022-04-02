@@ -48,7 +48,7 @@ export default class RecentActivities extends Vue {
   private recentsMenu: any = document.getElementById("recentsMenu");
 
   private mounted() {
-    Util.clickOutside("recentsMenu", "recentsToggle", "setIsRecentsMenu");
+    // Util.clickOutside("recentsMenu", "recentsToggle", "setIsRecentsMenu");
   }
 }
 </script>

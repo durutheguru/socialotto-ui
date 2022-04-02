@@ -1,15 +1,12 @@
 <template>
-  <div class="wrapper">
+  <div class="">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
     <BackOfficeHeader v-if="isBackOfficeUser" />
     <div v-else class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <router-link
-          class="my-auto focus:outline-none no-underline"
-          :to="'/home'"
-        >
+        <router-link class="my-auto focus:outline-none no-underline" :to="'/'">
           <span class="signupLogo ">Socialotto</span>
         </router-link>
         <div class="menuIcon my-auto " @click="dropAuthMenu">
@@ -125,18 +122,19 @@
               </transition>
             </div>
           </div>
-          <div
+          <button
+            @click="$router.push('/home')"
             class=" customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             <span>Support a campaign</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- </div> -->
     <auth-hamburger-menu />
-    <router-view @click="clearDropDowns"></router-view>
+    <!-- <router-view @click="clearDropDowns"></router-view> -->
     <donate-modal />
   </div>
 </template>
@@ -176,9 +174,7 @@ export default class AuthNavHeader extends BaseVue {
     store.commit("setIsRecentsMenu", false);
   }
 
-  private get userMenu(): boolean {
-    return store.state.userMenu;
-  }
+  private userMenu = false;
 
   private get noticeMenu(): boolean {
     return store.state.isNoticeMenu;
@@ -207,14 +203,14 @@ export default class AuthNavHeader extends BaseVue {
     // Log.info("dropMenu: " + );
   }
   private dropUserMenu() {
-    store.commit("setUserMenu", !this.userMenu);
+    this.userMenu = !this.userMenu;
     // Log.info("dropMenu: " + );
   }
 
-  private clearDropDowns() {
-    store.commit("setUserMenu", false);
-    // Log.info("dropMenu: " + );
-  }
+  // private clearDropDowns() {
+  //   store.commit("setUserMenu", false);
+  //   // Log.info("dropMenu: " + );
+  // }
 }
 </script>
 

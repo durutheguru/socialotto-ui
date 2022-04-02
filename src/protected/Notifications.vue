@@ -124,7 +124,7 @@ export default class Notifications extends Vue {
   private noticeMenu: any = document.getElementById("noticeMenu");
 
   private mounted() {
-    Util.clickOutside("noticeMenu", "noticeToggle", "setIsNoticeMenu");
+    // Util.clickOutside("noticeMenu", "noticeToggle", "setIsNoticeMenu");
   }
 }
 </script>
