@@ -30,10 +30,12 @@
                     need.
                   </p>
 
-                  <div class="grid grid-cols-2 h-14 mt-8">
-                    <div class="flex items-end  justify-start">
+                  <div class="grid grid-cols-2 h-14 mt-8 gap-6">
+                    <div
+                      class=" col-span-2 sm:col-span-1 flex items-end  justify-center sm:justify-start"
+                    >
                       <div
-                        class="bg-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointer"
+                        class="bg-blue-200 h-12  w-full rounded-md flex items-center  justify-center cursor-pointer"
                       >
                         <span
                           class="text-white text-base font-semi-bold cursor-pointer"
@@ -41,9 +43,11 @@
                         >
                       </div>
                     </div>
-                    <div class="flex items-end  justify-end">
+                    <div
+                      class="col-span-2 sm:col-span-1  flex items-end  justify-center sm:justify-end"
+                    >
                       <div
-                        class="bg-transparent border-text-blue-200 h-12  w-11/12 rounded-md flex items-center  justify-center cursor-pointe"
+                        class="bg-transparent border-text-blue-200 h-12  w-full rounded-md flex items-center  justify-center cursor-pointer"
                       >
                         <span class="text-base font-semi-bold cursor-pointer"
                           >Participate in a Lottery</span
