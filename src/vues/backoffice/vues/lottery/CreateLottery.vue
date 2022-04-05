@@ -1,7 +1,16 @@
 <template>
   <div class="col-span-5 pt-20 px-10 h-screen overflow-y-auto">
     <h1
-      class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
+      class="
+        flex
+        justify-center
+        sm:justify-start
+        spartan
+        text-3xl
+        font-semibold
+        text-black
+        mb-6
+      "
     >
       Create your lottery
     </h1>
@@ -15,14 +24,20 @@
       @reset.prevent="reset"
       novalidate
     >
-      <div class=" grid grid-cols-6 ">
+      <div class="grid grid-cols-6">
         <div class="col-span-3">
           <div class="w-11/12">
             <div class="w-full">
               <div class="w-full mb-6">
                 <label
                   for="Lottery_title"
-                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm text-gray-700
+                  "
                   >Lottery title</label
                 >
                 <div class="mt-1">
@@ -40,7 +55,18 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="
+                        spartan
+                        h-12
+                        bg-transparent
+                        border-gray-300 border-2
+                        px-2
+                        focus:border-blue-500
+                        block
+                        w-full
+                        sm:text-sm
+                        rounded-md
+                      "
                       placeholder="title"
                       autocomplete="off"
                     />
@@ -53,7 +79,13 @@
               <div class="w-full mb-6">
                 <label
                   for="Lottery_description"
-                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm text-gray-700
+                  "
                   >Lottery description</label
                 >
                 <div class="mt-1">
@@ -71,7 +103,25 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="max-h-44 spartan bg-transparent rounded-md px-2 pt-2 pb-8 form-textarea mt-1 border-gray-300 border-2 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5  focus:border-blue-500"
+                      class="
+                        max-h-44
+                        spartan
+                        bg-transparent
+                        rounded-md
+                        px-2
+                        pt-2
+                        pb-8
+                        form-textarea
+                        mt-1
+                        border-gray-300 border-2
+                        block
+                        w-full
+                        transition
+                        duration-150
+                        ease-in-out
+                        sm:text-sm sm:leading-5
+                        focus:border-blue-500
+                      "
                       placeholder="description"
                     ></textarea>
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
@@ -80,10 +130,18 @@
               </div>
 
               <!-- -------Lottery Owner------- -->
-              <div class="w-full mb-6 ">
+              <div class="w-full mb-6">
                 <label
                   for="Lottery owner"
-                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                  "
                   >Lottery owner</label
                 >
                 <div v-if="lottery.lotteryOwner.length === 0">
@@ -100,7 +158,18 @@
                         :class="{
                           'border-red-400': errors.length > 0,
                         }"
-                        class="spartan h-12 bg-transparent border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                        class="
+                          spartan
+                          h-12
+                          bg-transparent
+                          border-gray-300 border-2
+                          px-2
+                          focus:ring-indigo-500 focus:border-blue-500
+                          block
+                          w-full
+                          sm:text-sm
+                          rounded-md
+                        "
                         placeholder="Search"
                         autocomplete="off"
                       />
@@ -118,7 +187,16 @@
                     v-if="owners.length > 0 && ownerlistIsVisible"
                   >
                     <ul
-                      class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                      class="
+                        py-2
+                        absolute
+                        w-full
+                        rounded-md
+                        shadow-md
+                        bg-white
+                        spartan
+                        text-sm
+                      "
                     >
                       <li
                         class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
@@ -136,14 +214,42 @@
                 <div class="mt-1 relative" v-else>
                   <input
                     readonly
-                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    class="
+                      spartan
+                      h-12
+                      bg-transparent
+                      border-gray-300 border-2
+                      px-2
+                      focus:ring-indigo-500 focus:border-blue-500
+                      block
+                      w-full
+                      sm:text-sm
+                      rounded-md
+                    "
                   />
                   <div
-                    class="absolute left-0 top-0 h-full flex justify-center items-center"
+                    class="
+                      absolute
+                      left-0
+                      top-0
+                      h-full
+                      flex
+                      justify-center
+                      items-center
+                    "
                   >
                     <div
-                      style="max-width: 11rem;"
-                      class="h-4/6 flex justify-center items-center rounded-lg bg-gray-300 px-2 ml-3"
+                      style="max-width: 11rem"
+                      class="
+                        h-4/6
+                        flex
+                        justify-center
+                        items-center
+                        rounded-lg
+                        bg-gray-300
+                        px-2
+                        ml-3
+                      "
                     >
                       <span class="spartan text-sm truncate">{{
                         lottery.lotteryOwner
@@ -174,7 +280,13 @@
               <div class="w-full mb-1 relative">
                 <label
                   for="Supported Campaigns"
-                  class="spartan font-medium text-dark block text-sm text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm text-gray-700
+                  "
                   >Supported Campaigns (max {{ maxCampaigns }})</label
                 >
                 <div class="mt-1 relative">
@@ -193,7 +305,18 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan  h-12 bg-transparent  border-gray-300 border-2  pl-2  focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="
+                        spartan
+                        h-12
+                        bg-transparent
+                        border-gray-300 border-2
+                        pl-2
+                        focus:border-blue-500
+                        block
+                        w-full
+                        sm:text-sm
+                        rounded-md
+                      "
                       style="padding-right: 65%"
                       placeholder="campaign name"
                       autocomplete="off"
@@ -205,11 +328,20 @@
                   class="relative bg-white z-20"
                   v-if="
                     searchCampaignsNamesQuery.campaignData.length > 0 &&
-                      campaignListIsVisible
+                    campaignListIsVisible
                   "
                 >
                   <ul
-                    class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                    class="
+                      py-2
+                      absolute
+                      w-full
+                      rounded-md
+                      shadow-md
+                      bg-white
+                      spartan
+                      text-sm
+                    "
                   >
                     <li
                       class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
@@ -226,15 +358,33 @@
                 <div
                   v-if="chosenCampaigns.length > 0"
                   style="max-width: 65%"
-                  class="absolute  right-0 bottom-0 h-12  flex justify-end items-center"
+                  class="
+                    absolute
+                    right-0
+                    bottom-0
+                    h-12
+                    flex
+                    justify-end
+                    items-center
+                  "
                 >
                   <div
                     v-for="(chosenCampaign, index) in chosenCampaigns"
                     :key="chosenCampaign.id"
-                    style="max-width: 7rem; width: 7rem;"
-                    class=" h-4/6 cursor-pointer  flex justify-start items-center rounded-lg bg-gray-300 px-2 mr-2.5"
+                    style="max-width: 7rem; width: 7rem"
+                    class="
+                      h-4/6
+                      cursor-pointer
+                      flex
+                      justify-start
+                      items-center
+                      rounded-lg
+                      bg-gray-300
+                      px-2
+                      mr-2.5
+                    "
                   >
-                    <span class=" spartan text-sm truncate">{{
+                    <span class="spartan text-sm truncate">{{
                       chosenCampaign.name
                     }}</span>
 
@@ -267,25 +417,61 @@
               <div class="w-full mb-6 mt-6">
                 <label
                   for="Lottery File Uploads"
-                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                  "
                   >Lottery file uploads</label
                 >
                 <div class="mt-1">
                   <validation-provider rules="required" v-slot="{}">
                     <div
-                      class="spartan h-12 flex bg-transparent border border-solid rounded-md"
+                      class="
+                        spartan
+                        h-12
+                        flex
+                        bg-transparent
+                        border border-solid
+                        rounded-md
+                      "
                     >
                       <input
                         readonly
                         type="text"
                         name="Lottery file uploads"
                         id="Lottery file uploads"
-                        class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                        class="
+                          h-full
+                          px-2
+                          bg-transparent
+                          focus:ring-indigo-500 focus:border-indigo-500
+                          block
+                          w-full
+                          sm:text-sm
+                          border-gray-300
+                        "
                         placeholder="select files"
                       />
                       <div
                         @click="chooseFiles"
-                        class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-36 h-10 my-auto mr-0.5"
+                        class="
+                          cursor-pointer
+                          bg-dark-blue
+                          rounded-md
+                          flex
+                          items-center
+                          justify-center
+                          text-white
+                          w-36
+                          h-10
+                          my-auto
+                          mr-0.5
+                        "
                       >
                         <span class="spartan text-sm">Upload</span>
 
@@ -334,7 +520,7 @@
                               aria-valuenow="45"
                               aria-valuemin="0"
                               aria-valuemax="100"
-                              style="width:100%"
+                              style="width: 100%"
                             ></div>
                           </div>
                         </td>
@@ -365,7 +551,15 @@
             <div class="w-full mb-6">
               <label
                 for="Cost per ticket"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                class="
+                  spartan
+                  font-medium
+                  text-dark
+                  block
+                  text-sm
+                  font-medium
+                  text-gray-700
+                "
                 >Cost per ticket</label
               >
               <div class="mt-1">
@@ -384,7 +578,18 @@
                     :class="{
                       'border-red-400': errors.length > 0,
                     }"
-                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    class="
+                      spartan
+                      h-12
+                      bg-transparent
+                      border-gray-300 border-2
+                      px-2
+                      focus:ring-indigo-500 focus:border-blue-500
+                      block
+                      w-full
+                      sm:text-sm
+                      rounded-md
+                    "
                     placeholder="N200"
                   />
 
@@ -398,7 +603,15 @@
             <div class="w-full mb-6">
               <label
                 for="Number of winners"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                class="
+                  spartan
+                  font-medium
+                  text-dark
+                  block
+                  text-sm
+                  font-medium
+                  text-gray-700
+                "
                 >Number of winners</label
               >
               <div class="mt-1">
@@ -417,7 +630,18 @@
                     :class="{
                       'border-red-400': errors.length > 0,
                     }"
-                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    class="
+                      spartan
+                      h-12
+                      bg-transparent
+                      border-gray-300 border-2
+                      px-2
+                      focus:ring-indigo-500 focus:border-blue-500
+                      block
+                      w-full
+                      sm:text-sm
+                      rounded-md
+                    "
                     placeholder="25"
                   />
 
@@ -433,7 +657,15 @@
             <div class="w-full mb-6">
               <label
                 for="Number of winners"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                class="
+                  spartan
+                  font-medium
+                  text-dark
+                  block
+                  text-sm
+                  font-medium
+                  text-gray-700
+                "
                 >End date of registration</label
               >
               <div class="mt-1">
@@ -447,7 +679,18 @@
                     :class="{
                       'border-red-400': errors.length > 0,
                     }"
-                    class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                    class="
+                      spartan
+                      h-12
+                      bg-transparent
+                      border-gray-300 border-2
+                      px-2
+                      focus:ring-indigo-500 focus:border-blue-500
+                      block
+                      w-full
+                      sm:text-sm
+                      rounded-md
+                    "
                     placeholder="13/01/2022"
                   />
 
@@ -464,7 +707,15 @@
               <div class="col-span-1">
                 <label
                   for="Date of evaluation"
-                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                  "
                   >Date of evaluation</label
                 >
                 <div class="mt-1">
@@ -478,7 +729,18 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan h-12 bg-transparent border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="
+                        spartan
+                        h-12
+                        bg-transparent
+                        border-gray-300 border-2
+                        px-2
+                        focus:ring-indigo-500 focus:border-blue-500
+                        block
+                        w-full
+                        sm:text-sm
+                        rounded-md
+                      "
                       placeholder="13/01/2022"
                     />
 
@@ -491,7 +753,15 @@
               <div class="col-span-1">
                 <label
                   for="Number of winners"
-                  class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                  class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm
+                    font-medium
+                    text-gray-700
+                  "
                   >Time of evaluation</label
                 >
                 <div class="mt-1">
@@ -505,7 +775,18 @@
                       :class="{
                         'border-red-400': errors.length > 0,
                       }"
-                      class="spartan h-12 bg-transparent  border-gray-300 border-2  px-2 focus:ring-indigo-500 focus:border-blue-500 block w-full sm:text-sm rounded-md"
+                      class="
+                        spartan
+                        h-12
+                        bg-transparent
+                        border-gray-300 border-2
+                        px-2
+                        focus:ring-indigo-500 focus:border-blue-500
+                        block
+                        w-full
+                        sm:text-sm
+                        rounded-md
+                      "
                     />
 
                     <span class="text-red-500 spartan">{{ errors[0] }}</span>
@@ -531,9 +812,9 @@
               @click="createLottery"
               :disabled="
                 invalid ||
-                  fileUploader.uploads.length === 0 ||
-                  saveLottery.loading ||
-                  !dateCheck
+                fileUploader.uploads.length === 0 ||
+                saveLottery.loading ||
+                !dateCheck
               "
               :class="[
                 invalid ||
@@ -543,7 +824,19 @@
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
-              class="bg-blue-200 spartan w-full flex justify-center items-center h-12 px-4 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              class="
+                bg-blue-200
+                spartan
+                w-full
+                flex
+                justify-center
+                items-center
+                h-12
+                px-4
+                rounded-md
+                text-white
+                focus:outline-none focus:ring-2 focus:ring-indigo-500
+              "
             >
               Create lottery
               <i
@@ -581,6 +874,7 @@ import BaseVue from "@/components/BaseVue";
       variables() {
         return {
           searchKey: this.supportedCampaign,
+          status: 'ACTIVE',
           page: this.searchCampaignsNamesQuery.page,
           size: this.searchCampaignsNamesQuery.size,
         };
@@ -730,16 +1024,30 @@ export default class CreateLottery extends BaseVue {
   }
 
   private populateOwnersArray() {
-    LotteryService.getLotteryOwner(
-      this.lotteryOwner,
-      (response: any) => {
-        Log.info(response.data._embedded.platformUsers);
-        this.owners = response.data._embedded.platformUsers;
+    let self = this;
+
+    if (!Util.isValidString(self.lotteryOwner)) {
+      return;
+    }
+
+    Util.throttle({
+      key: "lottery-owmer-search",
+      run: () => {
+        LotteryService.getLotteryOwner(
+          self.lotteryOwner,
+
+          (response: any) => {
+            Log.info(response.data._embedded.platformUsers);
+            self.owners = response.data._embedded.platformUsers;
+          },
+
+          (error: any) => {
+            Log.error("Logged Error: " + JSON.stringify(error));
+          },
+        );
       },
-      (error: any) => {
-        Log.error("Logged Error: " + JSON.stringify(error));
-      }
-    );
+      time: 400,
+    });
   }
 
   private selectOwner(owner: any) {
