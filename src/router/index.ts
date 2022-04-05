@@ -94,6 +94,9 @@ const routes = [
         name: "CreateCampaign",
         component: () =>
           import("@/vues/campaign/vues/create/CreateCampaign.vue"),
+        meta: {
+          auth: ["CAN_CREATE_CAMPAIGN"],
+        },
       },
       
       {
@@ -165,39 +168,63 @@ const routes = [
     path: "/back-office",
     name: "BackOffice",
     component: BackOffice,
+    meta: {
+      auth: ["BACK_OFFICE_USER"],
+    },
     children: [
       {
         path: "/back-office/create-lottery",
         name: "CreateLottery",
         component: CreateLottery,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
       },
       {
         path: "/back-office/lotteries",
         name: "LotteriesView",
         component: LotteriesView,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
       },
       {
         path: "/back-office/campaigns",
-        name: "CampaignssView",
+        name: "CampaignsView",
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
         component: CampaignsView,
       },
       {
         path: "/back-office/raise_lottery_expense/:id",
         name: "RaiseLotteryExpense",
         component: RaiseLotteryExpense,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
       },
       {
         path: "/back-office/expense_requests",
         name: "ExpenseRequests",
         component: ExpenseRequests,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
       },
       {
         path: "/back-office/review_lottery_expense/:id",
         name: "ReviewLotteryExpense",
         component: ReviewLotteryExpense,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
       },
       {
         path: "/back-office/users",
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
         name: "Manage Users",
         component: ManageUsers,
       },
@@ -206,6 +233,9 @@ const routes = [
         // redirect: "/back-office/users/authorities/:userDetails",
         name: "UserDetails",
         component: UserDetails,
+        meta: {
+          auth: ["BACK_OFFICE_USER"],
+        },
         // children: [
         //   {
         //     path: "/back-office/users/authorities/:userDetails",

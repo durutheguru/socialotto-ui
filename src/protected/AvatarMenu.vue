@@ -50,7 +50,7 @@
           </a>
           <div
             @click="logout"
-            class=" p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
+            class="mb-2  p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
           >
             <p
               class=" mb-0 spartan text-base leading-6 fs-14 font-medium text-gray-900"
