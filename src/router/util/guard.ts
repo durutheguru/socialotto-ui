@@ -37,7 +37,7 @@ const navigatePath = (to: any, next: any) => {
   const authorizations = store.getters["authToken/authorizations"];
   Log.info(authorizations);
   Log.info(to.meta.auth);
-  //if no meta auth then continue process
+  // if no meta auth then continue process
   if (to.meta.auth && to.meta.auth.length > 0) {
     Log.info("auth");
     // Log.info("to: " + JSON.stringify(to));
@@ -55,8 +55,8 @@ const navigatePath = (to: any, next: any) => {
     next();
   }
 
-  //else check meta property against user authorities. if it contains at least one of the auths then go to page else
-  //go to landing page
+  // else check meta property against user authorities. if it contains at least one of the auths then go to page else
+  // go to landing page
 };
 
 export default function(to: any, from: any, next: any) {
@@ -68,4 +68,4 @@ export default function(to: any, from: any, next: any) {
   authRoute(to, next);
 }
 
-//if not authenticated, navigate to landing
+// if not authenticated, navigate to landing
