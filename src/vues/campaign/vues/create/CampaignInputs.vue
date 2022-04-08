@@ -210,7 +210,7 @@
                     <label
                       for="Total amount"
                       class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
-                      >Total amount</label
+                      >Target amount</label
                     >
                     <div class="mt-1">
                       <validation-provider

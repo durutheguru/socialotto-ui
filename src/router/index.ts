@@ -98,6 +98,7 @@ const routes = [
           auth: ["CAN_CREATE_CAMPAIGN"],
         },
       },
+      
       {
         path: "/user",
         redirect: "/user/profile",

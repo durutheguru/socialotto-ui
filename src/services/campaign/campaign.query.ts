@@ -34,8 +34,8 @@ const searchCampaigns = gql`
 `;
 
 const searchCampaignNames = gql`
-  query searchCampaignNames($searchKey: String, $page: Int, $size: Int) {
-    searchCampaigns(searchKey: $searchKey, page: $page, size: $size) {
+  query searchCampaignNames($searchKey: String, $status: CampaignStatus, $page: Int, $size: Int) {
+    searchCampaigns(searchKey: $searchKey, status: $status, page: $page, size: $size) {
       id
       name
       wallet {
