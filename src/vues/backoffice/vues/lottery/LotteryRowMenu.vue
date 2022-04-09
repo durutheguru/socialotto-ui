@@ -92,10 +92,13 @@
         <li class="bg-white hover:bg-gray-200">view</li>
       </ul> -->
     </div>
+    <lottery-disapproval-modal @refetch="refetch" />
   </div>
 </template>
 
 <script lang="ts">
+import LotteryDisapprovalModal from "@/vues/backoffice/vues/lottery/LotteryDisapprovalModal.vue";
+
 import { Component } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import { Log, Util } from "@/components/util";
@@ -108,6 +111,9 @@ import BaseVue from "@/components/BaseVue";
   props: {
     status: String,
     lotteryId: String,
+  },
+  components: {
+    LotteryDisapprovalModal,
   },
 })
 export default class LotteryRowMenu extends BaseVue {
@@ -125,10 +131,14 @@ export default class LotteryRowMenu extends BaseVue {
     this.show = !this.show;
   }
 
-  private rerenderTable() {
-    store.commit("setTbodyKey", 1);
-    Log.info(String(store.state.tbodyKey));
+  private refetch() {
+    this.$emit("refetch");
   }
+
+  // private rerenderTable() {
+  //   store.commit("setTbodyKey", 1);
+  //   Log.info(String(store.state.tbodyKey));
+  // }
 
   private approveLottery(lotteryId: string) {
     let self = this;
@@ -144,10 +154,10 @@ export default class LotteryRowMenu extends BaseVue {
 
         store.commit("setPendingApprovalLoading", false);
 
-        this.rerenderTable();
+        // this.rerenderTable();
 
         Log.info("ApprovalResponse: " + JSON.stringify(response));
-
+        this.refetch();
         Util.handleGlobalAlert(
           true,
           "success",

@@ -234,6 +234,7 @@
                     >
                       <div class="td-elipsis relative">
                         <LotteryRowMenu
+                          @refetch="refetchLotteries"
                           :lotteryId="lottery.id"
                           :status="lotteryStatuses[`${lottery.lotteryStatus}`]"
                         />
@@ -363,6 +364,10 @@ export default class LotteriesView extends BaseVue {
     REVERSED_TO_PARTICIPANTS: "Settled",
     CREDITED_TO_BENEFICIARIES: "Settled",
   };
+
+  private refetchLotteries() {
+    this.$apollo.queries.searchLotteries.refetch();
+  }
 
   private searchStatus(status: any) {
     // Log.info("status:" + status);

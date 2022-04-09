@@ -148,7 +148,7 @@ import BaseVue from "@/components/BaseVue";
 @Component({
   name: "LotteryDisapprovalModal",
 })
-export default class DonateModal extends BaseVue {
+export default class LotteryDisapprovalModal extends BaseVue {
   private message: string = "";
   private disapproval: ApiResource = ApiResource.create();
 
@@ -208,6 +208,8 @@ export default class DonateModal extends BaseVue {
         self.close();
         this.message = "";
         Util.handleGlobalAlert(true, "success", "Lottery has been disapproved");
+
+        this.$emit("refetch");
       },
       (error) => {
         self.disapproval.loading = false;
