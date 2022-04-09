@@ -221,6 +221,7 @@
                     >
                       <div class="td-elipsis relative">
                         <CampaignRowMenu
+                          @refetch="refetchCampaigns"
                           :campaignId="campaign.id"
                           :status="campaignStatuses[campaign.status]"
                         />
@@ -370,6 +371,10 @@ export default class CampaignsView extends BaseVue {
     if (this.campaignQuery.page > 0) {
       this.campaignQuery.page--;
     }
+  }
+
+  private refetchCampaigns() {
+    this.$apollo.queries.searchCampaigns.refetch();
   }
 
   private toggleStatusMenu() {
