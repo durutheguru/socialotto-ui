@@ -1,5 +1,7 @@
 <template>
-  <div class="col-span-5 pt-20 px-10 h-screen overflow-y-auto">
+  <div
+    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto "
+  >
     <h1
       class="
         flex
@@ -24,7 +26,7 @@
       @reset.prevent="reset"
       novalidate
     >
-      <div class="grid grid-cols-6">
+      <div class="grid grid-cols-3 lg:grid-cols-6">
         <div class="col-span-3">
           <div class="w-11/12">
             <div class="w-full">
@@ -328,7 +330,7 @@
                   class="relative bg-white z-20"
                   v-if="
                     searchCampaignsNamesQuery.campaignData.length > 0 &&
-                    campaignListIsVisible
+                      campaignListIsVisible
                   "
                 >
                   <ul
@@ -812,9 +814,9 @@
               @click="createLottery"
               :disabled="
                 invalid ||
-                fileUploader.uploads.length === 0 ||
-                saveLottery.loading ||
-                !dateCheck
+                  fileUploader.uploads.length === 0 ||
+                  saveLottery.loading ||
+                  !dateCheck
               "
               :class="[
                 invalid ||
@@ -833,6 +835,7 @@
                 items-center
                 h-12
                 px-4
+                mb-20
                 rounded-md
                 text-white
                 focus:outline-none focus:ring-2 focus:ring-indigo-500
@@ -874,7 +877,7 @@ import BaseVue from "@/components/BaseVue";
       variables() {
         return {
           searchKey: this.supportedCampaign,
-          status: 'ACTIVE',
+          status: "ACTIVE",
           page: this.searchCampaignsNamesQuery.page,
           size: this.searchCampaignsNamesQuery.size,
         };
@@ -1043,7 +1046,7 @@ export default class CreateLottery extends BaseVue {
 
           (error: any) => {
             Log.error("Logged Error: " + JSON.stringify(error));
-          },
+          }
         );
       },
       time: 400,

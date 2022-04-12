@@ -1,5 +1,5 @@
 <template>
-  <div class="showBackofficeSidebar h-full relative">
+  <div class="fixed h-full z-20">
     <div
       style="min-width: 17rem;"
       class="flex-1 flex flex-col w-72 h-full backOfficeSidebar overflow-y-auto"
@@ -99,9 +99,9 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({
-  name: "BackofficeSidebar",
+  name: "MobileSideBar",
 })
-export default class BackofficeSidebar extends Vue {
+export default class MobileSideBar extends Vue {
   private navigation = [
     { name: "Dashboard", href: "#", current: true },
     {
