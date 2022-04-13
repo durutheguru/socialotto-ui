@@ -49,7 +49,7 @@
                   />
                 </svg>
               </div>
-              <div>
+              <div @click="openLogoutModal" class="cursor-pointer">
                 <svg
                   class="h-6 w-6"
                   viewBox="0 0 14 14"
@@ -92,16 +92,40 @@
         </nav>
       </div>
     </div>
+    <LogoutModal
+      @logout="logout"
+      :isModalOpen="isLogoutModalOpen"
+      @close="closeLogoutModal"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import LogoutModal from "./LogoutModal.vue";
+import LoginService from "@/vues/login/service/LoginService";
 
 @Component({
   name: "BackofficeSidebar",
+  components: {
+    LogoutModal,
+  },
 })
 export default class BackofficeSidebar extends Vue {
+  private isLogoutModalOpen = false;
+
+  private openLogoutModal() {
+    this.isLogoutModalOpen = true;
+  }
+
+  private closeLogoutModal() {
+    this.isLogoutModalOpen = false;
+  }
+
+  private logout() {
+    LoginService.doLogout();
+  }
+
   private navigation = [
     { name: "Dashboard", href: "#", current: true },
     {

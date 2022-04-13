@@ -141,30 +141,27 @@ declare var MonnifySDK: any;
 import { Component, Vue } from "vue-property-decorator";
 import store from "@/store/index";
 import { Constants, Log, Util } from "@/components/util";
-import LotteryService from "@/services/lottery/LotteryService";
-import ApiResource from "@/components/core/ApiResource";
+// import LotteryService from "@/services/lottery/LotteryService";
+// import ApiResource from "@/components/core/ApiResource";
 import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryDisapprovalModal",
+  props: {
+    isModalOpen: Boolean,
+    disapproval: Object,
+  },
 })
 export default class LotteryDisapprovalModal extends BaseVue {
   private message: string = "";
-  private disapproval: ApiResource = ApiResource.create();
 
-  private disapprovalJson: any = {
-    lotteryId: "",
-    approvalAction: "",
-    message: "",
-  };
+  // private get isModalOpen(): boolean {
+  //   return store.state.isLotteryDisapproval.show;
+  // }
 
-  private get isModalOpen(): boolean {
-    return store.state.isLotteryDisapproval.show;
-  }
-
-  private get lotteryId(): boolean {
-    return store.state.isLotteryDisapproval.lotteryId;
-  }
+  // private get lotteryId(): boolean {
+  //   return store.state.isLotteryDisapproval.lotteryId;
+  // }
 
   private resetButtonClick: any = () => {
     let resetButton = document.getElementById(
@@ -173,10 +170,15 @@ export default class LotteryDisapprovalModal extends BaseVue {
     resetButton.click();
   };
 
+  private disapproveLottery() {
+    this.$emit("disapprove", this.message);
+  }
+
   private close() {
-    store.commit("setIsLotteryDisapproval", { show: false, lotteryId: "" });
+    // store.commit("setIsLotteryDisapproval", { show: false, lotteryId: "" });
     this.resetButtonClick();
-    Log.info("closeModal");
+    this.$emit("close");
+    // Log.info("close");
   }
 
   private reset() {
@@ -185,41 +187,6 @@ export default class LotteryDisapprovalModal extends BaseVue {
     (this.$refs.observer as any).reset();
 
     Log.info("Done Resetting form...");
-  }
-
-  private disapproveLottery() {
-    let self = this;
-    this.disapprovalJson.lotteryId = this.lotteryId;
-    this.disapprovalJson.approvalAction = "DISAPPROVED";
-    this.disapprovalJson.message = this.message;
-    self.disapproval.loading = true;
-
-    Log.info("disapprovalJson: " + JSON.stringify(this.disapprovalJson));
-
-    store.commit("setPendingDisapprovalLoading", true);
-
-    LotteryService.approveOrDecline(
-      self.disapprovalJson,
-      (response: any) => {
-        self.disapproval.loading = false;
-        store.commit("setPendingDisapprovalLoading", false);
-        store.commit("setTbodyKey", 1);
-        Log.info("disapprovalResponse: " + JSON.stringify(response));
-        self.close();
-        this.message = "";
-        Util.handleGlobalAlert(true, "success", "Lottery has been disapproved");
-
-        this.$emit("refetch");
-      },
-      (error) => {
-        self.disapproval.loading = false;
-        store.commit("setPendingDisapprovalLoading", false);
-        self.disapproval.error = self.extractError(error);
-        self.close();
-        this.message = "";
-        Util.handleGlobalAlert(true, "failed", self.disapproval.error);
-      }
-    );
   }
 }
 </script>

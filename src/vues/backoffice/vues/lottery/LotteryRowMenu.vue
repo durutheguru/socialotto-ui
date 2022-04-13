@@ -34,14 +34,14 @@
             View Details
           </li>
           <li
-            @mousedown="approveLottery(lotteryId)"
+            @mousedown="openApprovalModal"
             v-if="status === 'Pending'"
             class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
           >
             Approve
           </li>
           <li
-            @click="openDisapprovalModal(lotteryId)"
+            @click="openDisapprovalModal"
             v-if="status === 'Pending'"
             class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
           >
@@ -92,19 +92,32 @@
         <li class="bg-white hover:bg-gray-200">view</li>
       </ul> -->
     </div>
-    <lottery-disapproval-modal @refetch="refetch" />
+    <lottery-disapproval-modal
+      @disapprove="disapproveLottery"
+      :isModalOpen="isDisapprovalModalOpen"
+      @close="closeDisapprovalModal"
+      @refetch="refetch"
+      :disapproval="disapproval"
+    />
+    <LotteryApprovalModal
+      @approve="approveLottery"
+      :isModalOpen="isApprovalModalOpen"
+      :loading="approval.loading"
+      @close="closeApprovalModal"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import LotteryDisapprovalModal from "@/vues/backoffice/vues/lottery/LotteryDisapprovalModal.vue";
 
-import { Component } from "vue-property-decorator";
+import { Component, Prop } from "vue-property-decorator";
 import ApiResource from "@/components/core/ApiResource";
 import { Log, Util } from "@/components/util";
 import LotteryService from "@/services/lottery/LotteryService";
 import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
+import LotteryApprovalModal from "./LotteryApprovalModal.vue";
 
 @Component({
   name: "LotteryRowMenu",
@@ -114,6 +127,7 @@ import BaseVue from "@/components/BaseVue";
   },
   components: {
     LotteryDisapprovalModal,
+    LotteryApprovalModal,
   },
 })
 export default class LotteryRowMenu extends BaseVue {
@@ -122,6 +136,16 @@ export default class LotteryRowMenu extends BaseVue {
   private approval: ApiResource = ApiResource.create();
 
   private approvalJson: any = {
+    lotteryId: "",
+    approvalAction: "",
+    message: "",
+  };
+  @Prop()
+  private lotteryId!: string;
+
+  private disapproval: ApiResource = ApiResource.create();
+
+  private disapprovalJson: any = {
     lotteryId: "",
     approvalAction: "",
     message: "",
@@ -135,27 +159,48 @@ export default class LotteryRowMenu extends BaseVue {
     this.$emit("refetch");
   }
 
+  private isDisapprovalModalOpen = false;
+
+  private openDisapprovalModal() {
+    this.isDisapprovalModalOpen = true;
+  }
+
+  private closeDisapprovalModal() {
+    this.isDisapprovalModalOpen = false;
+  }
+
+  private isApprovalModalOpen = false;
+
+  private openApprovalModal() {
+    this.isApprovalModalOpen = true;
+  }
+
+  private closeApprovalModal() {
+    this.isApprovalModalOpen = false;
+  }
+
   // private rerenderTable() {
   //   store.commit("setTbodyKey", 1);
   //   Log.info(String(store.state.tbodyKey));
   // }
 
-  private approveLottery(lotteryId: string) {
+  private approveLottery() {
     let self = this;
-    self.approvalJson.lotteryId = lotteryId;
+    self.approvalJson.lotteryId = this.lotteryId;
     self.approvalJson.approvalAction = "APPROVED";
     self.approval.loading = true;
-    store.commit("setPendingApprovalLoading", true);
+
+    this.closeApprovalModal();
+
+    Log.info(self.approvalJson.lotteryId);
+    // store.commit("setPendingApprovalLoading", true);
 
     LotteryService.approveOrDecline(
       self.approvalJson,
       (response: any) => {
         self.approval.loading = false;
 
-        store.commit("setPendingApprovalLoading", false);
-
-        // this.rerenderTable();
-
+        this.closeApprovalModal();
         Log.info("ApprovalResponse: " + JSON.stringify(response));
         this.refetch();
         Util.handleGlobalAlert(
@@ -166,7 +211,7 @@ export default class LotteryRowMenu extends BaseVue {
       },
       (error) => {
         self.approval.loading = false;
-        store.commit("setPendingApprovalLoading", false);
+        this.closeApprovalModal();
         self.approval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.approval.error);
       }
@@ -175,14 +220,49 @@ export default class LotteryRowMenu extends BaseVue {
     // Log.info("ApprovalJson: " + JSON.stringify(self.approvalJson));
   }
 
-  private openDisapprovalModal(lotteryId: string) {
-    store.commit("setIsLotteryDisapproval", {
-      show: true,
-      lotteryId,
-    });
+  private disapproveLottery(message: string) {
+    let self = this;
+    this.disapprovalJson.lotteryId = this.lotteryId;
+    this.disapprovalJson.approvalAction = "DISAPPROVED";
+    this.disapprovalJson.message = message;
+    self.disapproval.loading = true;
 
-    // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
+    Log.info("disapprovalJson: " + JSON.stringify(this.disapprovalJson));
+
+    store.commit("setPendingDisapprovalLoading", true);
+
+    LotteryService.approveOrDecline(
+      self.disapprovalJson,
+      (response: any) => {
+        self.disapproval.loading = false;
+        store.commit("setPendingDisapprovalLoading", false);
+        store.commit("setTbodyKey", 1);
+        Log.info("disapprovalResponse: " + JSON.stringify(response));
+        this.closeDisapprovalModal();
+        // this.message = "";
+        Util.handleGlobalAlert(true, "success", "Lottery has been disapproved");
+
+        this.refetch();
+      },
+      (error) => {
+        self.disapproval.loading = false;
+        store.commit("setPendingDisapprovalLoading", false);
+        self.disapproval.error = self.extractError(error);
+        this.closeDisapprovalModal();
+        // this.message = "";
+        Util.handleGlobalAlert(true, "failed", self.disapproval.error);
+      }
+    );
   }
+
+  // private openDisapprovalModal(lotteryId: string) {
+  //   store.commit("setIsLotteryDisapproval", {
+  //     show: true,
+  //     lotteryId,
+  //   });
+
+  //   // Log.info("ApprovalJson: " + JSON.stringify(this.approvalJson));
+  // }
 
   private goToLotteryDetails(lotteryId: string) {
     // this.$router.push(`/lottery/${lotteryId}`);
