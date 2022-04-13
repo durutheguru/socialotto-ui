@@ -372,6 +372,7 @@ export default class LotteriesView extends BaseVue {
   private searchStatus(status: any) {
     // Log.info("status:" + status);
     this.lotteryQuery.status = status;
+    this.lotteryQuery.page = 0;
     this.showStatuses = false;
   }
 

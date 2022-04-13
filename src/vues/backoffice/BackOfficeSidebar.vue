@@ -12,16 +12,23 @@
           >
             <!-- --- -->
             <div class="w-full text-center">
-              <img
+              <!-- <img
                 class="inline-block h-24 w-24 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
-              />
+              /> -->
+              <div class="bg-gray-100 inline-block h-24 w-24 rounded-full">
+                <div class="flex items-center justify-center w-full h-full">
+                  <h1 class="fw-600 mb-0">
+                    {{ sliceName(userQuery.data.name) }}
+                  </h1>
+                </div>
+              </div>
             </div>
             <!-- ---------- -->
             <div class="w-full text-center">
               <h1 class="mt-2 text-2xl text-white spartan font-medium">
-                Dumebi Duru
+                {{ userQuery.data.name }}
               </h1>
               <h2 class="text-lg text-white spartan font-normal">Admin</h2>
             </div>
@@ -104,14 +111,53 @@
 import { Component, Vue } from "vue-property-decorator";
 import LogoutModal from "./LogoutModal.vue";
 import LoginService from "@/vues/login/service/LoginService";
+import store from "@/store/index";
+import { viewUserDetails } from "@/services/users/users.query";
+import { ApolloError } from "apollo-client";
+import { Log, Util } from "@/components/util";
 
 @Component({
   name: "BackofficeSidebar",
   components: {
     LogoutModal,
   },
+  apollo: {
+    // $client: "anonymousClient",
+    viewUserDetails: {
+      query: viewUserDetails,
+      variables() {
+        return {
+          userType: this.userQuery.userType,
+
+          username: this.userQuery.username,
+        };
+      },
+      result({ data }) {
+        Log.info("Search User Query: " + JSON.stringify(data));
+
+        this.userQuery.data = data?.viewUserDetails;
+
+        Log.info("User Query: " + JSON.stringify(this.userQuery.data));
+      },
+      error(error: ApolloError) {
+        this.userQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.userQuery.error)) {
+          this.$apollo.queries.viewUserDetails.refetch();
+        }
+      },
+    },
+  },
 })
 export default class BackofficeSidebar extends Vue {
+  private username = store.getters["authToken/username"];
+  private userType = store.getters["authToken/authorizations"][0];
+
+  private userQuery: any = {
+    username: this.username,
+    userType: this.userType,
+    data: {},
+    error: "",
+  };
   private isLogoutModalOpen = false;
 
   private openLogoutModal() {
@@ -124,6 +170,14 @@ export default class BackofficeSidebar extends Vue {
 
   private logout() {
     LoginService.doLogout();
+  }
+
+  private sliceName(name: string) {
+    const finitial = name.slice(0, 1);
+    const spaceIndex = name.split("").indexOf(" ");
+    const linitial = name.slice(spaceIndex + 1, spaceIndex + 2);
+    // return name.slice(0, indexOf(" "))
+    return `${finitial} ${linitial}`;
   }
 
   private navigation = [

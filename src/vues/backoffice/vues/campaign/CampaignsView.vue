@@ -360,6 +360,7 @@ export default class CampaignsView extends BaseVue {
   private searchStatus(status: any) {
     // Log.info("status:" + status);
     this.campaignQuery.status = status;
+    this.campaignQuery.page = 0;
     this.showStatuses = false;
   }
 
