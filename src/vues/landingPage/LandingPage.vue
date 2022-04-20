@@ -96,6 +96,7 @@ import Incentives from "@/components/Incentives.vue";
 import Footer from "@/components/Footer.vue";
 import RectanglesSvg from "@/components/svg/RectanglesSvg.vue";
 import CampaignDetailsCards from "../campaign/vues/campaignDetails/CampaignDetailsCards.vue";
+import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   name: "LandingPage",
@@ -106,7 +107,16 @@ import CampaignDetailsCards from "../campaign/vues/campaignDetails/CampaignDetai
     RectanglesSvg,
   },
 })
-export default class LandingPage extends Vue {}
+export default class LandingPage extends Vue {
+  private mounted() {
+    this.test();
+  }
+
+  private test() {
+    Log.info("Landing page ohh");
+    Util.handleGlobalAlert(true, "failed", "404");
+  }
+}
 </script>
 
 <style scoped></style>

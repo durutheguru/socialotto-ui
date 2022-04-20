@@ -108,12 +108,12 @@ import ApiResource from "@/components/core/ApiResource";
 import BaseVue from "@/components/BaseVue";
 
 @Component({
-  name: "lotteryApprovalModal",
+  name: "LotteryApprovalModal",
   //   props:{
   // 	  open: Boolean
   //   }
 })
-export default class lotteryApprovalModal extends BaseVue {
+export default class LotteryApprovalModal extends BaseVue {
   @Prop()
   private isModalOpen!: boolean;
 

@@ -35,12 +35,8 @@ const navigateLandingPage = (to: any, next: any) => {
 const navigatePath = (to: any, next: any) => {
   const url = store.getters.entryUrl;
   const authorizations = store.getters["authToken/authorizations"];
-  // Log.info(authorizations);
-  // Log.info(to.meta.auth);
-  // if no meta auth then continue process
+
   if (to.meta.auth && to.meta.auth.length > 0) {
-    // Log.info("auth");
-    // Log.info("to: " + JSON.stringify(to));
     if (!authorizations.some((auth: string) => to.meta.auth.includes(auth))) {
       Log.info("doesnt have auth");
       navigateLandingPage(to, next);
