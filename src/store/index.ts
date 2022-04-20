@@ -51,19 +51,17 @@ export default new Vuex.Store({
 
     setGlobalAlert(state, payload) {
       // Clear previous timer
-
       clearTimeout(timer);
-
       // update alert state
-
-      state.globalAlert = payload;
-
+      state.globaAlert = payload;
       // set new timer
-
-      timer = setTimeout(
-        () => (state.globalAlert = { show: false, text: "", type: "" }),
-        5000
-      );
+      timer = setTimeout(() => {
+        const alert = document.getElementById("globalAlert") as HTMLElement;
+        state.globaAlert = { show: false, text: "", type: "" };
+        if (payload.show === true) {
+          alert.click();
+        }
+      }, 5000);
     },
 
     setDropMenu(state, payload) {

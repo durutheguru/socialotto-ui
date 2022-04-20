@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 col-span-5 pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
@@ -234,6 +234,7 @@
                     >
                       <div class="td-elipsis relative">
                         <LotteryRowMenu
+                          @refetch="refetchLotteries"
                           :lotteryId="lottery.id"
                           :status="lotteryStatuses[`${lottery.lotteryStatus}`]"
                         />
@@ -364,9 +365,14 @@ export default class LotteriesView extends BaseVue {
     CREDITED_TO_BENEFICIARIES: "Settled",
   };
 
+  private refetchLotteries() {
+    this.$apollo.queries.searchLotteries.refetch();
+  }
+
   private searchStatus(status: any) {
     // Log.info("status:" + status);
     this.lotteryQuery.status = status;
+    this.lotteryQuery.page = 0;
     this.showStatuses = false;
   }
 

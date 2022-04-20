@@ -314,6 +314,14 @@
   background-color: #1d414b;
 }
 
+.showBackofficeSidebar {
+  display: none;
+}
+
+.showBackofficeNav {
+  display: block;
+}
+
 .bo-bg-dark-blue {
   background-color: #1d414b;
 }
@@ -380,6 +388,14 @@
   .instructionsDisplay {
     display: block;
   }
+
+  .showBackofficeSidebar {
+    display: block;
+  }
+
+  .showBackofficeNav {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -408,4 +424,14 @@
   .landingPageText {
     text-align: left;
   }
+}
+
+.slideOut-enter-active,
+.slideOut-leave-active {
+  transition: all 0.2s ease-out;
+}
+.slideOut-leave-to,
+.slideOut-enter-from {
+  opacity: 0;
+  transform: translateX(-100%);
 }
