@@ -8,7 +8,7 @@
         >
           <div class="roundLoader opacity-50 mx-auto"></div>
         </div>
-        <div v-else class="flex flex-col items-center justify-center">
+        <div v-else class="flex flex-col items-center justify-center ">
           <img
             class="inline-block h-24 w-24 rounded-full"
             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixusername=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -26,11 +26,11 @@
             </span>
           </div>
 
-          <div>
+          <div v-if="canCreateCampaign">
             <button
-              type="submit"
-              style="background-color: #4691A6; width: 30rem"
-              class="buttonText mb-12 flex justify-center py-3 px-4 border border-transparent br-8 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              @click="goToCampaign"
+              style="background-color: #4691A6; "
+              class="w-80 sm:w-96 buttonText mb-12 flex justify-center py-3 px-4 border border-transparent br-8 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Create A Campaign
             </button>
@@ -113,7 +113,7 @@ import { Component, Vue } from "vue-property-decorator";
 import Wallet from "./Wallet.vue";
 import Profile from "./Profile.vue";
 
-import { Constants, Log, Util } from "@/components/util";
+import { Constants, Log, Util, Security } from "@/components/util";
 import store from "@/store/index";
 import { viewUserDetails } from "@/services/users/users.query";
 import { ApolloError } from "apollo-client";
@@ -180,12 +180,12 @@ import { viewWalletBalances } from "@/services/users/users.query";
   },
 })
 export default class User extends Vue {
-
   private currentPage = "Profile";
 
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
-  
+  private canCreateCampaign = Security.hasAuthorization("CAN_CREATE_CAMPAIGN");
+
   private userQuery: any = {
     username: this.username,
     userType: this.userType,
@@ -202,6 +202,9 @@ export default class User extends Vue {
     error: "",
   };
 
+  private goToCampaign() {
+    this.$router.push("/create_campaign");
+  }
 
   private mounted() {
     Log.info("username: " + this.username);
@@ -217,17 +220,13 @@ export default class User extends Vue {
     }
   }
 
-
   private changeTo(path: string) {
     this.currentPage = path;
   }
 
-
   private get hasWalletId(): boolean {
     return Util.isValidString(this.userWalletQuery.walletId);
   }
-
-  
 }
 </script>
 

@@ -100,6 +100,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
       variables() {
         return {
           searchKey: this.siteQuery.key,
+          status: "ACTIVE",
           page: this.siteQuery.page,
           size: this.siteQuery.size,
         };

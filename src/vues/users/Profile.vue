@@ -10,7 +10,9 @@
                     font-size: 12px;
                     line-height: 100%;
                     color: #797979;"
-          class="block text-sm font-medium ">Name</label>
+          class="block text-sm font-medium "
+          >Name</label
+        >
         <div class="mt-1">
           <input
             id="name"
@@ -144,6 +146,10 @@ export default class Profile extends Vue {
     data: {},
     error: "",
   };
+
+  private mounted() {
+    // Util.handleGlobalAlert(true, "failed", "Alert");
+  }
 }
 </script>
 
