@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 col-span-5 pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
@@ -221,6 +221,7 @@
                     >
                       <div class="td-elipsis relative">
                         <CampaignRowMenu
+                          @refetch="refetchCampaigns"
                           :campaignId="campaign.id"
                           :status="campaignStatuses[campaign.status]"
                         />
@@ -359,6 +360,7 @@ export default class CampaignsView extends BaseVue {
   private searchStatus(status: any) {
     // Log.info("status:" + status);
     this.campaignQuery.status = status;
+    this.campaignQuery.page = 0;
     this.showStatuses = false;
   }
 
@@ -370,6 +372,10 @@ export default class CampaignsView extends BaseVue {
     if (this.campaignQuery.page > 0) {
       this.campaignQuery.page--;
     }
+  }
+
+  private refetchCampaigns() {
+    this.$apollo.queries.searchCampaigns.refetch();
   }
 
   private toggleStatusMenu() {

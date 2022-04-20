@@ -28,12 +28,13 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    redirect: "/socialotto",
 
     name: "NavHeader",
     component: NavHeader,
     children: [
       {
-        path: "/",
+        path: "/socialotto",
         name: "LandingPage",
         meta: {
           skipAuth: true,
@@ -98,7 +99,7 @@ const routes = [
           auth: ["CAN_CREATE_CAMPAIGN"],
         },
       },
-      
+
       {
         path: "/user",
         redirect: "/user/profile",
@@ -114,21 +115,21 @@ const routes = [
             path: "wallet",
             name: "Wallet",
             component: () => import("@/vues/users/Wallet.vue"),
-            children: [
-              {
-                path: "update",
-                name: "WalletUpdateApproval",
-                component: () =>
-                  import("@/vues/users/WalletUpdateApproval.vue"),
-              },
+            // children: [
+            //   {
+            //     path: "update",
+            //     name: "WalletUpdateApproval",
+            //     component: () =>
+            //       import("@/vues/users/WalletUpdateApproval.vue"),
+            //   },
 
-              {
-                path: "update/:updateId",
-                name: "WalletUpdateApproval",
-                component: () =>
-                  import("@/vues/users/WalletUpdateApproval.vue"),
-              },
-            ],
+            //   {
+            //     path: "update/:updateId",
+            //     name: "WalletUpdateApproval",
+            //     component: () =>
+            //       import("@/vues/users/WalletUpdateApproval.vue"),
+            //   },
+            // ],
           },
         ],
       },
@@ -167,6 +168,7 @@ const routes = [
   {
     path: "/back-office",
     name: "BackOffice",
+    redirect: "/back-office/campaigns",
     component: BackOffice,
     meta: {
       auth: ["BACK_OFFICE_USER"],

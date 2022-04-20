@@ -1,14 +1,16 @@
 <template>
-  <div class="flex spartan flex-col items-center justify-center mt-12 mb-20">
+  <div
+    class="overflow-y-auto flex spartan flex-col items-center justify-center mt-12 mb-20"
+  >
     <WalletBalanceCardLoading v-if="loading" />
     <div
       v-else
       style="
         background: linear-gradient(137.03deg, #4691A6 29.77%, #2C5662 87.65%);
         border-radius: 12px;
-        width: 50rem
+        
 	      "
-      class="spartan flex items-center justify-between py-4 px-6 "
+      class="walletWidth spartan flex items-center justify-between py-4 px-6 "
     >
       <div class="flex flex-col justify-between  mr-4 w-60">
         <span class="text-white fw-400 fs-16 mb-2">Wallet Balance</span>
@@ -21,13 +23,15 @@
         <div class="flex justify-between">
           <div
             @click="openWithdrawFundsModal"
-            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center">
+            class="px-7 py-2.5 bg-white cursor-pointer w-6/12 br-12 flex justify-center"
+          >
             <span class="fw-500 fs-16" style="color: #3C798A;">Withdraw</span>
           </div>
           <div
             @click="openEditWithdrawalModal"
             style="background-color: #CDE4EA;"
-            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12">
+            class=" py-2.5  cursor-pointer flex justify-center w-5/12 br-12"
+          >
             <span class="fw-500 fs-16 mr-2" style="color: #3C798A;">
               <i class="fa bigger-font fa-gear"></i>
             </span>
@@ -36,14 +40,14 @@
       </div>
     </div>
 
-    <div style="width: 50rem" class="">
+    <div style="min-width: 45rem" class="walletWidth ">
       <h1 style="color: #2D5763;" class="fw-600 fs-20 mt-6">
         Transaction History
       </h1>
       <div v-if="$apollo.queries.getAllWalletTransactions.loading">
         Loading...
       </div>
-      <div v-else>
+      <div class="" v-else>
         <div
           v-for="transaction in userWalletTransactionsQuery.data"
           :key="transaction.reference"
@@ -98,10 +102,11 @@
       @close="closeEditWithdrawalModal"
     />
 
-    <cashout-otp 
+    <cashout-otp
       :isModalOpen="openCashoutOTP"
       :reference="cashoutReference"
-      @close="closeCashoutOTPModal" />
+      @close="closeCashoutOTPModal"
+    />
 
     <withdraw-funds
       :isModalOpen="openWithdrawFunds"
@@ -112,7 +117,6 @@
     />
 
     <wallet-update-approval />
-
   </div>
 </template>
 
@@ -133,7 +137,6 @@ import WithdrawFunds from "./WithdrawFunds.vue";
 import WalletUpdateApproval from "./WalletUpdateApproval.vue";
 import { EventBus, EventTrigger } from "@/components/core/Event";
 import CashoutOtp from "./CashoutOtp.vue";
-
 
 @Component({
   name: "Wallet",
@@ -180,7 +183,8 @@ import CashoutOtp from "./CashoutOtp.vue";
         Log.info("FetchBanks Query: " + JSON.stringify(data));
         this.banks.data = data?.fetchBanks;
         EventTrigger.trigger(
-          "wallet-update-banks-fetched-event", this.banks.data
+          "wallet-update-banks-fetched-event",
+          this.banks.data
         );
       },
 
@@ -203,15 +207,13 @@ import CashoutOtp from "./CashoutOtp.vue";
   },
 })
 export default class Wallet extends BaseVue {
-
   @Prop()
   private loading!: boolean;
 
   @Prop()
   private userWalletQuery!: any;
 
-
-  private cashoutReference: string = '';
+  private cashoutReference: string = "";
 
   private mounted() {
     let self = this;
@@ -298,10 +300,12 @@ export default class Wallet extends BaseVue {
   private closeCashoutOTPModal() {
     this.openCashoutOTP = false;
   }
-
 }
 </script>
 
-<style scoped></style>
-
-
+<style scoped>
+.walletWidth {
+  max-width: 50rem;
+  width: 81%;
+}
+</style>

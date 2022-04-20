@@ -34,14 +34,14 @@
             View Details
           </li>
           <li
-            @mousedown="approveCampaign(campaignId)"
+            @mousedown="openApprovalModal"
             v-if="status === 'Pending'"
             class="lotteryTableMenuListGreen py-3 hover:bg-gray-200 grid justify-center items-center"
           >
             Approve
           </li>
           <li
-            @mousedown="disApproveCampaign(campaignId)"
+            @mousedown="openDisapprovalModal"
             v-if="status === 'Pending'"
             class="lotteryTableMenuRed py-3 hover:bg-gray-200 grid justify-center items-center"
           >
@@ -91,6 +91,18 @@
         <li class="bg-white hover:bg-gray-200">view</li>
       </ul> -->
     </div>
+    <campaign-approval-modal
+      @approve="approveCampaign(campaignId)"
+      :isModalOpen="isApprovalModalOpen"
+      @close="closeApprovalModal"
+      :loading="approval.loading"
+    />
+    <campaign-disapproval-modal
+      @disapprove="disApproveCampaign(campaignId)"
+      :isModalOpen="isDisapprovalModalOpen"
+      @close="closeDisapprovalModal"
+      :loading="disApproval.loading"
+    />
   </div>
 </template>
 
@@ -101,6 +113,8 @@ import { Log, Util } from "@/components/util";
 import CampaignService from "@/services/campaign/CampaignService";
 import store from "@/store/index";
 import BaseVue from "@/components/BaseVue";
+import CampaignApprovalModal from "./CampaignApprovalModal.vue";
+import CampaignDisapprovalModal from "./CampaignDisapprovalModal.vue";
 
 @Component({
   name: "CampaignRowMenu",
@@ -108,9 +122,33 @@ import BaseVue from "@/components/BaseVue";
     status: String,
     campaignId: String,
   },
+  components: {
+    CampaignApprovalModal,
+    CampaignDisapprovalModal,
+  },
 })
 export default class CampaignRowMenu extends BaseVue {
   private show: boolean = false;
+
+  private isApprovalModalOpen = false;
+
+  private openApprovalModal() {
+    this.isApprovalModalOpen = true;
+  }
+
+  private closeApprovalModal() {
+    this.isApprovalModalOpen = false;
+  }
+
+  private isDisapprovalModalOpen = false;
+
+  private openDisapprovalModal() {
+    this.isDisapprovalModalOpen = true;
+  }
+
+  private closeDisapprovalModal() {
+    this.isDisapprovalModalOpen = false;
+  }
 
   private approval: ApiResource = ApiResource.create();
   private disApproval: ApiResource = ApiResource.create();
@@ -134,6 +172,10 @@ export default class CampaignRowMenu extends BaseVue {
   //   Log.info(String(store.state.tbodyKey));
   // }
 
+  private refetch() {
+    this.$emit("refetch");
+  }
+
   private approveCampaign(campaignId: string) {
     let self = this;
     self.approvalJson.campaignId = campaignId;
@@ -151,6 +193,9 @@ export default class CampaignRowMenu extends BaseVue {
         // this.rerenderTable();
 
         Log.info("ApprovalResponse: " + JSON.stringify(response));
+        this.closeApprovalModal();
+        this.show = false;
+        this.refetch();
 
         Util.handleGlobalAlert(
           true,
@@ -163,6 +208,7 @@ export default class CampaignRowMenu extends BaseVue {
         store.commit("setCampaignPendingApprovalLoading", false);
         self.approval.error = self.extractError(error);
         Util.handleGlobalAlert(true, "failed", self.approval.error);
+        // this.refetch();
       }
     );
 
@@ -186,6 +232,9 @@ export default class CampaignRowMenu extends BaseVue {
         // this.rerenderTable();
 
         Log.info("disApprovalResponse: " + JSON.stringify(response));
+        this.closeDisapprovalModal();
+        this.show = false;
+        this.refetch();
 
         Util.handleGlobalAlert(
           true,

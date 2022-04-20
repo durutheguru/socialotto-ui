@@ -41,6 +41,7 @@ export default class Constants {
   // APIs to exclude authorization
   public static authExcludeApiPaths: string[] = [
     "/login",
+    "/navHeader",
     "/oauth/login",
     "/twitter/oauth",
     "/api/v1/user_signup",
