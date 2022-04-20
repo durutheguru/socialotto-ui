@@ -1,5 +1,5 @@
 <template>
-  <div class="showBackofficeSidebar h-full relative">
+  <div class=" h-full relative">
     <div
       style="min-width: 17rem;"
       class="flex-1 flex flex-col w-72 h-full backOfficeSidebar overflow-y-auto"
