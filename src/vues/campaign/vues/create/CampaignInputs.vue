@@ -411,7 +411,7 @@ export default class CampaignInputs extends BaseVue {
         Util.handleGlobalAlert(
           true,
           "success",
-          "Successfully created campaign"
+          "Successfully created campaign. Awaiting approval at BackOffice."
         );
 
         let resetButton: any = document.getElementById("reset");
