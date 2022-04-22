@@ -1,6 +1,6 @@
 <template>
   <transition name="slideDown">
-    <!-- <div
+    <div
       v-if="message.show"
       id="closeAlert"
       class="shadow-lg spartan main fixed z-50 top-5 right-0 mr-6 min-w-min-content flex sm:max-w-md m-auto over rounded-md px-3 py-4"
@@ -44,12 +44,12 @@
             class="text-sm leading-5"
           >
             {{ message.text }}
-           
           </div>
         </div>
       </div>
-    </div> -->
-    <div
+    </div>
+
+    <!-- <div
       v-if="message.show"
       @click="close"
       id="closeAlert"
@@ -91,12 +91,11 @@
         </div>
         <div class="ml-3 ">
           <p class="text-md my-auto">
-            <!-- Hello World of war craft -->
             {{ message.text }}
           </p>
         </div>
       </div>
-    </div>
+    </div> -->
   </transition>
 </template>
 

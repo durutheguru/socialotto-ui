@@ -22,7 +22,10 @@
             >
               <div class="roundLoader opacity-50"></div>
             </div>
-            <CampaignDetailsCarousel v-else :images="carouselImages" />
+            <CampaignDetailsCarousel
+              v-else
+              :images="campaignDetails.data.fileRefs"
+            />
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <DonateNShareSkeleton v-if="campaignDetails.loading" />
