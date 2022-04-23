@@ -129,7 +129,7 @@ export default class CampaignDetails extends Vue {
       },
       (error: any) => {
         self.campaignDetails.loading = false;
-        if (error.response.status === 404) {
+        if (error.response.status === 404 || error.response.status === 400) {
           this.$router.push("/404");
         }
         Log.error("campaignDetails Error: " + JSON.stringify(error));
