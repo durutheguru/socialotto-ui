@@ -109,7 +109,7 @@ import { Constants, Log, Util } from "@/components/util";
 })
 export default class LandingPage extends Vue {
   private mounted() {
-    this.test();
+    // this.test();
   }
 
   private test() {

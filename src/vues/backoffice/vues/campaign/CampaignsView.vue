@@ -329,7 +329,7 @@ import { searchCampaigns } from "@/services/campaign/campaign.query";
 })
 export default class CampaignsView extends BaseVue {
   private mounted() {
-    this.test();
+    // this.test();
   }
 
   private test() {
@@ -388,7 +388,6 @@ export default class CampaignsView extends BaseVue {
 
   private toggleStatusMenu() {
     this.showStatuses = !this.showStatuses;
-    this.test();
   }
 
   private displayColor(status: any) {

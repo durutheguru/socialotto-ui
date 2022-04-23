@@ -1,10 +1,10 @@
 <template>
-  <div class=" h-full relative">
+  <div class=" relative">
     <div
-      style="min-width: 17rem;"
-      class="flex-1 flex flex-col w-64 h-full backOfficeSidebar overflow-y-auto"
+      style="min-width: 16rem;"
+      class="flex-1 flex flex-col w-60 h-full backOfficeSidebar overflow-y-auto"
     >
-      <div class="flex-1 flex flex-col pt-16 pb-4  w-56 mx-auto">
+      <div class="flex-1 flex flex-col pt-16 pb-4  w-10/12 mx-auto">
         <div class="">
           <div
             style="background: #2B606E;"
@@ -82,7 +82,7 @@
         </div>
 
         <!-- -------Nav-------- -->
-        <nav class="mt-5 flex-1  space-y-1 spartan" aria-label="Sidebar">
+        <nav class="mt-5 mb-20 flex-1  space-y-1 spartan" aria-label="Sidebar">
           <router-link
             v-for="item in navigation"
             :key="item.name"

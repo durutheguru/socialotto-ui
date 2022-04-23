@@ -1,6 +1,6 @@
 <template>
   <transition name="slideDown">
-    <div
+    <!-- <div
       v-if="message.show"
       id="closeAlert"
       class="shadow-lg spartan main fixed z-50 top-5 right-0 mr-6 min-w-min-content flex sm:max-w-md m-auto over rounded-md px-3 py-4"
@@ -47,13 +47,13 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
-    <!-- <div
+    <div
       v-if="message.show"
       @click="close"
-      id="closeAlert"
-      class="shadow-lg spartan main fixed z-50 top-5 right-0 mr-6 min-w-min-content flex sm:max-w-md m-auto over rounded-md border-l-4  p-4"
+      id="globalAlert"
+      class="shadow-lg spartan main fixed z-50 top-5 globalAlertPositioning mr-20 min-w-min-content flex sm:max-w-md m-auto over rounded-md border-l-4  p-4"
       :class="
         message.type === 'success'
           ? 'bg-green-50 border-green-400 text-green-700'
@@ -95,7 +95,7 @@
           </p>
         </div>
       </div>
-    </div> -->
+    </div>
   </transition>
 </template>
 

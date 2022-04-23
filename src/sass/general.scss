@@ -164,6 +164,11 @@
   border: 1px solid #4691a6;
 }
 
+.globalAlertPositioning {
+  left: 0px;
+  right: 0px;
+}
+
 .focus-border-blue-200:focus {
   border-color: #4691a6;
 }
@@ -395,6 +400,13 @@
 
   .showBackofficeNav {
     display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .globalAlertPositioning {
+    left: auto;
+    right: 1rem;
   }
 }
 
