@@ -104,6 +104,7 @@ export default class CampaignDetails extends Vue {
     CampaignService.getCampaignDetails(
       self.campaignId,
       (response: any) => {
+        Log.info("resp: " + JSON.stringify(response.status));
         self.campaignDetails.loading = false;
         // Log.info("campaignDetails In: " + JSON.stringify(response.data));
         self.campaignDetails.data = response.data;
@@ -128,7 +129,11 @@ export default class CampaignDetails extends Vue {
       },
       (error: any) => {
         self.campaignDetails.loading = false;
+        if (error.response.status === 404) {
+          this.$router.push("/404");
+        }
         Log.error("campaignDetails Error: " + JSON.stringify(error));
+        Log.info("resp: " + JSON.stringify(error.response.status));
       }
     );
 

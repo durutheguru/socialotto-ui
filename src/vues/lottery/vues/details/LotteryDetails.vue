@@ -123,6 +123,9 @@ export default class LotteryDetails extends BaseVue {
       (error: any) => {
         self.lotteryDetails.loading = false;
         Log.error("lotteryDetails Error: " + JSON.stringify(error));
+        if (error.response.status === 404) {
+          this.$router.push("/404");
+        }
       }
     );
   }
