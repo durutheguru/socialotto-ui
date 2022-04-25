@@ -671,7 +671,11 @@
                 >End date of registration</label
               >
               <div class="mt-1">
-                <validation-provider rules="required" v-slot="{ errors }">
+                <validation-provider
+                  name="endDate"
+                  rules="required|endDate"
+                  v-slot="{ errors }"
+                >
                   <input
                     v-model="lottery.endDate"
                     required
@@ -721,7 +725,10 @@
                   >Date of evaluation</label
                 >
                 <div class="mt-1">
-                  <validation-provider rules="required" v-slot="{ errors }">
+                  <validation-provider
+                    rules="required|dateEval:@endDate"
+                    v-slot="{ errors }"
+                  >
                     <input
                       v-model="lottery.evaluationDate"
                       required
@@ -802,6 +809,24 @@
             <button class="hidden" id="clearLotteryInput" type="reset">
               Reset
             </button>
+            <!-- 
+            <div>{{ invalid }}</div>
+            <div>{{ saveLottery.loading }}</div>
+            <div>{{ fileUploader.uploads.length === 0 }}</div>
+            <div>{{ !dateCheck }}</div>
+            <div>{{ checkFileLoading }}</div>
+            <div>
+              {{
+                invalid ||
+                  fileUploader.uploads.length === 0 ||
+                  saveLottery.loading ||
+                  !dateCheck ||
+                  checkFileLoading
+              }}
+            </div> -->
+
+            <!-- <div>{{ now }}</div> -->
+
             <!-- --- -->
             <!-- :disabled="
                 invalid ||
@@ -816,13 +841,15 @@
                 invalid ||
                   fileUploader.uploads.length === 0 ||
                   saveLottery.loading ||
-                  !dateCheck
+                  !dateCheck ||
+                  checkFileLoading
               "
               :class="[
                 invalid ||
                 fileUploader.uploads.length === 0 ||
                 saveLottery.loading ||
-                !dateCheck
+                !dateCheck ||
+                checkFileLoading
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
@@ -848,6 +875,8 @@
               ></i>
             </button>
           </div>
+          <!-- <div>{{ checkFileLoading }}</div>
+          <div>{{ !dateCheck }}</div> -->
         </div>
         <!-- ------------------------------------ -->
       </div>
@@ -883,7 +912,7 @@ import BaseVue from "@/components/BaseVue";
         };
       },
       skip() {
-        return !this.supportedCampaign;
+        return this.supportedCampaign.length === 0;
       },
 
       result({ data }) {
@@ -971,6 +1000,13 @@ export default class CreateLottery extends BaseVue {
     );
   }
 
+  private get now() {
+    const d = new Date();
+    const newD = d.setDate(d.getDate() + 50);
+
+    return newD;
+  }
+
   private prepareLotteryRequest() {
     const time = Util.formatTime(
       `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
@@ -1015,6 +1051,13 @@ export default class CreateLottery extends BaseVue {
     Constants.defaultFileUploadExtensions,
     Constants.defaultMaxFileUploadSize
   );
+
+  private get checkFileLoading() {
+    const isTrue = (file: any) => file.getResource().loading === true;
+    const result = JSON.stringify(this.fileUploader.uploads.some(isTrue));
+    Log.info(result);
+    return result;
+  }
 
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);

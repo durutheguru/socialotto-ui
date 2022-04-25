@@ -2,6 +2,7 @@ import Vue from "vue";
 import { ValidationProvider, ValidationObserver } from "vee-validate";
 import { extend } from "vee-validate";
 import { email, numeric } from "vee-validate/dist/rules";
+import { Util } from "@/components/util";
 
 // import { Validator } from 'vee-validate';
 // import { configure } from 'vee-validate';
@@ -87,6 +88,49 @@ export default function() {
     },
     params: ["length"],
     message: "The {_field_} field must have at least {length} characters",
+  });
+
+  // extend("dayCheck", {
+  //   validate(value, args) {
+  //     let data = args as { now: any };
+  //     console.log(value);
+  //     console.log(data.now);
+  //     return value > data.now;
+  //   },
+  //   params: ["now"],
+  //   message: "The {_field_} field must come after {now} ",
+  // });
+
+  extend("endDate", {
+    validate(value) {
+      const today = new Date();
+      const date =
+        today.getFullYear() +
+        "-" +
+        (today.getMonth() + 1) +
+        "-" +
+        today.getDate();
+
+      const displayTime = Util.formatTime(
+        date,
+        "YYYY-MM-DD HH:mm:ss.SSSS Z",
+        "YYYY-MM-DD"
+      );
+      console.log(value);
+      console.log(displayTime);
+      return value > displayTime;
+    },
+
+    message: "The {_field_} field must come after today",
+  });
+
+  extend("dateEval", {
+    params: ["target"],
+    validate(value, args) {
+      let data = args as { target: any };
+      return value >= data.target;
+    },
+    message: "Evaluation date must come on or after end date",
   });
 
   extend("max", {
