@@ -39,6 +39,9 @@
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
               :closureDate="lotteryDetails.data.endDate"
               :lotteryOwner="lotteryDetails.data.lotteryOwner.name"
+              :evaluationTime="
+                lotteryDetails.data.stageDescriptions[0].evaluationTime
+              "
               v-else-if="isDataReceived"
             />
           </div>
