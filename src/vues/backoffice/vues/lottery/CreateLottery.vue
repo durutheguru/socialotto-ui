@@ -886,7 +886,7 @@ import BaseVue from "@/components/BaseVue";
       variables() {
         return {
           searchKey: this.supportedCampaign,
-          status: "COMPLETED",
+          status: "ACTIVE",
           page: this.searchCampaignsNamesQuery.page,
           size: this.searchCampaignsNamesQuery.size,
         };
