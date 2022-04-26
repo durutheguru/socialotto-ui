@@ -809,31 +809,11 @@
             <button class="hidden" id="clearLotteryInput" type="reset">
               Reset
             </button>
-            <!-- 
-            <div>{{ invalid }}</div>
-            <div>{{ saveLottery.loading }}</div>
-            <div>{{ fileUploader.uploads.length === 0 }}</div>
-            <div>{{ !dateCheck }}</div>
-            <div>{{ checkFileLoading }}</div>
-            <div>
-              {{
-                invalid ||
-                  fileUploader.uploads.length === 0 ||
-                  saveLottery.loading ||
-                  !dateCheck ||
-                  checkFileLoading
-              }}
+
+            <!-- <div v-if="returnBoolean || invalid">
+              show me {{ returnBoolean }} {{ invalid }}
             </div> -->
 
-            <!-- <div>{{ now }}</div> -->
-
-            <!-- --- -->
-            <!-- :disabled="
-                invalid ||
-                  fileUploader.uploads.length === 0 ||
-                  saveLottery.loading ||
-                  !dateCheck
-              " -->
             <!-- --- -->
             <button
               @click="createLottery"
@@ -906,7 +886,7 @@ import BaseVue from "@/components/BaseVue";
       variables() {
         return {
           searchKey: this.supportedCampaign,
-          status: "ACTIVE",
+          status: "COMPLETED",
           page: this.searchCampaignsNamesQuery.page,
           size: this.searchCampaignsNamesQuery.size,
         };
@@ -944,6 +924,23 @@ export default class CreateLottery extends BaseVue {
     size: 9,
     error: "",
   };
+
+  private get returnBoolean() {
+    Log.info(
+      "filesUploaded" + JSON.stringify(this.fileUploader.uploads.length === 0)
+    );
+    Log.info("loterry saving" + JSON.stringify(this.saveLottery.loading));
+    Log.info("fileLoading" + JSON.stringify(this.checkFileLoading));
+    if (
+      this.fileUploader.uploads.length === 0 ||
+      this.saveLottery.loading ||
+      this.checkFileLoading
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   private ownerlistIsVisible: boolean = false;
   private campaignListIsVisible: boolean = false;
@@ -1054,8 +1051,8 @@ export default class CreateLottery extends BaseVue {
 
   private get checkFileLoading() {
     const isTrue = (file: any) => file.getResource().loading === true;
-    const result = JSON.stringify(this.fileUploader.uploads.some(isTrue));
-    Log.info(result);
+    const result = this.fileUploader.uploads.some(isTrue);
+    // Log.info(result);
     return result;
   }
 
