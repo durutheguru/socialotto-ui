@@ -14,12 +14,12 @@
       >
         Supported Campaigns
       </button>
-      <button
+      <!-- <button
         class="mr-10 cursor-pointer focus:underline"
         @click="view = 'Terms & Conditions'"
       >
         Terms & Conditions
-      </button>
+      </button> -->
     </div>
 
     <div>
@@ -65,7 +65,7 @@
       </div>
 
       <!-- --------Terma and Conditions---------- -->
-      <div v-if="view === 'Terms & Conditions'" class="spartan relative">
+      <!-- <div v-if="view === 'Terms & Conditions'" class="spartan relative">
         <ul
           class="list-disc text-dark space-y-4 relative"
           style="right: 0.313rem;"
@@ -91,7 +91,7 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

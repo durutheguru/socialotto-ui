@@ -39,6 +39,9 @@
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
               :closureDate="lotteryDetails.data.endDate"
               :lotteryOwner="lotteryDetails.data.lotteryOwner.name"
+              :evaluationTime="
+                lotteryDetails.data.stageDescriptions[0].evaluationTime
+              "
               v-else-if="isDataReceived"
             />
           </div>
@@ -123,6 +126,9 @@ export default class LotteryDetails extends BaseVue {
       (error: any) => {
         self.lotteryDetails.loading = false;
         Log.error("lotteryDetails Error: " + JSON.stringify(error));
+        if (error.response.status === 404 || error.response.status === 400) {
+          this.$router.push("/404");
+        }
       }
     );
   }

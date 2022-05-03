@@ -25,7 +25,14 @@
           >Registration Ends
         </span>
         <span class="text-base font-semibold text-gray-600 ">{{
-          closureDate
+          dateOfClosure
+        }}</span>
+      </div>
+      <!-- ----------- -->
+      <div class="h-12 items-center flex  justify-between ">
+        <span class="text-sm font-medium text-gray-400">Evaluation Date </span>
+        <span class="text-base font-semibold text-gray-600 ">{{
+          evalTime
         }}</span>
       </div>
       <!-- ----------- -->
@@ -190,6 +197,7 @@ import ApiResource from "@/components/core/ApiResource";
     closureDate: String,
     lotteryOwner: String,
     lotteryStatus: String,
+    evaluationTime: String,
   },
 })
 export default class LotteryPayNShare extends BaseVue {
@@ -198,10 +206,36 @@ export default class LotteryPayNShare extends BaseVue {
   @Prop()
   private ticketCost!: number;
 
+  @Prop()
+  private closureDate!: string;
+
+  @Prop()
+  private evaluationTime!: string;
+
   private lotteryId = this.$route.params.id;
 
   get price() {
     return this.ticketAmount * this.ticketCost;
+  }
+
+  private get dateOfClosure() {
+    // const date = Util.formatTime(this.closureDate, "YYYY-MM-DD HH:mm:ss.SSSS", "MMM DD ddd YYYY hh:mm a")
+
+    const date = Util.formatTime(
+      this.closureDate,
+      "YYYY-MM-DD",
+      "MMM DD ddd YYYY"
+    );
+    return date;
+  }
+
+  private get evalTime() {
+    const date = Util.formatTime(
+      this.evaluationTime,
+      "YYYY-MM-DD HH:mm:ss.SSSS",
+      "MMM DD ddd YYYY hh:mm a"
+    );
+    return date;
   }
 
   private increment() {
