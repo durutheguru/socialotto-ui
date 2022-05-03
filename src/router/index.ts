@@ -29,13 +29,11 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/socialotto",
-
     name: "NavHeader",
     component: NavHeader,
     children: [
       {
-        path: "/socialotto",
+        path: "/",
         name: "LandingPage",
         meta: {
           skipAuth: true,
@@ -149,6 +147,7 @@ const routes = [
       {
         path: "/lottery/:id",
         name: "LotteryDetails",
+
         component: () =>
           import("@/vues/lottery/vues/details/LotteryDetails.vue"),
       },

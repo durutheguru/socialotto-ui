@@ -76,7 +76,7 @@
                       <div>
                         <validation-provider
                           mode="aggressive"
-                          rules="required|min:20|max:240"
+                          rules="required|min:20|max:2000"
                           v-slot="{ errors }"
                         >
                           <textarea
@@ -411,7 +411,7 @@ export default class CampaignInputs extends BaseVue {
         Util.handleGlobalAlert(
           true,
           "success",
-          "Successfully created campaign"
+          "Successfully created campaign. Awaiting approval at BackOffice."
         );
 
         let resetButton: any = document.getElementById("reset");

@@ -34,7 +34,7 @@
             </p>
           </div>
         </div>
-        <div class="mt-0 flex items-center spartan">
+        <div class="mt-0 hidden flex items-center spartan">
           <div
             class="cursor-pointer spartan h-11 w-full buyLotteryBtn flex justify-center items-center active:translate-y-2"
           >
