@@ -147,6 +147,7 @@ const routes = [
       {
         path: "/lottery/:id",
         name: "LotteryDetails",
+
         component: () =>
           import("@/vues/lottery/vues/details/LotteryDetails.vue"),
       },
