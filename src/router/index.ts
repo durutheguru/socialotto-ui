@@ -22,6 +22,7 @@ import LotteriesView from "@/vues/backoffice/vues/lottery/LotteriesView.vue";
 import CampaignsView from "@/vues/backoffice/vues/campaign/CampaignsView.vue";
 import guard from "./util/guard";
 import afterRouteScriptLoader from "./util/afterRouteScriptLoader";
+import PageNotFound from "@/vues/PageNotFound.vue";
 
 Vue.use(VueRouter);
 
@@ -41,6 +42,7 @@ const routes = [
         },
         component: LandingPage,
       },
+
       {
         path: "/signup",
         name: "Signup",
@@ -328,6 +330,14 @@ const routes = [
     meta: {
       skipAuth: true,
     },
+  },
+  {
+    path: "*",
+    name: "PageNotFound",
+    meta: {
+      skipAuth: true,
+    },
+    component: PageNotFound,
   },
 ];
 

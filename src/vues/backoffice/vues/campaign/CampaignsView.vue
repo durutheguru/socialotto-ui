@@ -328,6 +328,14 @@ import { searchCampaigns } from "@/services/campaign/campaign.query";
   },
 })
 export default class CampaignsView extends BaseVue {
+  private mounted() {
+    // this.test();
+  }
+
+  private test() {
+    Log.info("testing global alert");
+    Util.handleGlobalAlert(true, "success", "success");
+  }
   private campaignQuery: any = {
     key: "",
     page: 0,

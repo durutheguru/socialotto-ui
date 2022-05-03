@@ -10,10 +10,12 @@ import { Log } from "@/components/util";
 
 Vue.use(Vuex);
 let timer: any;
+let timer2: any;
 function defaultState() {
   return {
     entryUrl: null,
-    globalAlert: { show: false, text: "", type: "" },
+    globalAlert: { show: false, type: "", text: "" },
+    // globalAlert2: { show: false, text: "", type: "" },
     dropMenu: false,
     isNoticeMenu: false,
     isRecentsMenu: false,
@@ -49,19 +51,31 @@ export default new Vuex.Store({
       context.entryUrl = url;
     },
 
+    // setGlobalAlert2(state, payload) {
+    //   // Clear previous timer
+    //   clearTimeout(timer2);
+    //   // update alert state
+    //   state.globalAlert2 = payload;
+    //   // set new timer
+    //   timer2 = setTimeout(
+    //     () => (state.globalAlert2 = { show: false, text: "", type: "" }),
+    //     5000
+    //   );
+    // },
+
     setGlobalAlert(state, payload) {
       // Clear previous timer
-      clearTimeout(timer);
+      // clearTimeout(timer);
       // update alert state
-      state.globaAlert = payload;
+      state.globalAlert = payload;
       // set new timer
-      timer = setTimeout(() => {
-        const alert = document.getElementById("globalAlert") as HTMLElement;
-        state.globaAlert = { show: false, text: "", type: "" };
-        if (payload.show === true) {
-          alert.click();
-        }
-      }, 5000);
+      // timer = setTimeout(() => {
+      //   const alert = document.getElementById("globalAlert") as HTMLElement;
+      //   state.globalAlert = { show: false, type: "", text: "" };
+      //   if (payload.show === true) {
+      //     alert.click();
+      //   }
+      // }, 5000);
     },
 
     setDropMenu(state, payload) {
