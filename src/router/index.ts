@@ -28,13 +28,11 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/socialotto",
-
     name: "NavHeader",
     component: NavHeader,
     children: [
       {
-        path: "/socialotto",
+        path: "/",
         name: "LandingPage",
         meta: {
           skipAuth: true,

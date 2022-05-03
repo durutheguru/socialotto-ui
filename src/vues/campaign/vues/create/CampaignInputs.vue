@@ -76,7 +76,7 @@
                       <div>
                         <validation-provider
                           mode="aggressive"
-                          rules="required|min:20|max:240"
+                          rules="required|min:20|max:2000"
                           v-slot="{ errors }"
                         >
                           <textarea
