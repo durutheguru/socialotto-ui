@@ -671,7 +671,11 @@
                 >End date of registration</label
               >
               <div class="mt-1">
-                <validation-provider rules="required" v-slot="{ errors }">
+                <validation-provider
+                  name="endDate"
+                  rules="required|endDate"
+                  v-slot="{ errors }"
+                >
                   <input
                     v-model="lottery.endDate"
                     required
@@ -721,7 +725,10 @@
                   >Date of evaluation</label
                 >
                 <div class="mt-1">
-                  <validation-provider rules="required" v-slot="{ errors }">
+                  <validation-provider
+                    rules="required|dateEval:@endDate"
+                    v-slot="{ errors }"
+                  >
                     <input
                       v-model="lottery.evaluationDate"
                       required
@@ -802,13 +809,11 @@
             <button class="hidden" id="clearLotteryInput" type="reset">
               Reset
             </button>
-            <!-- --- -->
-            <!-- :disabled="
-                invalid ||
-                  fileUploader.uploads.length === 0 ||
-                  saveLottery.loading ||
-                  !dateCheck
-              " -->
+
+            <!-- <div v-if="returnBoolean || invalid">
+              show me {{ returnBoolean }} {{ invalid }}
+            </div> -->
+
             <!-- --- -->
             <button
               @click="createLottery"
@@ -816,13 +821,15 @@
                 invalid ||
                   fileUploader.uploads.length === 0 ||
                   saveLottery.loading ||
-                  !dateCheck
+                  !dateCheck ||
+                  checkFileLoading
               "
               :class="[
                 invalid ||
                 fileUploader.uploads.length === 0 ||
                 saveLottery.loading ||
-                !dateCheck
+                !dateCheck ||
+                checkFileLoading
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
@@ -848,6 +855,8 @@
               ></i>
             </button>
           </div>
+          <!-- <div>{{ checkFileLoading }}</div>
+          <div>{{ !dateCheck }}</div> -->
         </div>
         <!-- ------------------------------------ -->
       </div>
@@ -883,7 +892,7 @@ import BaseVue from "@/components/BaseVue";
         };
       },
       skip() {
-        return !this.supportedCampaign;
+        return this.supportedCampaign.length === 0;
       },
 
       result({ data }) {
@@ -915,6 +924,23 @@ export default class CreateLottery extends BaseVue {
     size: 9,
     error: "",
   };
+
+  private get returnBoolean() {
+    Log.info(
+      "filesUploaded" + JSON.stringify(this.fileUploader.uploads.length === 0)
+    );
+    Log.info("loterry saving" + JSON.stringify(this.saveLottery.loading));
+    Log.info("fileLoading" + JSON.stringify(this.checkFileLoading));
+    if (
+      this.fileUploader.uploads.length === 0 ||
+      this.saveLottery.loading ||
+      this.checkFileLoading
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   private ownerlistIsVisible: boolean = false;
   private campaignListIsVisible: boolean = false;
@@ -971,6 +997,13 @@ export default class CreateLottery extends BaseVue {
     );
   }
 
+  private get now() {
+    const d = new Date();
+    const newD = d.setDate(d.getDate() + 50);
+
+    return newD;
+  }
+
   private prepareLotteryRequest() {
     const time = Util.formatTime(
       `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
@@ -1015,6 +1048,13 @@ export default class CreateLottery extends BaseVue {
     Constants.defaultFileUploadExtensions,
     Constants.defaultMaxFileUploadSize
   );
+
+  private get checkFileLoading() {
+    const isTrue = (file: any) => file.getResource().loading === true;
+    const result = this.fileUploader.uploads.some(isTrue);
+    // Log.info(result);
+    return result;
+  }
 
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);

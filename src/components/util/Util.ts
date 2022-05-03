@@ -84,6 +84,10 @@ export default class Util {
     });
   }
 
+  // public static handleGlobalAlert2(show: boolean, type: string, text: string) {
+  //   store.commit("setGlobalAlert2", { show, type, text });
+  // }
+
   public static throttle(t: any) {
     if (Util.throttleObject[t.key]) {
       Util.throttleObject[t.key].exec = false;

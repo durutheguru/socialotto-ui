@@ -1,10 +1,10 @@
 <template>
-  <div class=" h-full relative">
+  <div class=" relative">
     <div
-      style="min-width: 17rem;"
-      class="flex-1 flex flex-col w-72 h-full backOfficeSidebar overflow-y-auto"
+      style="min-width: 16rem;"
+      class="flex-1 flex flex-col w-60 h-full backOfficeSidebar overflow-y-auto"
     >
-      <div class="flex-1 flex flex-col pt-16 pb-4  w-56 mx-auto">
+      <div class="flex-1 flex flex-col pt-16 pb-4  w-10/12 mx-auto">
         <div class="">
           <div
             style="background: #2B606E;"
@@ -19,7 +19,7 @@
               /> -->
               <div class="bg-gray-100 inline-block h-24 w-24 rounded-full">
                 <div class="flex items-center justify-center w-full h-full">
-                  <h1 class="fw-600 mb-0">
+                  <h1 v-if="userQuery.data.name" class="fw-600 mb-0">
                     {{ sliceName(userQuery.data.name) }}
                   </h1>
                 </div>
@@ -82,7 +82,7 @@
         </div>
 
         <!-- -------Nav-------- -->
-        <nav class="mt-5 flex-1  space-y-1 spartan" aria-label="Sidebar">
+        <nav class="mt-5 mb-20 flex-1  space-y-1 spartan" aria-label="Sidebar">
           <router-link
             v-for="item in navigation"
             :key="item.name"
@@ -173,9 +173,9 @@ export default class BackofficeSidebar extends Vue {
   }
 
   private sliceName(name: string) {
-    const finitial = name.slice(0, 1);
-    const spaceIndex = name.split("").indexOf(" ");
-    const linitial = name.slice(spaceIndex + 1, spaceIndex + 2);
+    const finitial = name?.slice(0, 1);
+    const spaceIndex = name?.split("").indexOf(" ");
+    const linitial = name?.slice(spaceIndex + 1, spaceIndex + 2);
     // return name.slice(0, indexOf(" "))
     return `${finitial} ${linitial}`;
   }

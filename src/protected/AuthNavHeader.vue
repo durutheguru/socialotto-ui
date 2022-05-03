@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
-    <BackOfficeHeader v-if="isBackOfficeUser" />
+    <BackOfficeHeader v-if="isBackOfficeUser && isLoggedIn" />
     <div v-else class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
@@ -175,6 +175,9 @@ export default class AuthNavHeader extends BaseVue {
   }
 
   private userMenu = false;
+  private get isLoggedIn(): boolean {
+    return store.getters["authToken/loggedIn"];
+  }
 
   private get noticeMenu(): boolean {
     return store.state.isNoticeMenu;

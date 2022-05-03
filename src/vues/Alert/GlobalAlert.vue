@@ -44,16 +44,16 @@
             class="text-sm leading-5"
           >
             {{ message.text }}
-           
           </div>
         </div>
       </div>
     </div> -->
+
     <div
       v-if="message.show"
       @click="close"
-      id="closeAlert"
-      class="shadow-lg spartan main fixed z-50 top-5 right-0 mr-6 min-w-min-content flex sm:max-w-md m-auto over rounded-md border-l-4  p-4"
+      id="globalAlert"
+      class="shadow-lg spartan main fixed z-50 top-5 globalAlertPositioning mr-20 min-w-min-content flex sm:max-w-md m-auto over rounded-md border-l-4  p-4"
       :class="
         message.type === 'success'
           ? 'bg-green-50 border-green-400 text-green-700'
@@ -91,7 +91,6 @@
         </div>
         <div class="ml-3 ">
           <p class="text-md my-auto">
-            <!-- Hello World of war craft -->
             {{ message.text }}
           </p>
         </div>

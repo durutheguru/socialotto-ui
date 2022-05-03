@@ -22,7 +22,10 @@
             >
               <div class="roundLoader opacity-50"></div>
             </div>
-            <CampaignDetailsCarousel v-else :images="carouselImages" />
+            <CampaignDetailsCarousel
+              v-else
+              :images="campaignDetails.data.fileRefs"
+            />
           </div>
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <DonateNShareSkeleton v-if="campaignDetails.loading" />
@@ -101,6 +104,7 @@ export default class CampaignDetails extends Vue {
     CampaignService.getCampaignDetails(
       self.campaignId,
       (response: any) => {
+        Log.info("resp: " + JSON.stringify(response.status));
         self.campaignDetails.loading = false;
         // Log.info("campaignDetails In: " + JSON.stringify(response.data));
         self.campaignDetails.data = response.data;
@@ -125,7 +129,11 @@ export default class CampaignDetails extends Vue {
       },
       (error: any) => {
         self.campaignDetails.loading = false;
+        if (error.response.status === 404 || error.response.status === 400) {
+          this.$router.push("/404");
+        }
         Log.error("campaignDetails Error: " + JSON.stringify(error));
+        Log.info("resp: " + JSON.stringify(error.response.status));
       }
     );
 
