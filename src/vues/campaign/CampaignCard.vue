@@ -43,9 +43,9 @@
             </div>
           </div>
         </div>
-        <div class="mt-0 grid grid-cols-2 items-center">
+        <div class="mt-0 grid grid-cols-2 items-center justify-center">
           <div
-            class="cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"
+            class="hidden cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"
           >
             <span>Donate</span>
           </div>
