@@ -7,7 +7,7 @@ const authRoute = async (to: any, next: any) => {
   if (store.getters["authToken/loggedIn"]) {
     const authenticated = await store.dispatch("authToken/authenticate");
     if (!authenticated) {
-      navigateLandingPage(to, next);
+      navigateLogin(to, next);
     } else {
       let userActive = store.getters["authToken/isUserActive"];
       if (userActive === true) {
@@ -19,7 +19,7 @@ const authRoute = async (to: any, next: any) => {
       }
     }
   } else {
-    navigateLandingPage(to, next);
+    navigateLogin(to, next);
   }
 };
 
@@ -27,9 +27,9 @@ const authRoute = async (to: any, next: any) => {
 //   store.commit("entryUrl", to.path);
 //   Web.navigate("/login");
 // };
-const navigateLandingPage = (to: any, next: any) => {
+const navigateLogin = (to: any, next: any) => {
   store.commit("entryUrl", to.path);
-  Web.navigate("/");
+  Web.navigate("/login");
 };
 
 const navigatePath = (to: any, next: any) => {
@@ -39,7 +39,7 @@ const navigatePath = (to: any, next: any) => {
   if (to.meta.auth && to.meta.auth.length > 0) {
     if (!authorizations.some((auth: string) => to.meta.auth.includes(auth))) {
       Log.info("doesnt have auth");
-      navigateLandingPage(to, next);
+      navigateLogin(to, next);
       return;
     }
   }
