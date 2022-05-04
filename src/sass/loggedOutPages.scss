@@ -213,9 +213,17 @@
   line-height: 100%;
 }
 
-.lotteryBtn {
+.lotteryBadge {
   background-color: #52c8e9;
   width: 82px;
+  height: 30px;
+  border-radius: 8px;
+  // blend-mode: Pass through;
+}
+
+.campaignBadge {
+  background-color: #e7e952;
+  width: 92px;
   height: 30px;
   border-radius: 8px;
   // blend-mode: Pass through;
