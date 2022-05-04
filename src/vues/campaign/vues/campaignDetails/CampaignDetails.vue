@@ -46,7 +46,7 @@
       :campaignDescription="campaignDetails.data.description"
     />
     <CampaignDetailsCards
-      heading="Similar campaigns and lotteries"
+      heading="Other campaigns and lotteries"
       :loading="campaignDetails.loading"
     />
     <Incentives />

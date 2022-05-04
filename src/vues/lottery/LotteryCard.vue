@@ -19,7 +19,7 @@
       >
         <div class="mb-auto flex justify-end relative">
           <div
-            class="cursor-pointer lotteryBtn rounded-lg flex justify-center items-center"
+            class="cursor-pointer lotteryBadge rounded-lg flex justify-center items-center"
           >
             <span class="spartan text-sm ">Lottery</span>
           </div>

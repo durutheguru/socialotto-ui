@@ -9,8 +9,15 @@
     }"
   >
     <div class="h-full flex items-end  bg-transparent-black">
-      <div class="flex-1  p-6 flex flex-col justify-between text-white">
-        <div class="flex-1">
+      <div class="flex-1  p-6 flex flex-col justify-between text-white h-full">
+        <div class="mb-auto flex justify-end relative">
+          <div
+            class="cursor-pointer campaignBadge rounded-lg flex justify-center items-center"
+          >
+            <span class="spartan text-sm ">Campaign</span>
+          </div>
+        </div>
+        <div class="mt-auto">
           <p class="text-sm font-semibold spartan ">
             {{ result.name }}
           </p>
@@ -43,12 +50,12 @@
             </div>
           </div>
         </div>
-        <div class="mt-0 grid grid-cols-2 items-center justify-center">
-          <div
+        <div class="mt-0 flex items-center justify-center">
+          <!-- <div
             class="hidden cursor-pointer h-11 w-full buyLotteryBtn spartan flex justify-center items-center"
           >
             <span>Donate</span>
-          </div>
+          </div> -->
 
           <div class="flex justify-center ">
             <div
