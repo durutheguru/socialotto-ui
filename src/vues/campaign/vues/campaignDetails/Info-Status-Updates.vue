@@ -14,12 +14,12 @@
       >
         Campaign Status
       </button>
-      <button
+      <!-- <button
         class="mr-10 cursor-pointer focus:underline"
         @click="view = 'Updates'"
       >
         Updates
-      </button>
+      </button> -->
     </div>
 
     <div>
@@ -50,7 +50,7 @@
       </div>
 
       <!-- --------Updates---------- -->
-      <div v-if="view === 'Updates'" class="spartan relative">
+      <!-- <div v-if="view === 'Updates'" class="spartan relative">
         <ul
           class="list-disc text-dark space-y-4 relative"
           style="right: 0.313rem;"
@@ -76,7 +76,7 @@
             >
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
