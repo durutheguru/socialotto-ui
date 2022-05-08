@@ -73,14 +73,13 @@
                     Disapproval Loading...
                   </div> -->
                 </div>
-                <div class="flex items-center">
-                  <div
-                    style="background-color: #EBEBEB; border-radius: 8px"
-                    class="h-11 flex items-center w-36 justify-center spartan fw-400 fs-14 "
-                  >
-                    <span>Add User</span>
-                  </div>
-                </div>
+                <!-- <div class="flex col-md-2">
+                  
+                </div> -->
+                <div 
+                    class="bg-blue-200 h-12 col-md-2 rounded-md flex items-center spartan justify-center cursor-pointer">
+                    <span class="text-white text-base font-semi-bold cursor-pointer">Add User</span>
+                    </div>
               </div>
 
               <div
