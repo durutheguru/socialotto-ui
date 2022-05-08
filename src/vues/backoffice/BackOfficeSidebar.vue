@@ -197,6 +197,7 @@ export default class BackofficeSidebar extends Vue {
     // },
     { name: "Users", href: "users", current: false },
     { name: "Expense Requests", href: "expense_requests", current: false },
+    { name: "Settlement Participants", href: "settlement-participants", current: false},
   ];
 }
 </script>

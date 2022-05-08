@@ -8,6 +8,7 @@ import ReviewLotteryExpense from "../vues/backoffice/vues/expense/ReviewLotteryE
 import Login from "../vues/login/Login.vue";
 // import Signup from '../vues/signup/'
 import ManageUsers from "../vues/backoffice/vues/users/UsersList.vue";
+import SettlementParticipants from "../vues/backoffice/vues/settlement-participants/SettlementParticipantList.vue";
 import UserDetails from "../vues/backoffice/vues/users/UserDetails.vue";
 import UserAuthorities from "../vues/backoffice/vues/users/UserAuthorities.vue";
 import UserSettlement from "../vues/backoffice/vues/users/UserSettlement.vue";
@@ -292,6 +293,14 @@ const routes = [
       //   path: 'campaign/awaiting_approval',
       //   component: () => import('@/vues/backoffice/vues/campaign/modules/approvals/CampaignApproval.vue'),
       // }
+      {
+        path: "/back-office/settlement-participants",
+        name: "SettlementParticipants",
+        component: SettlementParticipants,
+        meta: {
+          auth: ["BACK_OFFICE_USER", "REGULATORY_USER"],
+        },
+      },
     ],
   },
   // {
