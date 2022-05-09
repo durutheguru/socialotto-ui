@@ -1,5 +1,5 @@
 <template>
-  <div class="col-span-5 pt-20 px-10 h-screen overflow-y-auto">
+  <div class=" pt-20 px-10 h-screen overflow-y-auto">
     <div class="grid grid-cols-6">
       <div class="col-span-3">
         <div class="flex flex-col">
@@ -8,7 +8,7 @@
           </h1>
           <h2 style="color: #454545;" class="mb-6 spartan fs-20 fw-700 ">
             <span class="fs-20 fw-400">Lottery Title:</span>
-            25 tickets to Wizkid’s concert
+            {{ detailsQuery.details.name }}
           </h2>
           <div class="mb-9 flex justify-between items-center">
             <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
@@ -17,7 +17,7 @@
             </h2>
             <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
               <span class="fs-20 fw-400">Amount raised:</span>
-              2,102,200
+              {{ detailsQuery.details.totalFundsRaised }}
             </h2>
           </div>
 
@@ -40,8 +40,8 @@
             :key="index"
           >
             <!-- <RaiseExpenseInput /> -->
-            <div class="grid grid-cols-3 w-full">
-              <div class="col-span-2">
+            <div class="flex w-11/12">
+              <div class="w-9/12">
                 <label
                   for="Expense Details"
                   class="spartan font-medium text-dark block text-sm text-gray-700"
@@ -60,20 +60,20 @@
                   />
                 </div>
               </div>
-              <div class="col-span-1">
+              <div class="w-4/12">
                 <label
                   for="Cost"
                   class="spartan font-medium text-dark block text-sm text-gray-700"
                   >Cost</label
                 >
-                <div class="mt-1 flex justify-between">
+                <div class="mt-1 ">
                   <input
                     required
                     type="number"
                     v-model="input.amount"
                     name="amount"
                     id="cost"
-                    class=" spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
+                    class="w-full spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
                     placeholder="N200"
                     autocomplete="off"
                   />
@@ -131,6 +131,8 @@ import RaiseExpenseAmountPlate from "./expenseAmountPlates.vue";
 import { ApolloError } from "apollo-client";
 import EvaluationPlate from "./ExpenseEvaluationPlate.vue";
 import { evaluateSettlement } from "@/services/lottery/lottery.query";
+import { viewLotteryDetails } from "@/services/lottery/lottery.query";
+
 import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
 @Component({
   name: "RaiseLotteryExpense",
@@ -160,6 +162,25 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
         }
       },
     },
+    viewLotteryDetails: {
+      query: viewLotteryDetails,
+      variables() {
+        return {
+          id: this.lotteryId,
+        };
+      },
+
+      result({ data }) {
+        Log.info("details Query: " + JSON.stringify(data.lotteryById));
+        this.detailsQuery.details = data.lotteryById;
+      },
+      error(error: ApolloError) {
+        this.detailsQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.detailsQuery.error)) {
+          this.$apollo.queries.evaluateSettlement.refetch();
+        }
+      },
+    },
   },
   components: {
     SmallPlus,
@@ -173,6 +194,14 @@ export default class RaiseLotteryExpense extends Vue {
     id: "",
     expense: 0,
     transfers: [],
+    error: "",
+    skip: true,
+  };
+
+  private detailsQuery = {
+    id: "",
+    expense: 0,
+    details: {},
     error: "",
     skip: true,
   };
