@@ -142,13 +142,16 @@ import { Log, Util } from "@/components/util";
       error(error: ApolloError) {
         this.userQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.userQuery.error)) {
-          this.$apollo.queries.viewUserDetails.refetch();
+          // this.$apollo.queries.viewUserDetails.refetch();
         }
       },
     },
   },
 })
 export default class BackofficeSidebar extends Vue {
+  private mounted() {
+    Log.info("username: " + this.username);
+  }
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
 

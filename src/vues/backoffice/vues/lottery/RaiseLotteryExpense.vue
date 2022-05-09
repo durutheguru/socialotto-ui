@@ -13,7 +13,7 @@
           <div class="mb-9 flex justify-between items-center">
             <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
               <span class="fs-20 fw-400">Lottery Id:</span>
-              20211201
+              {{ lotteryId }}
             </h2>
             <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
               <span class="fs-20 fw-400">Amount raised:</span>
@@ -169,13 +169,6 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
   },
 })
 export default class RaiseLotteryExpense extends Vue {
-  // private
-  // private expensesArray: any = [];
-
-  // private get currentCount() {
-  //   return this.counter;
-  // }
-  // private inputModel = "vmodel" + this.currentCount;
   private evaluateQuery = {
     id: "",
     expense: 0,
