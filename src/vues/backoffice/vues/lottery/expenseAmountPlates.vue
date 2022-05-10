@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-end">
+  <div v-if="show" class="w-full flex justify-end">
     <div class="px-4 pb-4 pt-8 mr-8 spartan rounded-md bg-white w-10/12  ">
       <div class="grid grid-cols-3">
         <div class="col-span-1">
@@ -57,7 +57,7 @@
           @click="$emit('newExpense')"
           class="bg-blue-200 col-span-3 h-14 rounded-md mt-12 flex items-center justify-center"
         >
-          <span class="text-white spartan fs-16 fw-600">Evaluate</span>
+          <span class="text-white spartan fs-16 fw-600">Raise Expense</span>
         </div>
       </div>
     </div>
@@ -71,6 +71,7 @@ import { Component, Vue } from "vue-property-decorator";
   name: "RaiseExpenseAmountPlate",
   props: {
     transfers: Array,
+    show: Boolean,
   },
 })
 export default class RaiseExpenseAmountPlate extends Vue {}

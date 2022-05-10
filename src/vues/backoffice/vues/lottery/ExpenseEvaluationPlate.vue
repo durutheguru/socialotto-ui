@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-end mb-10">
+  <div v-if="show" class="w-full flex justify-end mb-10">
     <div class="px-4 pb-4 pt-8 mr-8 spartan rounded-md bg-white w-10/12  ">
       <div class="grid grid-cols-3">
         <div class="col-span-2">
@@ -20,7 +20,7 @@
         <!-- ------------------------- -->
 
         <!-- -------------------- -->
-        <div v-if="show" class="col-span-3">
+        <div class="col-span-3">
           <div
             v-for="(expense, index) in expenses"
             :key="index"

@@ -1,7 +1,15 @@
 <template>
-  <div class=" pt-20 px-10 h-screen overflow-y-auto">
+  <div class="w-full pt-20 px-10 h-screen overflow-y-auto">
     <div class="grid grid-cols-6">
-      <div class="col-span-3">
+      <validation-observer
+        ref="observer"
+        tag="form"
+        role="form"
+        v-slot="{ invalid }"
+        @submit.prevent="evaluate"
+        novalidate
+        class="col-span-3"
+      >
         <div class="flex flex-col">
           <h1 class="mb-6 spartan fw-600 fs-32 text-black">
             Raise Lottery Expense
@@ -42,42 +50,56 @@
             <!-- <RaiseExpenseInput /> -->
             <div class="flex w-11/12">
               <div class="w-9/12">
-                <label
-                  for="Expense Details"
-                  class="spartan font-medium text-dark block text-sm text-gray-700"
-                  >Expense Details</label
-                >
-                <div class="mt-1">
-                  <input
-                    required
-                    type="text"
-                    v-model="input.description"
-                    name="Expense Details"
-                    id="Expense Details"
-                    class="w-11/12 spartan h-12 bg-transparent border-gray-300 border-2  px-2  focus:border-blue-500 block sm:text-sm rounded-md"
-                    placeholder="Help a father of 3 with money for his "
-                    autocomplete="off"
-                  />
-                </div>
+                <validation-provider rules="required" v-slot="{ errors }">
+                  <label
+                    for="Expense Details"
+                    class="spartan font-medium text-dark block text-sm text-gray-700"
+                    >Expense Details</label
+                  >
+                  <div class="mt-1">
+                    <input
+                      required
+                      type="text"
+                      v-model="input.description"
+                      name="Expense Details"
+                      :disabled="evaluateQuery.loading"
+                      id="Expense Details"
+                      :class="{
+                        'border-red-400': errors.length > 0,
+                      }"
+                      class="w-11/12 spartan h-12 bg-transparent border-gray-300 border-2  px-2  focus:border-blue-500 block sm:text-sm rounded-md"
+                      placeholder="Help a father of 3 with money for his "
+                      autocomplete="off"
+                    />
+                  </div>
+                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                </validation-provider>
               </div>
               <div class="w-4/12">
-                <label
-                  for="Cost"
-                  class="spartan font-medium text-dark block text-sm text-gray-700"
-                  >Cost</label
-                >
-                <div class="mt-1 ">
-                  <input
-                    required
-                    type="number"
-                    v-model="input.amount"
-                    name="amount"
-                    id="cost"
-                    class="w-full spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
-                    placeholder="N200"
-                    autocomplete="off"
-                  />
-                </div>
+                <validation-provider rules="required" v-slot="{ errors }">
+                  <label
+                    for="Cost"
+                    class="spartan font-medium text-dark block text-sm text-gray-700"
+                    >Cost</label
+                  >
+                  <div class="mt-1 ">
+                    <input
+                      required
+                      type="number"
+                      v-model="input.amount"
+                      name="amount"
+                      id="cost"
+                      :disabled="evaluateQuery.loading"
+                      :class="{
+                        'border-red-400': errors.length > 0,
+                      }"
+                      class="w-full spartan h-12 bg-transparent border-gray-300 border-2 px-2 focus:border-blue-500 block sm:text-sm rounded-md"
+                      placeholder="N200"
+                      autocomplete="off"
+                    />
+                  </div>
+                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                </validation-provider>
               </div>
             </div>
 
@@ -101,17 +123,24 @@
             </div>
           </div>
         </div>
-        <div
-          @click="evaluate"
-          class="bg-blue-200 col-span-3 h-14 rounded-md mt-2 flex items-center justify-center"
+        <button
+          type="submit"
+          :disabled="invalid || evaluateQuery.loading"
+          :class="(invalid || evaluateQuery.loading) && 'opacity-25'"
+          class="bg-blue-200 w-full col-span-3 h-14 rounded-md mt-2 flex items-center justify-center"
         >
           <span class="text-white spartan fs-16 fw-600">Evaluate</span>
-        </div>
-      </div>
+          <i
+            class="ml-px fa fa-spinner fa-spin"
+            v-if="evaluateQuery.loading"
+          ></i>
+        </button>
+      </validation-observer>
       <!-- ---------- -->
       <div class="col-span-3 ">
         <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
         <RaiseExpenseAmountPlate
+          :show="show"
           @newExpense="newExpenseMutation"
           :transfers="this.evaluateQuery.transfers"
         />
@@ -154,6 +183,8 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
         );
 
         this.evaluateQuery.transfers = data.evaluateSettlement.transfers;
+        this.evaluateQuery.loading = false;
+        this.show = true;
       },
       error(error: ApolloError) {
         this.evaluateQuery.error = Util.extractGqlError(error);
@@ -195,6 +226,7 @@ export default class RaiseLotteryExpense extends Vue {
     expense: 0,
     transfers: [],
     error: "",
+    loading: false,
     skip: true,
   };
 
@@ -263,6 +295,7 @@ export default class RaiseLotteryExpense extends Vue {
 
   private evaluate() {
     // this.expensesArray = this.inputArray;
+    this.evaluateQuery.loading = true;
 
     const array = this.inputArray.map((obj) => Number(obj.amount));
     this.total = Number(array.reduce((a, b) => a + b));
@@ -272,7 +305,6 @@ export default class RaiseLotteryExpense extends Vue {
     Log.info("expense id:" + this.evaluateQuery.id);
     Log.info("expenseTotal:" + String(this.evaluateQuery.expense));
 
-    this.show = true;
     this.$apollo.queries.evaluateSettlement.skip = false;
     this.$apollo.queries.evaluateSettlement.refetch();
   }
