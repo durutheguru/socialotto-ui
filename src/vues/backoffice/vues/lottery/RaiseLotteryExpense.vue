@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full pt-20 px-10 h-screen overflow-y-auto">
+  <div class="pb-56 w-full pt-20 px-10 h-screen overflow-y-auto">
     <div class="grid grid-cols-6">
       <validation-observer
         ref="observer"
@@ -8,7 +8,7 @@
         v-slot="{ invalid }"
         @submit.prevent="evaluate"
         novalidate
-        class="col-span-3"
+        class="col-span-6 xl:col-span-3"
       >
         <div class="flex flex-col">
           <h1 class="mb-6 spartan fw-600 fs-32 text-black">
@@ -137,7 +137,7 @@
         </button>
       </validation-observer>
       <!-- ---------- -->
-      <div class="col-span-3 ">
+      <div class="col-span-6 xl:col-span-3 mt-12 md:mt-0 ">
         <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
         <RaiseExpenseAmountPlate
           :show="show"
@@ -187,6 +187,8 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
         this.show = true;
       },
       error(error: ApolloError) {
+        this.evaluateQuery.loading = false;
+
         this.evaluateQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.evaluateQuery.error)) {
           this.$apollo.queries.evaluateSettlement.refetch();
@@ -304,7 +306,8 @@ export default class RaiseLotteryExpense extends Vue {
 
     Log.info("expense id:" + this.evaluateQuery.id);
     Log.info("expenseTotal:" + String(this.evaluateQuery.expense));
-
+    // this.evaluateQuery.loading = false;
+    // this.show = true;
     this.$apollo.queries.evaluateSettlement.skip = false;
     this.$apollo.queries.evaluateSettlement.refetch();
   }

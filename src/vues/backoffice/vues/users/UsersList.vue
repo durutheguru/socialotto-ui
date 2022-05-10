@@ -46,23 +46,8 @@
                         />
                       </svg>
                     </div>
-                  </div>
-
-                  <div class="absolute ml-3">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
+                    <!-- ------SearchIcon----- -->
+                    <SearchIcon />
                   </div>
 
                   <!-- <div v-if="isApprovalPending">
@@ -76,10 +61,14 @@
                 <!-- <div class="flex col-md-2">
                   
                 </div> -->
-                <div 
-                    class="bg-blue-200 h-12 col-md-2 rounded-md flex items-center spartan justify-center cursor-pointer">
-                    <span class="text-white text-base font-semi-bold cursor-pointer">Add User</span>
-                    </div>
+                <div
+                  class="bg-blue-200 h-12 w-40 rounded-md flex items-center spartan justify-center cursor-pointer"
+                >
+                  <span
+                    class="text-white text-base font-semi-bold cursor-pointer"
+                    >Add User</span
+                  >
+                </div>
               </div>
 
               <div
@@ -310,6 +299,7 @@
 </template>
 
 <script lang="ts">
+import SearchIcon from "@/components/svg/SearchIcon.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { ApolloError } from "apollo-client";
 import { viewAllUsers } from "@/services/users/users.query";
@@ -351,6 +341,7 @@ import UsersRowMenu from "./UsersRowMenu.vue";
     SmallChevronUp,
     SmallChevronDown,
     UsersRowMenu,
+    SearchIcon,
   },
 })
 export default class ManageUsers extends Vue {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto "
+    class="pb-56 spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto "
   >
     <h1
       class="

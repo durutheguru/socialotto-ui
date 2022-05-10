@@ -1,9 +1,6 @@
 <template>
-  <div class=" relative">
-    <div
-      style="min-width: 16rem;"
-      class="flex-1 flex flex-col w-60 h-full backOfficeSidebar overflow-y-auto"
-    >
+  <div class=" h-full w-full">
+    <div style="min-width: 16rem;" class="flex-1 flex flex-col w-60 h-full  ">
       <div class="flex-1 flex flex-col pt-16 pb-4  w-10/12 mx-auto">
         <div class="">
           <div
@@ -184,7 +181,7 @@ export default class BackofficeSidebar extends Vue {
   }
 
   private navigation = [
-    { name: "Dashboard", href: "#", current: true },
+    // { name: "Dashboard", href: "#", current: true },
     {
       name: "Create A Lottery",
       href: "create-lottery",
@@ -200,7 +197,11 @@ export default class BackofficeSidebar extends Vue {
     // },
     { name: "Users", href: "users", current: false },
     { name: "Expense Requests", href: "expense_requests", current: false },
-    { name: "Settlement Participants", href: "settlement-participants", current: false},
+    {
+      name: "Settlement Participants",
+      href: "settlement-participants",
+      current: false,
+    },
   ];
 }
 </script>

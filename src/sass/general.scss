@@ -327,6 +327,16 @@
   display: block;
 }
 
+.showBackofficeSidebar::-webkit-scrollbar {
+  width: 8px;
+  // height: 120px;
+}
+
+.showBackofficeNav::-webkit-scrollbar {
+  width: 8px;
+  // height: 120px;
+}
+
 .bo-bg-dark-blue {
   background-color: #1d414b;
 }

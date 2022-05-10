@@ -25,11 +25,23 @@
       </button>
     </div>
     <div class="h-full w-full flex ">
-      <BackofficeSidebar />
+      <div
+        style="min-width: 16rem;"
+        class="backOfficeSidebar   overflow-y-auto overflow-x-hidden showBackofficeSidebar h-full"
+      >
+        <BackofficeSidebar />
+      </div>
       <transition name="slideOut">
-        <MobileSideBar v-if="open" />
+        <div
+          v-if="open"
+          class="backOfficeSidebar overflow-y-auto overflow-x-hidden showBackofficeNav fixed h-full z-20"
+        >
+          <MobileSideBar @close="close" />
+        </div>
       </transition>
-      <router-view></router-view>
+      <div class="w-full">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
@@ -39,6 +51,7 @@ import { Component, Vue } from "vue-property-decorator";
 import BackofficeSidebar from "./BackOfficeSidebar.vue";
 // import BackOfficeHome from './BackOfficeHome';
 import MobileSideBar from "./MobileSideBar.vue";
+import { Log } from "@/components/util";
 
 @Component({
   name: "BackOffice",
@@ -52,6 +65,11 @@ export default class BackOffice extends Vue {
   private open = false;
   private toggle() {
     this.open = !this.open;
+  }
+
+  private close() {
+    this.open = false;
+    Log.info("clicked route");
   }
 }
 </script>
