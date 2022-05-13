@@ -5,7 +5,7 @@
     <div
       class="  max-w-screen-xl mx-auto pt-5 md:pt-20 sm:w-11/12 px-6 md:px-0"
     >
-      <div class="xl:mb-14 mt-32 sm:mt-36">
+      <div class="xl:mb-14 mt-24 md:mt-32 sm:mt-36">
         <div class="mx-auto grid grid-cols-6 xl:grid-cols-5">
           <div
             class=" max-w-3xl col-span-6 mx-auto xl:mx-0 xl:col-span-3 xl:col-start-1  xl:h-full"
@@ -13,7 +13,7 @@
             <div class="h-full w-full flex items-center ">
               <div class="w-full xl:w-10/12 flex">
                 <div class="inline-block landingPageText">
-                  <h1 class="font-normal text-5xl leading-8 mb-4">
+                  <h1 class="font-normal text-4xl md:text-5xl leading-8 mb-4">
                     Support a cause
 
                     <span

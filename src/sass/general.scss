@@ -233,10 +233,15 @@
   background-color: #00b300;
 }
 
+.wv100 {
+  width: 100vw !important;
+}
+
 .divContainer {
   // overflow-y: scroll;
   height: calc(100% - 84px);
   margin-top: 84px;
+  width: 100%;
 }
 
 .tableHeaderInnerDiv {

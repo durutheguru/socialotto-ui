@@ -1,6 +1,8 @@
 <template>
   <div class="spartan divContainer overflow-auto lg:overflow-y-scroll">
-    <div class="  max-w-screen-xl mx-auto pt-3 md:pt-20 sm:w-11/12">
+    <div
+      class="  max-w-screen-xl mx-auto pt-3 md:pt-20 px-4 sm:px-0 sm:w-11/12"
+    >
       <div class="flex flex-col pt-10 items-center justify-center w-full">
         <div
           v-if="$apollo.queries.viewUserDetails.loading"
