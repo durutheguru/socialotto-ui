@@ -117,22 +117,21 @@ const routes = [
             name: "Wallet",
             component: () => import("@/vues/users/Wallet.vue"),
             // children: [
-            //   {
-            //     path: "update",
-            //     name: "WalletUpdateApproval",
-            //     component: () =>
-            //       import("@/vues/users/WalletUpdateApproval.vue"),
-            //   },
+            //   // {
+            //   //   path: "update",
+            //   //   name: "WalletUpdateApproval",
+            //   //   component: () =>
+            //   //     import("@/vues/users/WalletUpdateApproval.vue"),
+            //   // },
 
-            //   {
-            //     path: "update/:updateId",
-            //     name: "WalletUpdateApproval",
-            //     component: () =>
-            //       import("@/vues/users/WalletUpdateApproval.vue"),
-            //   },
             // ],
           },
         ],
+      },
+      {
+        path: "user/wallet/update/:updateId",
+        name: "WalletUpdateApproval",
+        component: () => import("@/vues/users/WalletUpdateApproval.vue"),
       },
 
       {

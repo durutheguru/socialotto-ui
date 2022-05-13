@@ -97,9 +97,34 @@ const getLotteryExpenseProposal = gql`
   }
 `;
 
+const viewLotteryDetails = gql`
+  query viewLotteryDetails($id: ID!) {
+    lotteryById(id: $id) {
+      id
+      name
+      lotteryStatus
+      ticketCost
+      endDate
+      lotteryFiles {
+        reference
+      }
+      owner {
+        username
+      }
+      stageDescriptions {
+        id
+        stage
+        evaluationTime
+      }
+      totalFundsRaised
+    }
+  }
+`;
+
 export {
   searchLotteries,
   evaluateSettlement,
   fetchLotteryExpenseRequests,
   getLotteryExpenseProposal,
+  viewLotteryDetails,
 };

@@ -9,7 +9,7 @@
         <router-link class="my-auto focus:outline-none no-underline" :to="'/'">
           <span class="signupLogo ">Socialotto</span>
         </router-link>
-        <div class="menuIcon my-auto " @click="dropAuthMenu">
+        <div class="menuIcon my-auto mr-auto" @click="dropAuthMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
