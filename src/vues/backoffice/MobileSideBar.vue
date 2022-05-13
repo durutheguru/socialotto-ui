@@ -1,10 +1,7 @@
 <template>
-  <div class="fixed h-full z-20">
-    <div
-      style="min-width: 17rem;"
-      class="flex-1 flex flex-col w-72 h-full backOfficeSidebar overflow-y-auto"
-    >
-      <div class="flex-1 flex flex-col pt-16 pb-4  w-56 mx-auto">
+  <div>
+    <div class="flex-1 flex flex-col w-60 h-full  ">
+      <div class="flex-1 flex flex-col pt-16 pb-4  w-10/12 mx-auto">
         <div class="">
           <div
             style="background: #2B606E;"
@@ -12,16 +9,23 @@
           >
             <!-- --- -->
             <div class="w-full text-center">
-              <img
+              <!-- <img
                 class="inline-block h-24 w-24 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
-              />
+              /> -->
+              <div class="bg-gray-100 inline-block h-24 w-24 rounded-full">
+                <div class="flex items-center justify-center w-full h-full">
+                  <h1 v-if="userQuery.data.name" class="fw-600 mb-0">
+                    {{ sliceName(userQuery.data.name) }}
+                  </h1>
+                </div>
+              </div>
             </div>
             <!-- ---------- -->
             <div class="w-full text-center">
               <h1 class="mt-2 text-2xl text-white spartan font-medium">
-                Dumebi Duru
+                {{ userQuery.data.name }}
               </h1>
               <h2 class="text-lg text-white spartan font-normal">Admin</h2>
             </div>
@@ -49,7 +53,7 @@
                   />
                 </svg>
               </div>
-              <div>
+              <div @click="openLogoutModal" class="cursor-pointer">
                 <svg
                   class="h-6 w-6"
                   viewBox="0 0 14 14"
@@ -75,35 +79,111 @@
         </div>
 
         <!-- -------Nav-------- -->
-        <nav class="mt-5 flex-1  space-y-1 spartan" aria-label="Sidebar">
-          <router-link
-            v-for="item in navigation"
-            :key="item.name"
-            :to="`/back-office/${item.href}`"
-            class=" font-normal
+        <nav class="mt-5 mb-20 flex-1  space-y-1 spartan" aria-label="Sidebar">
+          <div @mouseup="$emit('close')">
+            <router-link
+              v-for="item in navigation"
+              :key="item.name"
+              :to="`/back-office/${item.href}`"
+              class=" font-normal
                 text-gray-300  hover:text-white
               group flex items-center  py-3 text-md
               hover:font-bold "
-          >
-            <span class="flex-1">
-              {{ item.name }}
-            </span>
-          </router-link>
+            >
+              <span class="flex-1">
+                {{ item.name }}
+              </span>
+            </router-link>
+          </div>
         </nav>
       </div>
     </div>
+    <LogoutModal
+      @logout="logout"
+      :isModalOpen="isLogoutModalOpen"
+      @close="closeLogoutModal"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import LogoutModal from "./LogoutModal.vue";
+import LoginService from "@/vues/login/service/LoginService";
+import store from "@/store/index";
+import { viewUserDetails } from "@/services/users/users.query";
+import { ApolloError } from "apollo-client";
+import { Log, Util } from "@/components/util";
 
 @Component({
-  name: "MobileSideBar",
+  name: "BackofficeSidebar",
+  components: {
+    LogoutModal,
+  },
+  apollo: {
+    // $client: "anonymousClient",
+    viewUserDetails: {
+      query: viewUserDetails,
+      variables() {
+        return {
+          userType: this.userQuery.userType,
+
+          username: this.userQuery.username,
+        };
+      },
+      result({ data }) {
+        Log.info("Search User Query: " + JSON.stringify(data));
+
+        this.userQuery.data = data?.viewUserDetails;
+
+        Log.info("User Query: " + JSON.stringify(this.userQuery.data));
+      },
+      error(error: ApolloError) {
+        this.userQuery.error = Util.extractGqlError(error);
+        if (Util.isValidString(this.userQuery.error)) {
+          // this.$apollo.queries.viewUserDetails.refetch();
+        }
+      },
+    },
+  },
 })
-export default class MobileSideBar extends Vue {
+export default class BackofficeSidebar extends Vue {
+  private mounted() {
+    Log.info("username: " + this.username);
+  }
+  private username = store.getters["authToken/username"];
+  private userType = store.getters["authToken/authorizations"][0];
+
+  private userQuery: any = {
+    username: this.username,
+    userType: this.userType,
+    data: {},
+    error: "",
+  };
+  private isLogoutModalOpen = false;
+
+  private openLogoutModal() {
+    this.isLogoutModalOpen = true;
+  }
+
+  private closeLogoutModal() {
+    this.isLogoutModalOpen = false;
+  }
+
+  private logout() {
+    LoginService.doLogout();
+  }
+
+  private sliceName(name: string) {
+    const finitial = name?.slice(0, 1);
+    const spaceIndex = name?.split("").indexOf(" ");
+    const linitial = name?.slice(spaceIndex + 1, spaceIndex + 2);
+    // return name.slice(0, indexOf(" "))
+    return `${finitial} ${linitial}`;
+  }
+
   private navigation = [
-    { name: "Dashboard", href: "#", current: true },
+    // { name: "Dashboard", href: "#", current: true },
     {
       name: "Create A Lottery",
       href: "create-lottery",
@@ -119,6 +199,11 @@ export default class MobileSideBar extends Vue {
     // },
     { name: "Users", href: "users", current: false },
     { name: "Expense Requests", href: "expense_requests", current: false },
+    {
+      name: "Settlement Participants",
+      href: "settlement-participants",
+      current: false,
+    },
   ];
 }
 </script>

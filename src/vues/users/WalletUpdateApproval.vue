@@ -1,4 +1,4 @@
-<template></template>
+<template> <div></div></template>
 
 <script lang="ts">
 import BaseVue from "@/components/BaseVue";
@@ -24,7 +24,8 @@ export default class WalletUpdateApproval extends BaseVue {
 
   public approveWalletUpdate() {
     let self = this;
-    this.$apollo.mutate({
+    this.$apollo
+      .mutate({
         mutation: ApproveWalletUpdateAction,
         variables: {
           approvalId: self.$route.params.updateId,
@@ -32,17 +33,17 @@ export default class WalletUpdateApproval extends BaseVue {
       })
       .then((data: any) => {
         Log.info("Data: " + String(data));
+
         Util.handleGlobalAlert(
           true,
           "success",
           "Successfully applied wallet update"
         );
+        this.$router.push("/user/profile");
       })
       .catch((error) => {
         Log.error(error);
-        Util.handleGlobalAlert(
-          true, "failed", Util.extractGqlError(error)
-        );
+        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
       });
   }
 }

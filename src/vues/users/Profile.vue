@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center mt-12 pb-12">
-    <div class="grid grid-cols-2 gap-6 w-8/12 mb-20">
+    <div class="grid grid-cols-2 gap-6 w-11/12 sm:w-8/12 mb-20">
       <div class="col-span-2 md:col-span-1">
         <label
           for="name"

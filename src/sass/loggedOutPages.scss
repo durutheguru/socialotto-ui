@@ -12,7 +12,8 @@
 .customButton {
   background: #4691a6;
   border-radius: 8px;
-  height: 40px;
+  height: 40px !important;
+  max-width: 16rem;
 }
 
 .footerLogo {
@@ -33,12 +34,18 @@
   color: #4691a6;
 }
 
+.spartan {
+  font-family: "Spartan", sans-serif;
+}
+
 .signupLogo {
   position: relative;
+  // display: flex;
+
   width: 175px;
-  height: 40px;
+
   /* left: 10%;
-    top: 22px; */
+  top: 22px; */
 
   font-family: "Spartan", sans-serif;
   font-style: normal;
@@ -48,18 +55,11 @@
 
   letter-spacing: -0.14em;
 
-  color: #4691a6;
-}
-
-.spartan {
-  font-family: "Spartan", sans-serif;
+  color: #4691a6 !important;
 }
 
 .menuIcon {
   display: none;
-  width: 24px;
-  height: 24px;
-  color: #4691a6;
 }
 
 .signupMain {
@@ -68,7 +68,8 @@
   /* width: 520px; */
   /* height: 720px; */
   /* left: 460px; */
-  /* margin: 0 auto 0; */
+  margin-left: 1rem;
+  margin-right: 1rem;
   /* top: 84px; */
   border: 2px solid #2c5662;
   /* box-sizing: border-box; */
@@ -93,7 +94,6 @@
     padding-left: 5px;
     padding-right: 5px;
     --tw-bg-opacity: 1;
-    background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
   }
 
   .signupMainOuterDiv {
@@ -111,7 +111,7 @@
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 850px) {
   .anchorDIv {
     display: none;
   }
@@ -126,6 +126,9 @@
 
   .menuIcon {
     display: flex;
+    width: 24px;
+    height: 24px;
+    color: #4691a6;
   }
 }
 

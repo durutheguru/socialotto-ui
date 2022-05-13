@@ -1,9 +1,6 @@
 <template>
-  <div class=" relative">
-    <div
-      style="min-width: 16rem;"
-      class="flex-1 flex flex-col w-60 h-full backOfficeSidebar overflow-y-auto"
-    >
+  <div class=" h-full w-full">
+    <div style="min-width: 16rem;" class="flex-1 flex flex-col w-60 h-full  ">
       <div class="flex-1 flex flex-col pt-16 pb-4  w-10/12 mx-auto">
         <div class="">
           <div
@@ -142,13 +139,16 @@ import { Log, Util } from "@/components/util";
       error(error: ApolloError) {
         this.userQuery.error = Util.extractGqlError(error);
         if (Util.isValidString(this.userQuery.error)) {
-          this.$apollo.queries.viewUserDetails.refetch();
+          // this.$apollo.queries.viewUserDetails.refetch();
         }
       },
     },
   },
 })
 export default class BackofficeSidebar extends Vue {
+  private mounted() {
+    Log.info("username: " + this.username);
+  }
   private username = store.getters["authToken/username"];
   private userType = store.getters["authToken/authorizations"][0];
 
@@ -181,7 +181,7 @@ export default class BackofficeSidebar extends Vue {
   }
 
   private navigation = [
-    { name: "Dashboard", href: "#", current: true },
+    // { name: "Dashboard", href: "#", current: true },
     {
       name: "Create A Lottery",
       href: "create-lottery",
@@ -197,6 +197,11 @@ export default class BackofficeSidebar extends Vue {
     // },
     { name: "Users", href: "users", current: false },
     { name: "Expense Requests", href: "expense_requests", current: false },
+    {
+      name: "Settlement Participants",
+      href: "settlement-participants",
+      current: false,
+    },
   ];
 }
 </script>
