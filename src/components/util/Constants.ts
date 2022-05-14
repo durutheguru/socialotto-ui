@@ -2,6 +2,8 @@ export default class Constants {
   public static API_BASE: string = "/api/v1";
 
   // Event Related Constants
+  public static currencyFormat = "0,0.00";
+
   public static dialogClosedEvent: string = "close-dialog";
 
   public static routeUpdateEvent: string = "route-updated";

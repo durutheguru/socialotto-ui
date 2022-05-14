@@ -296,6 +296,10 @@
   font-family: "Spartan", sans-serif;
 }
 
+.walletBalanceFs {
+  font-size: 1.8rem;
+}
+
 .dot {
   cursor: pointer;
   height: 15px;
@@ -422,6 +426,10 @@
   .globalAlertPositioning {
     left: auto;
     right: 1rem;
+  }
+
+  .walletBalanceFs {
+    font-size: 32px;
   }
 }
 

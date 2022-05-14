@@ -12,10 +12,10 @@
 	      "
       class="w-full sm:w-11/12 walletWidth spartan flex flex-col md:flex-row items-start md:items-center justify-between py-4 px-6 "
     >
-      <div class="flex flex-col justify-between   mr-4 w-full md:w-60">
+      <div class="flex flex-col justify-between   mr-4 w-full md:w-80">
         <span class="text-white fw-400 fs-16 mb-2">Wallet Balance</span>
-        <h1 class="fw-700 fs-32 text-white mb-0">
-          {{ userWalletQuery.walletBalance[0].balance }}
+        <h1 class="fw-700 walletBalanceFs text-white mb-0">
+          &#x20A6;{{ formatCurrency(userWalletQuery.walletBalance[0].balance) }}
         </h1>
       </div>
 
@@ -131,7 +131,7 @@ import BaseVue from "@/components/BaseVue";
 
 // import { viewWalletBalances } from "@/services/users/users.query";
 import { getAllWalletTransactions } from "@/services/users/users.query";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Constants } from "@/components/util";
 import store from "@/store/index";
 import WalletBalanceCardLoading from "./WalletBalanceCardLoading.vue";
 import CreatePin from "./CreatePin.vue";
@@ -302,6 +302,10 @@ export default class Wallet extends BaseVue {
   }
   private closeCashoutOTPModal() {
     this.openCashoutOTP = false;
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 }
 </script>

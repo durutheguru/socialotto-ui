@@ -34,6 +34,10 @@
   color: #4691a6;
 }
 
+.hamburgerDisplay {
+  display: none;
+}
+
 .spartan {
   font-family: "Spartan", sans-serif;
 }
@@ -122,6 +126,10 @@
 
   .signupLogo {
     display: none;
+  }
+
+  .hamburgerDisplay {
+    display: block;
   }
 
   .menuIcon {

@@ -22,7 +22,7 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
         >&#8203;
         <section
-          class="main inline-block bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
+          class="main inline-block bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-xl mx-auto sm:my-8 sm:align-middle w-80 sm:w-full"
         >
           <div class="w-full h-full overflow-y-auto">
             <div class="flex flex-col h-full p-8">
@@ -100,9 +100,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import store from "@/store/index";
-import { Constants, Log, Util } from "@/components/util";
+import { Log } from "@/components/util";
+import LoginService from "@/vues/login/service/LoginService";
 
 import ApiResource from "@/components/core/ApiResource";
 import BaseVue from "@/components/BaseVue";
@@ -114,14 +115,16 @@ import BaseVue from "@/components/BaseVue";
   //   }
 })
 export default class LogoutModal extends BaseVue {
-  @Prop()
-  private isModalOpen!: boolean;
-
-  private logout() {
-    this.$emit("logout");
+  private get isModalOpen() {
+    return store.state.openLogout;
+  }
+  public logout() {
+    LoginService.doLogout();
+    store.commit("setOpenLogout", false);
   }
   private close() {
-    this.$emit("close");
+    Log.info("Close clicked");
+    store.commit("setOpenLogout", false);
   }
 }
 </script>

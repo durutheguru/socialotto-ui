@@ -15,6 +15,7 @@ function defaultState() {
   return {
     entryUrl: null,
     globalAlert: { show: false, type: "", text: "" },
+    openLogout: true,
     // globalAlert2: { show: false, text: "", type: "" },
     dropMenu: false,
     isNoticeMenu: false,
@@ -76,6 +77,10 @@ export default new Vuex.Store({
       //     alert.click();
       //   }
       // }, 5000);
+    },
+
+    setOpenLogout(state, payload) {
+      state.openLogout = payload;
     },
 
     setDropMenu(state, payload) {
