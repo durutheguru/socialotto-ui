@@ -185,7 +185,7 @@
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ campaign.totalFundsRaised }}
+                      {{ formatCurrency(campaign.totalFundsRaised) }}
                     </td>
 
                     <td
@@ -272,7 +272,7 @@
 import SearchIcon from "@/components/svg/SearchIcon.vue";
 
 import { Component, Vue } from "vue-property-decorator";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Constants } from "@/components/util";
 import { ApolloError } from "apollo-client";
 import CampaignRowMenu from "./CampaignRowMenu.vue";
 import store from "@/store/index";
@@ -358,6 +358,10 @@ export default class CampaignsView extends BaseVue {
     this.campaignQuery.status = status;
     this.campaignQuery.page = 0;
     this.showStatuses = false;
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 
   private next() {

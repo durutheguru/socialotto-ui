@@ -26,7 +26,8 @@
             {{ util.managedString(result.description, 100) }}
           </p>
           <p class="mt-3 text-sm spartan">
-            {{ result.totalFundsRaised }} raised out of {{ result.targetFunds }}
+            &#x20A6;{{ formatCurrency(result.totalFundsRaised) }} raised out of
+            &#x20A6;{{ formatCurrency(result.targetFunds) }}
           </p>
         </div>
         <div class="pb-3">
@@ -77,6 +78,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseVue from "../../components/BaseVue";
+import { Constants, Util } from "@/components/util";
 
 @Component({
   name: "CampaignCard",
@@ -95,6 +97,10 @@ export default class CampaignCard extends BaseVue {
   private showCampaignDetails(campaign: any) {
     this.$router.push(`/campaign/${campaign.id}`);
     // this.scrollToTop;
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 }
 </script>

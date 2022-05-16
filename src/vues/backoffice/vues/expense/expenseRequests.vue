@@ -203,12 +203,12 @@
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ format(request.lotteryTotalFunds) }}
+                      {{ formatCurrency(request.lotteryTotalFunds) }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ format(request.amount) }}
+                      {{ formatCurrency(request.amount) }}
                     </td>
 
                     <td
@@ -356,8 +356,8 @@ export default class ExpenseRequests extends BaseVue {
     this.approvalQuery.approvalStatus = status;
     this.showStatuses = false;
   }
-  private format(num: number) {
-    return Util.currencyFormatter(num, "0,0");
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
   //   private get isApprovalPending(): boolean {
   //     return store.state.pendingApprovalLoading;

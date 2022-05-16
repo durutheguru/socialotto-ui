@@ -25,7 +25,9 @@
             </h2>
             <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
               <span class="fs-20 fw-400">Amount raised:</span>
-              {{ detailsQuery.details.totalFundsRaised }}
+              &#x20A6;{{
+                formatCurrency(detailsQuery.details.totalFundsRaised)
+              }}
             </h2>
           </div>
 
@@ -160,12 +162,13 @@ import RaiseExpenseAmountPlate from "./expenseAmountPlates.vue";
 import { ApolloError } from "apollo-client";
 import EvaluationPlate from "./ExpenseEvaluationPlate.vue";
 import { evaluateSettlement } from "@/services/lottery/lottery.query";
-import { viewLotteryDetails } from "@/services/lottery/lottery.query";
+import { lotteryById } from "@/services/lottery/lottery.query";
 
 import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
 @Component({
   name: "RaiseLotteryExpense",
   apollo: {
+    // $client: "anonymousClient",
     evaluateSettlement: {
       query: evaluateSettlement,
       variables() {
@@ -196,7 +199,7 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
       },
     },
     viewLotteryDetails: {
-      query: viewLotteryDetails,
+      query: lotteryById,
       variables() {
         return {
           id: this.lotteryId,
@@ -293,6 +296,10 @@ export default class RaiseLotteryExpense extends Vue {
     if (this.inputArray.length < 10) {
       this.inputArray.unshift(obj);
     }
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 
   private evaluate() {

@@ -97,7 +97,7 @@ const getLotteryExpenseProposal = gql`
   }
 `;
 
-const viewLotteryDetails = gql`
+const lotteryById = gql`
   query viewLotteryDetails($id: ID!) {
     lotteryById(id: $id) {
       id
@@ -126,5 +126,5 @@ export {
   evaluateSettlement,
   fetchLotteryExpenseRequests,
   getLotteryExpenseProposal,
-  viewLotteryDetails,
+  lotteryById,
 };

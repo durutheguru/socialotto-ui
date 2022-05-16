@@ -1,9 +1,9 @@
 <template>
   <div
-    class="spartan relative right-0 col-span-5 pt-20 px-6 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 col-span-5 pt-20 pb-56 px-6 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
-      class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6 w-9/12"
+      class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6 w-full lg:w-9/12"
     >
       User Profile
     </h1>
@@ -13,7 +13,10 @@
     >
       <div class="roundLoader opacity-50 mx-auto"></div>
     </div>
-    <div v-else class="flex flex-col items-center justify-center w-9/12">
+    <div
+      v-else
+      class="flex flex-col items-center justify-center w-full lg:w-9/12"
+    >
       <img
         class="inline-block h-24 w-24 rounded-full"
         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixusername=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
