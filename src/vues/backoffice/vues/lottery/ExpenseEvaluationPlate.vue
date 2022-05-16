@@ -40,9 +40,9 @@
               v-if="expense.description.length > 0 && expense.amount.length > 0"
               class="col-span-1 flex justify-end items-center"
             >
-              <span style="color: #4691A6;" class="fw-500 fs-12 ">{{
-                expense.amount
-              }}</span>
+              <span style="color: #4691A6;" class="fw-500 fs-12 ">
+                &#x20A6;{{ formatCurrency(expense.amount) }}</span
+              >
             </div>
           </div>
           <div class="pt-2 grid col-span-3 grid-cols-3">
@@ -65,6 +65,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { Log, Constants, Util } from "@/components/util";
 
 @Component({
   name: "EvaluationPlate",
@@ -74,7 +75,11 @@ import { Component, Vue } from "vue-property-decorator";
     total: Number,
   },
 })
-export default class EvaluationPlate extends Vue {}
+export default class EvaluationPlate extends Vue {
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
+  }
+}
 </script>
 
 <style scoped></style>

@@ -97,7 +97,7 @@
                     <td
                       class="px-6 py-3 truncate  whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ participant.cap }}
+                      &#x20A6;{{ formatCurrency(participant.cap) }}
                     </td>
                   </tr>
                   <tr class="h-36 bg-white"></tr>
@@ -116,7 +116,7 @@ import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
 import { getSettlementParticipants } from "@/services/graphql/settlement-participant/query";
 import { ApolloError } from "apollo-client";
-import { Log, Util } from "@/components/util";
+import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   name: "SettlementParticipants",
@@ -143,6 +143,10 @@ export default class SettlementParticipants extends BaseVue {
     data: [],
     error: "",
   };
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
+  }
 }
 </script>
 

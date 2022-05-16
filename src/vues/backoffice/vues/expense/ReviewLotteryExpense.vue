@@ -12,7 +12,7 @@
     <div v-else class="grid grid-cols-7">
       <div class="flex flex-col col-span-7 md:col-span-5 xl:col-span-4">
         <h1 class="mb-6 spartan fw-600 fs-32 text-black">
-          Raise Lottery Expense
+          Review Lottery Expense
         </h1>
         <h2 style="color: #454545;" class="mb-6 spartan fs-20 fw-700 ">
           <span class="fs-20 fw-400">Lottery Title:</span>
@@ -27,7 +27,9 @@
           </h2>
           <h2 style="color: #454545;" class="spartan fs-20 fw-700 md:mb-0">
             <span class="fs-20 fw-400">Amount raised:</span>
-            {{ expenseProposal.data.expense.lotteryTotalFunds }}
+            &#x20A6;{{
+              formatCurrency(expenseProposal.data.expense.lotteryTotalFunds)
+            }}
           </h2>
         </div>
       </div>
@@ -85,7 +87,7 @@
                     </div>
                     <div class="col-span-1 flex justify-end items-center">
                       <span style="color: #4691A6;" class="fw-500 fs-12 ">
-                        {{ breakdown.amount }}
+                        &#x20A6;{{ formatCurrency(breakdown.amount) }}
                       </span>
                     </div>
                   </div>
@@ -97,7 +99,9 @@
                     </div>
                     <div class="col-span-1 flex justify-end items-center">
                       <span style="color: #4691A6;" class="fw-500 fs-12 ">
-                        {{ expenseProposal.data.expense.amount }}
+                        &#x20A6;{{
+                          formatCurrency(expenseProposal.data.expense.amount)
+                        }}
                       </span>
                     </div>
                   </div>
@@ -148,7 +152,7 @@
                   <div class="col-span-3 grid grid-cols-3 mb-3">
                     <div class="h-14 flex items-center">
                       <h2 style="color: #4691A6;" class="fw-500 fs-12">
-                        {{ transfer.amount }}
+                        &#x20A6;{{ formatCurrency(transfer.amount) }}
                       </h2>
                     </div>
                     <div
@@ -286,6 +290,10 @@ export default class ReviewLotteryExpense extends Vue {
     error: "",
     skip: true,
   };
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
+  }
 
   private newExpenseMutation(actn: string) {
     this.$apollo
