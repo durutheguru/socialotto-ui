@@ -1,6 +1,6 @@
 <template>
   <div
-    class="pb-56 spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto "
+    class="pb-56 spartan relative right-0 w-full pt-20 px-6 h-screen overflow-y-auto "
   >
     <h1
       class="
@@ -28,7 +28,7 @@
     >
       <div class="grid grid-cols-3 lg:grid-cols-6">
         <div class="col-span-3">
-          <div class="w-11/12">
+          <div class="w-full sm:w-11/12">
             <div class="w-full">
               <div class="w-full mb-6">
                 <label
@@ -548,7 +548,7 @@
 
         <!-- --------------------------Second half of page inputs------------------------------ -->
         <div class="col-span-3">
-          <div class="w-11/12">
+          <div class="w-full sm:w-11/12">
             <!-- -----Cost per ticket---- -->
             <div class="w-full mb-6">
               <label

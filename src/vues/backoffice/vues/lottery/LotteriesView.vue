@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 w-full pt-20 px-6 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"

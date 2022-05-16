@@ -89,11 +89,19 @@
               class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
               <button class="menuAnchor h-full" data-dropdown-button>
-                <img
-                  class="inline-block h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
+                <div
+                  style="background-color: #bebec5"
+                  class=" inline-block h-8 w-8 rounded-full"
+                >
+                  <div class="flex items-center justify-center w-full h-full">
+                    <span
+                      style="height: 18px;"
+                      class="fw-400 mb-0 flex uppercase text-white"
+                    >
+                      {{ userInitials }}
+                    </span>
+                  </div>
+                </div>
               </button>
               <!-- <input
                 type="checkbox"
@@ -173,6 +181,8 @@ export default class AuthNavHeader extends BaseVue {
     store.commit("setIsNoticeMenu", false);
     store.commit("setIsRecentsMenu", false);
   }
+
+  private userInitials = store.getters["authToken/username"].slice(0, 1);
 
   private userMenu = false;
   private get isLoggedIn(): boolean {

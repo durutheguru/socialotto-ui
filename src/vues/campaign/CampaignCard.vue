@@ -1,6 +1,7 @@
 <template>
   <div
-    class="h-full bg-cover  bg-center"
+    @click="showCampaignDetails(result)"
+    class="h-full bg-cover  bg-center cursor-pointer cardBoxShadow"
     :style="{
       'background-image':
         'url(' +
@@ -61,7 +62,7 @@
             <div
               class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
-              <div @click="showCampaignDetails(result)">
+              <div>
                 <span>Details</span>
               </div>
             </div>

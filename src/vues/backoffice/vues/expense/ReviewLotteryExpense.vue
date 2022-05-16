@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 col-span-5 pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 col-span-5 pt-20 pb-56 px-6 h-screen overflow-y-auto bg-blue-50"
   >
     <div
       v-if="$apollo.queries.getLotteryExpenseProposal.loading"
@@ -10,7 +10,7 @@
     </div>
 
     <div v-else class="grid grid-cols-7">
-      <div class="flex flex-col col-span-3">
+      <div class="flex flex-col col-span-7 md:col-span-5 xl:col-span-4">
         <h1 class="mb-6 spartan fw-600 fs-32 text-black">
           Raise Lottery Expense
         </h1>
@@ -18,12 +18,14 @@
           <span class="fs-20 fw-400">Lottery Title:</span>
           {{ expenseProposal.data.expense.lotteryTitle }}
         </h2>
-        <div class="mb-9 flex justify-between items-center">
-          <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
-            <span class="fs-20 fw-400">Lottery Id:</span>
+        <div
+          class="mb-9 flex flex-col   md:flex-row justify-between md:items-center"
+        >
+          <h2 style="color: #454545;" class="spartan fs-20 fw-700 mb-6 md:mb-0">
+            <span class="fs-20 fw-400 ">Lottery Id:</span>
             {{ expenseProposal.data.expense.lotteryId }}
           </h2>
-          <h2 style="color: #454545;" class="spartan fs-20 fw-700 ">
+          <h2 style="color: #454545;" class="spartan fs-20 fw-700 md:mb-0">
             <span class="fs-20 fw-400">Amount raised:</span>
             {{ expenseProposal.data.expense.lotteryTotalFunds }}
           </h2>
@@ -32,7 +34,7 @@
     </div>
     <div class="flex flex-col w-full">
       <div class="grid grid-cols-7">
-        <div class="col-span-3">
+        <div class="col-span-7 md:col-span-5 xl:col-span-4">
           <div class="w-full flex justify-start mb-10">
             <div class="px-4 pb-4 pt-8  spartan rounded-md bg-white w-full  ">
               <div class="grid grid-cols-3">
@@ -104,9 +106,9 @@
             </div>
           </div>
         </div>
-        <div class="col-span-3">
+        <div class="col-span-7 md:col-span-5 xl:col-span-3">
           <div class="w-full flex justify-start">
-            <div class="px-4 pb-4 pt-8 ml-8 spartan  w-full  ">
+            <div class="px-4 pb-4 pt-8 xl:ml-8 spartan  w-full  ">
               <div class="grid grid-cols-3">
                 <div class="col-span-1">
                   <div class="flex flex-col w-full">
