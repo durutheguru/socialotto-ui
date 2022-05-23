@@ -2,7 +2,8 @@
   <!-- :style="{ backgroundImage: `url(${post.imageUrl})` }" -->
 
   <div
-    class="h-full bg-cover bg-center"
+    @click="showLotteryDetails(result)"
+    class="h-full bg-cover bg-center cursor-pointer cardBoxShadow"
     :style="{
       'background-image':
         'url(' + util.searchImageUrl(result.lotteryFiles) + ')',
@@ -46,7 +47,7 @@
           <div
             class=" spartan cursor-pointer h-6 w-20 flex justify-center items-center"
           >
-            <div @click="showLotteryDetails(result)"><span>Details</span></div>
+            <div><span>Details</span></div>
           </div>
         </div>
       </div>

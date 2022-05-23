@@ -24,8 +24,8 @@
     <div
       class="h-14 items-center flex border-b-2 border-gray-200 justify-between"
     >
-      <span class=" text-base font-semibold text-gray-600 "
-        >N {{ totalFundsRaised }}
+      <span class=" text-base font-semibold text-gray-600 ">
+        &#x20A6;{{ formatCurrency(totalFundsRaised) }}
         <span class="font-medium text-gray-400">raised</span></span
       >
       <!-- <span class="text-base font-semibold text-gray-600 "
@@ -36,7 +36,7 @@
       <div class="h-14 items-center flex  justify-between ">
         <span class="text-sm font-medium text-gray-400">Campaign goal</span>
         <span class="text-base font-semibold text-gray-600 ">
-          N{{ targetFunds }}
+          &#x20A6;{{ formatCurrency(targetFunds) }}
         </span>
       </div>
       <!-- ----------- -->
@@ -119,7 +119,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Constants } from "@/components/util";
 import store from "@/store/index";
 
 @Component({
@@ -136,6 +136,10 @@ export default class CampaignDetailsDonateNShare extends Vue {
     // this.notifications = !this.notifications;
     store.commit("setDonateModal", true);
     Log.info("donateModalOpen campaignId:" + this.$route.params.id);
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 }
 </script>

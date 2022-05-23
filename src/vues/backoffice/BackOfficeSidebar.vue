@@ -96,18 +96,12 @@
         </nav>
       </div>
     </div>
-    <LogoutModal
-      @logout="logout"
-      :isModalOpen="isLogoutModalOpen"
-      @close="closeLogoutModal"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import LogoutModal from "./LogoutModal.vue";
-import LoginService from "@/vues/login/service/LoginService";
+
 import store from "@/store/index";
 import { viewUserDetails } from "@/services/users/users.query";
 import { ApolloError } from "apollo-client";
@@ -115,9 +109,7 @@ import { Log, Util } from "@/components/util";
 
 @Component({
   name: "BackofficeSidebar",
-  components: {
-    LogoutModal,
-  },
+
   apollo: {
     // $client: "anonymousClient",
     viewUserDetails: {
@@ -158,18 +150,9 @@ export default class BackofficeSidebar extends Vue {
     data: {},
     error: "",
   };
-  private isLogoutModalOpen = false;
 
   private openLogoutModal() {
-    this.isLogoutModalOpen = true;
-  }
-
-  private closeLogoutModal() {
-    this.isLogoutModalOpen = false;
-  }
-
-  private logout() {
-    LoginService.doLogout();
+    store.commit("setOpenLogout", true);
   }
 
   private sliceName(name: string) {

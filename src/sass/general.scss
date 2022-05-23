@@ -296,6 +296,10 @@
   font-family: "Spartan", sans-serif;
 }
 
+.walletBalanceFs {
+  font-size: 1.8rem;
+}
+
 .dot {
   cursor: pointer;
   height: 15px;
@@ -318,6 +322,10 @@
 
 .inactiveDot {
   background-color: blue;
+}
+
+.cardBoxShadow {
+  box-shadow: 0px 4px 67px rgba(0, 0, 0, 0.2);
 }
 
 .backOfficeSidebar {
@@ -422,6 +430,10 @@
   .globalAlertPositioning {
     left: auto;
     right: 1rem;
+  }
+
+  .walletBalanceFs {
+    font-size: 32px;
   }
 }
 

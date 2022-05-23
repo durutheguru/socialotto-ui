@@ -49,7 +49,7 @@
             </p>
           </a>
           <div
-            @click="logout"
+            @click="openLogoutModal"
             class="mb-2 pointer p-3 block space-y-1 hover:bg-gray-50 transition ease-in-out duration-150"
           >
             <p
@@ -92,8 +92,8 @@ export default class AvatarMenu extends Vue {
     // Util.clickOutside("avatarMenu", "dropdown", "setUserMenu");
   }
 
-  public logout() {
-    LoginService.doLogout();
+  private openLogoutModal() {
+    store.commit("setOpenLogout", true);
   }
 }
 </script>

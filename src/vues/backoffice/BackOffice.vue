@@ -2,7 +2,7 @@
   <div class="h-full w-full flex flex-col">
     <div
       style=" background-color: #e5f2f5;"
-      class="w-full shadow-md showBackofficeNav px-10 py-4"
+      class="w-full shadow-md showBackofficeNav px-6 py-4"
     >
       <button
         style="    border: 0.0625rem solid rgb(167 211 237) !important;"

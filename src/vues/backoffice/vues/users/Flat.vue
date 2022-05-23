@@ -59,11 +59,12 @@
         <!-- --------- -->
         <div class="mt-1">
           <div
-            @click="toggle"
             class="cursor-pointer relative flex border-gray-300 border-2 border-blue-dark  rounded-md h-10"
           >
             <input
               readonly
+              @focus="toggle"
+              @blur="closeBankList"
               v-model="bankInfo.bankName"
               id="bankName"
               name="bankName"
@@ -93,7 +94,7 @@
           </div>
           <div class="relative bg-white z-20" v-if="openMenu">
             <ul
-              class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+              class="py-2 absolute w-full max-h-60 overflow-y-auto  rounded-md shadow-md bg-white spartan text-sm"
             >
               <li
                 class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
@@ -258,6 +259,10 @@ export default class Fiat extends Vue {
     this.openMenu = false;
 
     Log.info(this.bankInfo.bankCode);
+  }
+
+  private closeBankList() {
+    this.openMenu = false;
   }
 
   private prepareDetails() {

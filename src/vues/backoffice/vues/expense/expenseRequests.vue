@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 w-full pt-20 px-6 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
@@ -203,12 +203,12 @@
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ format(request.lotteryTotalFunds) }}
+                      {{ formatCurrency(request.lotteryTotalFunds) }}
                     </td>
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ format(request.amount) }}
+                      {{ formatCurrency(request.amount) }}
                     </td>
 
                     <td
@@ -356,8 +356,8 @@ export default class ExpenseRequests extends BaseVue {
     this.approvalQuery.approvalStatus = status;
     this.showStatuses = false;
   }
-  private format(num: number) {
-    return Util.currencyFormatter(num, "0,0");
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
   //   private get isApprovalPending(): boolean {
   //     return store.state.pendingApprovalLoading;

@@ -10,27 +10,27 @@
         border-radius: 12px;
         
 	      "
-      class="w-full sm:w-11/12 walletWidth spartan flex items-center justify-between py-4 px-6 "
+      class="w-full sm:w-11/12 walletWidth spartan flex flex-col md:flex-row items-start md:items-center justify-between py-4 px-6 "
     >
-      <div class="flex flex-col justify-between  mr-4 w-60">
+      <div class="flex flex-col justify-between   mr-4 w-full md:w-80">
         <span class="text-white fw-400 fs-16 mb-2">Wallet Balance</span>
-        <h1 class="fw-700 fs-32 text-white mb-0">
-          {{ userWalletQuery.walletBalance[0].balance }}
+        <h1 class="fw-700 walletBalanceFs text-white mb-0">
+          &#x20A6;{{ formatCurrency(userWalletQuery.walletBalance[0].balance) }}
         </h1>
       </div>
 
-      <div class=" ">
-        <div class="flex flex-col items-end lg:flex-row lg:items-center">
+      <div class=" mt-2 md:mb-2 w-full md:w-5/12">
+        <div class="flex justify-start md:justify-between">
           <div
             @click="openWithdrawFundsModal"
-            class="h-12 bg-white cursor-pointer w-36 lg:w-40 br-12 flex items-center justify-center"
+            class="h-11 bg-white cursor-pointer w-40 br-12 flex items-center justify-center"
           >
             <span class="fw-500 fs-16" style="color: #3C798A;">Withdraw</span>
           </div>
           <div
             @click="openEditWithdrawalModal"
             style="background-color: #CDE4EA;"
-            class=" h-12 ml-4 mt-2 lg:mb-2 cursor-pointer flex items-center justify-center w-32 br-12"
+            class=" h-11 ml-4  cursor-pointer flex items-center justify-center w-32 br-12"
           >
             <span
               class="fw-500 fs-16 flex items-center"
@@ -131,7 +131,7 @@ import BaseVue from "@/components/BaseVue";
 
 // import { viewWalletBalances } from "@/services/users/users.query";
 import { getAllWalletTransactions } from "@/services/users/users.query";
-import { Log, Util } from "@/components/util";
+import { Log, Util, Constants } from "@/components/util";
 import store from "@/store/index";
 import WalletBalanceCardLoading from "./WalletBalanceCardLoading.vue";
 import CreatePin from "./CreatePin.vue";
@@ -302,6 +302,10 @@ export default class Wallet extends BaseVue {
   }
   private closeCashoutOTPModal() {
     this.openCashoutOTP = false;
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 }
 </script>
