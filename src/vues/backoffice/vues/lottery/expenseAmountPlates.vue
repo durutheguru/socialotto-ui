@@ -1,8 +1,6 @@
 <template>
   <div v-if="show" class="w-full flex justify-end">
-    <div
-      class="px-4 pb-4 pt-8 mx-auto xl:mr-8 spartan rounded-md bg-white w-10/12  "
-    >
+    <div class="px-0 pb-4 pt-8 mx-auto  spartan rounded-md bg-white w-full  ">
       <div class="grid grid-cols-3">
         <div class="col-span-1">
           <div class="flex flex-col w-full">
@@ -31,24 +29,24 @@
           class="col-span-3"
         >
           <div class="col-span-3 grid grid-cols-3 mb-3">
-            <div class="h-14 flex items-center">
+            <div class="h-14 flex flex-grow items-center">
               <h2 style="color: #4691A6;" class="fw-500 fs-12">
                 {{ transfer.amount }}
               </h2>
             </div>
             <div class="h-14 flex flex-col justify-between items-center">
-              <span style="color: #B9B9B9;" class="fs-12 fw-500">{{
+              <span style="color: #B9B9B9;" class="fs-12 fw-500 truncate">{{
                 transfer.sourceWalletName
               }}</span>
-              <h2 style="color: #4691A6;" class="fw-500 fs-12">
+              <h2 style="color: #4691A6;" class="fw-500 expenseWalletID-fs">
                 {{ transfer.sourceWalletId }}
               </h2>
             </div>
             <div class="h-14 flex flex-col justify-between items-end">
-              <span style="color: #B9B9B9;" class="fs-12 fw-500">{{
+              <span style="color: #B9B9B9;" class="fs-12 fw-500 truncate">{{
                 transfer.destinationWalletName
               }}</span>
-              <h2 style="color: #4691A6;" class="fw-500 fs-12">
+              <h2 style="color: #4691A6;" class="fw-500 expenseWalletID-fs ">
                 {{ transfer.destinationWalletId }}
               </h2>
             </div>

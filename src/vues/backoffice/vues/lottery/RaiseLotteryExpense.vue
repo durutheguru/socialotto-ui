@@ -1,6 +1,6 @@
 <template>
   <div class="pb-56 w-full pt-20 px-6 h-screen overflow-y-auto">
-    <div class="grid grid-cols-6">
+    <div class="grid grid-cols-6 gap-8">
       <validation-observer
         ref="observer"
         tag="form"
@@ -8,7 +8,7 @@
         v-slot="{ invalid }"
         @submit.prevent="evaluate"
         novalidate
-        class="col-span-6 xl:col-span-3"
+        class="col-span-6 md:col-span-5 lg:col-span-4 xl:col-span-3"
       >
         <div class="flex flex-col">
           <h1 class="mb-6 spartan fw-600 fs-32 text-black">
@@ -144,7 +144,9 @@
         </button>
       </validation-observer>
       <!-- ---------- -->
-      <div class="col-span-6 xl:col-span-3 mt-12 md:mt-0 ">
+      <div
+        class="col-span-6 md:col-span-5 lg:col-span-4 xl:col-span-3 mt-12 md:mt-0 "
+      >
         <EvaluationPlate :expenses="inputArray" :show="show" :total="total" />
         <RaiseExpenseAmountPlate
           :show="show"
@@ -203,7 +205,7 @@ import { newLotteryExpense } from "@/services/campaign/campaign.mutation";
         }
       },
     },
-    viewLotteryDetails: {
+    lotteryById: {
       query: lotteryById,
       variables() {
         return {
