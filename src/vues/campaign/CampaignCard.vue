@@ -1,6 +1,7 @@
 <template>
   <div
-    class="h-full bg-cover  bg-center"
+    @click="showCampaignDetails(result)"
+    class="h-full bg-cover  bg-center cursor-pointer cardBoxShadow"
     :style="{
       'background-image':
         'url(' +
@@ -25,7 +26,8 @@
             {{ util.managedString(result.description, 100) }}
           </p>
           <p class="mt-3 text-sm spartan">
-            {{ result.totalFundsRaised }} raised out of {{ result.targetFunds }}
+            &#x20A6;{{ formatCurrency(result.totalFundsRaised) }} raised out of
+            &#x20A6;{{ formatCurrency(result.targetFunds) }}
           </p>
         </div>
         <div class="pb-3">
@@ -61,7 +63,7 @@
             <div
               class="cursor-pointer h-6 w-20 flex justify-center items-center spartan"
             >
-              <div @click="showCampaignDetails(result)">
+              <div>
                 <span>Details</span>
               </div>
             </div>
@@ -76,6 +78,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BaseVue from "../../components/BaseVue";
+import { Constants, Util } from "@/components/util";
 
 @Component({
   name: "CampaignCard",
@@ -94,6 +97,10 @@ export default class CampaignCard extends BaseVue {
   private showCampaignDetails(campaign: any) {
     this.$router.push(`/campaign/${campaign.id}`);
     // this.scrollToTop;
+  }
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
   }
 }
 </script>

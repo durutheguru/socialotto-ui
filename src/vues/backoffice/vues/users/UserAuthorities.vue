@@ -1,10 +1,10 @@
 <template>
-  <div class="spartan w-full py-10">
+  <div class="spartan w-full py-10 ">
     <span style="color: #1D414B;" class="fw-700 fs-14 ">
       Permissions
     </span>
-    <div class="grid grid-cols-8 gap-4 mt-2">
-      <div class="col-span-2 flex items-center justify-start py-3 ">
+    <div class="flex flex-wrap mt-2">
+      <div class=" flex items-center justify-start py-3 h-12 mr-4">
         <span style="color: #454545" class="fs-14 fw-500"
           >This user is authorised to
         </span>
@@ -14,7 +14,7 @@
         :key="index"
         @click="openRemovalModal(authority.authorityId, username)"
         style="background-color: #EBEBEB; border-radius: 8px"
-        class="cursor-pointer col-span-3 flex justify-center items-center"
+        class="cursor-pointer mr-4 mb-4 flex justify-center items-center h-12"
       >
         <div class=" flex items-center justify-between px-4 w-full ">
           <span style="color: #696969">{{ authority.authorityId }}</span>
@@ -50,11 +50,11 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-4 mt-4 mb-6">
+    <div class="flex mt-4 mb-6">
       <div
         @click="openModal"
         style="background-color: #FFFFFF; border: 1px solid #4691A6; border-radius: 8px;"
-        class="cursor-pointer col-span-1 p-3"
+        class="cursor-pointer h-18 p-3"
       >
         <span style="color: #4691A6" class="">Add new permissions</span>
       </div>
@@ -65,12 +65,12 @@
       <span style="color: #1D414B;" class="fw-700 fs-14 ">
         Documents
       </span>
-      <div class="grid grid-cols-4 gap-4 mt-2">
+      <div class="flex flex-wrap mt-2">
         <div
           v-for="file in refResponse"
           :key="file.reference"
           style="background-color: #EBEBEB; border-radius: 8px"
-          class="col-span-1 flex items-center justify-between px-3 py-3"
+          class="mr-4 mb-4 flex items-center justify-between px-3 py-3"
         >
           <span style="color: #696969">{{ file.originalFileName }}</span>
           <div class="ml-2">

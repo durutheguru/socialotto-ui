@@ -1,6 +1,6 @@
 <template>
   <div
-    class="spartan relative right-0 w-full pt-20 px-10 h-screen overflow-y-auto bg-blue-50"
+    class="spartan relative right-0 w-full pt-20 px-6 h-screen overflow-y-auto bg-blue-50"
   >
     <h1
       class="flex justify-center sm:justify-start spartan text-3xl font-semibold text-black mb-6"
@@ -194,7 +194,7 @@
                     <td
                       class="px-6 py-3 whitespace-nowrap text-sm text-gray-500"
                     >
-                      {{ lottery.totalFundsRaised }}
+                      {{ formatCurrency(lottery.totalFundsRaised) }}
                     </td>
 
                     <td
@@ -351,6 +351,10 @@ export default class LotteriesView extends BaseVue {
     REVERSED_TO_PARTICIPANTS: "Settled",
     CREDITED_TO_BENEFICIARIES: "Settled",
   };
+
+  private formatCurrency(amount: number) {
+    return Util.currencyFormatter(amount, Constants.currencyFormat);
+  }
 
   private refetchLotteries() {
     this.$apollo.queries.searchLotteries.refetch();

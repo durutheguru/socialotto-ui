@@ -1,5 +1,5 @@
 <template>
-  <div class="p-8 pb-20 w-8/12">
+  <div class="py-8 px-0 sm:px-8 pb-20 w-full sm:w-8/12">
     <div class="spartan text-black fs-16 flex ">
       <div class="mr-8 cursor-pointer">
         <input type="radio" v-model="settlement" v-bind:value="'rate'" /><span

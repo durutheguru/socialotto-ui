@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="wrapper "> -->
-  <div class="background h-20 signupHeader">
+  <div class="background h-20 px-6">
     <div
       class="flex items-center justify-end h-full max-w-screen-xl spartan mx-auto"
     >
@@ -32,37 +32,20 @@
         </svg>
       </div>
     </div>
-    <LogoutModal
-      @logout="logout"
-      :isModalOpen="isLogoutModalOpen"
-      @close="closeLogoutModal"
-    />
   </div>
   <!-- </div> -->
 </template>
 
 <script lang="ts">
-import LogoutModal from "./LogoutModal.vue";
 import { Component, Vue } from "vue-property-decorator";
-import LoginService from "@/vues/login/service/LoginService";
+import store from "@/store/index";
 
 @Component({
   name: "BackOfficeHeader",
-  components: {
-    LogoutModal,
-  },
 })
 export default class BackOfficeHeader extends Vue {
-  private isLogoutModalOpen = false;
   private openLogoutModal() {
-    this.isLogoutModalOpen = true;
-  }
-  private closeLogoutModal() {
-    this.isLogoutModalOpen = false;
-  }
-
-  private logout() {
-    LoginService.doLogout();
+    store.commit("setOpenLogout", true);
   }
 }
 </script>
