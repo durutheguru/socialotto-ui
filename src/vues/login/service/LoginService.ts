@@ -50,4 +50,7 @@ export default class LoginService {
     Log.info("User Path: " + UserAuthContext.getInstance().homeUrl());
     Log.info("Logged In: " + JSON.stringify(response));
   }
+
+
 }
+

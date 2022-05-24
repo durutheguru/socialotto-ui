@@ -87,7 +87,7 @@ const routes = [
         name: "Home",
         component: () => import("@/vues/home/Home.vue"),
         meta: {
-          skipAuth: true,
+          skipAuth: false,
         },
       },
 
