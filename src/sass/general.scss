@@ -193,6 +193,10 @@
   color: #343434;
 }
 
+.expenseWalletID-fs {
+  font-size: 0.6rem;
+}
+
 .text-dark {
   color: #494949;
 }
@@ -473,4 +477,17 @@
 .slideOut-enter-from {
   opacity: 0;
   transform: translateX(-100%);
+}
+
+.innerScrollBar::-webkit-scrollbar {
+  height: 5px;
+}
+
+.innerScrollBar::-webkit-scrollbar-thumb {
+  // width: 4px;
+  background-color: rgba(168, 168, 168, 0.199);
+}
+
+.innerScrollBar::-webkit-scrollbar-track {
+  background: transparent;
 }

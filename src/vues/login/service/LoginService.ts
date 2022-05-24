@@ -1,4 +1,4 @@
-import { Log, Web } from "../../../components/util";
+import { Log, Web, Util } from "../../../components/util";
 import "@/interceptors/login/LoginInterceptor";
 import store from "@/store";
 import UserAuthContext from "@/components/auth/UserAuthContext";
@@ -37,9 +37,16 @@ export default class LoginService {
 
   public static handleSuccessfulLogin(response: any, vue: Vue) {
     store.commit("authToken/apiToken", response.headers.authorization);
-    vue.$router.push({
-      path: UserAuthContext.getInstance().homeUrl(),
+    Util.throttle({
+      key: "Route after login",
+      run: () => {
+        vue.$router.push({
+          path: UserAuthContext.getInstance().homeUrl(),
+        });
+      },
+      time: 1000,
     });
+
     Log.info("User Path: " + UserAuthContext.getInstance().homeUrl());
     Log.info("Logged In: " + JSON.stringify(response));
   }
