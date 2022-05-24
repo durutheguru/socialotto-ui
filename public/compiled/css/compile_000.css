@@ -13287,11 +13287,6 @@ header.purple-bg .search:focus {
   background: #fff;
   border-radius: 4px;
 }
-.customButton {
-  background: #4691a6;
-  border-radius: 8px;
-  height: 40px;
-}
 @media (min-width: 980px) {
   .custom-bar-chart {
     margin-bottom: 40px;

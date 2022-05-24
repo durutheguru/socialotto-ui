@@ -98,7 +98,7 @@ const getLotteryExpenseProposal = gql`
 `;
 
 const lotteryById = gql`
-  query viewLotteryDetails($id: ID!) {
+  query lotteryById($id: ID!) {
     lotteryById(id: $id) {
       id
       name

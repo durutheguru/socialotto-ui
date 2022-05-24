@@ -86,8 +86,8 @@
               zoneDateTimeMoment(transaction.transactionDateTime)
             }}</span>
             <span style="color: #4F4F4F" class="fs-14 fw-500 mb-1">Amount</span>
-            <span style="color: #333333" class="fs-28 fw-600"
-              >N{{ transaction.amount }}</span
+            <span style="color: #333333" class="fs-28 fw-600">
+              &#x20A6;{{ transaction.amount }}</span
             >
           </div>
           <!-- ------------------- -->
