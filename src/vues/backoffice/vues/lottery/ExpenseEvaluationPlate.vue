@@ -13,7 +13,7 @@
         <div class="col-span-1">
           <div class="flex justify-end  w-full">
             <h5 class="ml-auto fw-600 fs-16 mb-4" style="color: #1D414B;">
-              Credit
+              Amount
             </h5>
           </div>
         </div>
@@ -50,9 +50,9 @@
               </span>
             </div>
             <div class="col-span-1 flex justify-end items-center">
-              <span style="color: #4691A6;" class="fw-500 fs-12 ">{{
-                total
-              }}</span>
+              <span style="color: #4691A6;" class="fw-500 fs-12 "
+                >&#x20A6;{{ formatCurrency(total) }}</span
+              >
             </div>
           </div>
         </div>
