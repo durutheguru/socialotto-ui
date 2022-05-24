@@ -38,7 +38,7 @@
 
           <div
             @click="addInput"
-            class="mb-10 w-2/4 cursor-pointer bo-bg-dark-blue text-white flex h-14 rounded-md justify-center items-center"
+            class="mb-10 w-full sm:w-2/4 cursor-pointer bo-bg-dark-blue text-white flex h-14 rounded-md justify-center items-center"
           >
             <div class="flex items-center ">
               <SmallPlus />
