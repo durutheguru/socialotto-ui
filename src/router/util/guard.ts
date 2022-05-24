@@ -5,6 +5,7 @@ const authRoute = async (to: any, next: any) => {
   // Log.info("Auth Logged In: " + store.getters["authToken/loggedIn"]);
 
   if (store.getters["authToken/loggedIn"]) {
+    // TODO: fix this, convert to checking the expiration on persisted token
     const authenticated = await store.dispatch("authToken/authenticate");
     if (!authenticated) {
       navigateLogin(to, next);
