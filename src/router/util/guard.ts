@@ -2,7 +2,7 @@ import store from "../../store";
 import { Log, Web, Util } from "../../components/util";
 
 const authRoute = async (to: any, next: any) => {
-  // Log.info("Auth Logged In: " + store.getters["authToken/loggedIn"]);
+  Log.info("Auth Logged In: " + store.getters["authToken/loggedIn"]);
 
   if (store.getters["authToken/loggedIn"]) {
     // TODO: fix this, convert to checking the expiration on persisted token
@@ -11,9 +11,12 @@ const authRoute = async (to: any, next: any) => {
       navigateLogin(to, next);
     } else {
       let userActive = store.getters["authToken/isUserActive"];
+      Log.info(`User Active: ${userActive}`);
       if (userActive === true) {
+        Log.info(`Navigating to Path: ${to.path}`);
         navigatePath(to, next);
       } else if (userActive === false) {
+        Log.info(`Navigating to User activation`);
         Web.navigate("/user_activation");
       } else {
         Log.warn("userActive flag undefined. Unable to proceed");
