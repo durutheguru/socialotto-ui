@@ -25,9 +25,7 @@ const searchLotteries = gql`
         fileType
         publicUrl
       }
-      owner {
-        username
-      }
+
       stageDescriptions {
         id
         stage
@@ -108,9 +106,7 @@ const lotteryById = gql`
       lotteryFiles {
         reference
       }
-      owner {
-        username
-      }
+
       stageDescriptions {
         id
         stage

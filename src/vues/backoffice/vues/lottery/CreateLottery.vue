@@ -146,21 +146,18 @@
                   "
                   >Lottery owner</label
                 >
-                <div v-if="lottery.lotteryOwner.length === 0">
+                <div>
                   <div class="mt-1 relative">
-                    <validation-provider rules="required" v-slot="{ errors }">
-                      <input
-                        v-model="lotteryOwner"
-                        @focus="ownerlistIsVisible = true"
-                        @blur="ownerlistIsVisible = false"
-                        required
-                        type="text"
-                        name="Lottery owner"
-                        id="lottery owner"
-                        :class="{
-                          'border-red-400': errors.length > 0,
-                        }"
-                        class="
+                    <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
+                    <input
+                      v-model="lotteryOwner"
+                      @focus="ownerlistIsVisible = true"
+                      @blur="ownerlistIsVisible = false"
+                      required
+                      type="text"
+                      name="Lottery owner"
+                      id="lottery owner"
+                      class="
                           spartan
                           h-12
                           bg-transparent
@@ -172,17 +169,17 @@
                           sm:text-sm
                           rounded-md
                         "
-                        placeholder="Search"
-                        autocomplete="off"
-                      />
+                      placeholder="Search"
+                      autocomplete="off"
+                    />
 
-                      <span class="text-red-500 spartan">{{ errors[0] }}</span>
-                      <span
-                        v-if="lotteryOwner.length > 0 && owners.length === 0"
-                        class="text-red-500 spartan"
-                        >owner not found</span
-                      >
-                    </validation-provider>
+                    <!-- <span class="text-red-500 spartan">{{ errors[0] }}</span> -->
+                    <!-- <span
+                      v-if="lotteryOwner.length > 0 && owners.length === 0"
+                      class="text-red-500 spartan"
+                      >owner not found</span
+                    > -->
+                    <!-- </validation-provider> -->
                   </div>
                   <div
                     class="relative bg-white z-20"
@@ -212,52 +209,41 @@
                   </div>
                 </div>
 
-                <!-- -----v-if owner chosen------ -->
-                <div class="mt-1 relative" v-else>
-                  <input
-                    readonly
-                    class="
-                      spartan
-                      h-12
-                      bg-transparent
-                      border-gray-300 border-2
-                      px-2
-                      focus:ring-indigo-500 focus:border-blue-500
-                      block
-                      w-full
-                      sm:text-sm
-                      rounded-md
-                    "
-                  />
+                <!-- -----v-if any owner is chosen------ -->
+                <div
+                  v-if="lottery.lotteryUserNames.length > 0"
+                  class="mt-1 relative"
+                >
                   <div
                     class="
-                      absolute
-                      left-0
-                      top-0
-                      h-full
+                      
+                    
                       flex
-                      justify-center
-                      items-center
+                      flex-wrap
                     "
                   >
                     <div
+                      v-for="sponsor in lottery.lotteryUserNames"
+                      :key="sponsor.username"
                       style="max-width: 11rem"
                       class="
-                        h-4/6
+                       
                         flex
                         justify-center
                         items-center
                         rounded-lg
                         bg-gray-300
                         px-2
-                        ml-3
+                        h-8
+                        mr-3
+                        mb-2
                       "
                     >
                       <span class="spartan text-sm truncate">{{
-                        lottery.lotteryOwner
+                        sponsor.name
                       }}</span>
 
-                      <div @click="cancelOwner">
+                      <div @click="cancelOwner(sponsor)">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           class="ml-2 h-4 w-4"
@@ -822,14 +808,18 @@
                   fileUploader.uploads.length === 0 ||
                   saveLottery.loading ||
                   !dateCheck ||
-                  checkFileLoading
+                  checkFileLoading ||
+                  lottery.lotteryUserNames.length === 0 ||
+                  chosenCampaigns.length === 0
               "
               :class="[
                 invalid ||
                 fileUploader.uploads.length === 0 ||
                 saveLottery.loading ||
                 !dateCheck ||
-                checkFileLoading
+                checkFileLoading ||
+                lottery.lotteryUserNames.length === 0 ||
+                chosenCampaigns.length === 0
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
@@ -957,8 +947,8 @@ export default class CreateLottery extends BaseVue {
     description: "",
     ticketCost: "",
     numberOfWinners: "",
-    lotteryOwner: "",
-    lotteryUserName: "",
+    // lotteryOwner: "",
+    lotteryUserNames: [],
     supportedCampaigns: this.chosenCampaigns,
     endDate: "",
     evaluationDate: "",
@@ -969,77 +959,11 @@ export default class CreateLottery extends BaseVue {
     return this.lottery.evaluationDate > this.lottery.endDate;
   }
 
-  private createLottery() {
-    let self = this;
-
-    Log.info(`datecheck: ${this.dateCheck}`);
-
-    self.saveLottery.loading = true;
-    self.saveLottery.error = "";
-
-    const lotteryRequest = this.prepareLotteryRequest();
-    Log.info("lotteryDetails: " + JSON.stringify(lotteryRequest));
-    LotteryService.createLottery(
-      lotteryRequest,
-      (response: any) => {
-        self.saveLottery.loading = false;
-        Util.handleGlobalAlert(true, "success", "Successfully created lottery");
-
-        let resetButton: any = document.getElementById("clearLotteryInput");
-        resetButton.click();
-      },
-      (error: any) => {
-        self.saveLottery.loading = false;
-        self.saveLottery.error = self.extractError(error);
-        Log.error(`Error while creating lottery: ${error}`);
-        Util.handleGlobalAlert(true, "failed", self.saveLottery.error);
-      }
-    );
-  }
-
   private get now() {
     const d = new Date();
     const newD = d.setDate(d.getDate() + 50);
 
     return newD;
-  }
-
-  private prepareLotteryRequest() {
-    const time = Util.formatTime(
-      `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
-      "YYYY-MM-DD HH:mm",
-      "YYYY-MM-DD HH:mm:ss.SSSS Z"
-    );
-
-    Log.info(Util.removeLastChar(time, ":"));
-
-    Log.info(time);
-    let request = {
-      ownerUsername: this.lottery.lotteryUserName,
-      lottery: {
-        name: this.lottery.name,
-        description: this.lottery.description,
-        endDate: this.lottery.endDate,
-        ticketCost: this.lottery.ticketCost,
-        stageDescriptions: [
-          {
-            stage: "FIRST",
-            winnersCount: this.lottery.numberOfWinners,
-            evaluationTime: Util.removeLastChar(time, ":"),
-          },
-        ],
-      },
-      fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
-      beneficiaries: this.wallets.map((wallet: any) => {
-        const obj = {
-          wallet: {
-            id: wallet.id,
-          },
-        };
-        return obj;
-      }),
-    };
-    return request;
   }
 
   private fileUploader: FileUploader = new FileUploader(
@@ -1081,7 +1005,10 @@ export default class CreateLottery extends BaseVue {
 
           (response: any) => {
             Log.info(response.data._embedded.platformUsers);
-            self.owners = response.data._embedded.platformUsers;
+            const owners = response.data._embedded.platformUsers;
+            self.owners = owners.filter(
+              (sponsor: any) => !this.ownerIsSelected(sponsor)
+            );
           },
 
           (error: any) => {
@@ -1094,16 +1021,32 @@ export default class CreateLottery extends BaseVue {
   }
 
   private selectOwner(owner: any) {
-    const chosen = owner;
-    this.lottery.lotteryOwner = chosen.name;
-    this.lottery.lotteryUserName = chosen.username;
-    Log.info(this.lottery.lotteryOwner);
-    Log.info(this.lottery.lotteryUserName);
+    const obj = {
+      name: owner.name,
+      username: owner.username,
+    };
+    this.lottery.lotteryUserNames.push(obj);
+    this.owners = this.owners.filter(
+      (sponsor: any) => !this.ownerIsSelected(sponsor)
+    );
+
+    Log.info("sponsors: " + JSON.stringify(this.lottery.lotteryUserNames));
   }
 
-  private cancelOwner() {
-    this.lotteryOwner = "";
-    this.lottery.lotteryOwner = "";
+  private ownerIsSelected(owner: any) {
+    return this.lottery.lotteryUserNames.some(function(sponsor: any) {
+      return sponsor.username === owner.username;
+    });
+  }
+
+  private cancelOwner(sponsor: any) {
+    // this.lotteryOwner = "";
+    // only keep objects in array where obj.field !== 'money'
+    this.lottery.lotteryUserNames = this.lottery.lotteryUserNames.filter(
+      function(obj: any) {
+        return obj.username !== sponsor.username;
+      }
+    );
   }
 
   private selectCampaign(campaign: any) {
@@ -1142,7 +1085,7 @@ export default class CreateLottery extends BaseVue {
     this.lottery.ticketCost = "";
     this.lottery.numberOfWinners = "";
     this.lottery.lotteryOwner = "";
-    this.lottery.lotteryUserName = "";
+    this.lottery.lotteryUserNames = "";
     this.lottery.supportedCampaigns = [];
     this.lottery.endDate = "";
     this.lottery.evaluationDate = "";
@@ -1163,6 +1106,76 @@ export default class CreateLottery extends BaseVue {
 
   private get getOwner() {
     return this.lotteryOwner;
+  }
+
+  private prepareLotteryRequest() {
+    const time = Util.formatTime(
+      `${this.lottery.evaluationDate} ${this.lottery.evaluationTime}`,
+      "YYYY-MM-DD HH:mm",
+      "YYYY-MM-DD HH:mm:ss.SSSS Z"
+    );
+
+    Log.info(Util.removeLastChar(time, ":"));
+
+    Log.info(time);
+    let request = {
+      sponsorUsernames: [
+        ...this.lottery.lotteryUserNames.map(
+          (sponsor: any) => sponsor.username
+        ),
+      ],
+      lottery: {
+        name: this.lottery.name,
+        description: this.lottery.description,
+        endDate: this.lottery.endDate,
+        ticketCost: this.lottery.ticketCost,
+        stageDescriptions: [
+          {
+            stage: "FIRST",
+            winnersCount: this.lottery.numberOfWinners,
+            evaluationTime: Util.removeLastChar(time, ":"),
+          },
+        ],
+      },
+      fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
+      beneficiaries: this.wallets.map((wallet: any) => {
+        const obj = {
+          wallet: {
+            id: wallet.id,
+          },
+        };
+        return obj;
+      }),
+    };
+    return request;
+  }
+
+  private createLottery() {
+    let self = this;
+
+    Log.info(`datecheck: ${this.dateCheck}`);
+
+    self.saveLottery.loading = true;
+    self.saveLottery.error = "";
+
+    const lotteryRequest = this.prepareLotteryRequest();
+    Log.info("lotteryDetails: " + JSON.stringify(lotteryRequest));
+    LotteryService.createLottery(
+      lotteryRequest,
+      (response: any) => {
+        self.saveLottery.loading = false;
+        Util.handleGlobalAlert(true, "success", "Successfully created lottery");
+
+        let resetButton: any = document.getElementById("clearLotteryInput");
+        resetButton.click();
+      },
+      (error: any) => {
+        self.saveLottery.loading = false;
+        self.saveLottery.error = self.extractError(error);
+        Log.error(`Error while creating lottery: ${error}`);
+        Util.handleGlobalAlert(true, "failed", self.saveLottery.error);
+      }
+    );
   }
 
   @Watch("lotteryOwner")
