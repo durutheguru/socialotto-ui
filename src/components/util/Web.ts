@@ -28,14 +28,14 @@ axios.interceptors.response.use(
     // Do something with response data
     return response;
   },
-  
+
   (error) => {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     if (error.response.status === 401 || error.response.status === 403) {
       if (store.getters["authToken/loggedIn"] === true) {
         Web.navigate("/");
-        return;
+        Log.error("axiosError: " + JSON.stringify(error.response.status));
       }
     }
     Log.error("axiosError: " + JSON.stringify(error.response.status));
