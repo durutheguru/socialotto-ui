@@ -1026,6 +1026,7 @@ export default class CreateLottery extends BaseVue {
       username: owner.username,
     };
     this.lottery.lotteryUserNames.push(obj);
+    this.lotteryOwner = "";
     this.owners = this.owners.filter(
       (sponsor: any) => !this.ownerIsSelected(sponsor)
     );
@@ -1085,7 +1086,7 @@ export default class CreateLottery extends BaseVue {
     this.lottery.ticketCost = "";
     this.lottery.numberOfWinners = "";
     this.lottery.lotteryOwner = "";
-    this.lottery.lotteryUserNames = "";
+    this.lottery.lotteryUserNames = [];
     this.lottery.supportedCampaigns = [];
     this.lottery.endDate = "";
     this.lottery.evaluationDate = "";

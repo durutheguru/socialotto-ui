@@ -110,6 +110,13 @@ export default class NavHeader extends BaseVue {
     store.commit("setDropMenu", true);
     // Log.info("dropMenu: " + );
   }
+
+  // private get authenticated() {
+  //   const authenticate = async() => {
+  //     return await store.dispatch("authToken/authenticate");
+  //   }
+  //   return authenticate
+  // }
 }
 </script>
 
