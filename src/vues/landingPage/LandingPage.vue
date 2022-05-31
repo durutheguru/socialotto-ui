@@ -35,6 +35,7 @@
                       class=" col-span-2 sm:col-span-1 flex items-end  justify-center sm:justify-start"
                     >
                       <div
+                        @click="goHome"
                         class="bg-blue-200 h-12  w-full rounded-md flex items-center  justify-center cursor-pointer"
                       >
                         <span
@@ -47,6 +48,7 @@
                       class="col-span-2 sm:col-span-1  flex items-end  justify-center sm:justify-end"
                     >
                       <div
+                        @click="goHome"
                         class="bg-transparent border-text-blue-200 h-12  w-full rounded-md flex items-center  justify-center cursor-pointer"
                       >
                         <span class="text-base font-semi-bold cursor-pointer"
@@ -115,6 +117,10 @@ export default class LandingPage extends Vue {
   private test() {
     Log.info("Landing page ohh");
     Util.handleGlobalAlert(true, "failed", "404");
+  }
+
+  private goHome() {
+    this.$router.push("/home");
   }
 }
 </script>
