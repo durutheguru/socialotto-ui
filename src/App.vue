@@ -1,5 +1,5 @@
 <template>
-  <section id="container" class="overflow-hidden">
+  <section id="container" class="overflow-hidden spartan">
       <!-- <fade-transition origin="center" mode="out-in" :duration="250"> -->
         <template>
         <global-alert />

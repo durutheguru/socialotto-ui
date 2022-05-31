@@ -1,8 +1,8 @@
 <template>
   <!-- <div class="wrapper "> -->
-  <div class="background h-20 px-6">
+  <div class="background h-20  signupHeader navheaderPadding z-10">
     <div
-      class="flex items-center justify-end h-full max-w-screen-xl spartan mx-auto"
+      class="px-6 md:px-0 flex items-center justify-end h-full max-w-screen-xl spartan mx-auto"
     >
       <div class="flex items-center">
         <router-link class="text-white" to="/back-office"
