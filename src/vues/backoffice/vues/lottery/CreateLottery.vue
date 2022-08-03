@@ -132,10 +132,11 @@
               </div>
 
               <!-- -------Lottery Owner------- -->
-              <div class="w-full mb-6">
-                <label
-                  for="Lottery owner"
-                  class="
+              <div class="grid grid-cols-10 gap-4">
+                <div class="col-span-4">
+                  <span
+                    for="Lottery Sponsors"
+                    class="
                     spartan
                     font-medium
                     text-dark
@@ -144,20 +145,42 @@
                     font-medium
                     text-gray-700
                   "
-                  >Lottery owner</label
+                    >Lottery Sponsors</span
+                  >
+                </div>
+                <div class="col-span-4">
+                  <span
+                    for="Amount"
+                    class="
+                    spartan
+                    font-medium
+                    text-dark
+                    block
+                    text-sm
+                   
+                    text-gray-700
+                  "
+                    >Amount</span
+                  >
+                </div>
+                <div
+                  v-for="(input, index) in inputArray"
+                  :key="index"
+                  class="col-span-10 grid grid-cols-10 gap-4"
                 >
-                <div>
-                  <div class="mt-1 relative">
-                    <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
-                    <input
-                      v-model="lotteryOwner"
-                      @focus="ownerlistIsVisible = true"
-                      @blur="ownerlistIsVisible = false"
-                      required
-                      type="text"
-                      name="Lottery owner"
-                      id="lottery owner"
-                      class="
+                  <div class="col-span-4 mb-6 ">
+                    <div>
+                      <div class="mt-1 relative">
+                        <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
+                        <input
+                          v-model="input.sponsor"
+                          @focus="input.showOwners = true"
+                          @blur="input.showOwners = false"
+                          required
+                          type="text"
+                          name="Lottery owner"
+                          id="lottery owner"
+                          class="
                           spartan
                           h-12
                           bg-transparent
@@ -169,24 +192,16 @@
                           sm:text-sm
                           rounded-md
                         "
-                      placeholder="Search"
-                      autocomplete="off"
-                    />
-
-                    <!-- <span class="text-red-500 spartan">{{ errors[0] }}</span> -->
-                    <!-- <span
-                      v-if="lotteryOwner.length > 0 && owners.length === 0"
-                      class="text-red-500 spartan"
-                      >owner not found</span
-                    > -->
-                    <!-- </validation-provider> -->
-                  </div>
-                  <div
-                    class="relative bg-white z-20"
-                    v-if="owners.length > 0 && ownerlistIsVisible"
-                  >
-                    <ul
-                      class="
+                          placeholder="Search"
+                          autocomplete="off"
+                        />
+                      </div>
+                      <div
+                        class="relative bg-white z-20"
+                        v-if="owners.length > 0 && input.showOwners"
+                      >
+                        <ul
+                          class="
                         py-2
                         absolute
                         w-full
@@ -196,37 +211,37 @@
                         spartan
                         text-sm
                       "
-                    >
-                      <li
-                        class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                        @mousedown="selectOwner(owner)"
-                        v-for="(owner, index) in owners"
-                        :key="index"
-                      >
-                        {{ owner.name }}
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                        >
+                          <li
+                            class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
+                            @mousedown="selectOwner(owner, input)"
+                            v-for="(owner, index) in owners"
+                            :key="index"
+                          >
+                            {{ owner.name }}
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
 
-                <!-- -----v-if any owner is chosen------ -->
-                <div
-                  v-if="lottery.lotteryUserNames.length > 0"
-                  class="mt-1 relative"
-                >
-                  <div
-                    class="
+                    <!-- -----v-if any owner is chosen------ -->
+                    <div
+                      v-if="lottery.lotteryUserNames.length > 0"
+                      class="mt-1 relative"
+                    >
+                      <div
+                        class="
                       
                     
                       flex
                       flex-wrap
                     "
-                  >
-                    <div
-                      v-for="sponsor in lottery.lotteryUserNames"
-                      :key="sponsor.username"
-                      style="max-width: 11rem"
-                      class="
+                      >
+                        <div
+                          v-for="sponsor in lottery.lotteryUserNames"
+                          :key="sponsor.username"
+                          style="max-width: 11rem"
+                          class="
                        
                         flex
                         justify-center
@@ -238,294 +253,66 @@
                         mr-3
                         mb-2
                       "
-                    >
-                      <span class="spartan text-sm truncate">{{
-                        sponsor.name
-                      }}</span>
-
-                      <div @click="cancelOwner(sponsor)">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          class="ml-2 h-4 w-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
                         >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M6 18L18 6M6 6l12 12"
-                          />
-                        </svg>
+                          <span class="spartan text-sm truncate">{{
+                            sponsor.name
+                          }}</span>
+
+                          <div @click="cancelOwner(sponsor)">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="ml-2 h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-              <!-- -------Supported Campaigns------ -->
-
-              <div class="w-full mb-1 relative">
-                <label
-                  for="Supported Campaigns"
-                  class="
-                    spartan
-                    font-medium
-                    text-dark
-                    block
-                    text-sm text-gray-700
-                  "
-                  >Supported Campaigns (max {{ maxCampaigns }})</label
-                >
-                <div class="mt-1 relative">
-                  <validation-provider
-                    mode="aggressive"
-                    rules=""
-                    v-slot="{ errors }"
-                  >
-                    <input
-                      v-model="supportedCampaign"
-                      @focus="campaignListIsVisible = true"
-                      @blur="campaignListIsVisible = false"
-                      type="text"
-                      name="supported campaign"
-                      id="supported campaign"
-                      :class="{
-                        'border-red-400': errors.length > 0,
-                      }"
-                      class="
-                        spartan
-                        h-12
-                        bg-transparent
-                        border-gray-300 border-2
-                        pl-2
-                        focus:border-blue-500
-                        block
-                        w-full
-                        sm:text-sm
-                        rounded-md
-                      "
-                      style="padding-right: 65%"
-                      placeholder="campaign name"
-                      autocomplete="off"
-                    />
-                    <span class="text-red-500 spartan">{{ errors[0] }}</span>
-                  </validation-provider>
-                </div>
-                <div
-                  class="relative bg-white z-20"
-                  v-if="
-                    searchCampaignsNamesQuery.campaignData.length > 0 &&
-                      campaignListIsVisible
-                  "
-                >
-                  <ul
-                    class="
-                      py-2
-                      absolute
-                      w-full
-                      rounded-md
-                      shadow-md
-                      bg-white
-                      spartan
-                      text-sm
-                    "
-                  >
-                    <li
-                      class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                      @mousedown="selectCampaign(campaign)"
-                      v-for="campaign in searchCampaignsNamesQuery.campaignData"
-                      :key="campaign.id"
-                    >
-                      {{ campaign.name }}
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- -------chosenCampaigns------- -->
-                <div
-                  v-if="chosenCampaigns.length > 0"
-                  style="max-width: 65%"
-                  class="
-                    absolute
-                    right-0
-                    bottom-0
-                    h-12
-                    flex
-                    justify-end
-                    items-center
-                  "
-                >
-                  <div
-                    v-for="(chosenCampaign, index) in chosenCampaigns"
-                    :key="chosenCampaign.id"
-                    style="max-width: 7rem; width: 7rem"
-                    class="
-                      h-4/6
-                      cursor-pointer
-                      flex
-                      justify-start
-                      items-center
-                      rounded-lg
-                      bg-gray-300
-                      px-2
-                      mr-2.5
-                    "
-                  >
-                    <span class="spartan text-sm truncate">{{
-                      chosenCampaign.name
-                    }}</span>
-
-                    <div @click="cancelSupportedCampaign(index)">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="ml-2 h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M6 18L18 6M6 6l12 12"
-                        />
-                      </svg>
-                    </div>
-                    <!-- <span class=" spartan text-sm">{{
-                      chosenCampaign.name
-                    }}</span> -->
-                  </div>
-                </div>
-                <!-- ------------------- -->
-              </div>
-
-              <!-- ----------------- -->
-
-              <div class="w-full mb-6 mt-6">
-                <label
-                  for="Lottery File Uploads"
-                  class="
-                    spartan
-                    font-medium
-                    text-dark
-                    block
-                    text-sm
-                    font-medium
-                    text-gray-700
-                  "
-                  >Lottery file uploads</label
-                >
-                <div class="mt-1">
-                  <validation-provider rules="required" v-slot="{}">
-                    <div
-                      class="
-                        spartan
-                        h-12
-                        flex
-                        bg-transparent
-                        border border-solid
-                        rounded-md
-                      "
-                    >
+                  <div class="col-span-4">
+                    <div class="mt-1 relative">
+                      <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
                       <input
-                        readonly
-                        type="text"
-                        name="Lottery file uploads"
-                        id="Lottery file uploads"
+                        v-model="input.amount"
+                        required
+                        type="number"
+                        name="Amount"
+                        id="Amount"
                         class="
-                          h-full
-                          px-2
+                          spartan
+                          h-12
                           bg-transparent
-                          focus:ring-indigo-500 focus:border-indigo-500
+                          border-gray-300 border-2
+                          px-2
+                          focus:ring-indigo-500 focus:border-blue-500
                           block
                           w-full
                           sm:text-sm
-                          border-gray-300
-                        "
-                        placeholder="select files"
-                      />
-                      <div
-                        @click="chooseFiles"
-                        class="
-                          cursor-pointer
-                          bg-dark-blue
                           rounded-md
-                          flex
-                          items-center
-                          justify-center
-                          text-white
-                          w-36
-                          h-10
-                          my-auto
-                          mr-0.5
                         "
-                      >
-                        <span class="spartan text-sm">Upload</span>
-
-                        <input
-                          required
-                          autocomplete="off"
-                          multiple
-                          type="file"
-                          id="lottery_file"
-                          name="lottery_file"
-                          accept="image/png, image/jpeg, .pdf, .doc"
-                          placeholder="upload file"
-                          class="hidden"
-                          v-on:change="fileChanged"
-                        />
-                      </div>
+                        placeholder="Amount"
+                        autocomplete="off"
+                      />
                     </div>
-                  </validation-provider>
-                </div>
-                <div v-if="fileUploader.uploads.length > 0">
-                  <table
-                    role="presentation"
-                    class="table v-margin-medium table-striped"
+                  </div>
+                  <div
+                    @click="removeInput(index)"
+                    class="col-span-2 flex items-center justify-center"
                   >
-                    <tbody class="files">
-                      <tr
-                        v-for="fileUpload in fileUploader.uploads"
-                        :key="fileUpload.getFile().name"
-                      >
-                        <td class="col--4">
-                          <p>{{ fileUpload.getFile().name }}</p>
-                        </td>
-                        <td class="col--5">
-                          <br />
-                          <div
-                            v-if="fileUpload.getResource().loading"
-                            class="progress progress-striped active"
-                            role="progressbar"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            aria-valuenow="0"
-                          >
-                            <div
-                              class="progress-bar progress-bar-success"
-                              role="progressbar"
-                              aria-valuenow="45"
-                              aria-valuemin="0"
-                              aria-valuemax="100"
-                              style="width: 100%"
-                            ></div>
-                          </div>
-                        </td>
-                        <td class="col--3">
-                          <button
-                            data-toggle="button"
-                            class="pull-right btn btn-danger"
-                            @click="
-                              fileUploader.removeFile(fileUpload.getFile())
-                            "
-                          >
-                            <i class="fa fa-trash slight-bigger-text"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <span class="text-red-500">Delete</span>
+                  </div>
+                </div>
+                <div @click="addInput" class="mb-4 col-span-4">
+                  <span class="text-blue-500">Add Sponsor</span>
                 </div>
               </div>
             </div>
@@ -541,7 +328,7 @@
                 for="Cost per ticket"
                 class="
                   spartan
-                  font-medium
+                  
                   text-dark
                   block
                   text-sm
@@ -593,7 +380,7 @@
                 for="Number of winners"
                 class="
                   spartan
-                  font-medium
+                
                   text-dark
                   block
                   text-sm
@@ -640,6 +427,56 @@
 
             <!-- ---------- -->
 
+            <div class="w-full mb-6">
+              <label
+                for="Winners Earnings"
+                class="
+                  spartan
+                
+                  text-dark
+                  block
+                  text-sm
+                  font-medium
+                  text-gray-700
+                "
+                >Winners Earnings</label
+              >
+              <div class="mt-1">
+                <validation-provider
+                  rules="required|numeric"
+                  v-slot="{ errors }"
+                >
+                  <input
+                    v-model="lottery.winnersEarnings"
+                    required
+                    min="1"
+                    oninput="this.value = Math.abs(Math.round(this.value));"
+                    type="number"
+                    name="Winners Earnings"
+                    id="Winners Earnings"
+                    :class="{
+                      'border-red-400': errors.length > 0,
+                    }"
+                    class="
+                      spartan
+                      h-12
+                      bg-transparent
+                      border-gray-300 border-2
+                      px-2
+                      focus:ring-indigo-500 focus:border-blue-500
+                      block
+                      w-full
+                      sm:text-sm
+                      rounded-md
+                    "
+                    placeholder="25"
+                  />
+
+                  <span class="text-red-500 spartan">{{ errors[0] }}</span>
+                </validation-provider>
+              </div>
+            </div>
+
             <!-- ------End date of registration------ -->
 
             <div class="w-full mb-6">
@@ -651,7 +488,7 @@
                   text-dark
                   block
                   text-sm
-                  font-medium
+                 
                   text-gray-700
                 "
                 >End date of registration</label
@@ -701,7 +538,7 @@
                   for="Date of evaluation"
                   class="
                     spartan
-                    font-medium
+                   
                     text-dark
                     block
                     text-sm
@@ -754,7 +591,7 @@
                     text-dark
                     block
                     text-sm
-                    font-medium
+                   
                     text-gray-700
                   "
                   >Time of evaluation</label
@@ -805,7 +642,6 @@
               @click="createLottery"
               :disabled="
                 invalid ||
-                  fileUploader.uploads.length === 0 ||
                   saveLottery.loading ||
                   !dateCheck ||
                   checkFileLoading ||
@@ -814,7 +650,6 @@
               "
               :class="[
                 invalid ||
-                fileUploader.uploads.length === 0 ||
                 saveLottery.loading ||
                 !dateCheck ||
                 checkFileLoading ||
@@ -907,31 +742,6 @@ export default class CreateLottery extends BaseVue {
 
   // }
 
-  private searchCampaignsNamesQuery: any = {
-    // key: "",
-    campaignData: [],
-    page: 0,
-    size: 9,
-    error: "",
-  };
-
-  private get returnBoolean() {
-    Log.info(
-      "filesUploaded" + JSON.stringify(this.fileUploader.uploads.length === 0)
-    );
-    Log.info("loterry saving" + JSON.stringify(this.saveLottery.loading));
-    Log.info("fileLoading" + JSON.stringify(this.checkFileLoading));
-    if (
-      this.fileUploader.uploads.length === 0 ||
-      this.saveLottery.loading ||
-      this.checkFileLoading
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   private ownerlistIsVisible: boolean = false;
   private campaignListIsVisible: boolean = false;
   private lotteryOwner: any = "";
@@ -947,6 +757,7 @@ export default class CreateLottery extends BaseVue {
     description: "",
     ticketCost: "",
     numberOfWinners: "",
+    winnersEarnings: "",
     // lotteryOwner: "",
     lotteryUserNames: [],
     supportedCampaigns: this.chosenCampaigns,
@@ -954,6 +765,46 @@ export default class CreateLottery extends BaseVue {
     evaluationDate: "",
     evaluationTime: "",
   };
+
+  private inputArray = [
+    {
+      sponsor: "",
+      amount: "",
+
+      email: "",
+
+      owners: this.owners,
+      showOwners: false,
+    },
+  ];
+
+  private searchCampaignsNamesQuery: any = {
+    // key: "",
+    campaignData: [],
+    page: 0,
+    size: 9,
+    error: "",
+  };
+
+  private addInput() {
+    const obj = {
+      sponsor: "",
+      amount: "",
+      email: "",
+      owners: this.owners,
+      showOwners: false,
+    };
+
+    if (this.inputArray.length < 10) {
+      this.inputArray.unshift(obj);
+    }
+  }
+
+  private removeInput(index: any) {
+    if (this.inputArray.length > 1) {
+      this.inputArray.splice(index, 1);
+    }
+  }
 
   private get dateCheck() {
     return this.lottery.evaluationDate > this.lottery.endDate;
@@ -966,58 +817,34 @@ export default class CreateLottery extends BaseVue {
     return newD;
   }
 
-  private fileUploader: FileUploader = new FileUploader(
-    "/upload",
-    5,
-    Constants.defaultFileUploadExtensions,
-    Constants.defaultMaxFileUploadSize
-  );
-
-  private get checkFileLoading() {
-    const isTrue = (file: any) => file.getResource().loading === true;
-    const result = this.fileUploader.uploads.some(isTrue);
-    // Log.info(result);
-    return result;
-  }
-
-  public fileChanged(event: any) {
-    this.fileUploader.fileChange(event);
-    // this.$forceUpdate();
-  }
-
-  private chooseFiles() {
-    const showFilesToSelect: any = document.getElementById("lottery_file");
-    showFilesToSelect.click();
-  }
-
-  private populateOwnersArray() {
+  private populateOwnersArray(index: number) {
     let self = this;
 
-    if (!Util.isValidString(self.lotteryOwner)) {
+    if (!Util.isValidString(this.inputArray[index].sponsor)) {
       return;
     }
 
-    Util.throttle({
-      key: "lottery-owmer-search",
-      run: () => {
-        LotteryService.getLotteryOwner(
-          self.lotteryOwner,
+    // Util.throttle({
+    //   key: "lottery-owmer-search",
+    //   run: () => {
+    LotteryService.getLotteryOwner(
+      this.inputArray[index].sponsor,
 
-          (response: any) => {
-            Log.info(response.data._embedded.platformUsers);
-            const owners = response.data._embedded.platformUsers;
-            self.owners = owners.filter(
-              (sponsor: any) => !this.ownerIsSelected(sponsor)
-            );
-          },
-
-          (error: any) => {
-            Log.error("Logged Error: " + JSON.stringify(error));
-          }
+      (response: any) => {
+        Log.info(response.data._embedded.platformUsers);
+        const owners = response.data._embedded.platformUsers;
+        self.owners = owners.filter(
+          (sponsor: any) => !this.ownerIsSelected(sponsor)
         );
       },
-      time: 400,
-    });
+
+      (error: any) => {
+        Log.error("Logged Error: " + JSON.stringify(error));
+      }
+    );
+    //   },
+    //   time: 400,
+    // });
   }
 
   private selectOwner(owner: any) {
@@ -1035,7 +862,7 @@ export default class CreateLottery extends BaseVue {
   }
 
   private ownerIsSelected(owner: any) {
-    return this.lottery.lotteryUserNames.some(function(sponsor: any) {
+    return this.lottery.lotteryUserNames.some((sponsor: any) => {
       return sponsor.username === owner.username;
     });
   }
@@ -1044,7 +871,7 @@ export default class CreateLottery extends BaseVue {
     // this.lotteryOwner = "";
     // only keep objects in array where obj.field !== 'money'
     this.lottery.lotteryUserNames = this.lottery.lotteryUserNames.filter(
-      function(obj: any) {
+      (obj: any) => {
         return obj.username !== sponsor.username;
       }
     );
@@ -1091,7 +918,7 @@ export default class CreateLottery extends BaseVue {
     this.lottery.endDate = "";
     this.lottery.evaluationDate = "";
     this.lottery.evaluationTime = "";
-    this.fileUploader.uploads = [];
+
     this.chosenCampaigns = [];
     this.lotteryOwner = null;
 
@@ -1119,34 +946,31 @@ export default class CreateLottery extends BaseVue {
     Log.info(Util.removeLastChar(time, ":"));
 
     Log.info(time);
+
+    const sponsors = this.inputArray.reduce((accumulator, value, index) => {
+      return { ...accumulator, [value.sponsor]: value.amount };
+    }, {});
+    // this.inputArray.forEach(
+    //   (input: {sponsor: string, amount: string}) => (sponsors[sponsor] = input.amount)
+    // );
+
     let request = {
-      sponsorUsernames: [
-        ...this.lottery.lotteryUserNames.map(
-          (sponsor: any) => sponsor.username
-        ),
-      ],
+      // sponsorUsernames: [
+      //   ...this.lottery.lotteryUserNames.map(
+      //     (sponsor: any) => sponsor.username
+      //   ),
+      // ],
       lottery: {
         name: this.lottery.name,
         description: this.lottery.description,
         endDate: this.lottery.endDate,
+        evaluationTime: Util.removeLastChar(time, ":"),
+        sponsors: sponsors,
+
         ticketCost: this.lottery.ticketCost,
-        stageDescriptions: [
-          {
-            stage: "FIRST",
-            winnersCount: this.lottery.numberOfWinners,
-            evaluationTime: Util.removeLastChar(time, ":"),
-          },
-        ],
+        winnersCount: this.lottery.numberOfWinners,
+        winnersEarning: this.lottery.winnersEarnings,
       },
-      fileRefs: this.fileUploader.uploads.map((val) => val.getReference()),
-      beneficiaries: this.wallets.map((wallet: any) => {
-        const obj = {
-          wallet: {
-            id: wallet.id,
-          },
-        };
-        return obj;
-      }),
     };
     return request;
   }
@@ -1179,9 +1003,14 @@ export default class CreateLottery extends BaseVue {
     );
   }
 
-  @Watch("lotteryOwner")
+  @Watch("this.inputArray", { deep: true })
   private ownersFilter(newValue: string, oldValue: string) {
-    this.populateOwnersArray();
+    const index = this.inputArray.findIndex(
+      (input: any) => input.showOwners === true
+    );
+
+    Log.info("Index: " + JSON.stringify(index));
+    this.populateOwnersArray(index);
   }
 
   @Watch("supportedCampaign")
