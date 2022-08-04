@@ -142,7 +142,7 @@
                     text-dark
                     block
                     text-sm
-                    font-medium
+                    
                     text-gray-700
                   "
                     >Lottery Sponsors</span
@@ -174,8 +174,9 @@
                         <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
                         <input
                           v-model="input.sponsor"
-                          @focus="input.showOwners = true"
+                          @click="input.showOwners = true"
                           @blur="input.showOwners = false"
+                          @change="populateOwnersArray(index)"
                           required
                           type="text"
                           name="Lottery owner"
@@ -305,13 +306,17 @@
                     </div>
                   </div>
                   <div
+                    v-if="inputArray.length > 1"
                     @click="removeInput(index)"
-                    class="col-span-2 flex items-center justify-center"
+                    class="cursor-pointer col-span-2 flex items-center justify-center"
                   >
                     <span class="text-red-500">Delete</span>
                   </div>
                 </div>
-                <div @click="addInput" class="mb-4 col-span-4">
+                <div
+                  @click="addInput"
+                  class="mb-4 col-span-4 max-w-max cursor-pointer"
+                >
                   <span class="text-blue-500">Add Sponsor</span>
                 </div>
               </div>
@@ -644,17 +649,13 @@
                 invalid ||
                   saveLottery.loading ||
                   !dateCheck ||
-                  checkFileLoading ||
-                  lottery.lotteryUserNames.length === 0 ||
-                  chosenCampaigns.length === 0
+                  lottery.lotteryUserNames.length === 0
               "
               :class="[
                 invalid ||
                 saveLottery.loading ||
                 !dateCheck ||
-                checkFileLoading ||
-                lottery.lotteryUserNames.length === 0 ||
-                chosenCampaigns.length === 0
+                lottery.lotteryUserNames.length === 0
                   ? 'opacity-25'
                   : 'opacity-100',
               ]"
@@ -847,7 +848,14 @@ export default class CreateLottery extends BaseVue {
     // });
   }
 
-  private selectOwner(owner: any) {
+  private ownerIsSelected(owner: any) {
+    return this.lottery.lotteryUserNames.some((sponsor: any) => {
+      return sponsor.username === owner.username;
+    });
+  }
+
+  private selectOwner(owner: any, input: any) {
+    input.email = owner.email;
     const obj = {
       name: owner.name,
       username: owner.username,
@@ -859,12 +867,7 @@ export default class CreateLottery extends BaseVue {
     );
 
     Log.info("sponsors: " + JSON.stringify(this.lottery.lotteryUserNames));
-  }
-
-  private ownerIsSelected(owner: any) {
-    return this.lottery.lotteryUserNames.some((sponsor: any) => {
-      return sponsor.username === owner.username;
-    });
+    Log.info("inputs: " + JSON.stringify(this.inputArray));
   }
 
   private cancelOwner(sponsor: any) {
@@ -948,7 +951,7 @@ export default class CreateLottery extends BaseVue {
     Log.info(time);
 
     const sponsors = this.inputArray.reduce((accumulator, value, index) => {
-      return { ...accumulator, [value.sponsor]: value.amount };
+      return { ...accumulator, [value.email]: Number(value.amount) };
     }, {});
     // this.inputArray.forEach(
     //   (input: {sponsor: string, amount: string}) => (sponsors[sponsor] = input.amount)
@@ -967,9 +970,9 @@ export default class CreateLottery extends BaseVue {
         evaluationTime: Util.removeLastChar(time, ":"),
         sponsors: sponsors,
 
-        ticketCost: this.lottery.ticketCost,
-        winnersCount: this.lottery.numberOfWinners,
-        winnersEarning: this.lottery.winnersEarnings,
+        ticketCost: Number(this.lottery.ticketCost),
+        winnersCount: Number(this.lottery.numberOfWinners),
+        winnersEarning: Number(this.lottery.winnersEarnings),
       },
     };
     return request;
@@ -1003,15 +1006,15 @@ export default class CreateLottery extends BaseVue {
     );
   }
 
-  @Watch("this.inputArray", { deep: true })
-  private ownersFilter(newValue: string, oldValue: string) {
-    const index = this.inputArray.findIndex(
-      (input: any) => input.showOwners === true
-    );
+  // @Watch("this.inputArray", { deep: true })
+  // private ownersFilter(newValue: string, oldValue: string) {
+  //   const index = this.inputArray.findIndex(
+  //     (input: any) => input.showOwners === true
+  //   );
 
-    Log.info("Index: " + JSON.stringify(index));
-    this.populateOwnersArray(index);
-  }
+  //   Log.info("Index: " + JSON.stringify(index));
+  //   this.populateOwnersArray(index);
+  // }
 
   @Watch("supportedCampaign")
   private supportedCampaignFilter(newValue: string, oldValue: string) {
