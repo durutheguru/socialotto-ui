@@ -168,7 +168,7 @@
                   :key="index"
                   class="col-span-10 grid grid-cols-10 gap-4"
                 >
-                  <div class="col-span-4 mb-6 ">
+                  <div class="col-span-4  ">
                     <div>
                       <div class="mt-1 relative">
                         <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
@@ -176,8 +176,9 @@
                           v-model="input.sponsor"
                           @click="input.showOwners = true"
                           @blur="input.showOwners = false"
-                          @change="populateOwnersArray(index)"
+                          v-on:input="populateOwnersArray(index)"
                           required
+                          :disabled="input.name.length > 0"
                           type="text"
                           name="Lottery owner"
                           id="lottery owner"
@@ -196,6 +197,53 @@
                           placeholder="Search"
                           autocomplete="off"
                         />
+                        <div
+                          class=" absolute top-2 left-2"
+                          v-if="input.name.length > 0"
+                        >
+                          <div
+                            class="
+                      flex
+                      flex-wrap
+                    "
+                          >
+                            <div
+                              style="max-width: 11rem"
+                              class="
+                        flex
+                        justify-center
+                        items-center
+                        rounded-lg
+                        bg-gray-300
+                        px-2
+                        h-8
+                        mr-3
+                        mb-2
+                      "
+                            >
+                              <span class="spartan text-sm truncate">{{
+                                input.name
+                              }}</span>
+
+                              <!-- <div @click="cancelOwner(sponsor)">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="ml-2 h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"
+                              />
+                            </svg>
+                          </div> -->
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div
                         class="relative bg-white z-20"
@@ -222,60 +270,6 @@
                             {{ owner.name }}
                           </li>
                         </ul>
-                      </div>
-                    </div>
-
-                    <!-- -----v-if any owner is chosen------ -->
-                    <div
-                      v-if="lottery.lotteryUserNames.length > 0"
-                      class="mt-1 relative"
-                    >
-                      <div
-                        class="
-                      
-                    
-                      flex
-                      flex-wrap
-                    "
-                      >
-                        <div
-                          v-for="sponsor in lottery.lotteryUserNames"
-                          :key="sponsor.username"
-                          style="max-width: 11rem"
-                          class="
-                       
-                        flex
-                        justify-center
-                        items-center
-                        rounded-lg
-                        bg-gray-300
-                        px-2
-                        h-8
-                        mr-3
-                        mb-2
-                      "
-                        >
-                          <span class="spartan text-sm truncate">{{
-                            sponsor.name
-                          }}</span>
-
-                          <div @click="cancelOwner(sponsor)">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              class="ml-2 h-4 w-4"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                              />
-                            </svg>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -310,14 +304,14 @@
                     @click="removeInput(index)"
                     class="cursor-pointer col-span-2 flex items-center justify-center"
                   >
-                    <span class="text-red-500">Delete</span>
+                    <span class="text-red-500 fs-12">Delete</span>
                   </div>
                 </div>
                 <div
                   @click="addInput"
                   class="mb-4 col-span-4 max-w-max cursor-pointer"
                 >
-                  <span class="text-blue-500">Add Sponsor</span>
+                  <span class="text-blue-600">Add Sponsor</span>
                 </div>
               </div>
             </div>
@@ -328,7 +322,7 @@
         <div class="col-span-3">
           <div class="w-full sm:w-11/12">
             <!-- -----Cost per ticket---- -->
-            <div class="w-full mb-6">
+            <div class="w-fu">
               <label
                 for="Cost per ticket"
                 class="
@@ -771,9 +765,8 @@ export default class CreateLottery extends BaseVue {
     {
       sponsor: "",
       amount: "",
-
       email: "",
-
+      name: "",
       owners: this.owners,
       showOwners: false,
     },
@@ -792,6 +785,7 @@ export default class CreateLottery extends BaseVue {
       sponsor: "",
       amount: "",
       email: "",
+      name: "",
       owners: this.owners,
       showOwners: false,
     };
@@ -855,7 +849,9 @@ export default class CreateLottery extends BaseVue {
   }
 
   private selectOwner(owner: any, input: any) {
+    input.sponsor = "";
     input.email = owner.email;
+    input.name = owner.name;
     const obj = {
       name: owner.name,
       username: owner.username,
@@ -953,27 +949,17 @@ export default class CreateLottery extends BaseVue {
     const sponsors = this.inputArray.reduce((accumulator, value, index) => {
       return { ...accumulator, [value.email]: Number(value.amount) };
     }, {});
-    // this.inputArray.forEach(
-    //   (input: {sponsor: string, amount: string}) => (sponsors[sponsor] = input.amount)
-    // );
 
     let request = {
-      // sponsorUsernames: [
-      //   ...this.lottery.lotteryUserNames.map(
-      //     (sponsor: any) => sponsor.username
-      //   ),
-      // ],
-      lottery: {
-        name: this.lottery.name,
-        description: this.lottery.description,
-        endDate: this.lottery.endDate,
-        evaluationTime: Util.removeLastChar(time, ":"),
-        sponsors: sponsors,
+      name: this.lottery.name,
+      description: this.lottery.description,
+      endDate: this.lottery.endDate,
+      evaluationTime: Util.removeLastChar(time, ":"),
+      sponsors: sponsors,
 
-        ticketCost: Number(this.lottery.ticketCost),
-        winnersCount: Number(this.lottery.numberOfWinners),
-        winnersEarning: Number(this.lottery.winnersEarnings),
-      },
+      ticketCost: Number(this.lottery.ticketCost),
+      winnersCount: Number(this.lottery.numberOfWinners),
+      winnersEarning: Number(this.lottery.winnersEarnings),
     };
     return request;
   }
