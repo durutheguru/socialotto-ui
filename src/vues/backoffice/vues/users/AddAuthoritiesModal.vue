@@ -118,7 +118,7 @@
             <div class="w-full mb-6 mt-6">
               <label
                 for="Upload Supporting Documents"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
+                class="spartan font-medium text-dark block text-sm  text-gray-700"
                 >Upload Supporting Documents</label
               >
               <div class="mt-1">
@@ -292,6 +292,10 @@ export default class AddAuthoritiesModal extends Vue {
     {
       name: "can create campaign",
       value: "CAN_CREATE_CAMPAIGN",
+    },
+    {
+      name: "can sponsor lottery",
+      value: "CAN_SPONSOR_LOTTERY",
     },
   ];
 
