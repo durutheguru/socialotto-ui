@@ -955,7 +955,7 @@ export default class CreateLottery extends BaseVue {
       description: this.lottery.description,
       endDate: this.lottery.endDate,
       evaluationTime: Util.removeLastChar(time, ":"),
-      sponsors: sponsors,
+      sponsors,
 
       ticketCost: Number(this.lottery.ticketCost),
       winnersCount: Number(this.lottery.numberOfWinners),
