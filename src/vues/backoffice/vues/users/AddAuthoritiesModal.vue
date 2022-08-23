@@ -19,214 +19,229 @@
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen"></span
         >&#8203;
         <section
-          class="main spartan  inline-block py-8 px-4 bg-white align-bottom rounded-lg shadow-xs text-left overflow-hidden transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
+          class="main spartan   inline-block py-8  bg-white align-bottom rounded-lg shadow-xs text-left transform transition-all max-w-lg mx-auto sm:my-8 sm:align-middle sm:w-full"
         >
-          <div class="w-full h-full flex justify-between items-center mb-16">
-            <span class="fw-600 fs-20 " style="color: #4691A6"
-              >Add Authorities</span
+          <div
+            style="max-height: 500px;"
+            class=" px-4 h-full w-full overflow-y-auto"
+          >
+            <div class="w-full h-full flex justify-between items-center mb-16">
+              <span class="fw-600 fs-20 " style="color: #4691A6"
+                >Add Authorities</span
+              >
+              <div @click="close" class="cursor-pointer">
+                <svg
+                  width="32"
+                  height="32"
+                  viewBox="0 0 32 32"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M15.9998 29.3337C23.3636 29.3337 29.3332 23.3641 29.3332 16.0003C29.3332 8.63653 23.3636 2.66699 15.9998 2.66699C8.63604 2.66699 2.6665 8.63653 2.6665 16.0003C2.6665 23.3641 8.63604 29.3337 15.9998 29.3337Z"
+                    stroke="#898989"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M20 12L12 20"
+                    stroke="#898989"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M12 12L20 20"
+                    stroke="#898989"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div v-if="showNGOForm === true" class="w-full">
+              <NGOForm @close="close" @mainForm="showMainForm" />
+            </div>
+            <div
+              v-else-if="showNGOForm === false"
+              class="w-full flex flex-col gap-6"
             >
-            <div @click="close" class="cursor-pointer">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M15.9998 29.3337C23.3636 29.3337 29.3332 23.3641 29.3332 16.0003C29.3332 8.63653 23.3636 2.66699 15.9998 2.66699C8.63604 2.66699 2.6665 8.63653 2.6665 16.0003C2.6665 23.3641 8.63604 29.3337 15.9998 29.3337Z"
-                  stroke="#898989"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M20 12L12 20"
-                  stroke="#898989"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M12 12L20 20"
-                  stroke="#898989"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-          </div>
-          <div class="w-full flex flex-col">
-            <div class="w-full mb-6 mt-6">
-              <label
-                for="Upload Supporting Documents"
-                class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
-                >Add a permission</label
-              >
-              <div class="mt-1">
-                <div
-                  class="spartan h-12 relative flex bg-transparent border border-solid rounded-md"
+              <div class="w-full  mt-6">
+                <label
+                  for="Add Permission"
+                  class="spartan font-medium text-dark block text-sm  text-gray-700"
+                  >Add a permission</label
                 >
-                  <input
-                    readonly
-                    v-model="authority.name"
-                    type="text"
-                    name="Authority"
-                    id="Authority"
-                    class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
-                    placeholder="select authority"
-                  />
-
-                  <div @click="toggle" class="inset-y-0 my-auto mr-3">
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M6 9L12 15L18 9"
-                        stroke="black"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-                <div class="relative bg-white z-20" v-if="openMenu">
-                  <ul
-                    class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
-                  >
-                    <li
-                      class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
-                      @mousedown="selectAuthority(authority)"
-                      v-for="(authority, index) in authorities"
-                      :key="index"
-                    >
-                      {{ authority.name }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- ------------------ -->
-
-            <!-- --------------------- -->
-            <div class="w-full mb-6 mt-6">
-              <label
-                for="Upload Supporting Documents"
-                class="spartan font-medium text-dark block text-sm  text-gray-700"
-                >Upload Supporting Documents</label
-              >
-              <div class="mt-1">
-                <div
-                  class="spartan h-12 flex bg-transparent border border-solid rounded-md"
-                >
-                  <input
-                    readonly
-                    type="text"
-                    name="Authority file uploads"
-                    id="Authority file uploads"
-                    class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
-                    placeholder="select files"
-                  />
+                <div class="mt-1">
                   <div
-                    @click="chooseFiles"
-                    class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-40 h-9 my-auto mr-0.5"
+                    @click="toggle"
+                    class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
                   >
-                    <span class="spartan text-sm">Upload</span>
-
                     <input
-                      required
-                      autocomplete="off"
-                      multiple
-                      type="file"
-                      id="supportDocuments"
-                      name="supportDocuments"
-                      accept="image/png, image/jpeg, .pdf, .doc"
-                      placeholder="upload file"
-                      class="hidden"
-                      v-on:change="fileChanged"
+                      readonly
+                      v-model="authority.name"
+                      type="text"
+                      name="Authority"
+                      id="Authority"
+                      class="h-full px-2 bg-transparent focus:ring-indigo-500  focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                      placeholder="select authority"
                     />
+
+                    <div class="inset-y-0 my-auto mr-3">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 9L12 15L18 9"
+                          stroke="black"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div class="relative bg-white z-20" v-if="openMenu">
+                    <ul
+                      class="py-2 absolute w-full rounded-md shadow-md bg-white spartan text-sm"
+                    >
+                      <li
+                        class="cursor-pointer hover:bg-gray-50 py-1.5 px-2"
+                        @mousedown="selectAuthority(authority)"
+                        v-for="(authority, index) in authorities"
+                        :key="index"
+                      >
+                        {{ authority.name }}
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div v-if="fileUploader.uploads.length > 0">
-                <table
-                  role="presentation"
-                  class="table v-margin-medium table-striped"
+              <!-- ------------------ -->
+
+              <!-- --------------------- -->
+              <div class="w-full mb-6 ">
+                <label
+                  for="Upload Supporting Documents"
+                  class="spartan font-medium text-dark block text-sm  text-gray-700"
+                  >Upload Supporting Documents</label
                 >
-                  <tbody class="files">
-                    <tr
-                      v-for="fileUpload in fileUploader.uploads"
-                      :key="fileUpload.getFile().name"
+                <div class="mt-1">
+                  <div
+                    class="spartan h-12 flex bg-transparent border-2 border-solid rounded-md"
+                  >
+                    <input
+                      readonly
+                      type="text"
+                      name="Authority file uploads"
+                      id="Authority file uploads"
+                      class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
+                      placeholder="select files"
+                    />
+                    <div
+                      @click="chooseFiles"
+                      class="cursor-pointer bg-dark-blue rounded-md flex items-center justify-center text-white w-40 h-9 my-auto mr-0.5"
                     >
-                      <td class="col--6 ">
-                        <p class="mb-0">{{ fileUpload.getFile().name }}</p>
-                      </td>
-                      <td class="col--3">
-                        <br />
-                        <div
-                          v-if="fileUpload.getResource().loading"
-                          class="progress progress-striped active"
-                          role="progressbar"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                          aria-valuenow="0"
-                        >
+                      <span class="spartan text-sm">Upload</span>
+
+                      <input
+                        required
+                        autocomplete="off"
+                        multiple
+                        type="file"
+                        id="supportDocuments"
+                        name="supportDocuments"
+                        accept="image/png, image/jpeg, .pdf, .doc"
+                        placeholder="upload file"
+                        class="hidden"
+                        v-on:change="fileChanged"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div v-if="fileUploader.uploads.length > 0">
+                  <table
+                    role="presentation"
+                    class="table v-margin-medium table-striped"
+                  >
+                    <tbody class="files">
+                      <tr
+                        v-for="fileUpload in fileUploader.uploads"
+                        :key="fileUpload.getFile().name"
+                      >
+                        <td class="col--6 ">
+                          <p class="mb-0">{{ fileUpload.getFile().name }}</p>
+                        </td>
+                        <td class="col--3">
+                          <br />
                           <div
-                            class="progress-bar progress-bar-success"
+                            v-if="fileUpload.getResource().loading"
+                            class="progress progress-striped active"
                             role="progressbar"
-                            aria-valuenow="45"
                             aria-valuemin="0"
                             aria-valuemax="100"
-                            style="width:100%"
-                          ></div>
-                        </div>
-                      </td>
-                      <td class="col--3">
-                        <button
-                          data-toggle="button"
-                          class="pull-right btn btn-danger"
-                          @click="fileUploader.removeFile(fileUpload.getFile())"
-                        >
-                          <i class="fa fa-trash slight-bigger-text"></i>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                            aria-valuenow="0"
+                          >
+                            <div
+                              class="progress-bar progress-bar-success"
+                              role="progressbar"
+                              aria-valuenow="45"
+                              aria-valuemin="0"
+                              aria-valuemax="100"
+                              style="width:100%"
+                            ></div>
+                          </div>
+                        </td>
+                        <td class="col--3">
+                          <button
+                            data-toggle="button"
+                            class="pull-right btn btn-danger"
+                            @click="
+                              fileUploader.removeFile(fileUpload.getFile())
+                            "
+                          >
+                            <i class="fa fa-trash slight-bigger-text"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
 
-            <div class="grid grid-cols-2 gap-4">
-              <div
-                @click="close"
-                style="color: #4691A6; border: 1px solid #4691A6;"
-                class="flex w-full rounded-md py-2.5 cursor-pointer justify-center items-center"
-              >
-                Cancel
+              <div class="grid grid-cols-2 gap-4">
+                <div
+                  @click="close"
+                  style="color: #4691A6; border: 1px solid #4691A6;"
+                  class="flex w-full rounded-md py-2.5 cursor-pointer justify-center items-center"
+                >
+                  Cancel
+                </div>
+                <button
+                  :disabled="
+                    fileUploader.uploads.length === 0 || authority.value === ''
+                  "
+                  :class="[
+                    fileUploader.uploads.length === 0 || authority.value === ''
+                      ? 'opacity-25'
+                      : 'opacity-100',
+                  ]"
+                  @click="saveAuthority"
+                  style="background-color: #4691A6;"
+                  class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
+                >
+                  Save
+                </button>
               </div>
-              <button
-                :disabled="
-                  fileUploader.uploads.length === 0 || authority.value === ''
-                "
-                :class="[
-                  fileUploader.uploads.length === 0 || authority.value === ''
-                    ? 'opacity-25'
-                    : 'opacity-100',
-                ]"
-                @click="saveAuthority"
-                style="background-color: #4691A6;"
-                class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
-              >
-                Save
-              </button>
+              <!-- ------------------- -->
             </div>
-            <!-- ------------------- -->
           </div>
         </section>
       </div>
@@ -235,6 +250,7 @@
 </template>
 
 <script lang="ts">
+import NGOForm from "./NGOForm.vue";
 import { Component, Vue, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
 import UsersService from "@/services/users/usersService";
@@ -259,6 +275,7 @@ import FileUploader from "@/components/file-uploader/FileUploader";
     // ListboxLabel,
     // ListboxOption,
     // ListboxOptions,
+    NGOForm,
   },
 })
 export default class AddAuthoritiesModal extends Vue {
@@ -274,6 +291,11 @@ export default class AddAuthoritiesModal extends Vue {
   );
 
   private openMenu = false;
+  private showNGOForm = false;
+
+  private showMainForm() {
+    this.showNGOForm = false;
+  }
 
   private toggle() {
     this.openMenu = !this.openMenu;
@@ -297,6 +319,11 @@ export default class AddAuthoritiesModal extends Vue {
       name: "can sponsor lottery",
       value: "CAN_SPONSOR_LOTTERY",
     },
+
+    {
+      name: "enable as NGO",
+      value: "ENABLE_AS_NGO",
+    },
   ];
 
   public fileChanged(event: any) {
@@ -310,6 +337,11 @@ export default class AddAuthoritiesModal extends Vue {
   }
 
   private selectAuthority(auth: any) {
+    if (auth.value === "ENABLE_AS_NGO") {
+      this.showNGOForm = true;
+
+      return;
+    }
     this.authority = auth;
     this.openMenu = false;
 
@@ -362,6 +394,7 @@ export default class AddAuthoritiesModal extends Vue {
       );
     }
     this.$emit("close");
+    this.showNGOForm = false;
   }
 }
 </script>
