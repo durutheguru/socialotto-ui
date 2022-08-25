@@ -3,7 +3,7 @@
     <div class="max-w-screen-xl mx-auto pt-5 md:pt-20 sm:w-11/12 px-6 md:px-0">
       <div class="pb-14">
         <h1
-          class="spartan font-semibold flex justify-center md:justify-start text-2xl text-black"
+          class="spartan text-center font-semibold flex justify-center md:justify-start text-2xl text-black"
         >
           {{ heading }}
         </h1>
@@ -105,6 +105,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
         return {
           searchKey: this.siteQuery.key,
           page: this.siteQuery.page,
+          status: "ACTIVE",
           size: this.siteQuery.sizeLottery,
         };
       },
@@ -128,6 +129,7 @@ import CardSkeleton from "@/components/skeletons/CardSkeleton.vue";
       variables() {
         return {
           searchKey: this.siteQuery.key,
+          status: "ACTIVE",
           page: this.siteQuery.page,
           size: this.siteQuery.sizeCampaign,
         };

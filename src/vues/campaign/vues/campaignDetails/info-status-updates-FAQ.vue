@@ -7,7 +7,7 @@
             <InfoStatusUpdatesSkeleton />
           </div>
           <div class="col-span-6 md:col-span-2 relative mt-20 lg:mt-0">
-            <FAQSkeleton />
+            <!-- <FAQSkeleton /> -->
           </div>
         </div>
 
@@ -20,7 +20,7 @@
             />
           </div>
           <div class="col-span-6 md:col-span-2  mt-20 lg:mt-0">
-            <FAQ />
+            <!-- <FAQ /> -->
           </div>
         </div>
       </div>

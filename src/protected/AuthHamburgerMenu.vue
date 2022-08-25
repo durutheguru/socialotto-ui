@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="dropAuthMenu"
-    class="h-full w-full bg-gray-50 fixed top-0 left-0 z-20"
+    class="h-full hamburgerDisplay w-full bg-gray-50 fixed top-0 left-0 z-20"
   >
     <div class=" mb-20 h-full  flex flex-col py-6">
       <div class=" flex flex-row justify-between px-6 py-6 mb-2">
@@ -50,7 +50,7 @@
       </router-link>
 
       <router-link
-        :to="'/profile'"
+        :to="'/user/profile'"
         class="text-gray-500"
         exact
         active-class=" no-underline"
@@ -74,7 +74,13 @@
         </div>
       </router-link>
 
-      <router-link
+      <div class="px-6 py-6 " @click="openLogoutModal">
+        <span class="text-2xl sm:text-3xl hamburgerLink no-underline"
+          >Logout</span
+        >
+      </div>
+
+      <!-- <router-link
         :to="'/about'"
         class="text-gray-500"
         exact
@@ -107,7 +113,7 @@
         <div class="px-6 py-6 " @click="close">
           <span class="text-2xl sm:text-3xl hamburgerLink ">Contact us</span>
         </div>
-      </router-link>
+      </router-link> -->
 
       <div class="fixed bottom-0 w-full p-6">
         <div
@@ -145,6 +151,11 @@ export default class AuthHamburgerMenu extends Vue {
 
   private close() {
     store.commit("setDropAuthMenu", false);
+  }
+
+  private openLogoutModal() {
+    store.commit("setOpenLogout", true);
+    this.close();
   }
 }
 </script>

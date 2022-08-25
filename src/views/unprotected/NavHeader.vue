@@ -1,17 +1,22 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper wv100">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
-    <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
+    <div
+      v-if="!isLoggedIn"
+      class="signupHeader navheaderPadding z-10 bg-blue-50 "
+    >
       <div
-        class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
+        class="px-6 md:px-0  innerHeaderDiv mx-auto flex flex-row justify-between  max-w-screen-xl h-full sm:w-11/12"
       >
-        <router-link
-          class="signupLogo cursor-pointer my-auto no-underline"
-          :to="'/home'"
-        >
-          <span class="">Socialotto</span>
-        </router-link>
-        <div class="menuIcon my-auto" @click="dropMenu">
+        <div class="flex items-center ">
+          <router-link
+            class="signupLogo  cursor-pointer my-auto no-underline"
+            :to="'/'"
+          >
+            Socialotto
+          </router-link>
+        </div>
+        <div class="menuIcon my-auto mr-auto" @click="dropMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -51,14 +56,16 @@
               >Sign up</router-link
             >
           </div>
-          <div
-            class="spartan customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
+          <button
+            @click="$router.push('/home')"
+            class="cursor-pointer spartan customButton whitespace-nowrap items-center justify-center px-4 py-2 text-white"
           >
             Support a campaign
-          </div>
+          </button>
         </div>
       </div>
     </div>
+    <AuthNavHeader v-else />
     <!-- </div> -->
     <hamburger-menu />
     <router-view></router-view>
@@ -70,6 +77,7 @@ import { Log, Util } from "@/components/util";
 // import { computed } from "vue";
 import BaseVue from "@/components/BaseVue";
 import { Component } from "vue-property-decorator";
+import AuthNavHeader from "@/protected/AuthNavHeader.vue";
 import ApiResource from "@/components/core/ApiResource";
 import store from "../../store/index";
 import HamburgerMenu from "./HamburgerMenu.vue";
@@ -82,11 +90,16 @@ import HamburgerMenu from "./HamburgerMenu.vue";
   name: "NavHeader",
   components: {
     HamburgerMenu,
+    AuthNavHeader,
   },
 })
 export default class NavHeader extends BaseVue {
   private get pageName(): string {
     return String(this.$route.name);
+  }
+
+  private get isLoggedIn(): boolean {
+    return store.getters["authToken/loggedIn"];
   }
 
   private mounted() {
@@ -97,6 +110,13 @@ export default class NavHeader extends BaseVue {
     store.commit("setDropMenu", true);
     // Log.info("dropMenu: " + );
   }
+
+  // private get authenticated() {
+  //   const authenticate = async() => {
+  //     return await store.dispatch("authToken/authenticate");
+  //   }
+  //   return authenticate
+  // }
 }
 </script>
 
@@ -113,86 +133,17 @@ export default class NavHeader extends BaseVue {
   z-index: 1;
 }
 
-.customButton {
+/* .customButton {
   background: #4691a6;
   border-radius: 8px;
   height: 40px;
-}
-
-.signupLogo {
-  position: relative;
-  width: 175px;
-  height: 40px;
-  /* left: 10%;
-  top: 22px; */
-
-  font-family: "Spartan", sans-serif;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 40px;
-  line-height: 100%;
-
-  letter-spacing: -0.14em;
-
-  color: #4691a6;
-}
+} */
 
 a {
-  height: 14px;
+  /* height: 14px; */
   /* margin: auto 0; */
 
   color: #767676;
-}
-
-.menuIcon {
-  display: none;
-  width: 24px;
-  height: 24px;
-  color: #4691a6;
-}
-
-.signupMain {
-  position: relative;
-
-  /* width: 520px; */
-  /* height: 720px; */
-  /* left: 460px; */
-  /* margin: 0 auto 0; */
-  /* top: 84px; */
-  border: 2px solid #2c5662;
-  /* box-sizing: border-box; */
-  border-radius: 8px;
-  /* padding: 0 60px; */
-  /* display: flex; */
-  /* align-items: center;
-  flex-direction: column; */
-  /* z-index: -1; */
-}
-
-.anchorDIv {
-  width: 60%;
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media only screen and (max-width: 768px) {
-  .anchorDIv {
-    display: none;
-  }
-  /* .innerHeaderDiv { */
-  /* padding-left: 2.5rem;
-    padding-right: 2.5rem; */
-  /* padding-left: 5px;
-    padding-right: 5px; */
-  /* } */
-
-  .signupLogo {
-    display: none;
-  }
-
-  .menuIcon {
-    display: flex;
-  }
 }
 
 .mainHeader {

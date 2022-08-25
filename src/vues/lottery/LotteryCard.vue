@@ -2,7 +2,8 @@
   <!-- :style="{ backgroundImage: `url(${post.imageUrl})` }" -->
 
   <div
-    class="h-full bg-cover bg-center"
+    @click="showLotteryDetails(result)"
+    class="h-full bg-cover bg-center cursor-pointer cardBoxShadow"
     :style="{
       'background-image':
         'url(' + util.searchImageUrl(result.lotteryFiles) + ')',
@@ -19,7 +20,7 @@
       >
         <div class="mb-auto flex justify-end relative">
           <div
-            class="cursor-pointer lotteryBtn rounded-lg flex justify-center items-center"
+            class="cursor-pointer lotteryBadge rounded-lg flex justify-center items-center"
           >
             <span class="spartan text-sm ">Lottery</span>
           </div>
@@ -34,7 +35,7 @@
             </p>
           </div>
         </div>
-        <div class="mt-0 flex items-center spartan">
+        <div class="mt-0 hidden flex items-center spartan">
           <div
             class="cursor-pointer spartan h-11 w-full buyLotteryBtn flex justify-center items-center active:translate-y-2"
           >
@@ -46,7 +47,7 @@
           <div
             class=" spartan cursor-pointer h-6 w-20 flex justify-center items-center"
           >
-            <div @click="showLotteryDetails(result)"><span>Details</span></div>
+            <div><span>Details</span></div>
           </div>
         </div>
       </div>

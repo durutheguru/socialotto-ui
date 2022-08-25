@@ -33,11 +33,15 @@
           <div class="col-span-6 lg:col-span-2 lg:col-start-4 mt-20 lg:mt-0">
             <LotteryPayNShareSkeleton v-if="lotteryDetails.loading" />
             <LotteryPayNShare
+              :lotteryStatus="lotteryDetails.data.lotteryStatus"
               :ticketCost="lotteryDetails.data.ticketCost"
               :numberOfWinners="lotteryDetails.data.expectedWinnerCount"
               :numberOfEntries="lotteryDetails.data.numberOfEntries"
               :closureDate="lotteryDetails.data.endDate"
               :lotteryOwner="lotteryDetails.data.lotteryOwner.name"
+              :evaluationTime="
+                lotteryDetails.data.stageDescriptions[0].evaluationTime
+              "
               v-else-if="isDataReceived"
             />
           </div>
@@ -55,8 +59,8 @@
       heading="Similar campaigns and lotteries"
       :loading="campaignDetails.loading"
     /> -->
-    <Incentives />
-    <Footer />
+    <Incentives v-if="!isBackOfficeUser" />
+    <Footer v-if="!isBackOfficeUser" />
   </div>
 </template>
 
@@ -72,6 +76,7 @@ import LotteryInfoNFAQ from "./LotteryInfoNFAQ.vue";
 import LotteryDetailsCarousel from "./LotteryDetailsCarousel.vue";
 import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSkeleton.vue";
 // import LotteryDetailComponent from './LotteryDetailComponent';
+import BaseVue from "@/components/BaseVue";
 
 @Component({
   name: "LotteryDetails",
@@ -84,7 +89,7 @@ import LotteryPayNShareSkeleton from "@/components/skeletons/LotteryPayNShareSke
     LotteryPayNShareSkeleton,
   },
 })
-export default class LotteryDetails extends Vue {
+export default class LotteryDetails extends BaseVue {
   private lotteryDetails: ApiResource = ApiResource.create();
 
   get lotteryDetailsId() {
@@ -121,6 +126,9 @@ export default class LotteryDetails extends Vue {
       (error: any) => {
         self.lotteryDetails.loading = false;
         Log.error("lotteryDetails Error: " + JSON.stringify(error));
+        if (error.response.status === 404 || error.response.status === 400) {
+          this.$router.push("/404");
+        }
       }
     );
   }

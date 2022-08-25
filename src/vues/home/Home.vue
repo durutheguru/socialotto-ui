@@ -77,6 +77,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
           searchKey: this.siteQuery.key,
           page: this.siteQuery.page,
           size: this.siteQuery.size,
+          status: "ACTIVE",
         };
       },
 
@@ -99,6 +100,7 @@ import CardSkeleton from "../../components/skeletons/CardSkeleton.vue";
       variables() {
         return {
           searchKey: this.siteQuery.key,
+          status: "ACTIVE",
           page: this.siteQuery.page,
           size: this.siteQuery.size,
         };

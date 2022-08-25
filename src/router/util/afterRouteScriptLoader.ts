@@ -4,7 +4,7 @@ import { Log } from '@/components/util';
 
 import './include/jsFileLoader';
 import './include/cssFileLoader';
-import './include/background';
+// import './include/background';
 
 
 export default function(to: Route, from: Route) {
