@@ -11,6 +11,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
+            v-model="model.firstName"
             type="text"
             name="Authority"
             id="Authority"
@@ -32,6 +33,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
+            v-model="model.lastName"
             type="text"
             name="Authority"
             id="Authority"
@@ -54,6 +56,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
+            v-model="model.phone"
             type="text"
             name="Authority"
             id="Authority"
@@ -75,27 +78,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
-            type="text"
-            name="Authority"
-            id="Authority"
-            class="h-full px-2 bg-transparent focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 "
-            placeholder=""
-          />
-        </div>
-      </div>
-    </div>
-
-    <div class="w-full  col-span-2">
-      <label
-        for="Email"
-        class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
-        >Email</label
-      >
-      <div class="mt-1">
-        <div
-          class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
-        >
-          <input
+            v-model="model.email"
             type="text"
             name="Authority"
             id="Authority"
@@ -117,6 +100,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
+            v-model="model.nationalIdNumber"
             type="text"
             name="Authority"
             id="Authority"
@@ -127,7 +111,7 @@
       </div>
     </div>
 
-    <InputUpload documentName="National ID Photo" />
+    <InputUpload @uploaded="setModel" documentName="National ID Photo" />
   </div>
 </template>
 
@@ -138,8 +122,20 @@ import InputUpload from "./InputUpload.vue";
   components: {
     InputUpload,
   },
+  props: {
+    model: Object,
+    contact: String,
+  },
 })
-export default class NGOContactsForm extends Vue {}
+export default class NGOContactsForm extends Vue {
+  private setModel(fileRef: string) {
+    const obj = {
+      contact: this.$props.contact,
+      fileRef: fileRef,
+    };
+    this.$emit("uploaded", obj);
+  }
+}
 </script>
 
 <style scoped></style>

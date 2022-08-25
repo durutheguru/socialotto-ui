@@ -77,6 +77,7 @@
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
         >
           <input
+            v-model="ngoDetails.website"
             type="text"
             name="Authority"
             id="Authority"
@@ -88,10 +89,18 @@
     </div>
 
     <div class="fs-15 fw-700 ">Primary Contact</div>
-    <NGOContactsForm />
+    <NGOContactsForm
+      :model="primaryContact"
+      contact="primaryContact"
+      @uploaded="setContactIdRef"
+    />
 
     <div class="fs-15 fw-700 ">Secondary Contact</div>
-    <NGOContactsForm />
+    <NGOContactsForm
+      :model="secondaryContact"
+      contact="secondaryContact"
+      @uploaded="setContactIdRef"
+    />
 
     <div class="h-px w-full bg-gray-300 my-4"></div>
     <!-- --------------------- -->
@@ -125,7 +134,7 @@
 
 <script lang="ts">
 import NGOContactsForm from "./NGOContactsForm.vue";
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
 import InputUpload from "./InputUpload.vue";
 @Component({
@@ -141,9 +150,55 @@ export default class extends Vue {
     Log.info("Save NGO");
   }
 
+  private ngoDetails = {
+    username: "",
+    website: "",
+    ngoReferenceUpload: "",
+    ngoRefererCacDocument: "",
+    cacDocument: "",
+    ngoAgreementContract: "",
+  };
+
+  private primaryContact = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    nationalIdNumber: "",
+    nationalIdPhoto: "",
+  };
+
+  private secondaryContact = {
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    nationalIdNumber: "",
+    nationalIdPhoto: "",
+  };
+
   private close() {
     this.$emit("close");
   }
+
+  private setContactIdRef(docDetails: any) {
+    if (docDetails.contact === "primaryContact") {
+      this.primaryContact.nationalIdPhoto = docDetails.fileRef;
+    } else if (docDetails.contact === "secondaryContact") {
+      this.secondaryContact.nationalIdPhoto = docDetails.fileRef;
+    }
+  }
+
+  @Watch("primaryContact", { deep: true })
+  private monitor(newValue: any, oldValue: any) {
+    Log.info(`ids: ${newValue.nationalIdPhoto} to ${oldValue.nationalIdPhoto}`);
+  }
+
+  //  @Watch("ngoDetails", { deep: true })
+  // private ngoDetailsMonitor(newValue: string, oldValue: string) {
+  //   Log.info(`ids: ${newValue} to ${oldValue}`);
+
+  // }
 }
 </script>
 

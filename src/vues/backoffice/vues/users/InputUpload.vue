@@ -85,22 +85,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import FileUploader from "@/components/file-uploader/FileUploader";
 import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   props: {
     documentName: String,
+    // model: String,
   },
 })
-export default class extends Vue {
+export default class InputUpload extends Vue {
   private fileUploader: FileUploader = new FileUploader(
     "/upload",
-    5,
+    10,
     Constants.defaultFileUploadExtensions,
     Constants.defaultMaxFileUploadSize
   );
+
+  private uploadRef = this.fileUploader.uploads[0];
 
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);
@@ -111,9 +114,22 @@ export default class extends Vue {
     const showFilesToSelect: any = document.getElementById("supportDocuments");
     showFilesToSelect.click();
   }
+
+  @Watch("fileUploader", { deep: true })
+  private monitor(newValue: any, oldValue: any) {
+    if (newValue.uploads[0].uploadReference) {
+      Log.info(newValue.uploads[0].uploadReference);
+      this.$props.model = newValue.uploads[0].uploadReference;
+      this.$emit("uploaded", newValue.uploads[0].uploadReference);
+      // Log.info(
+      //   JSON.stringify({
+      //     property: this.$props.model,
+      //     fileRef: newValue.uploads[0].uploadReference,
+      //   })
+      // );
+    }
+  }
 }
 </script>
-
-private fileUploader: FileUploader = new FileUploader(
 
 <style scoped></style>
