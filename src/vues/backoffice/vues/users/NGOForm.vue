@@ -105,12 +105,28 @@
     <div class="h-px w-full bg-gray-300 my-4"></div>
     <!-- --------------------- -->
 
-    <InputUpload documentName="CAC Document" />
-    <InputUpload documentName="Agreement Contract" />
+    <InputUpload
+      documentName="CAC Document"
+      field="cacDocument"
+      @uploaded="setModel"
+    />
+    <InputUpload
+      documentName="Agreement Contract"
+      field="ngoAgreementContract"
+      @uploaded="setModel"
+    />
 
-    <InputUpload documentName="Referee CAC Document" />
+    <InputUpload
+      documentName="Referee CAC Document"
+      field="ngoRefererCacDocument"
+      @uploaded="setModel"
+    />
 
-    <InputUpload documentName="Reference Upload" />
+    <InputUpload
+      documentName="Reference Upload"
+      field="ngoReferenceUpload"
+      @uploaded="setModel"
+    />
 
     <div class="grid grid-cols-2 gap-4">
       <div
@@ -133,6 +149,8 @@
 </template>
 
 <script lang="ts">
+import { enableNGO } from "@/services/users/users.mutation";
+
 import NGOContactsForm from "./NGOContactsForm.vue";
 import { Component, Vue, Watch } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
@@ -144,6 +162,7 @@ import InputUpload from "./InputUpload.vue";
   },
 })
 export default class extends Vue {
+  private loading = false;
   private authority = "Enable as NGO";
 
   private saveAuthority() {
@@ -189,16 +208,66 @@ export default class extends Vue {
     }
   }
 
+  private setModel(upload: any) {
+    let { field, fileRef }: { field: string; fileRef: string } = upload;
+
+    if (field === "cacDocument") {
+      this.ngoDetails.cacDocument = fileRef;
+    } else if (field === "ngoReferenceUpload") {
+      this.ngoDetails.ngoReferenceUpload = fileRef;
+    } else if (field === "ngoRefererCacDocument") {
+      this.ngoDetails.ngoRefererCacDocument = fileRef;
+    } else if (field === "ngoAgreementContract") {
+      this.ngoDetails.ngoAgreementContract = fileRef;
+    }
+
+    Log.info("ngoDetails" + this.ngoDetails);
+  }
+
   @Watch("primaryContact", { deep: true })
   private monitor(newValue: any, oldValue: any) {
     Log.info(`ids: ${newValue.nationalIdPhoto} to ${oldValue.nationalIdPhoto}`);
   }
 
-  //  @Watch("ngoDetails", { deep: true })
-  // private ngoDetailsMonitor(newValue: string, oldValue: string) {
-  //   Log.info(`ids: ${newValue} to ${oldValue}`);
+  private prepareDetails() {
+    const info = {
+      ngoDetails: {
+        username: this.ngoDetails.username,
+        website: this.ngoDetails.website,
+        primaryContact: this.primaryContact,
+        secondaryContact: this.secondaryContact,
+        ngoReferenceUpload: this.ngoDetails.ngoReferenceUpload,
+        ngoRefererCacDocument: this.ngoDetails.ngoRefererCacDocument,
+        cacDocument: this.ngoDetails.cacDocument,
+        ngoAgreementContract: this.ngoDetails.ngoAgreementContract,
+      },
+    };
 
-  // }
+    return info;
+  }
+
+  private enableAsNGO() {
+    this.loading = true;
+    Log.info("detail: " + JSON.stringify(this.prepareDetails()));
+
+    this.$apollo
+      .mutate({
+        mutation: enableNGO,
+        variables: this.prepareDetails(),
+      })
+      .then((data: any) => {
+        this.loading = false;
+        Log.info("data: " + String(data));
+        Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
+        // this.$router.push(`/back-office/lotteries`);
+      })
+      .catch((error) => {
+        this.loading = false;
+        Log.error(error);
+
+        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+      });
+  }
 }
 </script>
 

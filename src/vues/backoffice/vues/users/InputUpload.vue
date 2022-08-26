@@ -3,8 +3,9 @@
     <label
       for=""
       class="spartan font-medium text-dark block text-sm  text-gray-700"
-      >{{ $props.documentName }}</label
-    >
+      >{{ $props.documentName }}
+      <!-- {{ $props.field }} -->
+    </label>
     <div class="mt-1">
       <div
         class="spartan h-12 flex bg-transparent border-2 border-solid rounded-md"
@@ -92,7 +93,7 @@ import { Constants, Log, Util } from "@/components/util";
 @Component({
   props: {
     documentName: String,
-    // model: String,
+    field: String,
   },
 })
 export default class InputUpload extends Vue {
@@ -118,15 +119,12 @@ export default class InputUpload extends Vue {
   @Watch("fileUploader", { deep: true })
   private monitor(newValue: any, oldValue: any) {
     if (newValue.uploads[0].uploadReference) {
-      Log.info(newValue.uploads[0].uploadReference);
-      this.$props.model = newValue.uploads[0].uploadReference;
-      this.$emit("uploaded", newValue.uploads[0].uploadReference);
-      // Log.info(
-      //   JSON.stringify({
-      //     property: this.$props.model,
-      //     fileRef: newValue.uploads[0].uploadReference,
-      //   })
-      // );
+      const obj = {
+        field: this.$props.field,
+        fileRef: newValue.uploads[0].uploadReference,
+      };
+      Log.info("fileUploaded; " + JSON.stringify(obj));
+      this.$emit("uploaded", obj);
     }
   }
 }
