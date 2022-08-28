@@ -120,18 +120,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Constants, Log, Util } from "@/components/util";
+
+import { Component, Vue, Prop } from "vue-property-decorator";
 import InputUpload from "./InputUpload.vue";
 @Component({
   components: {
     InputUpload,
   },
-  props: {
-    model: Object,
-    contact: String,
-  },
+  // props: {
+  //   model: Object,
+  //   contact: String,
+  // },
 })
 export default class NGOContactsForm extends Vue {
+  @Prop()
+  private model!: Object;
+
+  @Prop()
+  private contact!: String;
+
+  private mounted() {
+    Log.info(
+      "Contact props: " +
+        JSON.stringify({ model: this.model, contact: this.contact })
+    );
+  }
+
   private setModel(upload: any) {
     const obj = {
       contact: this.$props.contact,

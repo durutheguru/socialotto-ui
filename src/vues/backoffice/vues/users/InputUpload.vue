@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div v-if="fileUploader.uploads.length > 0">
+    <div v-if="fileUploader && fileUploader.uploads.length > 0">
       <table role="presentation" class="table v-margin-medium table-striped">
         <tbody class="files">
           <tr
@@ -86,17 +86,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import FileUploader from "@/components/file-uploader/FileUploader";
 import { Constants, Log, Util } from "@/components/util";
 
 @Component({
-  props: {
-    documentName: String,
-    field: String,
-  },
+  // props: {
+  //   documentName: String,
+  //   field: String,
+  // },
 })
 export default class InputUpload extends Vue {
+  @Prop()
+  documentName!: String;
+
+  @Prop()
+  field!: String;
+
+  private mounted() {
+    Log.info("initialised");
+    // this.fileUploader = new FileUploader(
+    //   "/upload",
+    //   10,
+    //   Constants.defaultFileUploadExtensions,
+    //   Constants.defaultMaxFileUploadSize
+    // );
+  }
+
   private fileUploader: FileUploader = new FileUploader(
     "/upload",
     10,
@@ -104,7 +120,7 @@ export default class InputUpload extends Vue {
     Constants.defaultMaxFileUploadSize
   );
 
-  private uploadRef = this.fileUploader.uploads[0];
+  // private uploadRef = this.fileUploader.uploads[0];
 
   public fileChanged(event: any) {
     this.fileUploader.fileChange(event);

@@ -224,11 +224,6 @@ export default class extends Vue {
     Log.info("ngoDetails" + this.ngoDetails);
   }
 
-  @Watch("primaryContact", { deep: true })
-  private monitor(newValue: any, oldValue: any) {
-    Log.info(`ids: ${newValue.nationalIdPhoto} to ${oldValue.nationalIdPhoto}`);
-  }
-
   private prepareDetails() {
     const info = {
       ngoDetails: {
@@ -267,6 +262,13 @@ export default class extends Vue {
 
         Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
       });
+  }
+
+  @Watch("primaryContact", { deep: true })
+  private monitor(newValue: any, oldValue: any) {
+    Log.info(
+      `primaryContact: ${newValue.nationalIdPhoto} to ${oldValue.nationalIdPhoto}`
+    );
   }
 }
 </script>
