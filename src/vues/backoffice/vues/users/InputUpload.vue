@@ -24,13 +24,24 @@
         >
           <span class="spartan text-sm">Upload</span>
 
-          <input
+          <!-- <input
             required
             autocomplete="off"
             multiple
             type="file"
             id="supportDocuments"
             name="supportDocuments"
+            accept="image/png, image/jpeg, .pdf, .doc"
+            placeholder="upload file"
+            class="hidden"
+            v-on:change="fileChanged"
+          /> -->
+          <input
+            required
+            autocomplete="off"
+            multiple
+            type="file"
+            :id="'supportDocuments' + documentName + ':' + field"
             accept="image/png, image/jpeg, .pdf, .doc"
             placeholder="upload file"
             class="hidden"
@@ -104,7 +115,7 @@ export default class InputUpload extends Vue {
   field!: String;
 
   private mounted() {
-    Log.info("initialised");
+    Log.info(`Initialised: Field: ${this.field}`);
     // this.fileUploader = new FileUploader(
     //   "/upload",
     //   10,
@@ -128,7 +139,7 @@ export default class InputUpload extends Vue {
   }
 
   private chooseFiles() {
-    const showFilesToSelect: any = document.getElementById("supportDocuments");
+    const showFilesToSelect: any = document.getElementById("supportDocuments" + this.documentName + ":" + this.field);
     showFilesToSelect.click();
   }
 
