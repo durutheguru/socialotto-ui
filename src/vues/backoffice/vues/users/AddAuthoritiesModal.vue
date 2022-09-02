@@ -63,7 +63,11 @@
             </div>
 
             <div v-if="showNGOForm === true" class="w-full">
-              <NGOForm @close="close" @mainForm="showMainForm" />
+              <NGOForm
+                :username="username"
+                @close="close"
+                @mainForm="showMainForm"
+              />
             </div>
             <div
               v-else-if="showNGOForm === false"
@@ -267,7 +271,7 @@ import FileUploader from "@/components/file-uploader/FileUploader";
   name: "AddAuthoritiesModal",
   props: {
     open: Boolean,
-    username: Boolean,
+    username: String,
   },
   components: {
     // Listbox,

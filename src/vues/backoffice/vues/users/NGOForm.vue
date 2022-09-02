@@ -6,6 +6,7 @@
         class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
         >Add a permission</label
       >
+      <!-- <span>UN: {{ username }}</span> -->
       <div class="mt-1">
         <div
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
@@ -154,10 +155,10 @@
 
 <script lang="ts">
 import { enableNGO } from "@/services/users/users.mutation";
-import store from "@/store/index";
+// import store from "@/store/index";
 
 import NGOContactsForm from "./NGOContactsForm.vue";
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
 import InputUpload from "./InputUpload.vue";
 @Component({
@@ -167,11 +168,13 @@ import InputUpload from "./InputUpload.vue";
   },
 })
 export default class extends Vue {
+  @Prop()
+  private username!: string;
   private loading = false;
   private authority = "Enable as NGO";
 
   private ngoDetails = {
-    username: store.getters["authToken/username"],
+    username: this.username,
     website: "",
     ngoReferenceUpload: "",
     ngoRefererCacDocument: "",
@@ -258,12 +261,15 @@ export default class extends Vue {
       })
       .then((data: any) => {
         this.loading = false;
+        this.close();
+
         Log.info("data: " + String(data));
         Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
         // this.$router.push(`/back-office/lotteries`);
       })
       .catch((error) => {
         this.loading = false;
+        this.close();
         Log.error(error);
 
         Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));

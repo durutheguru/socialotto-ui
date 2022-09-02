@@ -13,34 +13,53 @@ const saveContract = gql`
   }
 `;
 
+// const enableNGO = gql`
+//   mutation {
+//     enableNGO(
+//       ngoDetails: {
+//         username: String
+//         website: String
+//         primaryContact: {
+//           firstName: String
+//           lastName: String
+//           phone: String
+//           email: String
+//           nationalIdNumber: String
+//           nationalIdPhoto: String
+//         }
+//         secondaryContact: {
+//           firstName: String
+//           lastName: String
+//           phone: String
+//           email: String
+//           nationalIdNumber: String
+//           nationalIdPhoto: String
+//         }
+//         ngoReferenceUpload: String
+//         ngoRefererCacDocument: String
+//         cacDocument: String
+//         ngoAgreementContract: String
+//       }
+//     ) {
+//       username
+//       website
+//       primaryContact {
+//         firstName
+//         lastName
+//       }
+//       secondaryContact {
+//         firstName
+//         lastName
+//       }
+//       cacDocument
+//       ngoAgreementContract
+//     }
+//   }
+// `;
+
 const enableNGO = gql`
-  mutation {
-    enableNGO(
-      ngoDetails: {
-        username: "jolayemi+023x@gmail.com"
-        website: "http://www.jolaz.com"
-        primaryContact: {
-          firstName: "Jolayemi"
-          lastName: "LopoLopo"
-          phone: "08087172355"
-          email: "jolaz@gmail.com"
-          nationalIdNumber: "38918487818783"
-          nationalIdPhoto: "skjaiu29sk9-2789sb22-37sbka"
-        }
-        secondaryContact: {
-          firstName: "Femi"
-          lastName: "LopoLopo"
-          phone: "08087172311"
-          email: "femi@gmail.com"
-          nationalIdNumber: "38918487811294"
-          nationalIdPhoto: "skjaiu29sk9-2789sb22-37sbka"
-        }
-        ngoReferenceUpload: "skjaiu29sk9-2789sb22-37sbka"
-        ngoRefererCacDocument: "skjaiu29sk9-2789sb22-37sbka"
-        cacDocument: "skjaiu29sk9-2789sb22-37sbka"
-        ngoAgreementContract: "skjaiu29sk9-2789sb22-37sbka"
-      }
-    ) {
+  mutation EnableNGO($ngoDetails: NGODetailsInputDTO!) {
+    enableNGO(ngoDetails: $ngoDetails) {
       username
       website
       primaryContact {
