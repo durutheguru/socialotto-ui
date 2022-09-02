@@ -1,8 +1,11 @@
 <template>
-  <section id="container" class="overflow-hidden">
+  <section id="container" class="overflow-hidden spartan">
       <!-- <fade-transition origin="center" mode="out-in" :duration="250"> -->
         <template>
         <global-alert />
+        <logout-modal />
+        <!-- <global-alert-2 /> -->
+       
           <router-view />
           </template>
       <!-- </fade-transition> -->
@@ -12,11 +15,15 @@
 <script>
 import { FadeTransition } from "vue2-transitions";
 import GlobalAlert from "./vues/Alert/GlobalAlert.vue"
+import LogoutModal from "@/views/LogoutModal.vue"
+// import GlobalAlert2 from "./vues/Alert/GlobalAlert2.vue"
 
 export default {
   components: {
     FadeTransition,
-    GlobalAlert
+    GlobalAlert,
+    LogoutModal
+    // GlobalAlert2
   }
 };
 </script>

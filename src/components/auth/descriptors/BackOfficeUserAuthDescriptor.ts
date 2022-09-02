@@ -4,7 +4,7 @@ export default class BackOfficeUserAuthDescriptor implements AuthContextDescript
 
     public name: string = 'BACK_OFFICE_USER';
 
-    public homeUrl: string = '/back-office/users/back-office';
+    public homeUrl: string = '/back-office';
 
     public accessList: string[] = [];
 

@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="recentsMenu"
-    class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 "
-  >
+  <div class="absolute right-0 top-0 object-right-top  mt-10  sm:px-0 ">
     <div class="pointy ml-auto"></div>
     <div class="relative dropDownMenu">
       <div class=" shadow-xs overflow-hidden">
@@ -51,7 +48,7 @@ export default class RecentActivities extends Vue {
   private recentsMenu: any = document.getElementById("recentsMenu");
 
   private mounted() {
-    Util.clickOutside("recentsMenu", "recentsToggle", "setIsRecentsMenu");
+    // Util.clickOutside("recentsMenu", "recentsToggle", "setIsRecentsMenu");
   }
 }
 </script>

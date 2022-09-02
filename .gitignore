@@ -2,4 +2,6 @@
 node_modules
 dist
 
-/**/*/.DS_Store
+/**/.DS_Store
+public/compiled/js/**
+public/compiled/css/**

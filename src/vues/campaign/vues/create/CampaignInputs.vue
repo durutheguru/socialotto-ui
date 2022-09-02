@@ -37,7 +37,7 @@
                 <div class="w-full lg:w-4/5">
                   <div class="w-full mb-6">
                     <label
-                      for="email"
+                      for="Campaign_title"
                       class="spartan font-medium text-dark block text-sm text-gray-700"
                       >Campaign title</label
                     >
@@ -76,7 +76,7 @@
                       <div>
                         <validation-provider
                           mode="aggressive"
-                          rules="required|min:20|max:240"
+                          rules="required|min:20|max:2000"
                           v-slot="{ errors }"
                         >
                           <textarea
@@ -208,9 +208,9 @@
                 <div class="w-full  lg:w-4/5">
                   <div class="w-full mb-6">
                     <label
-                      for="email"
+                      for="Total amount"
                       class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
-                      >Total amount</label
+                      >Target amount</label
                     >
                     <div class="mt-1">
                       <validation-provider
@@ -411,7 +411,7 @@ export default class CampaignInputs extends BaseVue {
         Util.handleGlobalAlert(
           true,
           "success",
-          "Successfully created campaign"
+          "Successfully created campaign. Awaiting approval at BackOffice."
         );
 
         let resetButton: any = document.getElementById("reset");

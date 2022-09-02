@@ -3,7 +3,7 @@
     <div
       class="signupMainOuterDiv relative top-4 mx-auto sm:w-full max-w-sm sm:max-w-md mb-12 mt-12"
     >
-      <div class="signupMain bg-white py-8 px-10  sm:px-10 ">
+      <div class="signupMain sm:bg-white py-8 px-10  sm:px-10 ">
         <div class="sm:mx-auto sm:w-full sm:max-w-md mainHeaderDiv">
           <h2 class="mt-3 text-center mainHeader spartan">
             Signup to Socialotto
@@ -101,7 +101,12 @@
               Password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required|min:6" v-slot="{ errors }">
+              <validation-provider
+                name="password"
+                mode="aggressive"
+                rules="required|min:6"
+                v-slot="{ errors }"
+              >
                 <input
                   id="password"
                   name="password"
@@ -135,7 +140,11 @@
               Confirm password
             </label>
             <div class="mt-1">
-              <validation-provider rules="required" v-slot="{ errors }">
+              <validation-provider
+                mode="aggressive"
+                rules="required|password:@password"
+                v-slot="{ errors }"
+              >
                 <input
                   id="confirm-password"
                   name="confirm-password"
@@ -247,7 +256,11 @@
               style="background-color: #FF3D00; margin-bottom: 20px;"
               class="buttonText w-full flex justify-center py-3 px-4 border border-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Google
+              <i
+                class="large-font fa fa-google"
+                style="position:relative;top:-10px"
+              ></i
+              >oogle
             </button>
           </form>
         </div>
@@ -343,6 +356,7 @@ export default class Signup extends BaseVue {
       (error: any) => {
         self.userSignup.loading = false;
         self.userSignup.error = Util.extractError(error);
+        Util.handleGlobalAlert(true, "failed", self.userSignup.error);
       }
     );
   }
@@ -365,30 +379,6 @@ export default class Signup extends BaseVue {
   z-index: 1;
 }
 
-.customButton {
-  background: #4691a6;
-  border-radius: 8px;
-  height: 40px;
-}
-
-.signupLogo {
-  position: relative;
-  width: 175px;
-  height: 40px;
-  /* left: 10%;
-  top: 22px; */
-
-  font-family: "Spartan", sans-serif;
-  font-style: normal;
-  font-weight: 900;
-  font-size: 40px;
-  line-height: 100%;
-
-  letter-spacing: -0.14em;
-
-  color: #4691a6;
-}
-
 a {
   height: 14px;
   /* margin: auto 0; */
@@ -400,77 +390,19 @@ a {
   font-family: "Spartan", sans-serif;
 } */
 
-.menuIcon {
-  display: none;
-  width: 24px;
-  height: 24px;
-  color: #4691a6;
-}
-
-.signupMain {
-  position: relative;
-
-  /* width: 520px; */
-  /* height: 720px; */
-  /* left: 460px; */
-  /* margin: 0 auto 0; */
-  /* top: 84px; */
-  border: 2px solid #2c5662;
-  /* box-sizing: border-box; */
-  border-radius: 8px;
-  /* padding: 0 60px; */
-  /* display: flex; */
-  /* align-items: center;
-  flex-direction: column; */
-  /* z-index: -1; */
-}
-
-@media only screen and (max-width: 640px) {
-  .signupMain {
-    border: none;
-    padding-top: 0;
-    padding-left: 5px;
-    padding-right: 5px;
-    /* --tw-bg-opacity: 1; */
-    background-color: rgba(249, 250, 251, var(--tw-bg-opacity)) !important;
-  }
-
-  .signupMainOuterDiv {
-    margin-top: 0;
-  }
-
-  .mainHeaderDiv {
-    margin-bottom: 35px !important;
-  }
-}
-
 @media only screen and (max-height: 700px) {
   .smHeight {
     margin-top: 26px;
   }
 }
 
-.anchorDIv {
-  width: 60%;
-  display: flex;
-  justify-content: flex-end;
-}
-
 @media only screen and (max-width: 900px) {
-  .anchorDIv {
+  /* .anchorDIv {
     display: none;
-  }
+  } */
   .innerHeaderDiv {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
-  }
-
-  .signupLogo {
-    display: none;
-  }
-
-  .menuIcon {
-    display: flex;
   }
 }
 

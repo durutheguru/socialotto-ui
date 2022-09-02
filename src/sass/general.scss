@@ -1,3 +1,128 @@
+.br-3 {
+  border-radius: 3px;
+}
+
+.br-5 {
+  border-radius: 5px;
+}
+
+.br-6 {
+  border-radius: 6px;
+}
+
+.br-8 {
+  border-radius: 8px;
+}
+
+.br-10 {
+  border-radius: 10px;
+}
+
+.br-12 {
+  border-radius: 12px;
+}
+
+.br-24 {
+  border-radius: 24px;
+}
+
+.box-shadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dmsans {
+  // font-family: "DM Sans", sans-serif;
+  font-family: "Rubik", sans-serif;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.fs-18 {
+  font-size: 18px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-24 {
+  font-size: 24px;
+}
+
+.fs-30 {
+  font-size: 30px;
+}
+
+.fs-32 {
+  font-size: 32px;
+}
+
+.fw-300 {
+  font-weight: 300;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+.fw-800 {
+  font-weight: 800;
+}
+
+.fw-900 {
+  font-weight: 900;
+}
+
+.h-50px {
+  height: 3.125rem;
+}
+
+.h-26 {
+  height: 6.25rem;
+}
+
+.line-h-100 {
+  line-height: 100%;
+}
+
+.max-w-70 {
+  max-width: 70rem;
+}
+
 .bg-blue-50 {
   background-color: #f1f7f9;
 }
@@ -43,12 +168,37 @@
   border: 1px solid #4691a6;
 }
 
+.globalAlertPositioning {
+  left: 0px;
+  right: 0px;
+}
+
 .focus-border-blue-200:focus {
   border-color: #4691a6;
 }
 
+.nav-link-color {
+  color: #2b7ee4;
+}
+
+.nav-link-bg {
+  background-color: #4691a6;
+}
+
+.actv-nav-link-bg {
+  background-color: #4691a6;
+}
+
+.actv-nav-link-color {
+  color: #4691a6;
+}
+
 .text-grey-dark {
   color: #343434;
+}
+
+.expenseWalletID-fs {
+  font-size: 0.6rem;
 }
 
 .text-dark {
@@ -61,6 +211,14 @@
 
 .backgroundGrey {
   background-color: #343434;
+}
+
+.lotteryTableMenuListGreen {
+  color: #09aa09;
+}
+
+.lotteryTableMenuRed {
+  color: #ff0000;
 }
 
 .dark-blue-text {
@@ -83,10 +241,20 @@
   background-color: #00b300;
 }
 
+.wv100 {
+  width: 100vw !important;
+}
+
 .divContainer {
   // overflow-y: scroll;
   height: calc(100% - 84px);
   margin-top: 84px;
+  width: 100%;
+}
+
+.tableHeaderInnerDiv {
+  max-width: 75px;
+  min-width: 75px;
 }
 
 .overflow-y {
@@ -136,6 +304,10 @@
   font-family: "Spartan", sans-serif;
 }
 
+.walletBalanceFs {
+  font-size: 1.8rem;
+}
+
 .dot {
   cursor: pointer;
   height: 15px;
@@ -160,6 +332,75 @@
   background-color: blue;
 }
 
+.cardBoxShadow {
+  box-shadow: 0px 4px 67px rgba(0, 0, 0, 0.2);
+}
+
+.backOfficeSidebar {
+  background-color: #1d414b;
+}
+
+.showBackofficeSidebar {
+  display: none;
+}
+
+.showBackofficeNav {
+  display: block;
+}
+
+.showBackofficeSidebar::-webkit-scrollbar {
+  width: 8px;
+  // height: 120px;
+}
+
+.showBackofficeNav::-webkit-scrollbar {
+  width: 8px;
+  // height: 120px;
+}
+
+.bo-bg-dark-blue {
+  background-color: #1d414b;
+}
+
+// .tooltip {
+//   position: relative;
+//   display: inline-block;
+//   border-bottom: 1px dotted black;
+// }
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
 /* Safari */
 @-webkit-keyframes spin {
   0% {
@@ -182,6 +423,25 @@
 @media (min-width: 1024px) {
   .instructionsDisplay {
     display: block;
+  }
+
+  .showBackofficeSidebar {
+    display: block;
+  }
+
+  .showBackofficeNav {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .globalAlertPositioning {
+    left: auto;
+    right: 1rem;
+  }
+
+  .walletBalanceFs {
+    font-size: 32px;
   }
 }
 
@@ -211,4 +471,27 @@
   .landingPageText {
     text-align: left;
   }
+}
+
+.slideOut-enter-active,
+.slideOut-leave-active {
+  transition: all 0.2s ease-out;
+}
+.slideOut-leave-to,
+.slideOut-enter-from {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.innerScrollBar::-webkit-scrollbar {
+  height: 5px;
+}
+
+.innerScrollBar::-webkit-scrollbar-thumb {
+  // width: 4px;
+  background-color: rgba(168, 168, 168, 0.199);
+}
+
+.innerScrollBar::-webkit-scrollbar-track {
+  background: transparent;
 }

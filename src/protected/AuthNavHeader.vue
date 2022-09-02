@@ -1,17 +1,15 @@
 <template>
-  <div class="wrapper">
+  <div class="">
     <!-- <div class=" bg-blue-50 flex  justify-center  sm:px-6 lg:px-8 "> -->
-    <div class="signupHeader navheaderPadding z-10 bg-blue-50 ">
+    <BackOfficeHeader v-if="isBackOfficeUser && isLoggedIn" />
+    <div v-else class="signupHeader navheaderPadding z-10 bg-blue-50 ">
       <div
         class="px-6 md:px-0 innerHeaderDiv mx-auto flex flex-row justify-between max-w-screen-xl h-full sm:w-11/12"
       >
-        <router-link
-          class="my-auto focus:outline-none no-underline"
-          :to="'/home'"
-        >
+        <router-link class="my-auto focus:outline-none no-underline" :to="'/'">
           <span class="signupLogo ">Socialotto</span>
         </router-link>
-        <div class="menuIcon my-auto " @click="dropAuthMenu">
+        <div class="menuIcon my-auto mr-auto" @click="dropAuthMenu">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-6 w-6"
@@ -40,7 +38,6 @@
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
               <svg
-                id="noticeToggle"
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6 m-1 cursor-pointer"
                 fill="none"
@@ -54,7 +51,7 @@
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
                 />
               </svg>
-              <transition name="fade">
+              <transition name="fade" id="noticeMenu">
                 <Notificatons v-if="noticeMenu" />
               </transition>
             </div>
@@ -64,26 +61,24 @@
               @click="ToggleRecentActivities"
               class="relative spartan mr-6 my-auto items-center lg:flex whitespace-nowrap inline-flex items-center justify-center"
             >
-              <div>
-                <svg
-                  id="recentsToggle"
-                  class="m-1.5 cursor-pointer"
-                  width="22"
-                  height="20"
-                  viewBox="0 0 22 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M21 10H17L14 19L8 1L5 10H1"
-                    stroke="#767676"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-              <transition name="fade">
+              <svg
+                class="m-1.5 cursor-pointer"
+                width="22"
+                height="20"
+                viewBox="0 0 22 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M21 10H17L14 19L8 1L5 10H1"
+                  stroke="#767676"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+
+              <transition name="fade" id="recentsMenu">
                 <RecentActivities v-if="recentsMenu" />
               </transition>
             </div>
@@ -91,16 +86,22 @@
             <!-- -----Avatar menu----- -->
             <div
               @click="dropUserMenu"
-              data-dropdown
               class="dropdown spartan my-auto mr-6 items-center lg:flex  whitespace-nowrap inline-flex items-center justify-center"
             >
               <button class="menuAnchor h-full" data-dropdown-button>
-                <img
-                  id="dropdown"
-                  class="inline-block h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
+                <div
+                  style="background-color: #bebec5"
+                  class=" inline-block h-8 w-8 rounded-full"
+                >
+                  <div class="flex items-center justify-center w-full h-full">
+                    <span
+                      style="height: 18px;"
+                      class="fw-400 mb-0 flex uppercase text-white"
+                    >
+                      {{ userInitials }}
+                    </span>
+                  </div>
+                </div>
               </button>
               <!-- <input
                 type="checkbox"
@@ -129,17 +130,19 @@
               </transition>
             </div>
           </div>
-          <div
+          <button
+            @click="$router.push('/home')"
             class=" customButton whitespace-nowrap inline-flex items-center justify-center px-4 py-2 text-white"
           >
             <span>Support a campaign</span>
-          </div>
+          </button>
         </div>
       </div>
     </div>
+
     <!-- </div> -->
     <auth-hamburger-menu />
-    <router-view @click="clearDropDowns"></router-view>
+    <!-- <router-view @click="clearDropDowns"></router-view> -->
     <donate-modal />
   </div>
 </template>
@@ -157,11 +160,7 @@ import DonateModal from "@/vues/campaign/vues/campaignDetails/DonateModal.vue";
 // import ApiResource from "@/components/core/ApiResource";
 import store from "../store/index";
 import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
-// import ClickOutside from 'vue-click-outside';
-// import SignupService from "./service/SignupService";
-// import LoginService from "../login/service/LoginService";
-// import store from "@/store";
-// import UserAuthContext from "@/components/auth/UserAuthContext";
+import BackOfficeHeader from "@/vues/backoffice/BackOfficeHeader.vue";
 
 @Component({
   name: "AuthNavHeader",
@@ -171,6 +170,7 @@ import AuthHamburgerMenu from "./AuthHamburgerMenu.vue";
     Notificatons,
     RecentActivities,
     DonateModal,
+    BackOfficeHeader,
 
     // ExpMenu,
   },
@@ -182,17 +182,20 @@ export default class AuthNavHeader extends BaseVue {
     store.commit("setIsRecentsMenu", false);
   }
 
-  // private notifications: boolean = false;
+  private userInitials = store.getters["authToken/username"].slice(0, 1);
 
-  // private recentActivities: boolean = false;
-
-  private get userMenu(): boolean {
-    return store.state.userMenu;
+  private userMenu = false;
+  private get isLoggedIn(): boolean {
+    return store.getters["authToken/loggedIn"];
   }
 
   private get noticeMenu(): boolean {
     return store.state.isNoticeMenu;
   }
+
+  // private hide () {
+  //   store.commit("setIsNoticeMenu", false);
+  // }
 
   private get recentsMenu(): boolean {
     return store.state.isRecentsMenu;
@@ -213,14 +216,14 @@ export default class AuthNavHeader extends BaseVue {
     // Log.info("dropMenu: " + );
   }
   private dropUserMenu() {
-    store.commit("setUserMenu", !this.userMenu);
+    this.userMenu = !this.userMenu;
     // Log.info("dropMenu: " + );
   }
 
-  private clearDropDowns() {
-    store.commit("setUserMenu", false);
-    // Log.info("dropMenu: " + );
-  }
+  // private clearDropDowns() {
+  //   store.commit("setUserMenu", false);
+  //   // Log.info("dropMenu: " + );
+  // }
 }
 </script>
 

@@ -32,7 +32,7 @@ export default class FileUploader {
 
             let file = files.item(i) as File;
 
-            if (!this.allowedExtensions.test(file.name)) {
+            if (!this.allowedExtensions.test(file.name.toLowerCase())) {
                 Log.warn(`Unsupported file format: ${file.name}`);
                 return;
             }
