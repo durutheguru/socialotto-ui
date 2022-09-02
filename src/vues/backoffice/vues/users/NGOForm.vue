@@ -137,7 +137,7 @@
         Cancel
       </div>
       <button
-        @click="saveAuthority"
+        @click="enableAsNGO"
         style="background-color: #4691A6;"
         class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
       >
@@ -164,10 +164,6 @@ import InputUpload from "./InputUpload.vue";
 export default class extends Vue {
   private loading = false;
   private authority = "Enable as NGO";
-
-  private saveAuthority() {
-    Log.info("Save NGO");
-  }
 
   private ngoDetails = {
     username: "",
@@ -245,23 +241,23 @@ export default class extends Vue {
     this.loading = true;
     Log.info("detail: " + JSON.stringify(this.prepareDetails()));
 
-    this.$apollo
-      .mutate({
-        mutation: enableNGO,
-        variables: this.prepareDetails(),
-      })
-      .then((data: any) => {
-        this.loading = false;
-        Log.info("data: " + String(data));
-        Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
-        // this.$router.push(`/back-office/lotteries`);
-      })
-      .catch((error) => {
-        this.loading = false;
-        Log.error(error);
+    // this.$apollo
+    //   .mutate({
+    //     mutation: enableNGO,
+    //     variables: this.prepareDetails(),
+    //   })
+    //   .then((data: any) => {
+    //     this.loading = false;
+    //     Log.info("data: " + String(data));
+    //     Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
+    //     // this.$router.push(`/back-office/lotteries`);
+    //   })
+    //   .catch((error) => {
+    //     this.loading = false;
+    //     Log.error(error);
 
-        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
-      });
+    //     Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+    //   });
   }
 
   @Watch("primaryContact", { deep: true })

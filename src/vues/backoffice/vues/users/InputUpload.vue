@@ -98,10 +98,10 @@ import { Constants, Log, Util } from "@/components/util";
 })
 export default class InputUpload extends Vue {
   @Prop()
-  documentName!: String;
+  private documentName!: string;
 
   @Prop()
-  field!: String;
+  private field!: string;
 
   private mounted() {
     Log.info("initialised");
