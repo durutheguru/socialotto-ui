@@ -108,23 +108,27 @@
     <InputUpload
       documentName="CAC Document"
       field="cacDocument"
+      inputId="cacDocument"
       @uploaded="setModel"
     />
     <InputUpload
       documentName="Agreement Contract"
       field="ngoAgreementContract"
+      inputId="ngoAgreementContract"
       @uploaded="setModel"
     />
 
     <InputUpload
       documentName="Referee CAC Document"
       field="ngoRefererCacDocument"
+      inputId="ngoRefererCacDocument"
       @uploaded="setModel"
     />
 
     <InputUpload
       documentName="Reference Upload"
       field="ngoReferenceUpload"
+      inputId="ngoReferenceUpload"
       @uploaded="setModel"
     />
 
@@ -150,6 +154,7 @@
 
 <script lang="ts">
 import { enableNGO } from "@/services/users/users.mutation";
+import store from "@/store/index";
 
 import NGOContactsForm from "./NGOContactsForm.vue";
 import { Component, Vue, Watch } from "vue-property-decorator";
@@ -166,7 +171,7 @@ export default class extends Vue {
   private authority = "Enable as NGO";
 
   private ngoDetails = {
-    username: "",
+    username: store.getters["authToken/username"],
     website: "",
     ngoReferenceUpload: "",
     ngoRefererCacDocument: "",
@@ -175,6 +180,7 @@ export default class extends Vue {
   };
 
   private primaryContact = {
+    modelName: "primaryContact",
     firstName: "",
     lastName: "",
     phone: "",
@@ -184,6 +190,7 @@ export default class extends Vue {
   };
 
   private secondaryContact = {
+    modelName: "secondaryContact",
     firstName: "",
     lastName: "",
     phone: "",
@@ -221,6 +228,9 @@ export default class extends Vue {
   }
 
   private prepareDetails() {
+    delete this.primaryContact.modelName;
+    delete this.secondaryContact.modelName;
+
     const info = {
       ngoDetails: {
         username: this.ngoDetails.username,
@@ -241,23 +251,23 @@ export default class extends Vue {
     this.loading = true;
     Log.info("detail: " + JSON.stringify(this.prepareDetails()));
 
-    // this.$apollo
-    //   .mutate({
-    //     mutation: enableNGO,
-    //     variables: this.prepareDetails(),
-    //   })
-    //   .then((data: any) => {
-    //     this.loading = false;
-    //     Log.info("data: " + String(data));
-    //     Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
-    //     // this.$router.push(`/back-office/lotteries`);
-    //   })
-    //   .catch((error) => {
-    //     this.loading = false;
-    //     Log.error(error);
+    this.$apollo
+      .mutate({
+        mutation: enableNGO,
+        variables: this.prepareDetails(),
+      })
+      .then((data: any) => {
+        this.loading = false;
+        Log.info("data: " + String(data));
+        Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
+        // this.$router.push(`/back-office/lotteries`);
+      })
+      .catch((error) => {
+        this.loading = false;
+        Log.error(error);
 
-    //     Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
-    //   });
+        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+      });
   }
 
   @Watch("primaryContact", { deep: true })

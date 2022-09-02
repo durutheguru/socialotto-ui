@@ -29,7 +29,7 @@
             autocomplete="off"
             multiple
             type="file"
-            id="supportDocuments"
+            :id="inputId"
             name="supportDocuments"
             accept="image/png, image/jpeg, .pdf, .doc"
             placeholder="upload file"
@@ -82,6 +82,7 @@
         </tbody>
       </table>
     </div>
+    <!-- {{ documentName }} -->
   </div>
 </template>
 
@@ -92,7 +93,7 @@ import { Constants, Log, Util } from "@/components/util";
 
 @Component({
   // props: {
-  //   documentName: String,
+  //   documentNam: String,
   //   field: String,
   // },
 })
@@ -102,6 +103,9 @@ export default class InputUpload extends Vue {
 
   @Prop()
   private field!: string;
+
+  @Prop()
+  private inputId!: string;
 
   private mounted() {
     Log.info("initialised");
@@ -128,7 +132,8 @@ export default class InputUpload extends Vue {
   }
 
   private chooseFiles() {
-    const showFilesToSelect: any = document.getElementById("supportDocuments");
+    Log.info(this.$props.inputId);
+    const showFilesToSelect: any = document.getElementById(this.$props.inputId);
     showFilesToSelect.click();
   }
 

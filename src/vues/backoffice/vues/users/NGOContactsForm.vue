@@ -113,6 +113,7 @@
 
     <InputUpload
       @uploaded="setModel"
+      :inputId="`${model.modelName} National ID Photo`"
       documentName="National ID Photo"
       :field="contact"
     />
