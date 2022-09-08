@@ -6,6 +6,7 @@
         class="spartan font-medium text-dark block text-sm font-medium text-gray-700"
         >Add a permission</label
       >
+      <!-- <span>UN: {{ username }}</span> -->
       <div class="mt-1">
         <div
           class="spartan cursor-pointer h-12 relative flex bg-transparent border-2 border-solid rounded-md"
@@ -108,23 +109,27 @@
     <InputUpload
       documentName="CAC Document"
       field="cacDocument"
+      inputId="cacDocument"
       @uploaded="setModel"
     />
     <InputUpload
       documentName="Agreement Contract"
       field="ngoAgreementContract"
+      inputId="ngoAgreementContract"
       @uploaded="setModel"
     />
 
     <InputUpload
       documentName="Referee CAC Document"
       field="ngoRefererCacDocument"
+      inputId="ngoRefererCacDocument"
       @uploaded="setModel"
     />
 
     <InputUpload
       documentName="Reference Upload"
       field="ngoReferenceUpload"
+      inputId="ngoReferenceUpload"
       @uploaded="setModel"
     />
 
@@ -137,7 +142,7 @@
         Cancel
       </div>
       <button
-        @click="saveAuthority"
+        @click="enableAsNGO"
         style="background-color: #4691A6;"
         class="flex w-full rounded-md text-white cursor-pointer py-2.5 justify-center items-center"
       >
@@ -150,9 +155,10 @@
 
 <script lang="ts">
 import { enableNGO } from "@/services/users/users.mutation";
+// import store from "@/store/index";
 
 import NGOContactsForm from "./NGOContactsForm.vue";
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import { Constants, Log, Util } from "@/components/util";
 import InputUpload from "./InputUpload.vue";
 @Component({
@@ -162,15 +168,13 @@ import InputUpload from "./InputUpload.vue";
   },
 })
 export default class extends Vue {
+  @Prop()
+  private username!: string;
   private loading = false;
   private authority = "Enable as NGO";
 
-  private saveAuthority() {
-    Log.info("Save NGO");
-  }
-
   private ngoDetails = {
-    username: "",
+    username: this.username,
     website: "",
     ngoReferenceUpload: "",
     ngoRefererCacDocument: "",
@@ -179,6 +183,7 @@ export default class extends Vue {
   };
 
   private primaryContact = {
+    modelName: "primaryContact",
     firstName: "",
     lastName: "",
     phone: "",
@@ -188,6 +193,7 @@ export default class extends Vue {
   };
 
   private secondaryContact = {
+    modelName: "secondaryContact",
     firstName: "",
     lastName: "",
     phone: "",
@@ -225,6 +231,9 @@ export default class extends Vue {
   }
 
   private prepareDetails() {
+    delete this.primaryContact.modelName;
+    delete this.secondaryContact.modelName;
+
     const info = {
       ngoDetails: {
         username: this.ngoDetails.username,
@@ -252,12 +261,15 @@ export default class extends Vue {
       })
       .then((data: any) => {
         this.loading = false;
+        this.close();
+
         Log.info("data: " + String(data));
         Util.handleGlobalAlert(true, "success", "Successfully enabled NGO");
         // this.$router.push(`/back-office/lotteries`);
       })
       .catch((error) => {
         this.loading = false;
+        // this.close();
         Log.error(error);
 
         Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));

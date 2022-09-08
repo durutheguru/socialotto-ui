@@ -113,6 +113,7 @@
 
     <InputUpload
       @uploaded="setModel"
+      :inputId="`${model.modelName} National ID Photo`"
       documentName="National ID Photo"
       :field="contact"
     />
@@ -135,10 +136,10 @@ import InputUpload from "./InputUpload.vue";
 })
 export default class NGOContactsForm extends Vue {
   @Prop()
-  private model!: Object;
+  private model!: object;
 
   @Prop()
-  private contact!: String;
+  private contact!: string;
 
   private mounted() {
     Log.info(
