@@ -134,6 +134,9 @@
     />
 
     <div class="grid grid-cols-2 gap-4">
+      <div class="col-span-2">
+        <span class="text-red-500"> {{ enableNgoErr }}</span>
+      </div>
       <div
         @click="close"
         style="color: #4691A6; border: 1px solid #4691A6;"
@@ -172,7 +175,7 @@ export default class extends Vue {
   private username!: string;
   private loading = false;
   private authority = "Enable as NGO";
-
+  private enableNgoErr = "";
   private ngoDetails = {
     username: this.username,
     website: "",
@@ -271,8 +274,19 @@ export default class extends Vue {
         this.loading = false;
         // this.close();
         Log.error(error);
+        this.enableNgoErr = Util.extractGqlError(error);
 
-        Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
+        Util.throttle({
+          key: "enableNgoErr",
+          run: () => {
+            setTimeout(() => {
+              this.enableNgoErr = "";
+            }, 4000);
+          },
+          time: 300,
+        });
+
+        // Util.handleGlobalAlert(true, "failed", Util.extractGqlError(error));
       });
   }
 
